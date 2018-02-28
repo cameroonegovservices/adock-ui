@@ -6,6 +6,7 @@ module.exports = (on, config) => {
     integrationFolder: 'test/e2e/specs',
     screenshotsFolder: 'test/e2e/screenshots',
     videosFolder: 'test/e2e/videos',
-    supportFile: 'test/e2e/support/index.js'
+    supportFile: 'test/e2e/support/index.js',
+    videoRecording: false
   })
 }
