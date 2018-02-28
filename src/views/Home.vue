@@ -1,8 +1,8 @@
 <template lang="pug">
-  v-container(fluid, fill-height)
+  v-container(fill-height)
     v-layout(justify-center, align-center)
       v-flex(text-xs-center)
-        v-btn(large, color="primary") Inscrivez vous
+        v-btn(large, color="primary", to="subscribe") Inscrivez vous
 </template>
 
 <script>
