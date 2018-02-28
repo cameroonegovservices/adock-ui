@@ -1,13 +1,10 @@
-<template>
-  <v-app>
-    <v-toolbar app fixed light>
-      <v-spacer/>
-      <v-toolbar-title>A Dock</v-toolbar-title>
-    </v-toolbar>
-    <v-content>
-      <router-view/>
-    </v-content>
-  </v-app>
+<template lang="pug">
+  v-app
+    v-toolbar(app, fixed, light)
+      v-spacer
+      v-toolbar-title A Dock
+    v-content
+      router-view
 </template>
 
 <style scoped>
