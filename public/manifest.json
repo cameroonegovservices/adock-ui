@@ -1,6 +1,6 @@
 {
-  "name": "adock-ui",
-  "short_name": "adock-ui",
+  "name": "A Dock",
+  "short_name": "A Dock",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
