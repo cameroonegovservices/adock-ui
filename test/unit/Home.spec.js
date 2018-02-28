@@ -8,6 +8,6 @@ Vue.use(Vuetify)
 describe('Home.vue', () => {
   it('renders subscribe button', () => {
     const wrapper = mount(Home)
-    expect(wrapper.text()).toMatch('Inscrivez-vous')
+    expect(wrapper.text()).toMatch('Inscrivez vous')
   })
 })

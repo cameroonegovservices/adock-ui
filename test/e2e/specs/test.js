@@ -1,8 +1,8 @@
 // https://docs.cypress.io/api/introduction/api.html
 
-describe('My First Test', () => {
-  it('Visits the Kitchen Sink', () => {
+describe('A Dock', () => {
+  it('Visits the Home page', () => {
     cy.visit(Cypress.env('VUE_DEV_SERVER_URL'))
-    cy.contains('h1', 'Welcome to Your Vue.js App')
+    cy.contains('button', 'Inscrivez vous')
   })
 })
