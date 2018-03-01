@@ -91,13 +91,24 @@ export default {
       })
     },
 
-    selectCompany (data) {
-      this.selectedCompany = data
+    selectCompany (company) {
+      console.log(company)
+      this.selectedCompany = company
       this.step = 3
     },
 
     subscribe () {
-
+      axios.post('/subscribe/', {
+        siret: this.selectedCompany.siret,
+        email: this.email,
+        phone: this.phone
+      }).then(response => {
+        console.log('Done')
+      }).catch(error => {
+        if (error.response && error.response.data) {
+          console.log(error.response.data)
+        }
+      })
     }
   }
 }
