@@ -2,7 +2,7 @@
   v-card(color="grey lighten-4")
     v-card-title(primay-title)
       div
-        div(class="headline") {{ company.line1 }}
+        div(class="headline") {{ company.name }}
         span {{ company.address }}
         br
         span {{ company.zipCode }} {{ company.city }}
@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     onSelectCompany () {
-      this.$emit('select', {'siret': this.company.siret})
+      this.$emit('select', this.company)
     }
   }
 }

@@ -21,9 +21,11 @@
                   company-card(:company="company", @select="selectCompany")
           v-stepper-step(step="3", :complete="step > 3") Mise à jour de vos coordonnées
           v-stepper-content(step="3")
-            v-card(class="mb-5")
-
-            v-btn(color="primary" @click.native="step = 4") Suivant
+            div(v-if="step === 3")
+              span(color="grey") {{ this.selectedCompany.name }}
+              v-text-field(input="email", v-model="email", label="Adresse électronique")
+              v-text-field(input="phone", v-model="phone", label="Téléphone")
+              v-btn(color="primary" @click.native="subscribe") S'inscrire
 </template>
 
 <script>
@@ -36,7 +38,9 @@ export default {
       step: 1,
       isSearching: false,
       companies: [],
-      selectedCompanySiret: '',
+      selectedCompany: null,
+      email: null,
+      phone: null
     }
   },
 
@@ -95,22 +99,25 @@ export default {
         rawCompany.l6_normalisee = rawCompany.l6_normalisee || ''
         this.companies.push({
           siret: rawCompany.siren + rawCompany.nic,
-          line1: rawCompany.l1_normalisee,
+          name: rawCompany.l1_normalisee,
           address: `${rawCompany.numvoie} ${rawCompany.typevoie} ${rawCompany.libvoie}`,
           zipCode: rawCompany.codpos,
           city: rawCompany.l6_normalisee.replace(rawCompany.codpos + ' ', ''),
           codeApe: rawCompany.apet700,
-          textApe: rawCompany.libapet,
+          textApe: rawCompany.libapet
         })
       }
       this.isSearching = false
     },
 
     selectCompany (data) {
-      this.selectedCompanySiret = data.siret
+      this.selectedCompany = data
       this.step = 3
-    }
+    },
 
+    subscribe () {
+
+    }
   }
 }
 </script>
