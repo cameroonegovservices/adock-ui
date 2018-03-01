@@ -10,7 +10,9 @@
             v-container(fluid)
               v-layout
                 v-flex(xs12, md6)
-                  v-text-field(v-model="siren", label="Numéro de SIREN ou SIRET")
+                  span(v-if="error") {{ error }}
+                  v-text-field(v-model="siren", label="Numéro de SIREN ou SIRET",
+                    hint="Vous pouvez utiliser un SIRET (9 chiffres) ou un SIRET (15 chiffres).")
                   v-btn(color="primary" @click.native="searchSiren") Suivant
           v-stepper-step(step="2", :complete="step > 2") Sélection de l'établissement
           v-stepper-content(step="2")
@@ -29,11 +31,31 @@
 </template>
 
 <script>
+import axios from '@/resource'
 import CompanyCard from '@/components/CompanyCard.vue'
+
+function parseCompanies (rawCompanies) {
+  const companies = []
+  for (let rawCompany of rawCompanies) {
+    rawCompany.l6_normalisee = rawCompany.l6_normalisee || ''
+    companies.push({
+      siret: rawCompany.siren + rawCompany.nic,
+      name: rawCompany.l1_normalisee,
+      address: `${rawCompany.numvoie} ${rawCompany.typevoie} ${rawCompany.libvoie}`,
+      zipCode: rawCompany.codpos,
+      city: rawCompany.l6_normalisee.replace(rawCompany.codpos + ' ', ''),
+      codeApe: rawCompany.apet700,
+      textApe: rawCompany.libapet
+    })
+  }
+
+  return companies
+}
 
 export default {
   data () {
     return {
+      error: null,
       siren: null,
       step: 1,
       isSearching: false,
@@ -50,64 +72,23 @@ export default {
 
   methods: {
     searchSiren () {
+      this.error = null
       this.isSearching = true
       this.step = 2
 
-      const rawCompanies = [
-        {
-          siren: '824808349',
-          nic: '00016',
-          l1_normalisee: 'MADAME CLOTILDE TESSIER',
-          l6_normalisee: '75008 PARIS',
-          numvoie: '9',
-          typevoie: 'RTE',
-          libvoie: 'DE ROCHEFORT',
-          codpos: '75008',
-          dcret: '20170106',
-          apet700: '4779Z',
-          libapet: "Commerce de détail de biens d'occasion en magasin"
-        },
-        {
-          siren: '824808349',
-          nic: '00017',
-          l1_normalisee: 'MADAME BRIGITTE TESSIER',
-          l6_normalisee: '75008 PARIS',
-          numvoie: '9',
-          typevoie: 'RTE',
-          libvoie: 'DE ROCHEFORT',
-          codpos: '75008',
-          dcret: '20170106',
-          apet700: '4779Z',
-          libapet: "Commerce de détail de biens d'occasion en magasin"
-        },
-        {
-          siren: '824808349',
-          nic: '00018',
-          l1_normalisee: 'MONSIEUR MARC BOULLAIS',
-          l6_normalisee: '75008 PARIS',
-          numvoie: '9',
-          typevoie: 'RTE',
-          libvoie: 'DE ROCHEFORT',
-          codpos: '75008',
-          dcret: '20170106',
-          apet700: '4779Z',
-          libapet: "Commerce de détail de biens d'occasion en magasin"
+      axios.get('/sirene/search', {
+        params: {
+          siren: this.siren.replace(/ /g, '')
         }
-      ]
-      this.companies = []
-      for (let rawCompany of rawCompanies) {
-        rawCompany.l6_normalisee = rawCompany.l6_normalisee || ''
-        this.companies.push({
-          siret: rawCompany.siren + rawCompany.nic,
-          name: rawCompany.l1_normalisee,
-          address: `${rawCompany.numvoie} ${rawCompany.typevoie} ${rawCompany.libvoie}`,
-          zipCode: rawCompany.codpos,
-          city: rawCompany.l6_normalisee.replace(rawCompany.codpos + ' ', ''),
-          codeApe: rawCompany.apet700,
-          textApe: rawCompany.libapet
-        })
-      }
-      this.isSearching = false
+      }).then(response => {
+        this.companies = parseCompanies(response.data.results)
+        this.isSearching = false
+      }).catch(() => {
+        this.error = 'Requête non valide'
+        this.isSearching = false
+        // Back to step 1
+        this.step = 1
+      })
     },
 
     selectCompany (data) {
