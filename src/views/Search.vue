@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      previousSearchQuery: '',
+      previousSearchQuery: null,
       transporteurs: [],
       error: ''
     }
