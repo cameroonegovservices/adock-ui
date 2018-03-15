@@ -10,8 +10,8 @@
 <style scoped>
 .toolbar {
   background-image: url(assets/marianne.svg);
+  background-size: 80px;
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: 1em 0;
+  background-position: 1em;
 }
 </stylet>
