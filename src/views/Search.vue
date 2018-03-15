@@ -3,8 +3,12 @@
     v-layout
       v-flex(xs12)
         div.display-1.mt-5 Cherchez et contactez n'importe quel transporteur français
-        v-text-field(v-model="searchQuery", label="Numéro de SIREN, SIRET ou nom de l'entreprise",
-          hint="Vous pouvez utiliser un SIRET (9 chiffres), un SIRET (15 chiffres) ou le nom partiel de l'entreprise.")
+        v-text-field(
+          v-model="searchQuery",
+          label="Numéro de SIREN, SIRET ou nom de l'entreprise",
+          hint="Vous pouvez utiliser un SIRET (9 chiffres), un SIRET (15 chiffres) ou le nom partiel de l'entreprise.",
+          @keyup.enter="search"
+        )
         v-btn(large, color="primary", @click.native="search") Chercher
         span {{ error }}
         div(v-if="previousSearchQuery !== null") La recherche «&nbsp;{{ previousSearchQuery }}&nbsp;» a retourné {{ transporteurs.length }} résultats.
