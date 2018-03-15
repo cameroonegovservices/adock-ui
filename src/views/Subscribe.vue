@@ -76,9 +76,9 @@ export default {
       this.isSearching = true
       this.step = 2
 
-      axios.get('/sirene/search', {
+      axios.get('/transporteurs/recherche/', {
         params: {
-          siren: this.siren.replace(/ /g, '')
+          q: this.siren.replace(/ /g, '')
         }
       }).then(response => {
         this.companies = parseCompanies(response.data.results)
@@ -98,7 +98,7 @@ export default {
     },
 
     subscribe () {
-      axios.post('/subscribe/', {
+      axios.post('/transporteurs/inscription/', {
         siret: this.selectedCompany.siret,
         email: this.email,
         phone: this.phone
