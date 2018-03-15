@@ -10,13 +10,16 @@
           @keyup.enter="search"
         )
         v-btn(large, color="primary", @click.native="search") Chercher
-        span {{ error }}
-        div(v-if="previousSearchQuery !== null") La recherche «&nbsp;{{ previousSearchQuery }}&nbsp;» a retourné {{ transporteurs.length }} résultats.
+        p {{ error }}
+        p(v-if="previousSearchQuery !== null && transporteurs.length === 0") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
 
+        v-card(v-if="transporteurs.length > 0")
+          transporteur-list(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
 </template>
 
 <script>
 import axios from '@/resource'
+import TransporteurList from '@/components/TransporteurList.vue'
 
 export default {
   name: 'search',
@@ -24,10 +27,14 @@ export default {
   data () {
     return {
       searchQuery: '',
-      previousSearchQuery: null,
+      previousSearchQuery: '',
       transporteurs: [],
       error: ''
     }
+  },
+
+  components: {
+    'transporteur-list': TransporteurList
   },
 
   methods: {
