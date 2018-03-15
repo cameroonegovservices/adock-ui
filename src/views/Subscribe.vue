@@ -11,13 +11,12 @@
               v-layout
                 v-flex(xs12, md6)
                   span(v-if="error") {{ error }}
-                  v-text-field(v-model="siren", label="Numéro de SIREN ou SIRET",
-                    hint="Vous pouvez utiliser un SIRET (9 chiffres) ou un SIRET (15 chiffres).")
-                  v-btn(color="primary" @click.native="searchSiren") Suivant
+                  v-text-field(v-model="searchQuery", label="Numéro de SIREN, SIRET ou nom de l'entreprise",
+                    hint="Vous pouvez utiliser un SIRET (9 chiffres), un SIRET (15 chiffres) ou le nom partiel de l'entreprise.")
+                  v-btn(color="primary" @click.native="search") Suivant
           v-stepper-step(step="2", :complete="step > 2") Sélection de l'établissement
           v-stepper-content(step="2")
-            v-progress-circular(v-if="isSearching", indeterminate, color="primary")
-            v-container(v-else, fluid, grid-list-lg)
+            v-container(fluid, grid-list-lg)
               v-layout(row, wrap)
                 v-flex(xs12, sd6, md4, v-for="company in companies", :key="company.siret")
                   company-card(:company="company", @select="selectCompany")
@@ -34,29 +33,11 @@
 import axios from '@/resource'
 import CompanyCard from '@/components/CompanyCard.vue'
 
-function parseCompanies (rawCompanies) {
-  const companies = []
-  for (let rawCompany of rawCompanies) {
-    rawCompany.l6_normalisee = rawCompany.l6_normalisee || ''
-    companies.push({
-      siret: rawCompany.siren + rawCompany.nic,
-      name: rawCompany.l1_normalisee,
-      address: `${rawCompany.numvoie} ${rawCompany.typevoie} ${rawCompany.libvoie}`,
-      zipCode: rawCompany.codpos,
-      city: rawCompany.l6_normalisee.replace(rawCompany.codpos + ' ', ''),
-      codeApe: rawCompany.apet700,
-      textApe: rawCompany.libapet
-    })
-  }
-
-  return companies
-}
-
 export default {
   data () {
     return {
       error: null,
-      siren: null,
+      searchQuery: null,
       step: 1,
       isSearching: false,
       companies: [],
@@ -71,17 +52,17 @@ export default {
   },
 
   methods: {
-    searchSiren () {
+    search () {
       this.error = null
       this.isSearching = true
       this.step = 2
 
       axios.get('/transporteurs/recherche/', {
         params: {
-          q: this.siren.replace(/ /g, '')
+          q: this.searchQuery
         }
       }).then(response => {
-        this.companies = parseCompanies(response.data.results)
+        this.companies = response.data.results
         this.isSearching = false
       }).catch(() => {
         this.error = 'Requête non valide'

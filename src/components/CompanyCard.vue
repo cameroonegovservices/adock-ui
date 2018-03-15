@@ -2,14 +2,14 @@
   v-card(color="grey lighten-4")
     v-card-title(primay-title)
       div
-        div(class="headline") {{ company.name }}
-        span {{ company.address }}
+        div(class="headline") {{ company.raison_sociale }}
+        span {{ company.adresse }}
         br
-        span {{ company.zipCode }} {{ company.city }}
+        span {{ company.code_postal }} {{ company.vile }}
         br
-        span {{ company.codeApe }}
+        span {{ company.code_ape }}
         br
-        span {{ company.textApe }}
+        span {{ company.libelle_ape }}
     v-card-actions
       v-btn(flat, color="primary", @click="onSelectCompany") Sélectionner
 </template>
