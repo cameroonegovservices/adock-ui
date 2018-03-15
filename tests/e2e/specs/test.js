@@ -3,6 +3,6 @@
 describe('A Dock', () => {
   it('Visits the Home page', () => {
     cy.visit('/')
-    cy.contains('button', 'Inscrivez vous')
+    cy.contains('div.btn__content', 'Inscrivez vous')
   })
 })
