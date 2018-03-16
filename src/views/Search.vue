@@ -46,16 +46,15 @@ export default {
 
       this.error = ''
       this.isSearching = true
+      this.previousSearchQuery = this.searchQuery
       axios.get('/transporteurs/recherche/', {
         params: {
           q: this.searchQuery
         }
       }).then(response => {
         this.transporteurs = response.data.results
-        this.previousSearchQuery = this.searchQuery
         this.isSearching = false
       }).catch((error) => {
-        this.previousSearchQuery = ''
         if (error.response && error.response.data && error.response.data.message) {
           this.error = error.response.data.message
         }
