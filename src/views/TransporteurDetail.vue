@@ -1,6 +1,6 @@
 <template lang="pug">
-  v-container
-    v-layout
+  v-container(fluid)
+    v-layout(justify-center)
       v-flex(xs6)
         router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
           v-btn(icon)
