@@ -50,8 +50,12 @@
             div(v-show="isEditMode")
               v-divider
               v-card-text
-                v-text-field(input="telephone", v-model="telephone", label="Téléphone")
-                v-text-field(input="email", v-model="email", label="Adresse électronique")
+                v-text-field(input="telephone", v-model="telephone", label="Téléphone",
+                  :error-messages="errors.telephone"
+                )
+                v-text-field(input="email", v-model="email", label="Adresse électronique",
+                  :error-messages="errors.email"
+                )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
 
@@ -72,7 +76,8 @@ export default {
       transporteur: {},
       email: '',
       telephone: '',
-      isEditMode: false
+      isEditMode: false,
+      errors: {}
     }
   },
 
@@ -108,10 +113,11 @@ export default {
         telephone: this.telephone
       }).then(response => {
         this.loadData(response.data)
+        this.errors = {}
         this.isEditMode = false
       }).catch(error => {
         if (error.response && error.response.data) {
-          console.log(error.response.data)
+          this.errors = error.response.data
         }
       })
     }
