@@ -16,31 +16,31 @@
             v-flex(xs12)
               h3.headline {{ transporteur.raison_sociale }}
               span.grey--text {{ transporteur.libelle_ape }}
-          v-list(dense)
-            v-list-tile
-              v-list-tile-content SIRET
-              v-list-tile-content.align-end {{ transporteur.siret }}
-            v-list-tile
-              v-list-tile-content N° TVA
-              v-list-tile-content.align-end {{ transporteur.vat_number }}
-            v-list-tile
-              v-list-tile-content Adresse
-              v-list-tile-content.align-end {{ transporteur.adresse }}
-            v-list-tile
-              v-list-tile-content Ville
-              v-list-tile-content.align-end {{ transporteur.code_postal }} {{ transporteur.ville }}
-            v-list-tile
-              v-list-tile-content Licenses plus de 3,5 tonnes
-              v-list-tile-content.align-end {{ transporteur.lower_than_3_5_licenses }}
-            v-list-tile
-              v-list-tile-content Licenses moins de 3,5 tonnes
-              v-list-tile-content.align-end {{ transporteur.greater_than_3_5_licenses }}
-            v-list-tile
-              v-list-tile-content Téléphone
-              v-list-tile-content.align-end {{ transporteur.telephone }}
-            v-list-tile
-              v-list-tile-content Email
-              v-list-tile-content.align-end {{ transporteur.email }}
+          v-container(grid-list-lg, offset-xs1)
+            v-layout(row, wrap)
+              v-flex(xs5) SIRET
+              v-flex.align-right(xs6) {{ transporteur.siret }}
+            v-layout(row, wrap)
+              v-flex(xs5) N° TVA
+              v-flex.align-right(xs6) {{ transporteur.vat_number }}
+            v-layout(row, wrap)
+              v-flex(xs5) Adresse
+              v-flex.align-right(xs6) {{ transporteur.adresse }}
+            v-layout(row, wrap)
+              v-flex(xs5) Ville
+              v-flex.align-right(xs6) {{ transporteur.ville }}
+            v-layout(row, wrap)
+              v-flex(xs5) Licenses plus de 3,5 tonnes
+              v-flex.align-right(xs6) {{ transporteur.lower_than_3_5_licenses }}
+            v-layout(row, wrap)
+              v-flex(xs5) Licenses moins de 3,5 tonnes
+              v-flex.align-right(xs6) {{ transporteur.greater_than_3_5_licenses }}
+            v-layout(row, wrap)
+              v-flex(xs5) Téléphone
+              v-flex.align-right(xs6) {{ transporteur.telephone }}
+            v-layout(row, wrap)
+              v-flex(xs5) Email
+              v-flex.align-right(xs6) {{ transporteur.email }}
           v-card-actions
             v-spacer
             v-btn(flat, color='orange', @click.native="toggleEditMode")
@@ -123,4 +123,7 @@ export default {
 .no-link
   color: inherit
   text-decoration: none
+
+.align-right
+  text-align: right
 </style>
