@@ -2,6 +2,10 @@
   v-container
     v-layout
       v-flex(xs6)
+        router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
+          v-btn(icon)
+            v-icon chevron_left
+          span.subheading.no-wrap Recherche
         v-card
           v-card-media.white--text(:src='roadPicture', height='200px')
             v-container(fill-height, fluid)
@@ -114,3 +118,9 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.no-link
+  color: inherit
+  text-decoration: none
+</style>
