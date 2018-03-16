@@ -30,10 +30,10 @@
               v-flex(xs5) Ville
               v-flex.align-right(xs6) {{ transporteur.ville }}
             v-layout(row, wrap)
-              v-flex(xs5) Licenses plus de 3,5 tonnes
+              v-flex(xs5) Licences plus de 3,5 tonnes
               v-flex.align-right(xs6) {{ transporteur.lower_than_3_5_licenses }}
             v-layout(row, wrap)
-              v-flex(xs5) Licenses moins de 3,5 tonnes
+              v-flex(xs5) Licences moins de 3,5 tonnes
               v-flex.align-right(xs6) {{ transporteur.greater_than_3_5_licenses }}
             br
             span.grey--text Contact
