@@ -43,7 +43,7 @@
               v-flex.align-right(xs6) {{ transporteur.email }}
           v-card-actions
             v-spacer
-            v-btn(flat, color='orange', @click.native="toggleEditMode")
+            v-btn(flat, color='blue', @click.native="toggleEditMode")
               v-icon {{ isEditMode ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
               span Modifier
           v-slide-y-transition
