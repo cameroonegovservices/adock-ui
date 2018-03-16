@@ -35,6 +35,8 @@
             v-layout(row, wrap)
               v-flex(xs5) Licenses moins de 3,5 tonnes
               v-flex.align-right(xs6) {{ transporteur.greater_than_3_5_licenses }}
+            br
+            span.grey--text Contact
             v-layout(row, wrap)
               v-flex(xs5) Téléphone
               v-flex.align-right(xs6) {{ transporteur.telephone }}
