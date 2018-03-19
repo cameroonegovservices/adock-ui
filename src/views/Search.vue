@@ -2,7 +2,7 @@
   v-container(fluid, fill-height)
     v-layout(justify-center)
       v-flex(xs12 md9 lg8 xl6)
-        div.display-1.mt-5 Cherchez et contactez n'importe quel transporteur français
+        div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
         v-text-field(
           v-model="searchQuery",
           label="Numéro de SIREN, SIRET ou nom de l'entreprise",
