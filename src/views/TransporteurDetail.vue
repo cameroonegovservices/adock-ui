@@ -13,11 +13,11 @@
                 v-flex(xs12, align-end, flexbox)
                   span.headline Transporteur
           v-card-title(primary-title)
-            v-layout(row)
-              v-flex(xs11)
+            v-layout(row wrap)
+              v-flex(xs12 sm11)
                 h3.headline {{ transporteur.raison_sociale }}
                 span.grey--text {{ transporteur.libelle_ape }}
-              v-flex(xs1)
+              v-flex(offset-xs10 xs2 offset-sm0 sm1)
                 completeness-indicator(:percent="transporteur.completeness")
           v-container(grid-list-lg, offset-xs1)
             v-layout(row, wrap)

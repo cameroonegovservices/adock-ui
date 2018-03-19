@@ -1,8 +1,7 @@
 <template lang="pug">
-  v-card(v-if="percent != null", dark, :color="statusColor")
-    v-card-text(v-if="completed")
-      v-icon done
-    v-card-text(v-else) {{ percent }}&nbsp;%
+  div.indicator(v-if="percent != null", :class="statusColor")
+    v-icon(v-if="completed" dark) done
+    span(v-else) {{ percent }}&nbsp;%
 </template>
 
 <script>
@@ -28,3 +27,16 @@ export default {
   }
 }
 </script>
+
+<style>
+.indicator {
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  width: 48px;
+  height: 48px;
+  font-size: 16px;
+  padding-top: 12px;
+}
+</style>
