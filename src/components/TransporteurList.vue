@@ -8,6 +8,7 @@
         v-list-tile-title(v-html="transporteur.raison_sociale")
         v-list-tile-sub-title {{ transporteur.ville }}
       v-list-tile-action
+        v-list-tile-action-text Complété à {{ transporteur.completeness }}&nbsp;%
         v-icon chat_bubble
 </template>
 

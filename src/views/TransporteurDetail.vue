@@ -13,9 +13,12 @@
                 v-flex(xs12, align-end, flexbox)
                   span.headline Transporteur
           v-card-title(primary-title)
-            v-flex(xs12)
-              h3.headline {{ transporteur.raison_sociale }}
-              span.grey--text {{ transporteur.libelle_ape }}
+            v-layout(row)
+              v-flex(xs11)
+                h3.headline {{ transporteur.raison_sociale }}
+                span.grey--text {{ transporteur.libelle_ape }}
+              v-flex(xs1)
+                completeness-indicator(:percent="transporteur.completeness")
           v-container(grid-list-lg, offset-xs1)
             v-layout(row, wrap)
               v-flex(xs5) SIRET
@@ -64,6 +67,7 @@
 <script>
 import roadPicture from '@/assets/road-1229x768.jpg'
 import axios from '@/resource'
+import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 export default {
   props: {
@@ -81,6 +85,10 @@ export default {
       isEditMode: false,
       errors: {}
     }
+  },
+
+  components: {
+    'completeness-indicator': CompletenessIndicator
   },
 
   created () {
