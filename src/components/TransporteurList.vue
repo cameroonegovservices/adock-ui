@@ -2,7 +2,7 @@
   v-list(two-line)
     v-subheader {{ transporteurs.length }} transporteurs pour la recherche «&nbsp;{{ searchQuery }}&nbsp;»
     template(v-for="(transporteur, index) in transporteurs")
-      v-divider(v-if="index !== 0", :key="transporteur.siret")
+      v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
       v-list-tile(
         :key="transporteur.siret",
         :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
