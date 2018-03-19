@@ -7,8 +7,8 @@
         :key="transporteur.siret",
         :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
         v-list-tile-content
-          v-list-tile-title(v-html="transporteur.raison_sociale")
-          v-list-tile-sub-title {{ transporteur.ville }}
+          v-list-tile-title {{ transporteur.raison_sociale }}
+          v-list-tile-sub-title {{ transporteur.code_postal }} {{ transporteur.ville }}
         v-list-tile-action.transporteur-action
           v-list-tile-action-text Complété à {{ transporteur.completeness }}&nbsp;%
           v-icon info
