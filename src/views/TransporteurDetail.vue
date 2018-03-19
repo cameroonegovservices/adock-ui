@@ -16,7 +16,7 @@
             v-layout(row wrap)
               v-flex(xs12 sm11)
                 h3.headline {{ transporteur.raison_sociale }}
-                span.grey--text {{ transporteur.libelle_ape }}
+                span.grey--text.text--darken-1 {{ transporteur.libelle_ape }}
               v-flex(offset-xs10 xs2 offset-sm0 sm1)
                 completeness-indicator(:percent="transporteur.completeness")
           v-container(grid-list-lg, offset-xs1)
@@ -39,7 +39,7 @@
               v-flex(xs5) Licences moins de 3,5 tonnes
               v-flex.align-right(xs6) {{ transporteur.greater_than_3_5_licenses }}
             br
-            span.grey--text Contact
+            span.grey--text.text--darken-1 Contact
             v-layout(row, wrap)
               v-flex(xs5) Téléphone
               v-flex.align-right(xs6) {{ transporteur.telephone }}
