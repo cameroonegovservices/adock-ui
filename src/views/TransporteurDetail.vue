@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container(fluid)
-    v-layout(justify-center)
-      v-flex(xs6)
+    v-layout(justify-center, row, wrap)
+      v-flex(xs12 md9 lg8 xl6)
         router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
           v-btn(icon)
             v-icon chevron_left

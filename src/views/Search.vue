@@ -1,7 +1,7 @@
 <template lang="pug">
-  v-container(fill-height)
-    v-layout
-      v-flex(xs12)
+  v-container(fluid, fill-height)
+    v-layout(justify-center)
+      v-flex(xs12 md9 lg8 xl6)
         div.display-1.mt-5 Cherchez et contactez n'importe quel transporteur français
         v-text-field(
           v-model="searchQuery",
