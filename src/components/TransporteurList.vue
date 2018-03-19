@@ -1,15 +1,17 @@
 <template lang="pug">
-  v-list(subheader)
+  v-list(two-line)
     v-subheader {{ transporteurs.length }} transporteurs pour la recherche «&nbsp;{{ searchQuery }}&nbsp;»
-    v-list-tile(
-      v-for="transporteur in transporteurs", :key="transporteur.siret",
-      :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
-      v-list-tile-content
-        v-list-tile-title(v-html="transporteur.raison_sociale")
-        v-list-tile-sub-title {{ transporteur.ville }}
-      v-list-tile-action
-        v-list-tile-action-text Complété à {{ transporteur.completeness }}&nbsp;%
-        v-icon chat_bubble
+    template(v-for="(transporteur, index) in transporteurs")
+      v-divider(v-if="index !== 0", :key="transporteur.siret")
+      v-list-tile(
+        :key="transporteur.siret",
+        :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
+        v-list-tile-content
+          v-list-tile-title(v-html="transporteur.raison_sociale")
+          v-list-tile-sub-title {{ transporteur.ville }}
+        v-list-tile-action.transporteur-action
+          v-list-tile-action-text Complété à {{ transporteur.completeness }}&nbsp;%
+          v-icon info
 </template>
 
 <script>
@@ -27,3 +29,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.transporteur-action {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+</style>
