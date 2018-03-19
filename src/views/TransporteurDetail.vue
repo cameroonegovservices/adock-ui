@@ -50,7 +50,7 @@
             v-spacer
             v-btn(flat, color='blue', @click.native="toggleEditMode")
               v-icon {{ isEditMode ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
-              span Modifier
+              span Modifier les informations
           v-slide-y-transition
             div(v-show="isEditMode")
               v-divider
