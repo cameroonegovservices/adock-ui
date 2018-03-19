@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card(dark, :color="statusColor")
+  v-card(v-if="percent != null", dark, :color="statusColor")
     v-card-text(v-if="completed")
       v-icon done
     v-card-text(v-else) {{ percent }}&nbsp;%
@@ -9,8 +9,7 @@
 export default {
   props: {
     percent: {
-      type: Number,
-      required: true
+      type: Number
     }
   },
 
