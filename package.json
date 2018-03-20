@@ -15,7 +15,7 @@
     "pug": "2.0.1",
     "vue": "2.5.16",
     "vue-router": "3.0.1",
-    "vuetify": "1.0.8"
+    "vuetify": "1.0.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.0-beta.6",
