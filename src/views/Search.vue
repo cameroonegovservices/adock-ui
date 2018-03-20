@@ -22,7 +22,7 @@ import axios from '@/resource'
 import TransporteurList from '@/components/TransporteurList.vue'
 
 export default {
-  name: 'search',
+  name: 'Search',
 
   data () {
     return {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Search from './views/Search.vue'
-import TransporteurDetail from './views/TransporteurDetail.vue'
+import Detail from './views/Detail.vue'
 
 Vue.use(Router)
 
@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/transporteur/:transporteurSiret',
       name: 'transporteur',
-      component: TransporteurDetail,
+      component: Detail,
       props: true
     }
   ]
