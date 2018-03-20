@@ -13,12 +13,12 @@
         p {{ error }}
         p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
         v-card(v-if="transporteurs.length > 0")
-          transporteur-list(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
+          transporteur-results(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
 </template>
 
 <script>
 import axios from '@/resource'
-import TransporteurList from '@/components/TransporteurList.vue'
+import TransporteurResults from '@/components/TransporteurResults.vue'
 
 export default {
   name: 'Search',
@@ -33,7 +33,7 @@ export default {
   },
 
   components: {
-    'transporteur-list': TransporteurList
+    'transporteur-results': TransporteurResults
   },
 
   methods: {
