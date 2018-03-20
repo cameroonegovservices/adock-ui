@@ -11,8 +11,7 @@
         )
         v-btn(large, color="primary", @click.native="search") Chercher
         p {{ error }}
-        p(v-if="previousSearchQuery !== null && transporteurs.length === 0") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
-
+        p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
         v-card(v-if="transporteurs.length > 0")
           transporteur-list(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
 </template>
