@@ -6,6 +6,7 @@ import TransporteurDetail from './views/TransporteurDetail.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
