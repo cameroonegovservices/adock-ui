@@ -25,7 +25,7 @@
               v-flex.align-right(xs6) {{ transporteur.siret }}
             v-layout(row, wrap)
               v-flex(xs5) N° TVA
-              v-flex.align-right(xs6) {{ transporteur.vat_number }}
+              v-flex.align-right(xs6) {{ transporteur.numero_tva }}
             v-layout(row, wrap)
               v-flex(xs5) Adresse
               v-flex.align-right(xs6) {{ transporteur.adresse }}
