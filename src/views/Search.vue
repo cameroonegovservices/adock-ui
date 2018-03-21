@@ -51,7 +51,8 @@ export default {
           q: this.searchQuery
         }
       }).then(response => {
-        this.transporteurs = response.data.results
+        // Disable reactivity to speed up rendering
+        this.transporteurs = Object.freeze(response.data.results)
         this.isSearching = false
       }).catch((error) => {
         if (error.response && error.response.data && error.response.data.message) {
