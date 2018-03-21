@@ -54,9 +54,10 @@
           v-slide-y-transition
             div(v-show="isEditMode")
               v-divider
-              v-card-text
-                v-text-field(input="telephone", v-model="telephone", label="Téléphone",
-                  :error-messages="errors.telephone", ref="detailForm"
+              v-card-text(id="detailForm")
+                v-text-field(
+                  input="telephone", v-model="telephone", label="Téléphone",
+                  :error-messages="errors.telephone"
                 )
                 v-text-field(input="email", v-model="email", label="Adresse électronique",
                   :error-messages="errors.email"
@@ -113,19 +114,15 @@ export default {
       return `/transporteurs/${this.transporteurSiret}/`
     },
 
-    toggleEditMode () {
-      const goToOptions = {
-        duration: 1000,
-        offset: 0,
-        easing: 'easeInOutCubic'
+    scrollForm () {
+      if (this.isEditMode) {
+        this.$vuetify.goTo('#detailForm')
       }
+    },
 
+    toggleEditMode () {
       this.isEditMode = !this.isEditMode
-      setTimeout(() => {
-        if (this.isEditMode) {
-          this.$vuetify.goTo(this.$refs.detailForm, goToOptions)
-        }
-      }, 400)
+      setTimeout(this.scrollForm, 400)
     },
 
     update () {
