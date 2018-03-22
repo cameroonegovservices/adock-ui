@@ -3,6 +3,7 @@
     v-layout(justify-center)
       v-flex(xs12 md9 lg8 xl6)
         div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
+        v-alert(type="error" :value="error !== ''") {{ error }}
         v-text-field(
           v-model="searchQuery",
           label="Numéro de SIREN, SIRET ou nom de l'entreprise",
@@ -10,9 +11,8 @@
           @keyup.enter="search"
         )
         v-btn(large, color="primary", @click.native="search") Chercher
-        p {{ error }}
-        p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
-        v-card(v-if="transporteurs.length > 0")
+        p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0 && error === ''") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
+        v-card.mt-1(v-if="transporteurs.length > 0")
           transporteur-results(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
 </template>
 
@@ -56,6 +56,9 @@ export default {
       }).catch((error) => {
         if (error.response && error.response.data && error.response.data.message) {
           this.error = error.response.data.message
+        } else {
+          // Default
+          this.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
         }
         this.isSearching = false
       })
