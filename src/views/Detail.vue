@@ -67,7 +67,6 @@
 
 <script>
 import roadPicture from '@/assets/road-1229x768.jpg'
-import axios from '@/resource'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 export default {
@@ -98,7 +97,7 @@ export default {
   },
 
   mounted () {
-    axios.get(this.getDetailUrl()).then(response => {
+    this.$http.get(this.getDetailUrl()).then(response => {
       this.loadData(response.data)
     })
   },
@@ -126,7 +125,7 @@ export default {
     },
 
     update () {
-      axios.patch(this.getDetailUrl(), {
+      this.$http.patch(this.getDetailUrl(), {
         email: this.email,
         telephone: this.telephone
       }).then(response => {

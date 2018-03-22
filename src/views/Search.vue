@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import axios from '@/resource'
 import TransporteurResults from '@/components/TransporteurResults.vue'
 
 export default {
@@ -46,7 +45,7 @@ export default {
       this.error = ''
       this.isSearching = true
       this.previousSearchQuery = this.searchQuery
-      axios.get('/transporteurs/recherche/', {
+      this.$http.get('/transporteurs/recherche/', {
         params: {
           q: this.searchQuery
         }
