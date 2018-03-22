@@ -8,7 +8,7 @@
     "test": "vue-cli-service test",
     "e2e": "vue-cli-service e2e",
     "lint": "vue-cli-service lint",
-    "e2e:open": "vue-cli-service e2e:open"
+    "e2e:open": "vue-cli-service e2e:open --url http://localhost:8080/"
   },
   "dependencies": {
     "axios": "0.18.0",

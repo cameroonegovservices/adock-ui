@@ -57,10 +57,11 @@
               v-card-text(id="detailForm")
                 v-text-field(
                   input="telephone", v-model="telephone", label="Téléphone",
-                  :error-messages="errors.telephone"
+                  :error-messages="errors.telephone", data-cy="inputTelephone"
                 )
-                v-text-field(input="email", v-model="email", label="Adresse électronique",
-                  :error-messages="errors.email"
+                v-text-field(
+                  input="email", v-model="email", label="Adresse électronique",
+                  :error-messages="errors.email", data-cy="inputEmail"
                 )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
