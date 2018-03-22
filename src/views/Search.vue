@@ -7,7 +7,7 @@
         v-text-field(
           v-model="searchQuery",
           label="Numéro de SIREN, SIRET ou nom de l'entreprise",
-          hint="Vous pouvez utiliser un SIRET (9 chiffres), un SIRET (15 chiffres) ou le nom partiel de l'entreprise.",
+          hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise.",
           @keyup.enter="search"
         )
         v-btn(large, color="primary", @click.native="search") Chercher
