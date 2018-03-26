@@ -51,7 +51,7 @@
               v-flex.align-right(xs6) {{ choices.workingAreas[transporteur.working_area] }}
             v-layout(row, wrap, v-if="transporteur.working_area === 'DEPARTEMENT'")
               v-flex(xs5) Départements livrés
-              v-flex.align-right(xs6) {{ transporteur.working_area_departements.join(', ') }}
+              v-flex.align-right(xs6) {{ transporteur.working_area_departements | asDepartements }}
           v-card-actions
             v-spacer
             v-btn(flat, color='blue', @click.native="toggleEditMode")
@@ -136,11 +136,18 @@ export default {
     ])
   },
 
+  filters: {
+    asDepartements (value) {
+      return value.map(dep => String(dep).padStart(2, '0')).join(', ')
+    }
+  },
+
   methods: {
     loadData (data) {
       this.transporteur = data
       for (let field in this.form) {
         if (field === 'working_area_departements') {
+          // Join county numbers with '0' padding for number < 100
           this.form[field] = this.transporteur[field].join(', ')
         } else {
           this.form[field] = this.transporteur[field]
