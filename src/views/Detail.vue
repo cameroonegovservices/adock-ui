@@ -69,6 +69,10 @@
                   input="email", v-model="email", label="Adresse électronique",
                   :error-messages="errors.email", data-cy="inputEmail"
                 )
+                v-select(
+                  :items="selects.workingAreas", v-model="workingArea",
+                  label="Zone de travail"
+                )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
 
@@ -92,6 +96,7 @@ export default {
       transporteur: {},
       email: '',
       telephone: '',
+      workingArea: [],
       isEditMode: false,
       errors: {}
     }
@@ -114,7 +119,8 @@ export default {
 
   computed: {
     ...mapState([
-      'choices'
+      'choices',
+      'selects'
     ])
   },
 
@@ -145,7 +151,8 @@ export default {
       try {
         response = await api.patch(this.getDetailUrl(), {
           email: this.email,
-          telephone: this.telephone
+          telephone: this.telephone,
+          working_area: this.workingArea,
         })
       } catch (error) {
         if (error.response && error.response.data) {
