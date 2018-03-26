@@ -49,6 +49,9 @@
             v-layout(row, wrap)
               v-flex(xs5) Zone de travail
               v-flex.align-right(xs6) {{ choices.workingAreas[transporteur.working_area] }}
+            v-layout(row, wrap, v-if="transporteur.working_area === 'DEPARTEMENT'")
+              v-flex(xs5) Départements livrés
+              v-flex.align-right(xs6) {{ transporteur.working_area_departements.join(', ') }}
           v-card-actions
             v-spacer
             v-btn(flat, color='blue', @click.native="toggleEditMode")
