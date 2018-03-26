@@ -62,16 +62,25 @@
               v-divider
               v-card-text(id="detailForm")
                 v-text-field(
-                  input="telephone", v-model="telephone", label="Téléphone",
+                  v-model="form.telephone",
+                  input="telephone", label="Téléphone",
                   :error-messages="errors.telephone", data-cy="inputTelephone"
                 )
                 v-text-field(
-                  input="email", v-model="email", label="Adresse électronique",
+                  v-model="form.email",
+                  input="email", label="Adresse électronique",
                   :error-messages="errors.email", data-cy="inputEmail"
                 )
                 v-select(
-                  :items="selects.workingAreas", v-model="workingArea",
+                  v-model="form.working_area",
+                  :items="selects.workingAreas",
                   label="Zone de travail"
+                )
+                v-text-field(
+                  v-if="form.working_area === 'DEPARTEMENT'",
+                  v-model="form.working_area_departements",
+                  label="Départements livrés",
+                  hint="Numéros des départements séparés par des espaces ou virgules"
                 )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
@@ -94,9 +103,12 @@ export default {
   data () {
     return {
       transporteur: {},
-      email: '',
-      telephone: '',
-      workingArea: [],
+      form: {
+        email: '',
+        telephone: '',
+        working_area: '',
+        working_area_departements: ''
+      },
       isEditMode: false,
       errors: {}
     }
@@ -127,8 +139,13 @@ export default {
   methods: {
     loadData (data) {
       this.transporteur = data
-      this.telephone = this.transporteur.telephone
-      this.email = this.transporteur.email
+      for (let field in this.form) {
+        if (field === 'working_area_departements') {
+          this.form[field] = this.transporteur[field].join(', ')
+        } else {
+          this.form[field] = this.transporteur[field]
+        }
+      }
     },
 
     getDetailUrl () {
@@ -149,11 +166,7 @@ export default {
     async update () {
       let response
       try {
-        response = await api.patch(this.getDetailUrl(), {
-          email: this.email,
-          telephone: this.telephone,
-          working_area: this.workingArea,
-        })
+        response = await api.patch(this.getDetailUrl(), this.form)
       } catch (error) {
         if (error.response && error.response.data) {
           this.errors = error.response.data
