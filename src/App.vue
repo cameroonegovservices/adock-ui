@@ -9,3 +9,13 @@
     v-content
       router-view
 </template>
+
+<script>
+export default {
+  name: 'App',
+
+  async created () {
+    this.$store.dispatch('loadMeta')
+  }
+}
+</script>

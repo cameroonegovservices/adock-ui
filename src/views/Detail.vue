@@ -46,6 +46,9 @@
             v-layout(row, wrap)
               v-flex(xs5) Email
               v-flex.align-right(xs6) {{ transporteur.email }}
+            v-layout(row, wrap)
+              v-flex(xs5) Zone de travail
+              v-flex.align-right(xs6) {{ choices.workingAreas[transporteur.working_area] }}
           v-card-actions
             v-spacer
             v-btn(flat, color='blue', @click.native="toggleEditMode")
@@ -67,6 +70,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import api from '@/api.js'
 import roadPicture from '@/assets/road-1229x768.jpg'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
@@ -102,6 +107,12 @@ export default {
     // FIXME error handling
     const response = await api.get(this.getDetailUrl())
     this.loadData(response.data)
+  },
+
+  computed: {
+    ...mapState([
+      'choices'
+    ])
   },
 
   methods: {
