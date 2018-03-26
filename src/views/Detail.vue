@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import api from '@/api.js'
 import roadPicture from '@/assets/road-1229x768.jpg'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
 
@@ -97,10 +98,10 @@ export default {
     this.roadPicture = roadPicture
   },
 
-  mounted () {
-    this.$http.get(this.getDetailUrl()).then(response => {
-      this.loadData(response.data)
-    })
+  async mounted () {
+    // FIXME error handling
+    const response = await api.get(this.getDetailUrl())
+    this.loadData(response.data)
   },
 
   methods: {
@@ -125,19 +126,23 @@ export default {
       setTimeout(this.scrollForm, 400)
     },
 
-    update () {
-      this.$http.patch(this.getDetailUrl(), {
-        email: this.email,
-        telephone: this.telephone
-      }).then(response => {
-        this.loadData(response.data)
-        this.errors = {}
-        this.isEditMode = false
-      }).catch(error => {
+    async update () {
+      let response
+      try {
+        response = await api.patch(this.getDetailUrl(), {
+          email: this.email,
+          telephone: this.telephone
+        })
+      } catch (error) {
         if (error.response && error.response.data) {
           this.errors = error.response.data
         }
-      })
+        return
+      }
+
+      this.loadData(response.data)
+      this.errors = {}
+      this.isEditMode = false
     }
   }
 }

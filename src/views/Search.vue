@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import api from '@/api.js'
 import TransporteurResults from '@/components/TransporteurResults.vue'
 
 export default {
@@ -45,7 +46,7 @@ export default {
       this.error = ''
       this.isSearching = true
       this.previousSearchQuery = this.searchQuery
-      this.$http.get('/transporteurs/recherche/', {
+      api.get('/transporteurs/recherche/', {
         params: {
           q: this.searchQuery
         }
