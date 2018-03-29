@@ -1,6 +1,7 @@
 <template lang="pug">
   v-list(two-line)
-    v-subheader {{ transporteurs.length }} transporteurs pour la recherche «&nbsp;{{ searchQuery }}&nbsp;»
+    v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs pour la recherche «&nbsp;{{ searchQuery }}&nbsp;» sont affichés.
+    v-subheader(v-else) {{ transporteurs.length }} transporteurs pour la recherche «&nbsp;{{ searchQuery }}&nbsp;»
     template(v-for="(transporteur, index) in transporteurs")
       v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
       v-list-tile(
@@ -27,6 +28,10 @@ export default {
     transporteurs: {
       type: Array,
       required: true
+    },
+    limit: {
+      type: Number,
+      default: 0
     }
   }
 }

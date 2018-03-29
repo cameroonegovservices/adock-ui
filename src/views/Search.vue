@@ -13,7 +13,7 @@
         v-btn(large, color="primary", @click.native="search") Chercher
         p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0 && error === ''") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
         v-card.mt-1(v-if="transporteurs.length > 0")
-          transporteur-results(:searchQuery="previousSearchQuery", :transporteurs="transporteurs")
+          transporteur-results(:searchQuery="previousSearchQuery", :transporteurs="transporteurs", :limit="limit")
 </template>
 
 <script>
@@ -28,6 +28,7 @@ export default {
       searchQuery: '',
       previousSearchQuery: null,
       transporteurs: [],
+      limit: 0,
       error: ''
     }
   },
@@ -53,6 +54,7 @@ export default {
       }).then(response => {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
+        this.limit = response.data.limit || 0
         this.isSearching = false
       }).catch((error) => {
         if (error.response && error.response.data && error.response.data.message) {
