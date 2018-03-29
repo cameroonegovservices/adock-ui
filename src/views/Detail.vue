@@ -32,26 +32,28 @@
             v-layout(row, wrap)
               v-flex(xs5) Ville
               v-flex.align-right(xs6) {{ transporteur.ville }}
-            br
-            v-layout(row, wrap)
-              v-flex(xs5) Licence LTI
-              v-flex.align-right(xs6) {{ transporteur.lti_numero }}
-            v-layout(row, wrap)
-              v-flex(xs5) validité
-              v-flex.align-right(xs6) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
-            v-layout(row, wrap)
-              v-flex(xs5) nombre
-              v-flex.align-right(xs6) {{ transporteur.lti_nombre }}
-            br
-            v-layout(row, wrap)
-              v-flex(xs5) Licence LC (+ 3,5 tonnes)
-              v-flex.align-right(xs6) {{ transporteur.lc_numero }}
-            v-layout(row, wrap)
-              v-flex(xs5) validité
-              v-flex.align-right(xs6) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
-            v-layout(row, wrap)
-              v-flex(xs5) nombre
-              v-flex.align-right(xs6) {{ transporteur.lc_nombre }}
+            template(v-if="transporteur.lti_numero")
+              br
+              v-layout(row, wrap)
+                v-flex(xs5) Licence LTI
+                v-flex.align-right(xs6) {{ transporteur.lti_numero }}
+              v-layout(row, wrap)
+                v-flex(xs5) validité
+                v-flex.align-right(xs6) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
+              v-layout(row, wrap)
+                v-flex(xs5) nombre
+                v-flex.align-right(xs6) {{ transporteur.lti_nombre }}
+            template(v-if="transporteur.lc_numero")
+              br
+              v-layout(row, wrap)
+                v-flex(xs5) Licence LC (+ 3,5 tonnes)
+                v-flex.align-right(xs6) {{ transporteur.lc_numero }}
+              v-layout(row, wrap)
+                v-flex(xs5) validité
+                v-flex.align-right(xs6) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
+              v-layout(row, wrap)
+                v-flex(xs5) nombre
+                v-flex.align-right(xs6) {{ transporteur.lc_nombre }}
             br
             span.grey--text.text--darken-1 Contact
             v-layout(row, wrap)
