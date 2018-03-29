@@ -164,7 +164,8 @@ export default {
       for (let field in this.form) {
         if (field === 'working_area_departements') {
           // Join county numbers with '0' padding for number < 100
-          this.form[field] = this.transporteur[field].join(', ')
+          const value = this.transporteur[field]
+          this.form[field] = value ? value.join(', ') : ''
         } else {
           this.form[field] = this.transporteur[field]
         }
