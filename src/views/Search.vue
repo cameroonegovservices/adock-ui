@@ -87,9 +87,11 @@ export default {
       this.error = ''
       this.isSearching = true
       this.previousSearchQuery = this.searchQuery
+      // The parameters of the query are in French
       api.get('/transporteurs/recherche/', {
         params: {
-          q: this.searchQuery
+          q: this.searchQuery,
+          licenceTypes: this.searchLicenseTypes.map(item => item.value)
         }
       }).then(response => {
         // Disable reactivity to speed up rendering
