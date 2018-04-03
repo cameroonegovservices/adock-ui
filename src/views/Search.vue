@@ -12,12 +12,12 @@
         )
         v-flex(xs6 md5 lg4 xl3)
           v-select(
-            v-model="searchWeights"
+            v-model="searchLicenseTypes"
             label="Filtre sur le poids"
             hint="Le transporteur doit disposer d'au moins une licence pour le critère."
             chips
             tags
-            :items="searchWeightChoices"
+            :items="searchLicenseTypeChoices"
             return-object
           )
             template(
@@ -53,7 +53,7 @@ export default {
   data () {
     return {
       searchQuery: '',
-      searchWeights: [],
+      searchLicenseTypes: [],
       previousSearchQuery: null,
       transporteurs: [],
       limit: 0,
@@ -62,7 +62,7 @@ export default {
   },
 
   created () {
-    this.searchWeightChoices = [
+    this.searchLicenseTypeChoices = [
       {
         text: 'Léger',
         value: 'lti',
