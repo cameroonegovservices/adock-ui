@@ -83,9 +83,6 @@ export default {
   methods: {
     search () {
       this.searchQuery = this.searchQuery.trim()
-      if (this.searchQuery.length === 0) {
-        return
-      }
 
       this.error = ''
       this.isSearching = true
