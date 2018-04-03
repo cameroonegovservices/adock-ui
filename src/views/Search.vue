@@ -34,10 +34,10 @@
                 .
                   {{ data.item.text }}
         v-btn(large color="primary" @click.native="search") Chercher
-        p(v-if="searchIsEmpty") La recherche sur «&nbsp;{{ searchParams }}&nbsp;» n'a retourné aucun résultat.
+        p(v-if="searchResponseIsEmpty") La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
         v-card.mt-1(v-if="transporteurs.length > 0")
           transporteur-results(
-            :searchParams="searchParams"
+            :searchParamsForDisplay="searchParamsForDisplay"
             :transporteurs="transporteurs"
             :limit="limit"
           )
@@ -53,9 +53,10 @@ export default {
   data () {
     return {
       isSearching: false,
+      isSearchDone: false,
       searchQuery: '',
       searchLicenseTypes: [],
-      searchParams: null,
+      searchParamsForDisplay: '',
       transporteurs: [],
       limit: 0,
       error: ''
@@ -82,12 +83,11 @@ export default {
   },
 
   computed: {
-    searchIsEmpty () {
+    searchResponseIsEmpty () {
       return (
-        this.searchParams !== null &&
-        this.isSearching === false &&
-        this.transporteurs.length === 0 &&
-        this.error === '')
+        !this.isSearching &&
+        this.isSearchDone &&
+        this.transporteurs.length === 0)
     }
   },
 
@@ -98,7 +98,6 @@ export default {
       // Remove error message as soon as the user clicks
       this.error = ''
       this.isSearching = true
-      this.searchParams = this.searchQuery
       try {
         // The parameters of the query are in French
         response = await api.get('/transporteurs/recherche/', {
@@ -110,9 +109,15 @@ export default {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
+        this.searchParamsForDisplay = this.getSearchParamsForDisplay({
+          q: this.searchQuery,
+          licenseTypes: this.searchLicenseTypes
+        })
+        this.isSearchDone = true
       } catch (error) {
         this.transporteurs = []
         this.limit = 0
+        this.isSearchDone = false
         if (error.response && error.response.data && error.response.data.message) {
           this.error = error.response.data.message
         } else {
@@ -121,6 +126,24 @@ export default {
         }
       }
       this.isSearching = false
+    },
+
+    getSearchParamsForDisplay (searchParams) {
+      let messages = []
+
+      if (searchParams === null) {
+        return ''
+      }
+
+      if (searchParams.q !== '') {
+        messages.push(`« ${searchParams.q} »`)
+      }
+
+      let licenseTypes = searchParams.licenseTypes.map(item => item.text)
+      if (licenseTypes.length > 0) {
+        messages.push(`poids « ${licenseTypes.join(', ')} »`)
+      }
+      return messages.join(', ')
     }
   }
 }
