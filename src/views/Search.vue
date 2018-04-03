@@ -81,24 +81,27 @@ export default {
   },
 
   methods: {
-    search () {
+    async search () {
       this.searchQuery = this.searchQuery.trim()
 
       this.error = ''
       this.isSearching = true
       this.previousSearchQuery = this.searchQuery
-      // The parameters of the query are in French
-      api.get('/transporteurs/recherche/', {
-        params: {
-          q: this.searchQuery,
-          licenceTypes: this.searchLicenseTypes.map(item => item.value)
-        }
-      }).then(response => {
+      let response
+
+      try {
+        // The parameters of the query are in French
+        response = await api.get('/transporteurs/recherche/', {
+          params: {
+            q: this.searchQuery,
+            licencetypes: this.searchLicenseTypes.map(item => item.value)
+          }
+        })
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
         this.isSearching = false
-      }).catch((error) => {
+      } catch (error) {
         if (error.response && error.response.data && error.response.data.message) {
           this.error = error.response.data.message
         } else {
@@ -106,7 +109,7 @@ export default {
           this.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
         }
         this.isSearching = false
-      })
+      }
     }
   }
 }
