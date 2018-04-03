@@ -34,13 +34,12 @@
                 .
                   {{ data.item.text }}
         v-btn(large color="primary" @click.native="search") Chercher
-        p(v-if="searchResponseIsEmpty") La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
-        v-card.mt-1(v-if="transporteurs.length > 0")
-          transporteur-results(
-            :searchParamsForDisplay="searchParamsForDisplay"
-            :transporteurs="transporteurs"
-            :limit="limit"
-          )
+        transporteur-results(
+          :searchParams="searchParams"
+          :searchResponseIsEmpty="searchResponseIsEmpty"
+          :transporteurs="transporteurs"
+          :limit="limit"
+        )
 </template>
 
 <script>
@@ -56,7 +55,7 @@ export default {
       isSearchDone: false,
       searchQuery: '',
       searchLicenseTypes: [],
-      searchParamsForDisplay: '',
+      searchParams: null,
       transporteurs: [],
       limit: 0,
       error: ''
@@ -109,10 +108,10 @@ export default {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
-        this.searchParamsForDisplay = this.getSearchParamsForDisplay({
+        this.searchParams = {
           q: this.searchQuery,
           licenseTypes: this.searchLicenseTypes
-        })
+        }
         this.isSearchDone = true
       } catch (error) {
         this.transporteurs = []
@@ -126,24 +125,6 @@ export default {
         }
       }
       this.isSearching = false
-    },
-
-    getSearchParamsForDisplay (searchParams) {
-      let messages = []
-
-      if (searchParams === null) {
-        return ''
-      }
-
-      if (searchParams.q !== '') {
-        messages.push(`« ${searchParams.q} »`)
-      }
-
-      let licenseTypes = searchParams.licenseTypes.map(item => item.text)
-      if (licenseTypes.length > 0) {
-        messages.push(`poids « ${licenseTypes.join(', ')} »`)
-      }
-      return messages.join(', ')
     }
   }
 }
