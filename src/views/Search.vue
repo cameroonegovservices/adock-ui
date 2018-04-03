@@ -34,10 +34,10 @@
                 .
                   {{ data.item.text }}
         v-btn(large color="primary" @click.native="search") Chercher
-        p(v-if="previousSearchIsEmpty") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
+        p(v-if="searchIsEmpty") La recherche sur «&nbsp;{{ searchParams }}&nbsp;» n'a retourné aucun résultat.
         v-card.mt-1(v-if="transporteurs.length > 0")
           transporteur-results(
-            :searchQuery="previousSearchQuery"
+            :searchParams="searchParams"
             :transporteurs="transporteurs"
             :limit="limit"
           )
@@ -55,7 +55,7 @@ export default {
       isSearching: false,
       searchQuery: '',
       searchLicenseTypes: [],
-      previousSearchQuery: null,
+      searchParams: null,
       transporteurs: [],
       limit: 0,
       error: ''
@@ -82,9 +82,9 @@ export default {
   },
 
   computed: {
-    previousSearchIsEmpty () {
+    searchIsEmpty () {
       return (
-        this.previousSearchQuery !== null &&
+        this.searchParams !== null &&
         this.isSearching === false &&
         this.transporteurs.length === 0 &&
         this.error === '')
@@ -93,11 +93,11 @@ export default {
 
   methods: {
     async search () {
-      this.searchParams = this.searchQuery.trim()
+      this.searchQuery = this.searchQuery.trim()
 
       this.error = ''
       this.isSearching = true
-      this.previousSearchQuery = this.searchQuery
+      this.searchParams = this.searchQuery
       let response
 
       try {
