@@ -5,7 +5,7 @@
         div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
         v-alert(type="error" :value="error !== ''") {{ error }}
         v-text-field(
-          v-model="searchQuery"
+          v-model.trim="searchQuery"
           label="Numéro de SIREN, SIRET ou nom de l'entreprise"
           hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
           @keyup.enter="search"
@@ -93,8 +93,6 @@ export default {
 
   methods: {
     async search () {
-      this.searchQuery = this.searchQuery.trim()
-
       this.error = ''
       this.isSearching = true
       this.searchParams = this.searchQuery
