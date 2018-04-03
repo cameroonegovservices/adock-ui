@@ -34,7 +34,7 @@
                 .
                   {{ data.item.text }}
         v-btn(large color="primary" @click.native="search") Chercher
-        p(v-if="previousSearchQuery !== null && isSearching === false && transporteurs.length === 0 && error === ''") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
+        p(v-if="previousSearchIsEmpty") La recherche sur «&nbsp;{{ previousSearchQuery }}&nbsp;» n'a retourné aucun résultat.
         v-card.mt-1(v-if="transporteurs.length > 0")
           transporteur-results(
             :searchQuery="previousSearchQuery"
@@ -52,6 +52,7 @@ export default {
 
   data () {
     return {
+      isSearching: false,
       searchQuery: '',
       searchLicenseTypes: [],
       previousSearchQuery: null,
@@ -80,9 +81,19 @@ export default {
     'transporteur-results': TransporteurResults
   },
 
+  computed: {
+    previousSearchIsEmpty () {
+      return (
+        this.previousSearchQuery !== null &&
+        this.isSearching === false &&
+        this.transporteurs.length === 0 &&
+        this.error === '')
+    }
+  },
+
   methods: {
     async search () {
-      this.searchQuery = this.searchQuery.trim()
+      this.searchParams = this.searchQuery.trim()
 
       this.error = ''
       this.isSearching = true
