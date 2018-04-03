@@ -93,11 +93,12 @@ export default {
 
   methods: {
     async search () {
+      let response
+
+      // Remove error message as soon as the user clicks
       this.error = ''
       this.isSearching = true
       this.searchParams = this.searchQuery
-      let response
-
       try {
         // The parameters of the query are in French
         response = await api.get('/transporteurs/recherche/', {
@@ -111,6 +112,8 @@ export default {
         this.limit = response.data.limit || 0
         this.isSearching = false
       } catch (error) {
+        this.transporteurs = []
+        this.limit = 0
         if (error.response && error.response.data && error.response.data.message) {
           this.error = error.response.data.message
         } else {
