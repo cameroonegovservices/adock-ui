@@ -110,7 +110,6 @@ export default {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
-        this.isSearching = false
       } catch (error) {
         this.transporteurs = []
         this.limit = 0
@@ -120,8 +119,8 @@ export default {
           // Default
           this.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
         }
-        this.isSearching = false
       }
+      this.isSearching = false
     }
   }
 }
