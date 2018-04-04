@@ -32,6 +32,9 @@
             v-layout(row, wrap)
               v-flex(xs5) Ville
               v-flex.align-right(xs6) {{ transporteur.ville }}
+            v-layout(row, wrap)
+              v-flex(xs5) Gestionnaire
+              v-flex.align-right(xs6) {{ transporteur.gestionnaire }}
             template(v-if="transporteur.lti_numero")
               br
               v-layout(row, wrap)
