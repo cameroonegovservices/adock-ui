@@ -12,12 +12,12 @@
         )
         v-flex(xs6 md5 lg4 xl3)
           v-select(
+            :items="searchLicenseTypeChoices"
             v-model="searchLicenseTypes"
             label="Filtre sur le poids"
             hint="Le transporteur doit disposer d'au moins une licence pour le critère."
             chips
-            tags
-            :items="searchLicenseTypeChoices"
+            multiple
             return-object
           )
             template(
