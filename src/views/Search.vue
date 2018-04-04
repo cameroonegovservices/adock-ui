@@ -29,6 +29,7 @@
                 :selected="data.selected"
                 :disabled="data.disabled"
                 :key="JSON.stringify(data.item)"
+                close
               )
                 v-avatar.accent {{ data.item.avatar }}
                 .
