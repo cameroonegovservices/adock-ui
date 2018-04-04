@@ -38,7 +38,7 @@
             template(v-if="transporteur.lti_numero")
               br
               v-layout(row, wrap)
-                v-flex(xs5) Licence LTI
+                v-flex(xs5) Licence LTI (léger)
                 v-flex.align-right(xs6) {{ transporteur.lti_numero }}
               v-layout(row, wrap)
                 v-flex(xs5) validité
@@ -49,7 +49,7 @@
             template(v-if="transporteur.lc_numero")
               br
               v-layout(row, wrap)
-                v-flex(xs5) Licence LC (+ 3,5 tonnes)
+                v-flex(xs5) Licence LC (lourd, + 3,5 tonnes)
                 v-flex.align-right(xs6) {{ transporteur.lc_numero }}
               v-layout(row, wrap)
                 v-flex(xs5) validité
