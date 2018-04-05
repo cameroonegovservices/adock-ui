@@ -102,8 +102,8 @@ export default {
         // The parameters of the query are in French
         response = await api.get('/transporteurs/recherche/', {
           params: {
-            q: this.searchQuery,
-            licencetypes: this.searchLicenseTypes.map(item => item.value)
+            'q': this.searchQuery,
+            'licence-types': this.searchLicenseTypes.map(item => item.value),
           }
         })
         // Disable reactivity to speed up rendering
