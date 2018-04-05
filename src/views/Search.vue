@@ -10,30 +10,44 @@
           hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
           @keyup.enter="search"
         )
-        v-flex(xs6 md5 lg4 xl3)
-          v-select(
-            :items="searchLicenseTypeChoices"
-            v-model="searchLicenseTypes"
-            label="Filtre sur le poids"
-            hint="Le transporteur doit disposer d'au moins une licence pour le critère."
-            chips
-            multiple
-            return-object
-          )
-            template(
-              slot="selection"
-              slot-scope="data"
-            )
-              v-chip.chip--select--multi(
-                @input="data.parent.selectItem(data.item)"
-                :selected="data.selected"
-                :disabled="data.disabled"
-                :key="JSON.stringify(data.item)"
-                close
+        v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+          v-layout(row wrap align-end)
+            v-flex(xs12 sm4 md4)
+              v-select(
+                :items="searchLicenseTypeChoices"
+                v-model="searchLicenseTypes"
+                label="Filtre sur le poids"
+                hint="Le transporteur doit disposer d'au moins une licence pour le critère."
+                chips
+                multiple
+                return-object
               )
-                v-avatar.accent {{ data.item.avatar }}
-                .
-                  {{ data.item.text }}
+                template(
+                  slot="selection"
+                  slot-scope="data"
+                )
+                  v-chip.chip--select--multi(
+                    @input="data.parent.selectItem(data.item)"
+                    :selected="data.selected"
+                    :disabled="data.disabled"
+                    :key="JSON.stringify(data.item)"
+                    close
+                  )
+                    v-avatar.accent {{ data.item.avatar }}
+                    .
+                      {{ data.item.text }}
+            v-flex(xs6 sm4 md3)
+              v-text-field(
+                v-model.number='departementFrom'
+                label="Département de départ"
+                mask="###"
+              )
+            v-flex(xs6 sm4 md3)
+              v-text-field(
+                v-model.number='departementTo'
+                label="Département d'arrivée"
+                mask="###"
+              )
         v-btn(large color="primary" @click.native="search") Chercher
         transporteur-results(
           :searchParams="searchParams"
@@ -57,6 +71,8 @@ export default {
       searchQuery: '',
       searchLicenseTypes: [],
       searchParams: null,
+      departementFrom: null,
+      departementTo: null,
       transporteurs: [],
       limit: 0,
       error: ''
@@ -104,6 +120,8 @@ export default {
           params: {
             'q': this.searchQuery,
             'licence-types': this.searchLicenseTypes.map(item => item.value),
+            'departement-depart': this.departementFrom,
+            'departement-arrivee': this.departementTo
           }
         })
         // Disable reactivity to speed up rendering
@@ -111,7 +129,9 @@ export default {
         this.limit = response.data.limit || 0
         this.searchParams = {
           q: this.searchQuery,
-          licenseTypes: this.searchLicenseTypes
+          licenseTypes: this.searchLicenseTypes,
+          departementFrom: this.departementFrom,
+          departementTo: this.departementTo
         }
         this.isSearchDone = true
       } catch (error) {

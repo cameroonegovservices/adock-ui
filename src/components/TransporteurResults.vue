@@ -4,7 +4,7 @@
     v-card.mt-1(v-if="transporteurs.length > 0")
       v-list(two-line)
         v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
-        v-subheader(v-else) {{ transporteurs.length }} transporteurs de la recherche {{ searchParamsForDisplay }}
+        v-subheader(v-else) {{ transporteurs.length }} transporteurs pour la recherche {{ searchParamsForDisplay }}
         template(v-for="(transporteur, index) in transporteurs")
           v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
           v-list-tile(
@@ -58,6 +58,15 @@ export default {
       if (licenseTypes.length > 0) {
         messages.push(`poids « ${licenseTypes.join(', ')} »`)
       }
+
+      if (this.searchParams.departementFrom > 0) {
+        messages.push(`départ « ${this.searchParams.departementFrom} »`)
+      }
+
+      if (this.searchParams.departementTo > 0) {
+        messages.push(`arrivée « ${this.searchParams.departementTo} »`)
+      }
+
       return messages.join(', ')
     }
   }
