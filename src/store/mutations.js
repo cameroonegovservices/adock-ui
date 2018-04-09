@@ -17,7 +17,7 @@ export const mutations = {
       state.selects.workingAreas.push({value: k, text: v})
     }
     state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES
-    state.transporteur = payload.transporteur
+    state.transporteur = payload.transporteur || {}
     state.version = payload.version
   }
 }
