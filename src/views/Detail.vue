@@ -92,7 +92,7 @@
                 )
                 v-select(
                   v-model="form.working_area",
-                  :items="selects.workingAreas",
+                  :items="options.workingAreas",
                   label="Aire de travail"
                 )
                 v-text-field(
@@ -151,7 +151,7 @@ export default {
   computed: {
     ...mapState([
       'choices',
-      'selects'
+      'options'
     ])
   },
 
