@@ -1,16 +1,16 @@
 <template lang="pug">
   v-container(fluid)
-    v-layout(justify-center, row, wrap)
+    v-layout(justify-center row wrap)
       v-flex(xs12 sm10 md7 lg6 xl5)
         router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
           v-btn(icon)
             v-icon chevron_left
           span.subheading.no-wrap Recherche
         v-card
-          v-card-media.white--text(:src='roadPicture', height='200px')
-            v-container(fill-height, fluid)
+          v-card-media.white--text(:src="roadPicture" height="200px")
+            v-container(fill-height fluid)
               v-layout(fill-height)
-                v-flex(xs12, align-end, flexbox)
+                v-flex(xs12 align-end flexbox)
                   span.headline Transporteur
           v-card-title(primary-title)
             v-layout(row wrap)
@@ -19,59 +19,59 @@
                 span.grey--text.text--darken-1 {{ transporteur.libelle_ape }}
               v-flex(offset-xs10 xs2 offset-sm0 sm1)
                 completeness-indicator(:percent="transporteur.completeness")
-          v-container(grid-list-lg, offset-xs1)
-            v-layout(row, wrap)
+          v-container(grid-list-lg,offset-xs1)
+            v-layout(row wrap)
               v-flex(xs5) SIRET
               v-flex.align-right(xs6) {{ transporteur.siret }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) N° TVA
               v-flex.align-right(xs6) {{ transporteur.numero_tva }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Adresse
               v-flex.align-right(xs6) {{ transporteur.adresse }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Ville
               v-flex.align-right(xs6) {{ transporteur.ville }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Gestionnaire
               v-flex.align-right(xs6) {{ transporteur.gestionnaire }}
             template(v-if="transporteur.lti_numero")
               br
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) Licence LTI (léger)
                 v-flex.align-right(xs6) {{ transporteur.lti_numero }}
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) validité
                 v-flex.align-right(xs6) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) nombre
                 v-flex.align-right(xs6) {{ transporteur.lti_nombre }}
             template(v-if="transporteur.lc_numero")
               br
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) Licence LC (lourd, + 3,5 tonnes)
                 v-flex.align-right(xs6) {{ transporteur.lc_numero }}
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) validité
                 v-flex.align-right(xs6) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
-              v-layout(row, wrap)
+              v-layout(row wrap)
                 v-flex(xs5) nombre
                 v-flex.align-right(xs6) {{ transporteur.lc_nombre }}
             br
             span.grey--text.text--darken-1 Contact
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Téléphone
               v-flex.align-right(xs6) {{ transporteur.telephone }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Email
               v-flex.align-right(xs6) {{ transporteur.email }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Aire de travail
               v-flex.align-right(xs6) {{ choices.workingAreas[transporteur.working_area] }}
-            v-layout(row, wrap, v-if="transporteur.working_area === 'DEPARTEMENT'")
+            v-layout(row wrap, v-if="transporteur.working_area === 'DEPARTEMENT'")
               v-flex(xs5) Départements livrés
               v-flex.align-right(xs6) {{ transporteur.working_area_departements | asDepartements }}
-            v-layout(row, wrap)
+            v-layout(row wrap)
               v-flex(xs5) Spécialités
               v-flex.align-right(xs6) {{ displaySpecialities }}
           v-card-actions
@@ -84,24 +84,28 @@
               v-divider
               v-card-text(id="detailForm")
                 v-text-field(
-                  v-model="form.telephone",
-                  input="telephone", label="Téléphone",
-                  :error-messages="errors.telephone", data-cy="inputTelephone"
+                  v-model="form.telephone"
+                  input="telephone"
+                  label="Téléphone"
+                  :error-messages="errors.telephone"
+                  data-cy="inputTelephone"
                 )
                 v-text-field(
-                  v-model="form.email",
-                  input="email", label="Adresse électronique",
-                  :error-messages="errors.email", data-cy="inputEmail"
+                  v-model="form.email"
+                  input="email"
+                  label="Adresse électronique"
+                  :error-messages="errors.email"
+                  data-cy="inputEmail"
                 )
                 v-select(
-                  v-model="form.working_area",
-                  :items="options.workingAreas",
+                  v-model="form.working_area"
+                  :items="options.workingAreas"
                   label="Aire de travail"
                 )
                 v-text-field(
-                  v-if="form.working_area === 'DEPARTEMENT'",
-                  v-model="form.working_area_departements",
-                  label="Départements livrés",
+                  v-if="form.working_area === 'DEPARTEMENT'"
+                  v-model="form.working_area_departements"
+                  label="Départements livrés"
                   hint="Numéros des départements séparés par des espaces ou virgules"
                 )
                 v-btn(color="primary" @click.native="update") Mettre à jour
@@ -141,7 +145,7 @@ export default {
   },
 
   created () {
-    // Workaround asset loading, for now...
+    // FIXME Workaround asset loading, for now...
     this.roadPicture = roadPicture
   },
 
