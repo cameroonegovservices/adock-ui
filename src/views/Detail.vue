@@ -71,6 +71,9 @@
             v-layout(row, wrap, v-if="transporteur.working_area === 'DEPARTEMENT'")
               v-flex(xs5) Départements livrés
               v-flex.align-right(xs6) {{ transporteur.working_area_departements | asDepartements }}
+            v-layout(row, wrap)
+              v-flex(xs5) Spécialités
+              v-flex.align-right(xs6) {{ displaySpecialities }}
           v-card-actions
             v-spacer
             v-btn(flat, color='blue', @click.native="toggleEditMode")
@@ -149,6 +152,14 @@ export default {
   },
 
   computed: {
+    displaySpecialities () {
+      if (this.transporteur.specialities && this.choices.specialities) {
+        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
+      } else {
+        return ''
+      }
+    },
+
     ...mapState([
       'choices',
       'options'
