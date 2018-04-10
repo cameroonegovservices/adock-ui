@@ -44,7 +44,7 @@ export default {
 
   computed: {
     searchParamsForDisplay () {
-      let messages = []
+      const messages = []
 
       if (this.searchParams === null) {
         return ''
@@ -54,7 +54,7 @@ export default {
         messages.push(`« ${this.searchParams.q} »`)
       }
 
-      let licenseTypes = this.searchParams.licenseTypes.map(item => item.text)
+      const licenseTypes = this.searchParams.licenseTypes.map(item => item.text)
       if (licenseTypes.length > 0) {
         messages.push(`poids « ${licenseTypes.join(', ')} »`)
       }
@@ -65,6 +65,11 @@ export default {
 
       if (this.searchParams.departementTo > 0) {
         messages.push(`arrivée « ${this.searchParams.departementTo} »`)
+      }
+
+      const specialities = this.searchParams.specialities.map(item => item.text)
+      if (specialities.length > 0) {
+        messages.push(`spécialités « ${specialities.join(', ')} »`)
       }
 
       return messages.join(', ')

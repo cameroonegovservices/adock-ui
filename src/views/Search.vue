@@ -48,6 +48,18 @@
                 label="Département d'arrivée"
                 mask="###"
               )
+        v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+          v-layout(row)
+            v-flex(xs12 sm8 md7)
+              v-select(
+                :items="options.specialities"
+                v-model="specialities"
+                label="Filtre sur les spécialités"
+                chips
+                multiple
+                deletable-chips
+                return-object
+              )
         v-btn(large color="primary" @click.native="search") Chercher
         transporteur-results(
           :searchParams="searchParams"
@@ -58,6 +70,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import api from '@/api.js'
 import TransporteurResults from '@/components/TransporteurResults.vue'
 
@@ -70,6 +84,7 @@ export default {
       isSearchDone: false,
       searchQuery: '',
       searchLicenseTypes: [],
+      specialities: [],
       searchParams: null,
       departementFrom: null,
       departementTo: null,
@@ -80,6 +95,7 @@ export default {
   },
 
   created () {
+    // FIXME To move to /meta...
     this.searchLicenseTypeChoices = [
       {
         text: 'Léger',
@@ -104,7 +120,10 @@ export default {
         !this.isSearching &&
         this.isSearchDone &&
         this.transporteurs.length === 0)
-    }
+    },
+    ...mapState([
+      'options'
+    ])
   },
 
   methods: {
@@ -121,17 +140,20 @@ export default {
             'q': this.searchQuery,
             'licence-types': this.searchLicenseTypes.map(item => item.value),
             'departement-depart': this.departementFrom,
-            'departement-arrivee': this.departementTo
+            'departement-arrivee': this.departementTo,
+            'specialities': this.specialities.map(item => item.value)
           }
         })
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
+        // Build an object with search parameters to display them to the user with the results
         this.searchParams = {
           q: this.searchQuery,
           licenseTypes: this.searchLicenseTypes,
           departementFrom: this.departementFrom,
-          departementTo: this.departementTo
+          departementTo: this.departementTo,
+          specialities: this.specialities
         }
         this.isSearchDone = true
       } catch (error) {
