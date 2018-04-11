@@ -5,7 +5,7 @@
         div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
         v-alert(type="error" :value="error !== ''") {{ error }}
         v-text-field(
-          v-model.trim="searchQuery"
+          v-model.trim="searchForm.q"
           label="Numéro de SIREN, SIRET ou nom de l'entreprise"
           hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
           @keyup.enter="search"
@@ -15,7 +15,7 @@
             v-flex(xs12 sm4 md4)
               v-select(
                 :items="searchLicenseTypeChoices"
-                v-model="searchLicenseTypes"
+                v-model="searchForm.licenseTypes"
                 label="Filtre sur le poids"
                 hint="Le transporteur doit disposer d'au moins une licence pour le critère."
                 chips
@@ -38,13 +38,13 @@
                       {{ data.item.text }}
             v-flex(xs6 sm4 md3)
               v-text-field(
-                v-model.number='departementFrom'
+                v-model.number='searchForm.departementFrom'
                 label="Département de départ"
                 mask="###"
               )
             v-flex(xs6 sm4 md3)
               v-text-field(
-                v-model.number='departementTo'
+                v-model.number='searchForm.departementTo'
                 label="Département d'arrivée"
                 mask="###"
               )
@@ -53,7 +53,7 @@
             v-flex(xs12 sm8 md7)
               v-select(
                 :items="options.specialities"
-                v-model="specialities"
+                v-model="searchForm.specialities"
                 label="Filtre sur les spécialités"
                 chips
                 multiple
@@ -82,12 +82,14 @@ export default {
     return {
       isSearching: false,
       isSearchDone: false,
-      searchQuery: '',
-      searchLicenseTypes: [],
-      specialities: [],
+      searchForm: {
+        q: '',
+        licenseTypes: [],
+        departementFrom: null,
+        departementTo: null,
+        specialities: []
+      },
       searchParams: null,
-      departementFrom: null,
-      departementTo: null,
       transporteurs: [],
       limit: 0,
       error: ''
@@ -137,11 +139,11 @@ export default {
         // The parameters of the query are in French
         response = await api.get('/transporteurs/recherche/', {
           params: {
-            'q': this.searchQuery,
-            'licence-types': this.searchLicenseTypes.map(item => item.value),
-            'departement-depart': this.departementFrom,
-            'departement-arrivee': this.departementTo,
-            'specialities': this.specialities.map(item => item.value)
+            'q': this.searchForm.q,
+            'licence-types': this.searchForm.licenseTypes.map(item => item.value),
+            'departement-depart': this.searchForm.departementFrom,
+            'departement-arrivee': this.searchForm.departementTo,
+            'specialities': this.searchForm.specialities.map(item => item.value)
           }
         })
         // Disable reactivity to speed up rendering
@@ -149,11 +151,11 @@ export default {
         this.limit = response.data.limit || 0
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = {
-          q: this.searchQuery,
-          licenseTypes: this.searchLicenseTypes,
-          departementFrom: this.departementFrom,
-          departementTo: this.departementTo,
-          specialities: this.specialities
+          q: this.searchForm.q,
+          licenseTypes: this.searchForm.licenseTypes,
+          departementFrom: this.searchForm.departementFrom,
+          departementTo: this.searchForm.departementTo,
+          specialities: this.searchForm.specialities
         }
         this.isSearchDone = true
       } catch (error) {
