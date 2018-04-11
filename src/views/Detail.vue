@@ -211,7 +211,7 @@ export default {
 
     toggleEditMode () {
       this.isEditMode = !this.isEditMode
-      setTimeout(this.scrollForm, 400)
+      setTimeout(this.scrollForm, 600)
     },
 
     async update () {
