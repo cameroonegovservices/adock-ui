@@ -108,6 +108,14 @@
                   label="Départements livrés"
                   hint="Numéros des départements séparés par des espaces ou virgules"
                 )
+                v-select(
+                  :items="options.specialities"
+                  v-model="form.specialities"
+                  label="Spécialités"
+                  chips
+                  multiple
+                  deletable-chips
+                )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
 
@@ -133,7 +141,8 @@ export default {
         email: '',
         telephone: '',
         working_area: '',
-        working_area_departements: ''
+        working_area_departements: '',
+        specialities: []
       },
       isEditMode: false,
       errors: {}
