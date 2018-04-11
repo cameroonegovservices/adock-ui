@@ -150,13 +150,7 @@ export default {
         this.transporteurs = Object.freeze(response.data.results)
         this.limit = response.data.limit || 0
         // Build an object with search parameters to display them to the user with the results
-        this.searchParams = {
-          q: this.searchForm.q,
-          licenseTypes: this.searchForm.licenseTypes,
-          departementFrom: this.searchForm.departementFrom,
-          departementTo: this.searchForm.departementTo,
-          specialities: this.searchForm.specialities
-        }
+        this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
         this.isSearchDone = true
       } catch (error) {
         this.transporteurs = []
