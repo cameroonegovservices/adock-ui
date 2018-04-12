@@ -159,7 +159,6 @@ export default {
   },
 
   async mounted () {
-    // FIXME error handling
     const response = await api.get(this.getDetailUrl())
     this.loadData(response.data)
   },

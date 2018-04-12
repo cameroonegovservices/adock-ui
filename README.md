@@ -42,6 +42,16 @@ avec [Cypress][cypress].
 - [Jest][jest]
 - [cypress][cypress]
 
+## Configuration
+
+Les paramètres de configuration sont définis dans les fichiers
+`.env.development` et `.env.production` (en fonction des environnements). Pour
+ajouter des paramètres non versionnés, vous pouvez créer des fichiers avec
+l'extension `.local` pour surcharger les valeurs de ces fichiers.
+
+Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
+`.env.production.local` sous le nom `VUE_APP_RAVEN_URL`.
+
 ## Utilisation
 
 * `yarn serve` sert l'application pour le développement
