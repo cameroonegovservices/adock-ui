@@ -1,7 +1,12 @@
+import Raven from 'raven-js'
 import api from '@/api.js'
 import * as types from './mutation-types'
 
 export const loadMeta = async ({ commit, state }) => {
-  const response = await api.get('/meta/')
-  commit(types.SET_META, response.data)
+  try {
+    const response = await api.get('/meta/')
+    commit(types.SET_META, response.data)
+  } catch (error) {
+    Raven.captureException(error)
+  }
 }

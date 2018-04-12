@@ -71,6 +71,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Raven from 'raven-js'
 
 import api from '@/api.js'
 import TransporteurResults from '@/components/TransporteurResults.vue'
@@ -160,6 +161,7 @@ export default {
           this.error = error.response.data.message
         } else {
           // Default
+          Raven.captureException(error)
           this.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
         }
       }

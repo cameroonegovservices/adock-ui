@@ -120,8 +120,8 @@
 </template>
 
 <script>
+import Raven from 'raven-js'
 import { mapState } from 'vuex'
-
 import api from '@/api.js'
 import roadPicture from '@/assets/road-1229x768.jpg'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
@@ -159,8 +159,12 @@ export default {
   },
 
   async mounted () {
-    const response = await api.get(this.getDetailUrl())
-    this.loadData(response.data)
+    try {
+      const response = await api.get(this.getDetailUrl())
+      this.loadData(response.data)
+    } catch (error) {
+      Raven.captureException(error)
+    }
   },
 
   computed: {
@@ -219,7 +223,10 @@ export default {
         response = await api.patch(this.getDetailUrl(), this.form)
       } catch (error) {
         if (error.response && error.response.data) {
+          // Data not validated by server
           this.errors = error.response.data
+        } else {
+          Raven.captureException(error)
         }
         return
       }
