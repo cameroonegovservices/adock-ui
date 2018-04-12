@@ -196,6 +196,9 @@ export default {
           // Join county numbers with '0' padding for number < 100
           const value = this.transporteur[field]
           this.form[field] = value ? value.join(', ') : ''
+        } else if (field === 'specialities') {
+          // v-select expects [] instead of null
+          this.form[field] = this.transporteur[field] || []
         } else {
           this.form[field] = this.transporteur[field]
         }
