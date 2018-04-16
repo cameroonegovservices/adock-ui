@@ -9,6 +9,7 @@
           label="Numéro de SIREN, SIRET ou nom de l'entreprise"
           hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
           @keyup.enter="search"
+          data-cy="searchFormQ"
         )
         v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
           v-layout(row wrap align-end)

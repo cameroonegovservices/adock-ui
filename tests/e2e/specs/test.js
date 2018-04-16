@@ -5,7 +5,7 @@ describe('A Dock', () => {
     cy.visit('/')
 
     // Search on SIRET
-    cy.get('input')
+    cy.get('[data-cy=searchFormQ')
       .type('3002')
       .should('have.value', '3002')
     cy.contains('div.btn__content', 'Chercher')
@@ -27,9 +27,9 @@ describe('A Dock', () => {
       .should('have.value', '')
     cy.get('#detailForm > .btn > .btn__content')
       .click()
-    // Check 70 %
+    // Check indicator percentage
     cy.get('.indicator.orange > span')
-      .should('contain', '70')
+      .should('contain', '55')
 
     // Submit full details
     cy.get('.card__actions > .btn > .btn__content')
@@ -38,8 +38,18 @@ describe('A Dock', () => {
       .clear()
       .type('foo@example.com')
       .should('have.value', 'foo@example.com')
-    cy.get('#detailForm > .btn > .btn__content')
+    cy.get('div[data-cy=inputWorkingArea]')
       .click()
+    // 2nd element is France
+    cy.get('.menuable__content__active > .card > .list > :nth-child(2) > .list__tile > .list__tile__content > .list__tile__title')
+      .click()
+    cy.get('div[data-cy=inputSpecialities]')
+      .click()
+    // First speciality
+    cy.get('.menuable__content__active > .card > .list > :nth-child(1) > .list__tile > .list__tile__content > .list__tile__title')
+      .click()
+    cy.get('#detailForm > .btn > .btn__content')
+      .click({force: true})
     // Check 100 %
     cy.get('.indicator > .icon')
       .should('contain', 'done')

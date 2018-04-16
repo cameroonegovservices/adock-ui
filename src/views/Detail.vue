@@ -101,6 +101,7 @@
                   v-model="form.working_area"
                   :items="options.workingAreas"
                   label="Aire de travail"
+                  data-cy="inputWorkingArea"
                 )
                 v-text-field(
                   v-if="form.working_area === 'DEPARTEMENT'"
@@ -115,6 +116,7 @@
                   chips
                   multiple
                   deletable-chips
+                  data-cy="inputSpecialities"
                 )
                 v-btn(color="primary" @click.native="update") Mettre à jour
 </template>
