@@ -31,13 +31,7 @@ if (process.env.NODE_ENV === 'production') {
   router.beforeEach((to, from, next) => {
     const tracker = getTracker()
     if (tracker) {
-      // to.name
-      tracker.trackPageView(
-        to.path,
-        {
-          name: to.name
-        }
-      )
+      tracker.trackPageView(to.path)
     }
     next()
   })
