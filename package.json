@@ -13,7 +13,6 @@
   "dependencies": {
     "axios": "0.18.0",
     "babel-polyfill": "^6.26.0",
-    "matomo-tracker": "^2.2.0",
     "pug": "^2.0.3",
     "raven-js": "^3.24.1",
     "vue": "2.5.16",

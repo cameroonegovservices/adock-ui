@@ -8,6 +8,7 @@ import { Vuetify } from 'vuetify'
 import vuetifyOptions from './vuetifyOptions'
 import { version } from '../package.json'
 
+import { loadTracker } from './tracker'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -17,6 +18,7 @@ import './stylus/main.styl'
 Vue.config.productionTip = false
 
 if (process.env.NODE_ENV === 'production') {
+  // Raven is the client of Sentry
   // Take care to set VUE_APP_RAVEN_URL in .env.production.local
   Raven
     .config(process.env.VUE_APP_RAVEN_URL, {
@@ -24,6 +26,9 @@ if (process.env.NODE_ENV === 'production') {
     })
     .addPlugin(RavenVue, Vue)
     .install()
+
+  // Piwik/Matomo tracker
+  loadTracker()
 }
 
 Vue.use(Vuetify, vuetifyOptions)
