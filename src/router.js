@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'production') {
     if (tracker) {
       // to.name
       tracker.trackPageView(
-        window.origin + '/#' + to.path,
+        to.path,
         {
           name: to.name
         }
