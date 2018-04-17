@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app
-    v-toolbar(app light)
+    v-toolbar.white(app light flat)
       router-link(:to="{name: 'search'}")
         img(src='./assets/marianne.svg', width='80px')
       img.app-name(src='./assets/adock.beta.gouv.fr-25.png', height='25px')
