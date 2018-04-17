@@ -6,7 +6,7 @@
       img.app-name(src='./assets/adock.beta.gouv.fr-50.png', height='25px')
     v-content
       router-view
-    v-footer.pa-3(app absolute)
+    v-footer.white.pa-3(app absolute)
       span(v-if="version") v{{ version }}
       v-spacer
       span(v-if="transporteur.count")
