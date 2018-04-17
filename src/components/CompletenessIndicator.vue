@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.indicator(v-if="percent != null", :class="statusColor")
+  div.indicator(v-if="percent != null" :class="statusColor")
     v-icon(v-if="completed" dark) done
     span(v-else) {{ percent }} %
 </template>
