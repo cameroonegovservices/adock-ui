@@ -4,7 +4,8 @@
       v-flex(xs12 sm11 md9 lg8 xl6)
         v-card
           v-card-text
-            div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
+            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des 50 000 transporteurs de marchandises français
+            div.display-1.mt-4.hidden-sm-and-up Cherchez simplement parmi les transporteurs de marchandises français
             v-alert(type="error" :value="error !== ''") {{ error }}
             v-text-field(
               v-model.trim="searchForm.q"

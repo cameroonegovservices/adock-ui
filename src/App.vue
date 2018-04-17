@@ -11,7 +11,7 @@
       v-spacer
       span(v-if="transporteur.count")
         .
-          {{ transporteur.count }} transporteurs inscrits au {{ transporteurLocaleDate }}
+          {{ transporteur.count }} transporteurs au {{ transporteurLocaleDate }}
 </template>
 
 <script>
