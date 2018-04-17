@@ -3,9 +3,7 @@
     v-toolbar(app light)
       router-link(:to="{name: 'search'}")
         img(src='./assets/marianne.svg', width='80px')
-      v-toolbar-title A Dock - Simplifions les relations transporteurs/chargeurs
-      v-spacer
-      span Bêta
+      img.app-name(src='./assets/adock.beta.gouv.fr-25.png', height='25px')
     v-content
       router-view
     v-footer.pa-3(app)
@@ -42,3 +40,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.app-name {
+  padding-left: 8px;
+}
+</style>
