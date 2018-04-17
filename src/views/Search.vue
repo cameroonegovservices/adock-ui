@@ -2,66 +2,68 @@
   v-container(fluid fill-height)
     v-layout(row justify-center)
       v-flex(xs12 sm11 md9 lg8 xl6)
-        div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
-        v-alert(type="error" :value="error !== ''") {{ error }}
-        v-text-field(
-          v-model.trim="searchForm.q"
-          label="Numéro de SIREN, SIRET ou nom de l'entreprise"
-          hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
-          @keyup.enter="search"
-          data-cy="searchFormQ"
-        )
-        v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
-          v-layout(row wrap align-end)
-            v-flex(xs12 sm4 md4)
-              v-select(
-                :items="searchLicenseTypeChoices"
-                v-model="searchForm.licenseTypes"
-                label="Filtre sur le poids"
-                hint="Le transporteur doit disposer d'au moins une licence pour le critère."
-                chips
-                multiple
-                return-object
-              )
-                template(
-                  slot="selection"
-                  slot-scope="data"
-                )
-                  v-chip.chip--select--multi(
-                    @input="data.parent.selectItem(data.item)"
-                    :selected="data.selected"
-                    :disabled="data.disabled"
-                    :key="JSON.stringify(data.item)"
-                    close
+        v-card
+          v-card-text
+            div.display-1.mt-4 Cherchez et contactez n'importe quel transporteur français
+            v-alert(type="error" :value="error !== ''") {{ error }}
+            v-text-field(
+              v-model.trim="searchForm.q"
+              label="Numéro de SIREN, SIRET ou nom de l'entreprise"
+              hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
+              @keyup.enter="search"
+              data-cy="searchFormQ"
+            )
+            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+              v-layout(row wrap align-end)
+                v-flex(xs12 sm4 md4)
+                  v-select(
+                    :items="searchLicenseTypeChoices"
+                    v-model="searchForm.licenseTypes"
+                    label="Filtre sur le poids"
+                    hint="Le transporteur doit disposer d'au moins une licence pour le critère."
+                    chips
+                    multiple
+                    return-object
                   )
-                    v-avatar.accent {{ data.item.avatar }}
-                    .
-                      {{ data.item.text }}
-            v-flex(xs6 sm4 md3)
-              v-text-field(
-                v-model.number='searchForm.departementFrom'
-                label="Département de départ"
-                mask="###"
-              )
-            v-flex(xs6 sm4 md3)
-              v-text-field(
-                v-model.number='searchForm.departementTo'
-                label="Département d'arrivée"
-                mask="###"
-              )
-        v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
-          v-layout(row)
-            v-flex(xs12 sm8 md7)
-              v-select(
-                :items="options.specialities"
-                v-model="searchForm.specialities"
-                label="Filtre sur les spécialités"
-                chips
-                multiple
-                deletable-chips
-                return-object
-              )
-        v-btn(large color="primary" @click.native="search") Chercher
+                    template(
+                      slot="selection"
+                      slot-scope="data"
+                    )
+                      v-chip.chip--select--multi(
+                        @input="data.parent.selectItem(data.item)"
+                        :selected="data.selected"
+                        :disabled="data.disabled"
+                        :key="JSON.stringify(data.item)"
+                        close
+                      )
+                        v-avatar.accent {{ data.item.avatar }}
+                        .
+                          {{ data.item.text }}
+                v-flex(xs6 sm4 md3)
+                  v-text-field(
+                    v-model.number='searchForm.departementFrom'
+                    label="Département de départ"
+                    mask="###"
+                  )
+                v-flex(xs6 sm4 md3)
+                  v-text-field(
+                    v-model.number='searchForm.departementTo'
+                    label="Département d'arrivée"
+                    mask="###"
+                  )
+            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+              v-layout(row)
+                v-flex(xs12 sm8 md7)
+                  v-select(
+                    :items="options.specialities"
+                    v-model="searchForm.specialities"
+                    label="Filtre sur les spécialités"
+                    chips
+                    multiple
+                    deletable-chips
+                    return-object
+                  )
+            v-btn(large color="primary" @click.native="search") Chercher
         transporteur-results(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
