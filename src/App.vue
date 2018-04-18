@@ -3,15 +3,10 @@
     v-toolbar.white(app light flat)
       router-link(:to="{name: 'search'}")
         img(src='./assets/marianne.svg', width='80px')
-      img.app-name(src='./assets/adock.beta.gouv.fr-50.png', height='25px')
+      router-link(:to="{name: 'search'}")
+        img.app-name(src='./assets/adock.beta.gouv.fr-50.png', height='25px')
     v-content
       router-view
-    v-footer.white.pa-3(app absolute)
-      span(v-if="meta.version") v{{ meta.version }}
-      v-spacer
-      span(v-if="meta.transporteur.count")
-        .
-          {{ meta.transporteur.count }} transporteurs au {{ meta.transporteur.localeDate }}
 </template>
 
 <script>
