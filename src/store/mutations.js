@@ -30,10 +30,14 @@ export const mutations = {
     state.options.specialities = getOptionsFromChoices(payload.choices.SPECIALITY_CHOICES)
     state.choices.specialities = payload.choices.SPECIALITY_CHOICES
     if (payload.transporteur) {
+      // Format the payload data before assignment
       if (payload.transporteur.date) {
-        // Format the included date before assignment
         payload.transporteur.date = new Date(payload.transporteur.date)
         payload.transporteur.localeDate = payload.transporteur.date.toLocaleDateString()
+      }
+
+      if (payload.transporteur.count) {
+        payload.transporteur.localeCount = payload.transporteur.count.toLocaleString()
       }
       state.meta.transporteur = payload.transporteur
     }
