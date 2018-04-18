@@ -9,8 +9,10 @@ export const state = {
     workingAreas: [],
     specialities: []
   },
-  transporteur: {},
-  version: ''
+  meta: {
+    transporteur: {},
+    version: ''
+  }
 }
 
 function getOptionsFromChoices (choices) {
@@ -27,7 +29,14 @@ export const mutations = {
     state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES
     state.options.specialities = getOptionsFromChoices(payload.choices.SPECIALITY_CHOICES)
     state.choices.specialities = payload.choices.SPECIALITY_CHOICES
-    state.transporteur = payload.transporteur || {}
-    state.version = payload.version
+    if (payload.transporteur) {
+      if (payload.transporteur.date) {
+        // Format the included date before assignment
+        payload.transporteur.date = new Date(payload.transporteur.date)
+        payload.transporteur.localeDate = payload.transporteur.date.toLocaleDateString()
+      }
+      state.meta.transporteur = payload.transporteur
+    }
+    state.meta.version = payload.version
   }
 }

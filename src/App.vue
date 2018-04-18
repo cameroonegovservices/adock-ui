@@ -7,11 +7,11 @@
     v-content
       router-view
     v-footer.white.pa-3(app absolute)
-      span(v-if="version") v{{ version }}
+      span(v-if="meta.version") v{{ meta.version }}
       v-spacer
-      span(v-if="transporteur.count")
+      span(v-if="meta.transporteur.count")
         .
-          {{ transporteur.count }} transporteurs au {{ transporteurLocaleDate }}
+          {{ meta.transporteur.count }} transporteurs au {{ meta.transporteur.localeDate }}
 </template>
 
 <script>
@@ -25,17 +25,8 @@ export default {
   },
 
   computed: {
-    transporteurLocaleDate () {
-      if (this.transporteur.date) {
-        const date = new Date(this.transporteur.date)
-        return date.toLocaleDateString()
-      } else {
-        return ''
-      }
-    },
     ...mapState([
-      'version',
-      'transporteur'
+      'meta'
     ])
   }
 }
