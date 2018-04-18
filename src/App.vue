@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app
-    v-toolbar.white(app light flat)
+    v-toolbar.white(app light)
       v-tooltip(bottom)
         span(slot="activator")
           img(src='./assets/marianne.svg' width='80px')

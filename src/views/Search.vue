@@ -1,8 +1,8 @@
 <template lang="pug">
-  v-container(fluid fill-height)
+  v-container.search-background(fluid fill-height)
     v-layout(row justify-center)
       v-flex(xs12 sm11 md9 lg8 xl6)
-        v-card
+        v-card.elevation-8
           v-card-text
             div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises français
             div.display-1.mt-4.hidden-sm-and-up Cherchez simplement parmi les transporteurs de marchandises français
@@ -71,6 +71,26 @@
           :transporteurs="transporteurs"
           :limit="limit"
         )
+        v-card.elevation-0.cta
+          v-container.pt-4
+            v-layout.cta(row wrap justify-space-around)
+              v-flex(xs3)
+                h2.text-xs-center
+                  v-icon(x-large) search
+                h3.text-xs-center Recherchez votre entreprise
+                p.text-xs-center Grâce à son SIRET ou son nom
+              v-flex(xs3)
+                h2.text-xs-center
+                  v-icon(x-large) mode_edit
+                h3.text-xs-center Complétez votre fiche transporteur
+                p.text-xs-center
+                  | Avec le téléphone ou le mail de votre commercial
+                  | et votre spécialité (par ex. transport frigorifique)
+              v-flex(xs3)
+                h2.text-xs-center
+                  v-icon(x-large) call
+                h3.text-xs-center Apparaissez en tête des recherches
+                p.text-xs-center Grâce à votre profil complet !
 </template>
 
 <script>
@@ -175,3 +195,18 @@ export default {
   }
 }
 </script>
+
+<style>
+.search-background {
+  background: no-repeat top/100% url('../assets/search-background.jpg');
+  background-color: white;
+}
+
+.card.cta {
+  background-color: rgba(255, 255, 255, .6);
+}
+
+.layout.cta h3, .layout.cta p, .layout.cta .icon {
+  color: #373C42;
+}
+</style>
