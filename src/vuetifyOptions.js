@@ -14,7 +14,8 @@ import {
   VSelect,
   VSubheader,
   VTextField,
-  VToolbar
+  VToolbar,
+  VTooltip
 } from 'vuetify'
 
 import { Ripple } from 'vuetify/es5/directives'
@@ -36,7 +37,8 @@ export const vuetifyOptions = {
     VSelect,
     VSubheader,
     VTextField,
-    VToolbar
+    VToolbar,
+    VTooltip
   },
   directives: {
     Ripple
