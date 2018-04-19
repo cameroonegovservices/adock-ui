@@ -203,7 +203,7 @@ export default {
 }
 
 .card.cta {
-  background-color: rgba(255, 255, 255, .6);
+  background-color: rgba(255, 255, 255, .7);
 }
 
 .layout.cta h3, .layout.cta p, .layout.cta .icon {
