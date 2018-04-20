@@ -2,7 +2,7 @@
 import { mapState } from 'vuex'
 
 import api from '@/api.js'
-import TransporteurResults from '@/components/TransporteurResults.vue'
+import TransporteurList from '@/components/TransporteurList.vue'
 
 export default {
   name: 'Search',
@@ -42,7 +42,7 @@ export default {
   },
 
   components: {
-    'transporteur-results': TransporteurResults
+    'transporteur-list': TransporteurList
   },
 
   computed: {
@@ -162,7 +162,7 @@ export default {
                     return-object
                   )
             v-btn(large color="primary" @click.native="search") Chercher
-        transporteur-results(
+        transporteur-list(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
           :transporteurs="transporteurs"
