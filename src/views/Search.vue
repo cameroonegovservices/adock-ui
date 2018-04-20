@@ -42,7 +42,7 @@ export default {
   },
 
   components: {
-    'transporteur-list': TransporteurList
+    TransporteurList
   },
 
   computed: {
@@ -162,7 +162,7 @@ export default {
                     return-object
                   )
             v-btn(large color="primary" @click.native="search") Chercher
-        transporteur-list(
+        TransporteurList(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
           :transporteurs="transporteurs"

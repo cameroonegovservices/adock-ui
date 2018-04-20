@@ -35,7 +35,7 @@ export default {
   },
 
   components: {
-    'completeness-indicator': CompletenessIndicator
+    CompletenessIndicator
   },
 
   created () {
@@ -97,7 +97,7 @@ export default {
                     h3.headline {{ transporteur.raison_sociale }}
                     span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
                   v-flex(xs2)
-                    completeness-indicator(:percent="transporteur.completeness")
+                    CompletenessIndicator(:percent="transporteur.completeness")
           v-card-text(id="detailForm")
             v-text-field(
               v-model="form.telephone"

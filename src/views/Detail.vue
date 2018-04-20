@@ -23,7 +23,7 @@ export default {
   },
 
   components: {
-    'completeness-indicator': CompletenessIndicator
+    CompletenessIndicator
   },
 
   created () {
@@ -79,7 +79,7 @@ export default {
                       :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
                     ) Compléter les informations
                   v-flex(xs2)
-                    completeness-indicator(:percent="transporteur.completeness")
+                    CompletenessIndicator(:percent="transporteur.completeness")
           v-container(grid-list-lg)
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
