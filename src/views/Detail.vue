@@ -15,9 +15,11 @@
                     h3.headline {{ transporteur.raison_sociale }}
                     span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
                     br
-                    v-btn.ma-0(v-if="transporteur.completeness < 100" dark color="orange" @click.native="setEditMode(true)")
-                      .
-                        Compléter les informations
+                    v-btn.ma-0(v-if="transporteur.completeness < 100"
+                      dark
+                      color="orange"
+                      :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
+                    ) Compléter les informations
                   v-flex(xs2)
                     completeness-indicator(:percent="transporteur.completeness")
           v-container(grid-list-lg)
@@ -78,64 +80,25 @@
               v-flex.align-right(xs6 md5) {{ displaySpecialities }}
             v-layout
               v-flex.align-right(xs12 md11)
-                v-btn(v-if="transporteur.completeness === 100" flat color="green" @click.native="setEditMode(!isEditMode)")
-                  v-icon {{ isEditMode ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
-                  .
-                    Modifier les informations
-                v-btn.ma-0(v-else flat color="orange" @click.native="setEditMode(!isEditMode)")
-                  v-icon {{ isEditMode ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
-                  .
-                    Compléter les informations
-            v-slide-y-transition
-              div(v-show="isEditMode")
-                v-divider
-                v-card-text(id="detailForm")
-                  v-text-field(
-                    v-model="form.telephone"
-                    input="telephone"
-                    label="Téléphone"
-                    :error-messages="errors.telephone"
-                    data-cy="inputTelephone"
-                  )
-                  v-text-field(
-                    v-model="form.email"
-                    input="email"
-                    label="Adresse électronique"
-                    :error-messages="errors.email"
-                    data-cy="inputEmail"
-                  )
-                  v-select(
-                    v-model="form.working_area"
-                    :items="options.workingAreas"
-                    label="Aire de travail"
-                    data-cy="inputWorkingArea"
-                  )
-                  v-text-field(
-                    v-if="form.working_area === 'DEPARTEMENT'"
-                    v-model="form.working_area_departements"
-                    label="Départements livrés"
-                    hint="Numéros des départements séparés par des espaces ou virgules"
-                  )
-                  v-select(
-                    :items="options.specialities"
-                    v-model="form.specialities"
-                    label="Spécialités"
-                    chips
-                    multiple
-                    deletable-chips
-                    data-cy="inputSpecialities"
-                  )
-                  v-btn(color="primary" @click.native="update") Valider
+                v-btn.ma-0(
+                  dark
+                  :color="transporteur.completeness === 100 ? 'green' : 'orange'"
+                  :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
+                )
+                  span(v-if="transporteur.completeness === 100") Modifier les informations
+                  span(v-else) Compléter les informations
 </template>
 
 <script>
-import Raven from 'raven-js'
 import { mapState } from 'vuex'
+
 import api from '@/api.js'
 import roadPicture from '@/assets/road.jpg'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 export default {
+  name: 'Detail',
+
   props: {
     transporteurSiret: {
       type: String,
@@ -145,16 +108,7 @@ export default {
 
   data () {
     return {
-      transporteur: {},
-      form: {
-        email: '',
-        telephone: '',
-        working_area: '',
-        working_area_departements: '',
-        specialities: []
-      },
-      isEditMode: false,
-      errors: {}
+      transporteur: {}
     }
   },
 
@@ -168,12 +122,7 @@ export default {
   },
 
   async mounted () {
-    try {
-      const response = await api.get(this.getDetailUrl())
-      this.loadData(response.data)
-    } catch (error) {
-      Raven.captureException(error)
-    }
+    this.transporteur = await api.fetchTransporteur(this.transporteurSiret)
   },
 
   computed: {
@@ -184,10 +133,8 @@ export default {
         return ''
       }
     },
-
     ...mapState([
-      'choices',
-      'options'
+      'choices'
     ])
   },
 
@@ -195,63 +142,11 @@ export default {
     asDepartements (value) {
       return value.map(dep => String(dep).padStart(2, '0')).join(', ')
     }
-  },
-
-  methods: {
-    loadData (data) {
-      this.transporteur = data
-      for (let field in this.form) {
-        if (field === 'working_area_departements') {
-          // Join county numbers with '0' padding for number < 100
-          const value = this.transporteur[field]
-          this.form[field] = value ? value.join(', ') : ''
-        } else if (field === 'specialities') {
-          // v-select expects [] instead of null
-          this.form[field] = this.transporteur[field] || []
-        } else {
-          this.form[field] = this.transporteur[field]
-        }
-      }
-    },
-
-    getDetailUrl () {
-      return `/transporteurs/${this.transporteurSiret}/`
-    },
-
-    scrollForm () {
-      if (this.isEditMode) {
-        this.$vuetify.goTo('#detailForm')
-      }
-    },
-
-    setEditMode (value) {
-      this.isEditMode = value
-      setTimeout(this.scrollForm, 600)
-    },
-
-    async update () {
-      let response
-      try {
-        response = await api.patch(this.getDetailUrl(), this.form)
-      } catch (error) {
-        if (error.response && error.response.data) {
-          // Data not validated by server
-          this.errors = error.response.data
-        } else {
-          Raven.captureException(error)
-        }
-        return
-      }
-
-      this.loadData(response.data)
-      this.errors = {}
-      this.isEditMode = false
-    }
   }
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 .no-link
   color: inherit
   text-decoration: none

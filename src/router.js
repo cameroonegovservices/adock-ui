@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import { getTracker } from './tracker'
-import Search from './views/Search.vue'
-import Detail from './views/Detail.vue'
+import Search from '@/views/Search.vue'
+import Detail from '@/views/Detail.vue'
+import Edit from '@/views/Edit.vue'
+import api from './api'
 
 Vue.use(Router)
 
@@ -17,6 +19,18 @@ const routes = [
     path: '/transporteur/:transporteurSiret',
     name: 'transporteur',
     component: Detail,
+    props: true
+  },
+  {
+    path: '/transporteur/:transporteurSiret/edit',
+    name: 'transporteur_edit',
+    component: Edit,
+    async beforeEnter (routeTo, routeFrom, next) {
+      if (!routeTo.params.transporteur) {
+        routeTo.params.transporteur = await api.fetchTransporteur(routeTo.params.transporteurSiret)
+      }
+      next()
+    },
     props: true
   }
 ]

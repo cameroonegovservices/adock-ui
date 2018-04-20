@@ -95,7 +95,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import Raven from 'raven-js'
 
 import api from '@/api.js'
 import TransporteurResults from '@/components/TransporteurResults.vue'
@@ -156,40 +155,35 @@ export default {
 
   methods: {
     async search () {
-      let response
-
       // Remove error message as soon as the user clicks
       this.error = ''
       this.isSearching = true
-      try {
+
+      const data = await api.searchTransporteurs({
         // The parameters of the query are in French
-        response = await api.get('/transporteurs/recherche/', {
-          params: {
-            'q': this.searchForm.q,
-            'licence-types': this.searchForm.licenseTypes.map(item => item.value),
-            'departement-depart': this.searchForm.departementFrom,
-            'departement-arrivee': this.searchForm.departementTo,
-            'specialities': this.searchForm.specialities.map(item => item.value)
-          }
-        })
+        params: {
+          'q': this.searchForm.q,
+          'licence-types': this.searchForm.licenseTypes.map(item => item.value),
+          'departement-depart': this.searchForm.departementFrom,
+          'departement-arrivee': this.searchForm.departementTo,
+          'specialities': this.searchForm.specialities.map(item => item.value)
+        }
+      })
+
+      if (data.error == null) {
         // Disable reactivity to speed up rendering
-        this.transporteurs = Object.freeze(response.data.results)
-        this.limit = response.data.limit || 0
+        this.transporteurs = Object.freeze(data.transporteurs)
+        this.limit = data.limit || 0
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
         this.isSearchDone = true
-      } catch (error) {
+      } else {
+        this.error = data.error
         this.transporteurs = []
         this.limit = 0
         this.isSearchDone = false
-        if (error.response && error.response.data && error.response.data.message) {
-          this.error = error.response.data.message
-        } else {
-          // Default
-          Raven.captureException(error)
-          this.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
-        }
       }
+
       this.isSearching = false
     }
   }
