@@ -7,9 +7,27 @@ const adockAxios = axios.create({
 })
 
 const searchTransporteursUrl = '/transporteurs/recherche'
+const metaUrl = '/meta'
+
+function getTransporteurUrl (transporteurSiret) {
+  return `/transporteurs/${transporteurSiret}/`
+}
 
 export default {
-  searchTransporteurs (params) {
+  async getMeta () {
+    let meta
+    try {
+      const response = await adockAxios.get(metaUrl)
+      meta = response.data
+    } catch (error) {
+      Raven.captureException(error)
+      meta = null
+    }
+
+    return meta
+  },
+
+  async searchTransporteurs (params) {
     const data = {
       transporteurs: null,
       limit: null,
@@ -17,7 +35,7 @@ export default {
     }
 
     try {
-      const response = adockAxios.get(searchTransporteursUrl, params)
+      const response = await adockAxios.get(searchTransporteursUrl, params)
       data.transporteurs = response.data.results
       data.limit = response.data.limit
     } catch (error) {
@@ -33,18 +51,37 @@ export default {
     return data
   },
 
-  getTransporteurUrl (transporteurSiret) {
-    return `/transporteurs/${transporteurSiret}/`
-  },
-
   async fetchTransporteur (transporteurSiret) {
+    let transporteur
+
     try {
-      const url = this.getTransporteurUrl(transporteurSiret)
+      const url = getTransporteurUrl(transporteurSiret)
       const response = await adockAxios.get(url)
-      return response.data
+      transporteur = response.data
     } catch (error) {
       Raven.captureException(error)
-      return null
+      transporteur = null
     }
+
+    return transporteur
+  },
+
+  async updateTransporteur (transporteurSiret, form) {
+    const data = {
+      transporteur: null,
+      errors: null
+    }
+
+    try {
+      const url = getTransporteurUrl(transporteurSiret)
+      const response = await adockAxios.patch(url, form)
+      data.transporteur = response.data
+    } catch (error) {
+      if (error.response && error.response.data) {
+        data.errors = error.response.data
+      }
+    }
+
+    return data
   }
 }
