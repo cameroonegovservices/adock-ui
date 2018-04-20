@@ -1,9 +1,3 @@
-<template lang="pug">
-  div.adock-indicator(v-if="percent != null" :class="statusColor")
-    v-icon(v-if="completed" dark) done
-    span(v-else) {{ percent }} %
-</template>
-
 <script>
 export default {
   props: {
@@ -27,6 +21,12 @@ export default {
   }
 }
 </script>
+
+<template lang="pug">
+  div.adock-indicator(v-if="percent != null" :class="statusColor")
+    v-icon(v-if="completed" dark) done
+    span(v-else) {{ percent }} %
+</template>
 
 <style lang="stylus">
 .adock-indicator

@@ -1,3 +1,61 @@
+
+<script>
+import { mapState } from 'vuex'
+
+import api from '@/api.js'
+import roadPicture from '@/assets/road.jpg'
+import CompletenessIndicator from '@/components/CompletenessIndicator'
+
+export default {
+  name: 'Detail',
+
+  props: {
+    transporteurSiret: {
+      type: String,
+      required: true
+    }
+  },
+
+  data () {
+    return {
+      transporteur: {}
+    }
+  },
+
+  components: {
+    'completeness-indicator': CompletenessIndicator
+  },
+
+  created () {
+    // FIXME Workaround asset loading, for now...
+    this.roadPicture = roadPicture
+  },
+
+  async mounted () {
+    this.transporteur = await api.fetchTransporteur(this.transporteurSiret)
+  },
+
+  computed: {
+    displaySpecialities () {
+      if (this.transporteur.specialities && this.choices.specialities) {
+        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
+      } else {
+        return ''
+      }
+    },
+    ...mapState([
+      'choices'
+    ])
+  },
+
+  filters: {
+    asDepartements (value) {
+      return value.map(dep => String(dep).padStart(2, '0')).join(', ')
+    }
+  }
+}
+</script>
+
 <template lang="pug">
   v-container(fluid)
     v-layout(justify-center row wrap)
@@ -88,63 +146,6 @@
                   span(v-if="transporteur.completeness === 100") Modifier les informations
                   span(v-else) Compléter les informations
 </template>
-
-<script>
-import { mapState } from 'vuex'
-
-import api from '@/api.js'
-import roadPicture from '@/assets/road.jpg'
-import CompletenessIndicator from '@/components/CompletenessIndicator'
-
-export default {
-  name: 'Detail',
-
-  props: {
-    transporteurSiret: {
-      type: String,
-      required: true
-    }
-  },
-
-  data () {
-    return {
-      transporteur: {}
-    }
-  },
-
-  components: {
-    'completeness-indicator': CompletenessIndicator
-  },
-
-  created () {
-    // FIXME Workaround asset loading, for now...
-    this.roadPicture = roadPicture
-  },
-
-  async mounted () {
-    this.transporteur = await api.fetchTransporteur(this.transporteurSiret)
-  },
-
-  computed: {
-    displaySpecialities () {
-      if (this.transporteur.specialities && this.choices.specialities) {
-        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
-      } else {
-        return ''
-      }
-    },
-    ...mapState([
-      'choices'
-    ])
-  },
-
-  filters: {
-    asDepartements (value) {
-      return value.map(dep => String(dep).padStart(2, '0')).join(', ')
-    }
-  }
-}
-</script>
 
 <style lang="stylus">
 .adock-no-link

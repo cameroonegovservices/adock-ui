@@ -1,24 +1,3 @@
-<template lang="pug">
-  div
-    p(v-if="searchResponseIsEmpty") La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
-    v-card.mt-1(v-if="transporteurs.length > 0")
-      v-list(two-line)
-        v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
-        v-subheader(v-else) {{ transporteurs.length }} transporteurs pour la recherche {{ searchParamsForDisplay }}
-        template(v-for="(transporteur, index) in transporteurs")
-          v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
-          v-list-tile(
-            :key="transporteur.siret",
-            :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
-            v-list-tile-content
-              v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
-              v-list-tile-sub-title.adock-transporteur-list-tile {{ transporteur.code_postal }} {{ transporteur.ville }}
-            v-list-tile-action.adock-transporteur-list-action
-              v-list-tile-action-text
-                span.hidden-xs-only Complété à
-                span  {{ transporteur.completeness }}&nbsp;%
-              v-icon info
-</template>
 
 <script>
 export default {
@@ -77,6 +56,28 @@ export default {
   }
 }
 </script>
+
+<template lang="pug">
+  div
+    p(v-if="searchResponseIsEmpty") La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
+    v-card.mt-1(v-if="transporteurs.length > 0")
+      v-list(two-line)
+        v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
+        v-subheader(v-else) {{ transporteurs.length }} transporteurs pour la recherche {{ searchParamsForDisplay }}
+        template(v-for="(transporteur, index) in transporteurs")
+          v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
+          v-list-tile(
+            :key="transporteur.siret",
+            :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
+            v-list-tile-content
+              v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
+              v-list-tile-sub-title.adock-transporteur-list-tile {{ transporteur.code_postal }} {{ transporteur.ville }}
+            v-list-tile-action.adock-transporteur-list-action
+              v-list-tile-action-text
+                span.hidden-xs-only Complété à
+                span  {{ transporteur.completeness }}&nbsp;%
+              v-icon info
+</template>
 
 <style lang="stylus">
 .adock-transporteur-list-action

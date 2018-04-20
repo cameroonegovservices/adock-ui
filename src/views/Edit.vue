@@ -1,60 +1,3 @@
-<template lang="pug">
-  v-container(fluid)
-    v-layout(justify-center row wrap)
-      v-flex(xs12 sm11 md9 lg8 xl6)
-        router-link(:to="{name: 'search'}").d-inline-flex.align-center.adock-no-link
-          v-btn(icon)
-            v-icon chevron_left
-          span.subheading.no-wrap Recherche
-        v-card
-          v-card-media.white--text(:src="roadPicture" height="200px")
-            v-layout.pa-4(column reverse)
-              v-flex.flex-bottom(xs10)
-                v-layout(align-end)
-                  v-flex(xs10)
-                    h3.headline {{ transporteur.raison_sociale }}
-                    span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
-                  v-flex(xs2)
-                    completeness-indicator(:percent="transporteur.completeness")
-          v-card-text(id="detailForm")
-            v-text-field(
-              v-model="form.telephone"
-              input="telephone"
-              label="Téléphone"
-              :error-messages="errors.telephone"
-              data-cy="inputTelephone"
-            )
-            v-text-field(
-              v-model="form.email"
-              input="email"
-              label="Adresse électronique"
-              :error-messages="errors.email"
-              data-cy="inputEmail"
-            )
-            v-select(
-              v-model="form.working_area"
-              :items="options.workingAreas"
-              label="Aire de travail"
-              data-cy="inputWorkingArea"
-            )
-            v-text-field(
-              v-if="form.working_area === 'DEPARTEMENT'"
-              v-model="form.working_area_departements"
-              label="Départements livrés"
-              hint="Numéros des départements séparés par des espaces ou virgules"
-            )
-            v-select(
-              :items="options.specialities"
-              v-model="form.specialities"
-              label="Spécialités"
-              chips
-              multiple
-              deletable-chips
-              data-cy="inputSpecialities"
-            )
-            v-btn(color="primary" @click.native="update") Valider
-</template>
-
 <script>
 import { mapState } from 'vuex'
 
@@ -136,6 +79,63 @@ export default {
   }
 }
 </script>
+
+<template lang="pug">
+  v-container(fluid)
+    v-layout(justify-center row wrap)
+      v-flex(xs12 sm11 md9 lg8 xl6)
+        router-link(:to="{name: 'search'}").d-inline-flex.align-center.adock-no-link
+          v-btn(icon)
+            v-icon chevron_left
+          span.subheading.no-wrap Recherche
+        v-card
+          v-card-media.white--text(:src="roadPicture" height="200px")
+            v-layout.pa-4(column reverse)
+              v-flex.flex-bottom(xs10)
+                v-layout(align-end)
+                  v-flex(xs10)
+                    h3.headline {{ transporteur.raison_sociale }}
+                    span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
+                  v-flex(xs2)
+                    completeness-indicator(:percent="transporteur.completeness")
+          v-card-text(id="detailForm")
+            v-text-field(
+              v-model="form.telephone"
+              input="telephone"
+              label="Téléphone"
+              :error-messages="errors.telephone"
+              data-cy="inputTelephone"
+            )
+            v-text-field(
+              v-model="form.email"
+              input="email"
+              label="Adresse électronique"
+              :error-messages="errors.email"
+              data-cy="inputEmail"
+            )
+            v-select(
+              v-model="form.working_area"
+              :items="options.workingAreas"
+              label="Aire de travail"
+              data-cy="inputWorkingArea"
+            )
+            v-text-field(
+              v-if="form.working_area === 'DEPARTEMENT'"
+              v-model="form.working_area_departements"
+              label="Départements livrés"
+              hint="Numéros des départements séparés par des espaces ou virgules"
+            )
+            v-select(
+              :items="options.specialities"
+              v-model="form.specialities"
+              label="Spécialités"
+              chips
+              multiple
+              deletable-chips
+              data-cy="inputSpecialities"
+            )
+            v-btn(color="primary" @click.native="update") Valider
+</template>
 
 <style lang="stylus">
 .adock-no-link
