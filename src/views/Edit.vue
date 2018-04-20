@@ -2,7 +2,7 @@
   v-container(fluid)
     v-layout(justify-center row wrap)
       v-flex(xs12 sm11 md9 lg8 xl6)
-        router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
+        router-link(:to="{name: 'search'}").d-inline-flex.align-center.adock-no-link
           v-btn(icon)
             v-icon chevron_left
           span.subheading.no-wrap Recherche
@@ -137,8 +137,8 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.no-link
+<style lang="stylus">
+.adock-no-link
   color: inherit
   text-decoration: none
 

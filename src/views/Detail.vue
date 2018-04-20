@@ -2,7 +2,7 @@
   v-container(fluid)
     v-layout(justify-center row wrap)
       v-flex(xs12 sm11 md9 lg8 xl6)
-        router-link(:to="{name: 'search'}").d-inline-flex.align-center.no-link
+        router-link(:to="{name: 'search'}").d-inline-flex.align-center.adock-no-link
           v-btn(icon)
             v-icon chevron_left
           span.subheading.no-wrap Recherche
@@ -25,61 +25,61 @@
           v-container(grid-list-lg)
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
-              v-flex.align-right(xs6 md5) {{ transporteur.siret }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
             v-layout
               v-flex(xs6 offset-md1 md5) N° TVA
-              v-flex.align-right(xs6 md5) {{ transporteur.numero_tva }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.numero_tva }}
             v-layout
               v-flex(xs6 offset-md1 md5) Adresse
-              v-flex.align-right(xs6 md5) {{ transporteur.adresse }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.adresse }}
             v-layout
               v-flex(xs6 offset-md1 md5) Ville
-              v-flex.align-right(xs6 md5) {{ transporteur.ville }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.ville }}
             v-layout
               v-flex(xs6 offset-md1 md5) Gestionnaire
-              v-flex.align-right(xs6 md5) {{ transporteur.gestionnaire }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.gestionnaire }}
             template(v-if="transporteur.lti_numero")
               br
               v-layout
                 v-flex(xs6 offset-md1 md5) Licence LTI (léger)
-                v-flex.align-right(xs6 md5) {{ transporteur.lti_numero }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_numero }}
               v-layout
                 v-flex(xs6 offset-md1 md5) validité
-                v-flex.align-right(xs6 md5) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
-                v-flex.align-right(xs6 md5) {{ transporteur.lti_nombre }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_nombre }}
             template(v-if="transporteur.lc_numero")
               br
               v-layout
                 v-flex(xs6 offset-md1 md5) Licence LC (lourd, + 3,5 tonnes)
-                v-flex.align-right(xs6 md5) {{ transporteur.lc_numero }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_numero }}
               v-layout
                 v-flex(xs6 offset-md1 md5) validité
-                v-flex.align-right(xs6 md5) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
-                v-flex.align-right(xs6 md5) {{ transporteur.lc_nombre }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
             v-layout
               v-flex(xs6 offset-md1 md5)
-                span.section.grey--text.text--darken-1 Informations complémentaires
+                span.adock-section.grey--text.text--darken-1 Informations complémentaires
             v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
-              v-flex.align-right(xs6 md5) {{ transporteur.telephone }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.telephone }}
             v-layout
               v-flex(xs6 offset-md1 md5) Email
-              v-flex.align-right(xs6 md5) {{ transporteur.email }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.email }}
             v-layout
               v-flex(xs6 offset-md1 md5) Aire de travail
-              v-flex.align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
+              v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
             v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
               v-flex(xs6 offset-md1 md5) Départements livrés
-              v-flex.align-right(xs6 md5) {{ transporteur.working_area_departements | asDepartements }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asDepartements }}
             v-layout
               v-flex(xs6 offset-md1 md5) Spécialités
-              v-flex.align-right(xs6 md5) {{ displaySpecialities }}
+              v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
             v-layout
-              v-flex.align-right(xs12 md11)
+              v-flex.adock-align-right(xs12 md11)
                 v-btn.ma-0(
                   dark
                   :color="transporteur.completeness === 100 ? 'green' : 'orange'"
@@ -146,15 +146,15 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.no-link
+<style lang="stylus">
+.adock-no-link
   color: inherit
   text-decoration: none
 
-.align-right
+.adock-align-right
   text-align: right
 
-.section
+.adock-section
   padding-top: 0.5em
   margin-left: -0.5em
 

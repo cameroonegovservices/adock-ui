@@ -9,7 +9,7 @@
           br
           span {{ meta.transporteur.localeCount }} transporteurs au {{ meta.transporteur.localeDate }}
       router-link(:to="{name: 'search'}")
-        img.app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
+        img.adock-app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
     v-content
       router-view
 </template>
@@ -32,8 +32,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.app-name {
-  padding-left: 8px;
-}
+<style lang="stylus">
+.adock-app-name
+  padding-left: 8px
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-container.search-background(fluid fill-height)
+  v-container.adock-search-background(fluid fill-height)
     v-layout(row justify-center)
       v-flex(xs12 sm11 md9 lg8 xl6)
         v-card.elevation-8
@@ -71,9 +71,9 @@
           :transporteurs="transporteurs"
           :limit="limit"
         )
-        v-card.elevation-0.cta
+        v-card.elevation-0.adock-cta
           v-container.pt-4
-            v-layout.cta(row wrap justify-space-around)
+            v-layout.adock-cta(row wrap justify-space-around)
               v-flex(xs3)
                 h2.text-xs-center
                   v-icon(x-large) search
@@ -190,17 +190,15 @@ export default {
 }
 </script>
 
-<style>
-.search-background {
-  background: no-repeat top/100% url('../assets/search-background.jpg');
-  background-color: white;
-}
+<style lang="stylus">
+.adock-search-background
+  background: no-repeat top/100% url('../assets/search-background.jpg')
+  background-color: white
 
-.card.cta {
-  background-color: rgba(255, 255, 255, .7);
-}
+.card.adock-cta
+  background-color: rgba(255, 255, 255, .7)
 
-.layout.cta h3, .layout.cta p, .layout.cta .icon {
-  color: #373C42;
-}
+.layout.adock-cta
+  h3, p, .icon
+    color: #373C42
 </style>

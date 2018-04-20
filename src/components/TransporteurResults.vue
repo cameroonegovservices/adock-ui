@@ -11,9 +11,9 @@
             :key="transporteur.siret",
             :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
             v-list-tile-content
-              v-list-tile-title.transporteur-tile {{ transporteur.raison_sociale }}
-              v-list-tile-sub-title.transporteur-tile {{ transporteur.code_postal }} {{ transporteur.ville }}
-            v-list-tile-action.transporteur-action
+              v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
+              v-list-tile-sub-title.adock-transporteur-list-tile {{ transporteur.code_postal }} {{ transporteur.ville }}
+            v-list-tile-action.adock-transporteur-list-action
               v-list-tile-action-text
                 span.hidden-xs-only Complété à
                 span  {{ transporteur.completeness }}&nbsp;%
@@ -78,13 +78,11 @@ export default {
 }
 </script>
 
-<style>
-.transporteur-action {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
+<style lang="stylus">
+.adock-transporteur-list-action
+  padding-top: 15px
+  padding-bottom: 15px
 
-.transporteur-tile {
-  white-space: unset;
-}
+.adock-transporteur-list-tile
+  white-space: unset
 </style>
