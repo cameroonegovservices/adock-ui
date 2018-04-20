@@ -1,11 +1,9 @@
 <script>
 import { mapState } from 'vuex'
+import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 import api from '@/api.js'
 import router from '@/router.js'
-
-import CompletenessIndicator from '@/components/CompletenessIndicator'
-import roadPicture from '@/assets/road.jpg'
 
 export default {
   name: 'Edit',
@@ -21,6 +19,10 @@ export default {
     }
   },
 
+  components: {
+    TransporteurCardHeader
+  },
+
   data () {
     return {
       form: {
@@ -34,13 +36,7 @@ export default {
     }
   },
 
-  components: {
-    CompletenessIndicator
-  },
-
   created () {
-    // FIXME Workaround asset loading, for now...
-    this.roadPicture = roadPicture
     this.loadForm(this.transporteur)
   },
 
@@ -89,15 +85,7 @@ export default {
             v-icon chevron_left
           span.subheading.no-wrap Recherche
         v-card
-          v-card-media.white--text(:src="roadPicture" height="200px")
-            v-layout.pa-4(column reverse)
-              v-flex.flex-bottom(xs10)
-                v-layout(align-end)
-                  v-flex(xs10)
-                    h3.headline {{ transporteur.raison_sociale }}
-                    span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
-                  v-flex(xs2)
-                    CompletenessIndicator(:percent="transporteur.completeness")
+          TransporteurCardHeader(:transporteur="transporteur")
           v-card-text(id="detailForm")
             v-text-field(
               v-model="form.telephone"

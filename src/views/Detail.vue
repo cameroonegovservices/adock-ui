@@ -3,8 +3,7 @@
 import { mapState } from 'vuex'
 
 import api from '@/api.js'
-import roadPicture from '@/assets/road.jpg'
-import CompletenessIndicator from '@/components/CompletenessIndicator'
+import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 export default {
   name: 'Detail',
@@ -16,19 +15,14 @@ export default {
     }
   },
 
+  components: {
+    TransporteurCardHeader
+  },
+
   data () {
     return {
       transporteur: {}
     }
-  },
-
-  components: {
-    CompletenessIndicator
-  },
-
-  created () {
-    // FIXME Workaround asset loading, for now...
-    this.roadPicture = roadPicture
   },
 
   async mounted () {
@@ -65,21 +59,7 @@ export default {
             v-icon chevron_left
           span.subheading.no-wrap Recherche
         v-card
-          v-card-media.white--text(:src="roadPicture" height="200px")
-            v-layout.pa-4(column reverse)
-              v-flex.flex-bottom(xs10)
-                v-layout(align-end)
-                  v-flex(xs10)
-                    h3.headline {{ transporteur.raison_sociale }}
-                    span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
-                    br
-                    v-btn.ma-0(v-if="transporteur.completeness < 100"
-                      dark
-                      color="orange"
-                      :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
-                    ) Compléter les informations
-                  v-flex(xs2)
-                    CompletenessIndicator(:percent="transporteur.completeness")
+          TransporteurCardHeader(:transporteur="transporteur" :with-button="true")
           v-container(grid-list-lg)
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
