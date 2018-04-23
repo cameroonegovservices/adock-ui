@@ -7,10 +7,10 @@ v-card-media.white--text(:src="roadPicture" height="200px")
           h3.headline {{ transporteur.raison_sociale }}
           span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
           br
-          v-btn.ma-0(v-if="this.withButton && transporteur.completeness < 100"
+          v-btn.ma-0(v-if="withButton && transporteur.completeness < 100"
             dark
             color="orange"
-            :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
+            :to="{name: 'transporteur_edit', params: {transporteurSiret: transporteur.siret}}"
           ) Compléter les informations
         v-flex(xs2)
           CompletenessIndicator(:percent="transporteur.completeness")
