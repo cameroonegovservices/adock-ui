@@ -1,8 +1,14 @@
 <script>
 import { mapState } from 'vuex'
 
+import Message from '@/components/Message.vue'
+
 export default {
   name: 'App',
+
+  components: {
+    Message
+  },
 
   async created () {
     this.$store.dispatch('loadMeta')
@@ -18,6 +24,7 @@ export default {
 
 <template lang="pug">
   v-app
+    Message
     v-toolbar.white(app light)
       v-tooltip(bottom)
         span(slot="activator")

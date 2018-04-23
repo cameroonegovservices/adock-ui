@@ -9,6 +9,9 @@ export const state = {
     workingAreas: [],
     specialities: []
   },
+  // Contains objects {color: 'success', text: ''}
+  messages: [
+  ],
   meta: {
     transporteur: {},
     version: ''
@@ -24,6 +27,12 @@ function getOptionsFromChoices (choices) {
 }
 
 export const mutations = {
+  [types.POP_MESSAGE] (state) {
+    state.messages.pop()
+  },
+  [types.PUSH_MESSAGE] (state, message) {
+    state.messages.push(message)
+  },
   [types.SET_META] (state, payload) {
     state.options.workingAreas = getOptionsFromChoices(payload.choices.WORKING_AREA_CHOICES)
     state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES

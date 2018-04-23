@@ -69,6 +69,7 @@ export default {
       if (data.errors) {
         this.errors = data.errors
       } else {
+
         router.push({name: 'transporteur', transporteurSiret: this.transporteurSiret})
       }
     }
