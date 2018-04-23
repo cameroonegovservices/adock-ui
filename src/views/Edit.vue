@@ -87,7 +87,7 @@ export default {
           span.subheading.no-wrap Recherche
         v-card
           TransporteurCardHeader(:transporteur="transporteur")
-          v-card-text(id="detailForm")
+          v-card-text.pa-5
             v-text-field(
               v-model="form.telephone"
               input="telephone"
