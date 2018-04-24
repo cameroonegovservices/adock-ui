@@ -2,6 +2,7 @@
 import 'babel-polyfill'
 
 import Vue from 'vue'
+import Vuex from 'vuex'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import { Vuetify } from 'vuetify'
@@ -11,7 +12,7 @@ import { version } from '../package.json'
 import { loadTracker } from './tracker'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { storeOptions } from './store/options'
 
 import './stylus/main.styl'
 
@@ -32,6 +33,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.use(Vuetify, vuetifyOptions)
+Vue.use(Vuex)
+const store = new Vuex.Store(storeOptions)
 
 new Vue({
   router,
