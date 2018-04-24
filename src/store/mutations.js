@@ -1,5 +1,3 @@
-import * as types from './mutation-types'
-
 export const state = {
   choices: {
     workingAreas: {},
@@ -27,13 +25,13 @@ function getOptionsFromChoices (choices) {
 }
 
 export const mutations = {
-  [types.POP_MESSAGE] (state) {
+  POP_MESSAGE (state) {
     state.messages.pop()
   },
-  [types.PUSH_MESSAGE] (state, message) {
+  PUSH_MESSAGE (state, message) {
     state.messages.push(message)
   },
-  [types.SET_META] (state, payload) {
+  SET_META (state, payload) {
     state.options.workingAreas = getOptionsFromChoices(payload.choices.WORKING_AREA_CHOICES)
     state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES
     state.options.specialities = getOptionsFromChoices(payload.choices.SPECIALITY_CHOICES)

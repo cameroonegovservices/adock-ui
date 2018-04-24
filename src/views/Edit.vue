@@ -1,5 +1,4 @@
 <script>
-import { PUSH_MESSAGE } from '@/store/mutation-types'
 import { mapState } from 'vuex'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
@@ -70,7 +69,7 @@ export default {
       if (data.errors) {
         this.errors = data.errors
       } else {
-        this.$store.commit(PUSH_MESSAGE, {
+        this.$store.commit('PUSH_MESSAGE', {
           color: null,
           text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
         })

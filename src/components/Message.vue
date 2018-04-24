@@ -1,6 +1,5 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
-import * as types from '@/store/mutation-types'
 
 export default {
   name: 'Message',
@@ -13,7 +12,7 @@ export default {
 
   methods: {
     ...mapMutations([
-      types.POP_MESSAGE
+      'POP_MESSAGE'
     ])
   }
 }
