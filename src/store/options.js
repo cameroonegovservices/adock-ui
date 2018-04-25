@@ -6,3 +6,5 @@ export const storeOptions = {
   mutations,
   actions
 }
+
+export default storeOptions
