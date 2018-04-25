@@ -57,7 +57,8 @@ Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
 * `yarn serve` sert l'application pour le développement
 * `yarn build` compile la version de production
 * `yarn test` lance les tests unitaires
-* `yarn e2e` lance les tests E2E
+* `yarn e2e` lance les tests E2E. Il est nécessaire de lancer le client en mode développement, le serveur Django et la factory précisée dans les tests au préalable.
+
 
 Les variables d'environnement telles que l'URL du serveur sont passées via les
 fichiers `.env.development` (ou `.env.development.local` pour surcharger) et
