@@ -67,6 +67,6 @@ describe('mutations', () => {
     expect(state.meta.transporteur.localeDate).toBeTruthy()
     // toLocaleString is a noop on node
     expect(state.meta.transporteur.localeCount).toBeTruthy()
-    expect(state.meta.version).toEqual('1.0')
+    expect(state.meta.version).toBe('1.0')
   })
 })

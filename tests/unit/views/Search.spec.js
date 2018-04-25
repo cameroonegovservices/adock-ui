@@ -20,7 +20,10 @@ describe('Search.vue', () => {
   })
 
   it('renders search', () => {
-    const wrapper = mount(Search, {localVue, store})
+    const wrapper = mount(Search, {
+      localVue,
+      store
+    })
     expect(wrapper.text()).toMatch('Chercher')
   })
 })
