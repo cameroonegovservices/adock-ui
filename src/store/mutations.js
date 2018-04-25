@@ -28,8 +28,8 @@ export const mutations = {
   REMOVE_MESSAGE (state) {
     state.messages.shift()
   },
-  ADD_MESSAGE (state, message) {
-    state.messages.push(message)
+  ADD_MESSAGE (state, payload) {
+    state.messages.push(payload.message)
   },
   SET_META (state, payload) {
     state.options.workingAreas = getOptionsFromChoices(payload.choices.WORKING_AREA_CHOICES)

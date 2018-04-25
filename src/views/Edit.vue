@@ -70,8 +70,10 @@ export default {
         this.errors = data.errors
       } else {
         this.$store.commit('ADD_MESSAGE', {
-          color: null,
-          text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
+          message: {
+            color: null,
+            text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
+          }
         })
         router.push({name: 'transporteur', transporteurSiret: this.transporteurSiret})
       }

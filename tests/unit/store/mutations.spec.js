@@ -15,7 +15,7 @@ describe('mutations', () => {
       messages: ['old']
     }
     const message = 'new'
-    mutations.ADD_MESSAGE(state, message)
+    mutations.ADD_MESSAGE(state, { message })
     expect(state.messages).toEqual(['old', 'new'])
   })
 
