@@ -1,5 +1,3 @@
-/* eslint no-debugger: "off" */
-
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import { mount, createLocalVue } from '@vue/test-utils'

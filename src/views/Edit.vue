@@ -69,7 +69,7 @@ export default {
       if (data.errors) {
         this.errors = data.errors
       } else {
-        this.$store.commit('PUSH_MESSAGE', {
+        this.$store.commit('ADD_MESSAGE', {
           color: null,
           text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
         })

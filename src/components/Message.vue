@@ -12,7 +12,7 @@ export default {
 
   methods: {
     ...mapMutations([
-      'POP_MESSAGE'
+      'REMOVE_MESSAGE'
     ])
   }
 }
@@ -25,7 +25,7 @@ export default {
     :timeout="6000",
     :color="messages[0].color"
     :value="messages.length > 0"
-    @input="POP_MESSAGE()"
+    @input="REMOVE_MESSAGE()"
   ) {{ messages[0].text }}
-    <v-btn flat color="pink" @click.native="POP_MESSAGE()">Fermer</v-btn>
+    <v-btn flat color="pink" @click.native="REMOVE_MESSAGE()">Fermer</v-btn>
 </template>

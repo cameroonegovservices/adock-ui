@@ -25,10 +25,10 @@ function getOptionsFromChoices (choices) {
 }
 
 export const mutations = {
-  POP_MESSAGE (state) {
-    state.messages.pop()
+  REMOVE_MESSAGE (state) {
+    state.messages.shift()
   },
-  PUSH_MESSAGE (state, message) {
+  ADD_MESSAGE (state, message) {
     state.messages.push(message)
   },
   SET_META (state, payload) {

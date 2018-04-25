@@ -1,21 +1,22 @@
 import { mutations } from '@/store/mutations'
 
 describe('mutations', () => {
-  it('POP_MESSAGE', () => {
+  it('REMOVE_MESSAGE', () => {
     const state = {
       messages: ['old', 'new']
     }
-    mutations.POP_MESSAGE(state)
-    expect(state.messages).toEqual(['old'])
+    mutations.REMOVE_MESSAGE(state)
+    // Only recent messages are remaining
+    expect(state.messages).toEqual(['new'])
   })
 
-  it('PUSH_MESSAGE', () => {
+  it('ADD_MESSAGE', () => {
     const state = {
-      messages: []
+      messages: ['old']
     }
-    const message = 'It works!'
-    mutations.PUSH_MESSAGE(state, message)
-    expect(state.messages).toEqual([message])
+    const message = 'new'
+    mutations.ADD_MESSAGE(state, message)
+    expect(state.messages).toEqual(['old', 'new'])
   })
 
   it('SET_META', () => {
