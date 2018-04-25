@@ -68,7 +68,7 @@ export default {
           v-divider(v-if="index !== 0", :key="'d-' + transporteur.siret")
           v-list-tile(
             :key="transporteur.siret",
-            :to="{ name: 'transporteur', params: { transporteurSiret: transporteur.siret }}")
+            :to="{ name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}")
             v-list-tile-content
               v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
               v-list-tile-sub-title.adock-transporteur-list-tile {{ transporteur.code_postal }} {{ transporteur.ville }}

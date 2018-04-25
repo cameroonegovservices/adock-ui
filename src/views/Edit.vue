@@ -75,7 +75,7 @@ export default {
             text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
           }
         })
-        router.push({name: 'transporteur', transporteurSiret: this.transporteurSiret})
+        router.push({name: 'transporteur_detail', transporteurSiret: this.transporteurSiret})
       }
     }
   }
@@ -128,7 +128,7 @@ export default {
               deletable-chips
               data-cy="inputSpecialities"
             )
-            v-btn(:to="{name: 'transporteur', params: { transporteurSiret: transporteur.siret }}") Annuler
+            v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
             v-btn(color="primary" @click.native="update") Valider
 </template>
 

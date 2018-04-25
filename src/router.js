@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/transporteur/:transporteurSiret',
-    name: 'transporteur',
+    name: 'transporteur_detail',
     component: Detail,
     props: true
   },
