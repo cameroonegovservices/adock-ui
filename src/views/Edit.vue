@@ -128,6 +128,7 @@ export default {
               deletable-chips
               data-cy="inputSpecialities"
             )
+            v-btn(:to="{name: 'transporteur', params: { transporteurSiret: transporteur.siret }}") Annuler
             v-btn(color="primary" @click.native="update") Valider
 </template>
 
