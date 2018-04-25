@@ -1,14 +1,15 @@
-import Vue from 'vue'
 import Vuetify from 'vuetify'
-import { shallow } from '@vue/test-utils'
+import { createLocalVue, shallow } from '@vue/test-utils'
 
 import CompletenessIndicator from '@/components/CompletenessIndicator.vue'
 
-Vue.use(Vuetify)
-
 describe('CompletenessIndicator.vue', () => {
+  const localVue = createLocalVue()
+  localVue.use(Vuetify)
+
   it('displays a orange counter below 100%', () => {
     const wrapper = shallow(CompletenessIndicator, {
+      localVue,
       propsData: {
         percent: 50
       }
@@ -20,6 +21,7 @@ describe('CompletenessIndicator.vue', () => {
 
   it('displays a orange counter below 100%', () => {
     const wrapper = shallow(CompletenessIndicator, {
+      localVue,
       propsData: {
         percent: 100
       }
