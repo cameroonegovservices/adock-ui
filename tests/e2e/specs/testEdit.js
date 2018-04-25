@@ -3,14 +3,14 @@ describe('Edit', () => {
     cy.visit('/transporteur/80005226884728')
 
     // Switch to edit view (2 buttons)
-    cy.get('a.btn').first()
+    cy.contains('Compléter les informations').first()
       .click()
 
     // Submit form w/o phone to raise an error
     cy.get('[data-cy=inputTelephone]')
       .clear()
     // Don't change the current view on error
-    cy.get('.btn.primary')
+    cy.contains('Valider')
       .click()
     cy.get('.input-group__messages')
       .contains('Ce champ est obligatoire')
@@ -34,7 +34,7 @@ describe('Edit', () => {
       { timeout: 500 })
       .click({multiple: true})
     // Go the detail view with success message
-    cy.get('.btn.primary')
+    cy.contains('Valider')
       .click()
     cy.get('.snack__content')
       .contains('Transporteur « A DOCK TRANSPORTEUR » enregistré.')
@@ -44,7 +44,7 @@ describe('Edit', () => {
       .should('contain', '55')
 
     // Go again to the edit view
-    cy.get('a.btn').first()
+    cy.contains('Compléter les informations').first()
       .click()
 
     // Submit full details
@@ -63,7 +63,7 @@ describe('Edit', () => {
     cy.get('.menuable__content__active > .card > .list > :nth-child(1) > .list__tile > .list__tile__content > .list__tile__title')
       .click()
     // Button could be behind the menu
-    cy.get('.btn.primary')
+    cy.contains('Valider')
       .click({force: true})
     // Check 100 %
     cy.get('.adock-indicator > .icon')
