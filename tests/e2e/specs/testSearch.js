@@ -5,15 +5,36 @@ describe('Search', () => {
     cy.visit('/')
 
     // Search on SIRET
-    cy.get('[data-cy=searchFormQ')
+    cy.get('[data-cy=searchFormQ]')
       .type('80005226884728')
     cy.contains('div.btn__content', 'Chercher')
       .click()
 
     // Click on result to reach detail view
     cy.get("a[href='/transporteur/80005226884728']")
+  })
+
+  it('searches on county code', () => {
+    cy.visit('/')
+    cy.get('[data-cy=searchFormQ]')
+      .type('80005226884728')
+    cy.get('[data-cy=searchFormDepartementFrom]')
+      .type('34')
+    cy.contains('div.btn__content', 'Chercher')
       .click()
 
-    cy.contains('.headline', 'A DOCK TRANSPORT')
+    cy.get("a[href='/transporteur/80005226884728']")
+  })
+
+  it("doesn't find with SIRET and county code", () => {
+    cy.visit('/')
+    cy.get('[data-cy=searchFormQ]')
+      .type('80005226884728')
+    cy.get('[data-cy=searchFormDepartementFrom]')
+      .type('42')
+    cy.contains('div.btn__content', 'Chercher')
+      .click()
+
+    cy.contains("La recherche avec « 80005226884728 », départ « 42 » n'a retourné aucun résultat.")
   })
 })

@@ -142,6 +142,7 @@ export default {
                     v-model.number='searchForm.departementFrom'
                     label="Département de départ"
                     mask="###"
+                    data-cy="searchFormDepartementFrom"
                   )
                 v-flex(xs6 sm4 md3)
                   v-text-field(
