@@ -78,7 +78,7 @@ export default {
       if (data.error == null) {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(data.transporteurs)
-        this.limit = data.limit || 0
+        this.limit = data.limit
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
         this.isSearchDone = true

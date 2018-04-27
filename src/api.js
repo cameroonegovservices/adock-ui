@@ -1,23 +1,23 @@
 import axios from 'axios'
 import Raven from 'raven-js'
 
-const adockAxios = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   timeout: 3000
 })
 
-const searchTransporteursUrl = '/transporteurs/recherche'
-const metaUrl = '/meta'
+export const searchTransporteursUrl = '/transporteurs/recherche'
+export const metaUrl = '/meta'
 
-function getTransporteurUrl (transporteurSiret) {
+export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
 }
 
-export default {
+export const api = {
   async getMeta () {
     let meta
     try {
-      const response = await adockAxios.get(metaUrl)
+      const response = await axiosInstance.get(metaUrl)
       meta = response.data
     } catch (error) {
       Raven.captureException(error)
@@ -35,9 +35,9 @@ export default {
     }
 
     try {
-      const response = await adockAxios.get(searchTransporteursUrl, params)
+      const response = await axiosInstance.get(searchTransporteursUrl, params)
       data.transporteurs = response.data.results
-      data.limit = response.data.limit
+      data.limit = response.data.limit || 0
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
         data.error = error.response.data.message
@@ -56,7 +56,7 @@ export default {
 
     try {
       const url = getTransporteurUrl(transporteurSiret)
-      const response = await adockAxios.get(url)
+      const response = await axiosInstance.get(url)
       transporteur = response.data
     } catch (error) {
       Raven.captureException(error)
@@ -74,7 +74,7 @@ export default {
 
     try {
       const url = getTransporteurUrl(transporteurSiret)
-      const response = await adockAxios.patch(url, form)
+      const response = await axiosInstance.patch(url, form)
       data.transporteur = response.data
     } catch (error) {
       if (error.response && error.response.data) {
@@ -85,3 +85,5 @@ export default {
     return data
   }
 }
+
+export default api
