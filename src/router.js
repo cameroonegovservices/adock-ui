@@ -27,7 +27,10 @@ const routes = [
     component: Edit,
     async beforeEnter (routeTo, routeFrom, next) {
       if (!routeTo.params.transporteur) {
-        routeTo.params.transporteur = await api.fetchTransporteur(routeTo.params.transporteurSiret)
+        const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
+        if (response.errors === null) {
+          routeTo.params.transporteur = response.transporteur
+        }
       }
       next()
     },

@@ -20,13 +20,14 @@ describe('api', () => {
     })
 
     const response = await api.getMeta()
-    expect(response.version).toBe('1.0')
+    expect(response.meta.version).toBe('1.0')
+    expect(response.errors).toBe(null)
   })
 
   it('fails to get meta information', async () => {
     mockAdapter.onGet(metaUrl).reply(500)
     const response = await api.getMeta()
-    expect(response).toBe(null)
+    expect(response.errors).toHaveLength(1)
   })
 
   it('search transporteurs', async () => {
@@ -47,14 +48,16 @@ describe('api', () => {
       message: 'Invalid request'
     })
     const response = await api.searchTransporteurs()
-    expect(response.error).toBe('Invalid request')
+    expect(response.errors).toHaveLength(1)
+    expect(response.errors[0]).toBe('Invalid request')
   })
 
   it('fails to search transporteurs w/o message', async () => {
     mockAdapter.onGet(searchTransporteursUrl).reply(500)
     process.env.VUE_APP_API_URL = 'https://example.com'
     const response = await api.searchTransporteurs()
-    expect(response.error).toBe('Impossible de contacter le serveur https://example.com')
+    expect(response.errors).toHaveLength(1)
+    expect(response.errors[0]).toBe('Impossible de contacter le serveur https://example.com')
   })
 
   it('fetch a transporteur', async () => {
@@ -62,15 +65,16 @@ describe('api', () => {
     mockAdapter.onGet(url).reply(200, {
       raison_sociale: 'FOO'
     })
-    const transporteur = await api.fetchTransporteur('123')
-    expect(transporteur.raison_sociale).toBe('FOO')
+    const response = await api.fetchTransporteur('123')
+    expect(response.transporteur.raison_sociale).toBe('FOO')
+    expect(response.errors).toBe(null)
   })
 
   it('fails to fetch a transporteur', async () => {
     const url = getTransporteurUrl('123')
     mockAdapter.onGet(url).reply(404)
-    const transporteur = await api.fetchTransporteur('123')
-    expect(transporteur).toBe(null)
+    const response = await api.fetchTransporteur('123')
+    expect(response.errors).toHaveLength(1)
   })
 
   it('update a transporteur', async () => {

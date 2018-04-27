@@ -26,7 +26,10 @@ export default {
   },
 
   async mounted () {
-    this.transporteur = await api.fetchTransporteur(this.transporteurSiret)
+    const response = await api.fetchTransporteur(this.transporteurSiret)
+    if (response.errors === null) {
+      this.transporteur = response.transporteur
+    }
   },
 
   computed: {

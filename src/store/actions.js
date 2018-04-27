@@ -2,9 +2,9 @@ import api from '@/api.js'
 
 export const actions = {
   loadMeta: async ({ commit, state }) => {
-    const meta = await api.getMeta()
-    if (meta) {
-      commit('SET_META', meta)
+    const response = await api.getMeta()
+    if (response.errors === null) {
+      commit('SET_META', response.meta)
     }
   }
 }

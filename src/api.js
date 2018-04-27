@@ -13,25 +13,35 @@ export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
 }
 
+function handleNetworkError (error) {
+  Raven.captureException(error)
+  return [
+    `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
+  ]
+}
+
 export const api = {
   async getMeta () {
-    let meta
-    try {
-      const response = await axiosInstance.get(metaUrl)
-      meta = response.data
-    } catch (error) {
-      Raven.captureException(error)
-      meta = null
+    const data = {
+      meta: null,
+      errors: null
     }
 
-    return meta
+    try {
+      const response = await axiosInstance.get(metaUrl)
+      data.meta = response.data
+    } catch (error) {
+      data.errors = handleNetworkError(error)
+    }
+
+    return data
   },
 
   async searchTransporteurs (params) {
     const data = {
       transporteurs: null,
       limit: null,
-      error: null
+      errors: null
     }
 
     try {
@@ -40,11 +50,9 @@ export const api = {
       data.limit = response.data.limit || 0
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        data.error = error.response.data.message
+        data.errors = [ error.response.data.message ]
       } else {
-        // Default
-        Raven.captureException(error)
-        data.error = `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
+        data.errors = handleNetworkError(error)
       }
     }
 
@@ -52,18 +60,21 @@ export const api = {
   },
 
   async fetchTransporteur (transporteurSiret) {
-    let transporteur
+    const data = {
+      transporteur: null,
+      errors: null
+    }
 
     try {
       const url = getTransporteurUrl(transporteurSiret)
       const response = await axiosInstance.get(url)
-      transporteur = response.data
+      data.transporteur = response.data
     } catch (error) {
-      Raven.captureException(error)
-      transporteur = null
+      // FIXME Add not found message
+      data.errors = handleNetworkError(error)
     }
 
-    return transporteur
+    return data
   },
 
   async updateTransporteur (transporteurSiret, form) {
@@ -79,6 +90,8 @@ export const api = {
     } catch (error) {
       if (error.response && error.response.data) {
         data.errors = error.response.data
+      } else {
+        data.errors = handleNetworkError(error)
       }
     }
 
