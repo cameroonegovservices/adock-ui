@@ -21,7 +21,7 @@ export default {
       searchParams: null,
       transporteurs: [],
       limit: 0,
-      error: ''
+      errors: null
     }
   },
 
@@ -50,6 +50,7 @@ export default {
       return (
         !this.isSearching &&
         this.isSearchDone &&
+        this.transporteurs &&
         this.transporteurs.length === 0)
     },
     ...mapState([
@@ -61,7 +62,7 @@ export default {
   methods: {
     async search () {
       // Remove error message as soon as the user clicks
-      this.error = ''
+      this.errors = null
       this.isSearching = true
 
       const data = await api.searchTransporteurs({
@@ -75,7 +76,7 @@ export default {
         }
       })
 
-      if (data.error == null) {
+      if (data.errors == null) {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(data.transporteurs)
         this.limit = data.limit
@@ -83,7 +84,7 @@ export default {
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
         this.isSearchDone = true
       } else {
-        this.error = data.error
+        this.errors = data.errors
         this.transporteurs = []
         this.limit = 0
         this.isSearchDone = false
@@ -103,7 +104,12 @@ export default {
           v-card-text
             div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises français
             div.display-1.mt-4.hidden-sm-and-up Cherchez simplement parmi les transporteurs de marchandises français
-            v-alert(type="error" :value="error !== ''") {{ error }}
+            v-alert(
+              v-for="(error, index) in errors"
+              :key="index"
+              type="error"
+              :value="true"
+            ) {{ error }}
             v-text-field(
               v-model.trim="searchForm.q"
               label="Numéro de SIREN, SIRET ou nom de l'entreprise"
