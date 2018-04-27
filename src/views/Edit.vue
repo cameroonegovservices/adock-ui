@@ -92,50 +92,65 @@ export default {
           span.subheading.no-wrap Recherche
         v-card
           TransporteurCardHeader(:transporteur="transporteur")
-          v-card-text.pa-5
-            v-text-field(
-              v-model="form.telephone"
-              input="telephone"
-              label="Téléphone"
-              :error-messages="errors.telephone"
-              data-cy="inputTelephone"
-            )
-            v-text-field(
-              v-model="form.email"
-              input="email"
-              label="Adresse électronique"
-              :error-messages="errors.email"
-              data-cy="inputEmail"
-            )
-            v-select(
-              v-model="form.working_area"
-              :items="options.workingAreas"
-              label="Aire de travail"
-              data-cy="inputWorkingArea"
-            )
-            v-text-field(
-              v-if="form.working_area === 'DEPARTEMENT'"
-              v-model="form.working_area_departements"
-              label="Départements livrés"
-              hint="Numéros des départements séparés par des espaces ou virgules"
-            )
-            v-select(
-              :items="options.specialities"
-              v-model="form.specialities"
-              label="Spécialités"
-              chips
-              multiple
-              deletable-chips
-              data-cy="inputSpecialities"
-            )
-            v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
-            v-btn(color="primary" @click.native="update") Valider
+          v-container(grid-list-lg)
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.telephone"
+                  input="telephone"
+                  label="Téléphone"
+                  :error-messages="errors.telephone"
+                  data-cy="inputTelephone"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.email"
+                  input="email"
+                  label="Adresse électronique"
+                  :error-messages="errors.email"
+                  data-cy="inputEmail"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-select(
+                  v-model="form.working_area"
+                  :items="options.workingAreas"
+                  label="Aire de travail"
+                  data-cy="inputWorkingArea"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-if="form.working_area === 'DEPARTEMENT'"
+                  v-model="form.working_area_departements"
+                  label="Départements livrés"
+                  hint="Numéros des départements séparés par des espaces ou virgules"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-select(
+                  :items="options.specialities"
+                  v-model="form.specialities"
+                  label="Spécialités"
+                  chips
+                  multiple
+                  deletable-chips
+                  data-cy="inputSpecialities"
+                )
+            v-layout
+              v-flex.adock-align-right(xs12 md11)
+                v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
+                v-btn(color="primary" @click.native="update") Valider
 </template>
 
 <style lang="stylus">
 .adock-no-link
   color: inherit
   text-decoration: none
+
+.adock-align-right
+  text-align: right
 
 .flex.flex-bottom
   flex-basis: 0
