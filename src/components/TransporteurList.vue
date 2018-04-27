@@ -33,21 +33,21 @@ export default {
         messages.push(`« ${this.searchParams.q} »`)
       }
 
-      const licenseTypes = this.searchParams.licenseTypes.map(item => item.text)
-      if (licenseTypes.length > 0) {
+      if (this.searchParams.licenseTypes && this.searchParams.licenseTypes.length > 0) {
+        const licenseTypes = this.searchParams.licenseTypes.map(item => item.text)
         messages.push(`poids « ${licenseTypes.join(', ')} »`)
       }
 
-      if (this.searchParams.departementFrom > 0) {
+      if (this.searchParams.departementFrom != null) {
         messages.push(`départ « ${this.searchParams.departementFrom} »`)
       }
 
-      if (this.searchParams.departementTo > 0) {
+      if (this.searchParams.departementTo != null) {
         messages.push(`arrivée « ${this.searchParams.departementTo} »`)
       }
 
-      const specialities = this.searchParams.specialities.map(item => item.text)
-      if (specialities.length > 0) {
+      if (this.searchParams.specialities && this.searchParams.specialities.length > 0) {
+        const specialities = this.searchParams.specialities.map(item => item.text)
         messages.push(`spécialités « ${specialities.join(', ')} »`)
       }
 
