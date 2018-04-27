@@ -59,7 +59,8 @@ export default {
 
 <template lang="pug">
   div
-    p(v-if="searchResponseIsEmpty") La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
+    v-card.mt-1(v-if="searchResponseIsEmpty")
+      v-card-text La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
     v-card.mt-1(v-if="transporteurs.length > 0")
       v-list(two-line)
         v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
