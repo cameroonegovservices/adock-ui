@@ -11,8 +11,8 @@ export default {
       type: Object,
       default: null
     },
+    // Array or null
     transporteurs: {
-      type: Array,
       required: true
     },
     limit: {
@@ -61,7 +61,7 @@ export default {
   div
     v-card.mt-1(v-if="searchResponseIsEmpty")
       v-card-text La recherche avec {{ searchParamsForDisplay }} n'a retourné aucun résultat.
-    v-card.mt-1(v-if="transporteurs.length > 0")
+    v-card.mt-1(v-if="transporteurs && transporteurs.length > 0")
       v-list(two-line)
         v-subheader(v-if="limit") Seuls les {{ transporteurs.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
         v-subheader(v-else) {{ transporteurs.length }} transporteurs pour la recherche {{ searchParamsForDisplay }}

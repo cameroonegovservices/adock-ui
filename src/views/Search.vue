@@ -10,7 +10,6 @@ export default {
   data () {
     return {
       isSearching: false,
-      isSearchDone: false,
       searchForm: {
         q: '',
         licenseTypes: [],
@@ -19,7 +18,7 @@ export default {
         specialities: []
       },
       searchParams: null,
-      transporteurs: [],
+      transporteurs: null,
       limit: 0,
       errors: null
     }
@@ -48,8 +47,7 @@ export default {
     searchResponseIsEmpty () {
       return (
         !this.isSearching &&
-        this.isSearchDone &&
-        this.transporteurs &&
+        this.transporteurs != null &&
         this.transporteurs.length === 0)
     },
     ...mapState([
@@ -81,12 +79,10 @@ export default {
         this.limit = data.limit
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
-        this.isSearchDone = true
       } else {
         this.errors = data.errors
-        this.transporteurs = []
+        this.transporteurs = null
         this.limit = 0
-        this.isSearchDone = false
       }
 
       this.isSearching = false

@@ -51,11 +51,11 @@ describe('Search.vue', () => {
       localVue,
       store
     })
+    expect(wrapper.vm.transporteurs).toBe(null)
     await wrapper.vm.search()
     expect(wrapper.vm.transporteurs[0].raison_sociale).toBe('FOO')
     expect(wrapper.vm.errors).toBe(null)
     expect(wrapper.vm.limit).toBe(0)
-    expect(wrapper.vm.isSearchDone).toBe(true)
   })
 
   it('fails to search transporteurs', async () => {
@@ -67,8 +67,7 @@ describe('Search.vue', () => {
     })
     await wrapper.vm.search()
     expect(wrapper.vm.errors).toHaveLength(1)
-    expect(wrapper.vm.transporteurs).toEqual([])
+    expect(wrapper.vm.transporteurs).toEqual(null)
     expect(wrapper.vm.limit).toBe(0)
-    expect(wrapper.vm.isSearchDone).toBe(false)
   })
 })
