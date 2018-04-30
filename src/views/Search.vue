@@ -1,22 +1,30 @@
 <script>
+import deepClone from 'lodash.clonedeep'
 import { mapState } from 'vuex'
+import saveState from 'vue-save-state'
 
 import api from '@/api.js'
 import TransporteurList from '@/components/TransporteurList.vue'
 
+const defaultSearchForm = {
+  q: '',
+  licenseTypes: [],
+  departementFrom: null,
+  departementTo: null,
+  specialities: []
+}
+
 export default {
   name: 'Search',
+
+  mixins: [
+    saveState
+  ],
 
   data () {
     return {
       isSearching: false,
-      searchForm: {
-        q: '',
-        licenseTypes: [],
-        departementFrom: null,
-        departementTo: null,
-        specialities: []
-      },
+      searchForm: deepClone(defaultSearchForm),
       searchParams: null,
       transporteurs: null,
       limit: 0,
@@ -57,6 +65,18 @@ export default {
   },
 
   methods: {
+    getSaveStateConfig () {
+      return {
+        cacheKey: 'transporteurSearch',
+        saveProperties: [
+          'searchForm',
+          'searchParams',
+          'transporteurs',
+          'limit'
+        ]
+      }
+    },
+
     async search () {
       // Remove error message as soon as the user clicks
       this.errors = null
@@ -86,6 +106,10 @@ export default {
       }
 
       this.isSearching = false
+    },
+
+    clear () {
+      this.searchForm = deepClone(defaultSearchForm)
     }
   }
 }
@@ -164,6 +188,7 @@ export default {
                     return-object
                   )
             v-btn(large color="primary" @click.native="search") Chercher
+            v-btn(@click.native="clear") Effacer
         TransporteurList(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"

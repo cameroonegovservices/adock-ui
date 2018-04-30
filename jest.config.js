@@ -15,5 +15,8 @@ module.exports = {
   },
   snapshotSerializers: [
     'jest-serializer-vue'
+  ],
+  setupFiles: [
+    'jest-localstorage-mock'
   ]
 }

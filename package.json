@@ -13,10 +13,12 @@
   "dependencies": {
     "axios": "0.18.0",
     "babel-polyfill": "^6.26.0",
+    "lodash.clonedeep": "^4.5.0",
     "pug": "^2.0.3",
     "raven-js": "^3.24.2",
     "vue": "2.5.16",
     "vue-router": "3.0.1",
+    "vue-save-state": "^1.2.0",
     "vuetify": "1.0.17",
     "vuex": "^3.0.1"
   },
@@ -33,7 +35,7 @@
     "babel-jest": "^22.0.4",
     "babel-plugin-transform-imports": "^1.5.0",
     "eslint": "^4.18.2",
-    "lodash.clonedeep": "^4.5.0",
+    "jest-localstorage-mock": "^2.2.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "2.5.16"
