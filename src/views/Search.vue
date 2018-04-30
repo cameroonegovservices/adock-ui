@@ -26,7 +26,6 @@ export default {
   },
 
   created () {
-    // FIXME To move to /meta...
     this.searchLicenseTypeChoices = [
       {
         text: 'Léger',
