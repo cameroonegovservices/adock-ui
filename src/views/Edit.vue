@@ -30,7 +30,8 @@ export default {
         telephone: '',
         working_area: '',
         working_area_departements: '',
-        specialities: []
+        specialities: [],
+        website: ''
       },
       errors: {}
     }
@@ -137,6 +138,14 @@ export default {
                   multiple
                   deletable-chips
                   data-cy="inputSpecialities"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.website"
+                  input="url"
+                  label="Site Web"
+                  :error-messages="errors.website"
                 )
             v-layout
               v-flex.adock-align-right(xs12 md11)
