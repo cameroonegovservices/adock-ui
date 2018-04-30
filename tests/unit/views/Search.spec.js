@@ -5,7 +5,7 @@ import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
 import Search from '@/views/Search.vue'
-import { addElementWithDataAppToBody } from '../test'
+import { addElementWithDataAppToBody } from '../utils'
 
 describe('Search.vue', () => {
   const localVue = createLocalVue()
