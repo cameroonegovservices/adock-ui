@@ -35,6 +35,9 @@ export default {
           span {{ meta.transporteur.localeCount }} transporteurs au {{ meta.transporteur.localeDate }}
       router-link(:to="{name: 'search'}")
         img.adock-app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
+      v-spacer
+      v-toolbar-items
+        v-btn(flat :to="{name: 'cgu'}") CGU
     v-content
       router-view
 </template>

@@ -5,6 +5,7 @@ import { getTracker } from './tracker'
 import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
 import Edit from '@/views/Edit.vue'
+import CGU from '@/views/CGU.vue'
 import api from './api'
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ const routes = [
       next()
     },
     props: true
+  },
+  {
+    path: '/cgu',
+    name: 'cgu',
+    component: CGU
   }
 ]
 
