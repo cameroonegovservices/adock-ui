@@ -3,7 +3,7 @@
 // Piwik/Matomo tracker
 window._paq = window._paq || []
 window._paq.push(['setDomains', ['*.' + process.env.VUE_APP_HOSTNAME]])
-// window._paq.push(['setDoNotTrack', true])
+window._paq.push(['setDoNotTrack', true])
 window._paq.push(['trackPageView'])
 window._paq.push(['enableLinkTracking'])
 
