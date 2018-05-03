@@ -54,8 +54,8 @@ describe('Edit', () => {
       .should('have.value', 'foo@example.com')
     cy.get('div[data-cy=inputWorkingArea]')
       .click()
-    // 2nd element is France
-    cy.get('.menuable__content__active > .card > .list > :nth-child(2) > .list__tile > .list__tile__content > .list__tile__title')
+    // 3th element is France
+    cy.get('.menuable__content__active > .card > .list > :nth-child(3) > .list__tile > .list__tile__content > .list__tile__title')
       .click()
     cy.get('div[data-cy=inputSpecialities]')
       .click()
