@@ -1,5 +1,6 @@
 <script>
 import { mapState } from 'vuex'
+import GlobalError from '@/components/GlobalError.vue'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 import api from '@/api.js'
@@ -20,6 +21,7 @@ export default {
   },
 
   components: {
+    GlobalError,
     TransporteurCardHeader
   },
 
@@ -70,12 +72,14 @@ export default {
       if (data.errors) {
         this.errors = data.errors
       } else {
+        // Success
         this.$store.commit('ADD_MESSAGE', {
           message: {
             color: null,
             text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
           }
         })
+        // Redirect
         router.push({name: 'transporteur_detail', transporteurSiret: this.transporteurSiret})
       }
     }
@@ -94,6 +98,7 @@ export default {
         v-card
           TransporteurCardHeader(:transporteur="transporteur")
           v-container(grid-list-lg)
+            GlobalError(:errors="errors")
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(

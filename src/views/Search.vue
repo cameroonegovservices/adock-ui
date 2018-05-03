@@ -4,6 +4,7 @@ import { mapState } from 'vuex'
 import saveState from 'vue-save-state'
 
 import api from '@/api.js'
+import GlobalError from '@/components/GlobalError.vue'
 import TransporteurList from '@/components/TransporteurList.vue'
 
 const defaultSearchForm = {
@@ -48,6 +49,7 @@ export default {
   },
 
   components: {
+    GlobalError,
     TransporteurList
   },
 
@@ -123,12 +125,7 @@ export default {
           v-card-text
             div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs français de marchandises
             div.display-1.mt-4.hidden-sm-and-up Cherchez simplement parmi les transporteurs français de marchandises
-            v-alert(
-              v-for="(error, index) in errors"
-              :key="index"
-              type="error"
-              :value="true"
-            ) {{ error }}
+            GlobalError(:errors="errors")
             v-text-field(
               v-model.trim="searchForm.q"
               label="Numéro de SIREN, SIRET ou nom de l'entreprise"

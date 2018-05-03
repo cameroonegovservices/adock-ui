@@ -66,7 +66,7 @@ describe('Search.vue', () => {
       store
     })
     await wrapper.vm.search()
-    expect(wrapper.vm.errors).toHaveLength(1)
+    expect(wrapper.vm.errors.global).toBeDefined()
     expect(wrapper.vm.transporteurs).toEqual(null)
     expect(wrapper.vm.limit).toBe(0)
   })
