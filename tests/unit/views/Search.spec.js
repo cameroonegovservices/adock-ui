@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import MockAdapter from 'axios-mock-adapter'
-import { mount, shallow, createLocalVue } from '@vue/test-utils'
+import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { axiosInstance, searchTransporteursUrl } from '@/api'
@@ -47,7 +47,7 @@ describe('Search.vue', () => {
         ]
       })
 
-    const wrapper = shallow(Search, {
+    const wrapper = shallowMount(Search, {
       localVue,
       store
     })
@@ -61,7 +61,7 @@ describe('Search.vue', () => {
   it('fails to search transporteurs', async () => {
     mockAdapter.onGet(searchTransporteursUrl)
       .reply(500)
-    const wrapper = shallow(Search, {
+    const wrapper = shallowMount(Search, {
       localVue,
       store
     })

@@ -1,5 +1,5 @@
 import Vuetify from 'vuetify'
-import { createLocalVue, shallow } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 
 import TransporteurList from '@/components/TransporteurList.vue'
 
@@ -8,7 +8,7 @@ describe('TransporteurList.vue', () => {
   localVue.use(Vuetify)
 
   it('renders a list of transporteurs', () => {
-    const wrapper = shallow(TransporteurList, {
+    const wrapper = shallowMount(TransporteurList, {
       localVue,
       propsData: {
         searchResponseIsEmpty: false,

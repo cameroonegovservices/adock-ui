@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, shallow } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
@@ -14,7 +14,7 @@ describe('Message.vue', () => {
   it('has nothing to show', () => {
     const clonedStoreOptions = deepClone(storeOptions)
     const store = new Vuex.Store(clonedStoreOptions)
-    const wrapper = shallow(Message, {
+    const wrapper = shallowMount(Message, {
       localVue,
       store
     })
@@ -24,7 +24,7 @@ describe('Message.vue', () => {
   it('displays an added message', () => {
     const clonedStoreOptions = deepClone(storeOptions)
     const store = new Vuex.Store(clonedStoreOptions)
-    const wrapper = shallow(Message, {
+    const wrapper = shallowMount(Message, {
       localVue,
       store
     })
@@ -51,7 +51,7 @@ describe('Message.vue', () => {
       },
       mutations
     })
-    const wrapper = shallow(Message, {
+    const wrapper = shallowMount(Message, {
       localVue,
       store
     })
