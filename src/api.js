@@ -3,7 +3,7 @@ import Raven from 'raven-js'
 
 export const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
-  timeout: 3000
+  timeout: 5000
 })
 
 export const searchTransporteursUrl = '/transporteurs/recherche'
