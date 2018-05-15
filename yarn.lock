@@ -833,7 +833,7 @@
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-overlay/-/cli-overlay-3.0.0-beta.10.tgz#88a64635f43bc0304b5b90f830ccd654031f3bb9"
 
-"@vue/cli-plugin-babel@^3.0.0-beta.6":
+"@vue/cli-plugin-babel@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-babel/-/cli-plugin-babel-3.0.0-beta.10.tgz#5b7a203ab0b5b4e00499adbf4bb487ad55bb252c"
   dependencies:
@@ -841,14 +841,14 @@
     "@vue/babel-preset-app" "^3.0.0-beta.10"
     babel-loader "^8.0.0-0"
 
-"@vue/cli-plugin-e2e-cypress@^3.0.0-beta.6":
+"@vue/cli-plugin-e2e-cypress@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-e2e-cypress/-/cli-plugin-e2e-cypress-3.0.0-beta.10.tgz#e215b151c669eb2dcf298f3a92b86749e1ed25b7"
   dependencies:
     cypress "^2.1.0"
     eslint-plugin-cypress "^2.0.1"
 
-"@vue/cli-plugin-eslint@^3.0.0-beta.6":
+"@vue/cli-plugin-eslint@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-eslint/-/cli-plugin-eslint-3.0.0-beta.10.tgz#aa6bcc9bcbcfe72d835176a9e18ee5467d1110ce"
   dependencies:
@@ -857,7 +857,7 @@
     eslint-loader "^2.0.0"
     eslint-plugin-vue "^4.5.0"
 
-"@vue/cli-plugin-unit-jest@^3.0.0-beta.6":
+"@vue/cli-plugin-unit-jest@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-plugin-unit-jest/-/cli-plugin-unit-jest-3.0.0-beta.10.tgz#07af8cd368f47748b5aaf642a93a963b4572523d"
   dependencies:
@@ -867,7 +867,7 @@
     jest-transform-stub "^1.0.0"
     vue-jest "^2.5.0"
 
-"@vue/cli-service@^3.0.0-beta.6":
+"@vue/cli-service@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/cli-service/-/cli-service-3.0.0-beta.10.tgz#13b3f669ec3b0829f3e9d226489d161cde6c8af0"
   dependencies:
@@ -941,7 +941,7 @@
     source-map "^0.5.6"
     vue-template-es2015-compiler "^1.6.0"
 
-"@vue/eslint-config-standard@^3.0.0-beta.6":
+"@vue/eslint-config-standard@^3.0.0-beta.10":
   version "3.0.0-beta.10"
   resolved "https://registry.yarnpkg.com/@vue/eslint-config-standard/-/eslint-config-standard-3.0.0-beta.10.tgz#c4fbfae57992a07a8319436475a1fe2915ecd54a"
   dependencies:
@@ -951,7 +951,7 @@
     eslint-plugin-promise "^3.7.0"
     eslint-plugin-standard "^3.1.0"
 
-"@vue/test-utils@^1.0.0-beta.15":
+"@vue/test-utils@^1.0.0-beta.16":
   version "1.0.0-beta.16"
   resolved "https://registry.yarnpkg.com/@vue/test-utils/-/test-utils-1.0.0-beta.16.tgz#dcf7a30304391422e382b5f97db6eb9508112906"
   dependencies:
