@@ -62,7 +62,7 @@ export default {
           this.form[field] = transporteur[field] || []
         } else {
           // Default for other fields
-          this.form[field] = transporteur[field]
+          this.form[field] = transporteur[field] || ''
         }
       }
     },
