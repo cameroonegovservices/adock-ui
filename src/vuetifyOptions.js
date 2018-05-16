@@ -1,3 +1,4 @@
+import 'vuetify/src/stylus/app.styl'
 import {
   transitions,
   VApp,
@@ -18,7 +19,6 @@ import {
   VToolbar,
   VTooltip
 } from 'vuetify'
-
 import { Ripple } from 'vuetify/es5/directives'
 
 export const vuetifyOptions = {

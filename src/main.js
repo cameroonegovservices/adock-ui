@@ -14,8 +14,6 @@ import App from './App.vue'
 import router from './router'
 import { storeOptions } from './store/options'
 
-import './stylus/main.styl'
-
 Vue.config.productionTip = false
 
 if (process.env.NODE_ENV === 'production') {
