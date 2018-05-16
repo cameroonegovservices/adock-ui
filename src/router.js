@@ -6,6 +6,7 @@ import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
 import Edit from '@/views/Edit.vue'
 import CGU from '@/views/CGU.vue'
+import ResourceError from '@/views/ResourceError.vue'
 import api from './api'
 
 Vue.use(Router)
@@ -27,13 +28,19 @@ const routes = [
     name: 'transporteur_edit',
     component: Edit,
     async beforeEnter (routeTo, routeFrom, next) {
-      if (!routeTo.params.transporteur) {
+      if (routeTo.params.transporteur) {
+        next()
+      } else {
+        // Load the JSON of transporteur before entering
         const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
         if (response.errors === null) {
           routeTo.params.transporteur = response.transporteur
+          next()
+        } else {
+          // Error
+          next({name: 'error', params: { errorUrl: routeTo.path }})
         }
       }
-      next()
     },
     props: true
   },
@@ -41,6 +48,12 @@ const routes = [
     path: '/cgu',
     name: 'cgu',
     component: CGU
+  },
+  {
+    path: '/error',
+    name: 'error',
+    component: ResourceError,
+    props: true
   }
 ]
 
