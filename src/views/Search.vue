@@ -22,6 +22,13 @@ export default {
     saveState
   ],
 
+  props: {
+    keepPreviousSearch: {
+      type: Boolean,
+      default: false
+    }
+  },
+
   data () {
     return {
       isSearching: false,
@@ -69,6 +76,14 @@ export default {
   methods: {
     getSaveStateConfig () {
       return {
+        onLoad: (key, value) => {
+          if (this.keepPreviousSearch) {
+            return value
+          } else {
+            // Default data values
+            return this[key]
+          }
+        },
         cacheKey: 'transporteurSearch',
         saveProperties: [
           'searchForm',

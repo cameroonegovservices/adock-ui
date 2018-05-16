@@ -15,7 +15,8 @@ const routes = [
   {
     path: '/',
     name: 'search',
-    component: Search
+    component: Search,
+    props: true
   },
   {
     path: '/transporteur/:transporteurSiret',
