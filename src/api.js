@@ -6,8 +6,8 @@ export const axiosInstance = axios.create({
   timeout: 5000
 })
 
-export const searchTransporteursUrl = '/transporteurs/recherche'
-export const metaUrl = '/meta'
+export const searchTransporteursUrl = '/transporteurs/recherche/'
+export const metaUrl = '/meta/'
 
 export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
