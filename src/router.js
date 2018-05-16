@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
 import { getTracker } from './tracker'
 import Search from '@/views/Search.vue'
@@ -9,7 +9,7 @@ import CGU from '@/views/CGU.vue'
 import ResourceError from '@/views/ResourceError.vue'
 import api from './api'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -57,7 +57,7 @@ const routes = [
   }
 ]
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'history',
   routes
 })
