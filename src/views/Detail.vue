@@ -29,6 +29,8 @@ export default {
     const response = await api.fetchTransporteur(this.transporteurSiret)
     if (response.errors === null) {
       this.transporteur = response.transporteur
+    } else {
+      this.$router.push({name: 'error', params: { errorUrl: this.$router.currentRoute.path }})
     }
   },
 
