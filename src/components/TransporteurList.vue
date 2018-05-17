@@ -39,11 +39,11 @@ export default {
       }
 
       if (this.searchParams.departementFrom != null) {
-        messages.push(`départ « ${this.searchParams.departementFrom} »`)
+        messages.push(`enlèvement « ${this.searchParams.departementFrom} »`)
       }
 
       if (this.searchParams.departementTo != null) {
-        messages.push(`arrivée « ${this.searchParams.departementTo} »`)
+        messages.push(`livraison « ${this.searchParams.departementTo} »`)
       }
 
       if (this.searchParams.specialities && this.searchParams.specialities.length > 0) {

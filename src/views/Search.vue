@@ -150,7 +150,7 @@ export default {
             )
             v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
               v-layout(row wrap align-end)
-                v-flex(xs12 sm4 md4)
+                v-flex(xs12 sm8 md4)
                   v-select(
                     :items="searchLicenseTypeChoices"
                     v-model="searchForm.licenseTypes"
@@ -174,17 +174,17 @@ export default {
                         v-avatar.accent {{ data.item.avatar }}
                         .
                           {{ data.item.text }}
-                v-flex(xs6 sm4 md3)
+                v-flex(xs12 sm6 md4)
                   v-text-field(
                     v-model.number='searchForm.departementFrom'
-                    label="Département de départ"
+                    label="Département d'enlèvement"
                     mask="###"
                     data-cy="searchFormDepartementFrom"
                   )
-                v-flex(xs6 sm4 md3)
+                v-flex(xs12 sm6 md4)
                   v-text-field(
                     v-model.number='searchForm.departementTo'
-                    label="Département d'arrivée"
+                    label="Département de livraison"
                     mask="###"
                   )
             v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
