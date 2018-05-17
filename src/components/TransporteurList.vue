@@ -38,11 +38,11 @@ export default {
         messages.push(`poids « ${licenseTypes.join(', ')} »`)
       }
 
-      if (this.searchParams.departementFrom != null) {
+      if (this.searchParams.departementFrom != null && this.searchParams.departementFrom !== '') {
         messages.push(`enlèvement « ${this.searchParams.departementFrom} »`)
       }
 
-      if (this.searchParams.departementTo != null) {
+      if (this.searchParams.departementTo != null && this.searchParams.departementTo !== '') {
         messages.push(`livraison « ${this.searchParams.departementTo} »`)
       }
 

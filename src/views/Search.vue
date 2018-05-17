@@ -10,8 +10,8 @@ import TransporteurList from '@/components/TransporteurList.vue'
 const defaultSearchForm = {
   q: '',
   licenseTypes: [],
-  departementFrom: null,
-  departementTo: null,
+  departementFrom: '',
+  departementTo: '',
   specialities: []
 }
 
