@@ -143,8 +143,8 @@ export default {
             GlobalError(:errors="errors")
             v-text-field(
               v-model.trim="searchForm.q"
-              label="Numéro de SIREN, SIRET ou nom de l'entreprise"
-              hint="Vous pouvez utiliser les premiers chiffres du SIRET ou le nom partiel de l'entreprise."
+              label="Nom, code postal ou SIRET de l'entreprise"
+              hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
               @keyup.enter="search"
               data-cy="searchFormQ"
             )
