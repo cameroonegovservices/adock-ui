@@ -77,7 +77,7 @@ export default {
               v-flex.adock-align-right(xs6 md5) {{ transporteur.adresse }}
             v-layout
               v-flex(xs6 offset-md1 md5) Ville
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.ville }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.code_postal }} {{ transporteur.ville }}
             v-layout
               v-flex(xs6 offset-md1 md5) Gestionnaire
               v-flex.adock-align-right(xs6 md5) {{ transporteur.gestionnaire }}
