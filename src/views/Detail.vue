@@ -104,7 +104,7 @@ export default {
                 v-flex(xs6 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
             v-layout
-              v-flex(xs6 offset-md1 md5)
+              v-flex(xs12 offset-md1 md12)
                 span.adock-section.grey--text.text--darken-1 Informations complémentaires
             v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
