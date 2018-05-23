@@ -139,7 +139,7 @@ export default {
         v-card.elevation-8
           v-card-text
             div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs français de marchandises
-            div.display-1.mt-4.hidden-sm-and-up Cherchez simplement parmi les transporteurs français de marchandises
+            div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs français
             GlobalError(:errors="errors")
             v-text-field(
               v-model.trim="searchForm.q"
