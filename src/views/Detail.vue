@@ -111,7 +111,8 @@ export default {
               v-flex.adock-align-right(xs6 md5) {{ transporteur.telephone }}
             v-layout
               v-flex(xs6 offset-md1 md5) Email
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.email }}
+              v-flex.adock-align-right(xs6 md5)
+                a(:href="'mailto:' + transporteur.email") {{ transporteur.email }}
             v-layout
               v-flex(xs6 offset-md1 md5) Aire de travail
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
