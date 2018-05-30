@@ -39,7 +39,7 @@ export default {
       if (this.transporteur.specialities && this.choices.specialities) {
         return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
       } else {
-        return ''
+        return 'Non renseigné'
       }
     },
     ...mapState([
@@ -109,11 +109,19 @@ export default {
             v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs6 md5)
-                a(:href="'tel:' + transporteur.telephone") {{ transporteur.telephone }}
+                a(
+                  v-if="transporteur.telephone"
+                  :href="'tel:' + transporteur.telephone"
+                ) {{ transporteur.telephone }}
+                span(v-else) Non renseigné
             v-layout
               v-flex(xs6 offset-md1 md5) Email
               v-flex.adock-align-right(xs6 md5)
-                a(:href="'mailto:' + transporteur.email") {{ transporteur.email }}
+                a(
+                  v-if="transporteur.email"
+                  :href="'mailto:' + transporteur.email"
+                ) {{ transporteur.email }}
+                span(v-else) Non renseigné
             v-layout
               v-flex(xs6 offset-md1 md5) Aire de travail
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
