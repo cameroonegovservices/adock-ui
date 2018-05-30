@@ -108,7 +108,8 @@ export default {
                 span.adock-section.grey--text.text--darken-1 Informations complémentaires
             v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.telephone }}
+              v-flex.adock-align-right(xs6 md5)
+                a(:href="'tel:' + transporteur.telephone") {{ transporteur.telephone }}
             v-layout
               v-flex(xs6 offset-md1 md5) Email
               v-flex.adock-align-right(xs6 md5)
@@ -151,4 +152,12 @@ export default {
 
 .flex.flex-bottom
   flex-basis: 0
+
+a[href^="tel:"], a[href^="mailto:"]
+  text-decoration: none
+
+a[href^="tel:"]:before
+  content: "\260e"
+  margin-right: 0.5em
+
 </style>
