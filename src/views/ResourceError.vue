@@ -14,11 +14,7 @@ export default {
 v-container(fluid)
     v-layout(row justify-center align-center)
       v-flex(xs4)
-        v-alert(
-          type="warning"
-          transition="scale-transition"
-        )
-        h3 Impossible de charger la resource demandée.
+        h3 Impossible de charger la ressource demandée.
         p Cela peut venir d'une mauvaise connexion à Internet ou d'une indisponibilité du serveur.
         v-btn(
           :to="errorUrl"
