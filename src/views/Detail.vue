@@ -66,6 +66,15 @@ export default {
         v-card
           TransporteurCardHeader(:transporteur="transporteur" :with-button="true")
           v-container(grid-list-lg)
+            v-layout(v-if="!transporteur.in_sirene")
+              v-alert(
+                :value="true"
+                type="warning"
+                color="orange"
+              )
+                | Ce transporteur est présent dans le registre mais absent de la base de données Sirène de l'Insee.
+                | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
+                | La cause peut être l'opposition au démarchage commerciale.
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
               v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
