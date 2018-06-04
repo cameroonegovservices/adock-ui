@@ -11,7 +11,12 @@ export default {
   },
 
   async created () {
-    this.$store.dispatch('loadMeta')
+    this.$store.dispatch('loadMeta').then(() => {
+      if (this.meta.version.length === 0) {
+        // meta data is empty
+        this.$router.push({name: 'error'})
+      }
+    })
   },
 
   computed: {

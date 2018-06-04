@@ -6,7 +6,6 @@ export const actions = {
     if (response.errors == null) {
       commit('SET_META', response.meta)
     }
-    // FIXME On error, the user should refresh...
   }
 }
 
