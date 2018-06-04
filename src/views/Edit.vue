@@ -10,10 +10,6 @@ export default {
   name: 'Edit',
 
   props: {
-    transporteurSiret: {
-      type: String,
-      required: true
-    },
     transporteur: {
       type: Object,
       required: true
@@ -68,7 +64,7 @@ export default {
     },
 
     async update () {
-      const data = await api.updateTransporteur(this.transporteurSiret, this.form)
+      const data = await api.updateTransporteur(this.transporteur.siret, this.form)
       if (data.errors) {
         this.errors = data.errors
       } else {
@@ -80,7 +76,7 @@ export default {
           }
         })
         // Redirect
-        router.push({name: 'transporteur_detail', transporteurSiret: this.transporteurSiret})
+        router.push({name: 'transporteur_detail', transporteurSiret: this.transporteur.siret})
       }
     }
   }
