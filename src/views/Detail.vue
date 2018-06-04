@@ -2,36 +2,20 @@
 <script>
 import { mapState } from 'vuex'
 
-import api from '@/api.js'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 export default {
   name: 'Detail',
 
   props: {
-    transporteurSiret: {
-      type: String,
+    transporteur: {
+      type: Object,
       required: true
     }
   },
 
   components: {
     TransporteurCardHeader
-  },
-
-  data () {
-    return {
-      transporteur: {}
-    }
-  },
-
-  async mounted () {
-    const response = await api.fetchTransporteur(this.transporteurSiret)
-    if (response.errors === null) {
-      this.transporteur = response.transporteur
-    } else {
-      this.$router.push({name: 'error', params: { errorUrl: this.$router.currentRoute.path }})
-    }
   },
 
   computed: {
@@ -149,7 +133,7 @@ export default {
                 v-btn.ma-0(
                   dark
                   :color="transporteur.completeness === 100 ? 'green' : 'orange'"
-                  :to="{name: 'transporteur_edit', params: {transporteurSiret}}"
+                  :to="{name: 'transporteur_edit', params: {transporteurSiret: transporteur.siret}}"
                 )
                   span(v-if="transporteur.completeness === 100") Modifier les informations
                   span(v-else) Compléter les informations

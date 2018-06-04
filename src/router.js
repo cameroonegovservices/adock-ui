@@ -11,6 +11,17 @@ import api from './api'
 
 Vue.use(VueRouter)
 
+async function loadTransporteur (routeTo, next) {
+  const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
+  if (response.errors === null) {
+    routeTo.params.transporteur = response.transporteur
+    next()
+  } else {
+    // Error
+    next({name: 'error', params: { errorUrl: routeTo.path }})
+  }
+}
+
 const routes = [
   {
     path: '/',
@@ -22,28 +33,24 @@ const routes = [
     path: '/transporteur/:transporteurSiret',
     name: 'transporteur_detail',
     component: Detail,
-    props: true
+    props: true,
+    async beforeEnter (routeTo, routeFrom, next) {
+      // Load the JSON of transporteur before entering
+      await loadTransporteur(routeTo, next)
+    }
   },
   {
     path: '/transporteur/:transporteurSiret/edit',
     name: 'transporteur_edit',
     component: Edit,
+    props: true,
     async beforeEnter (routeTo, routeFrom, next) {
       if (routeTo.params.transporteur) {
         next()
       } else {
-        // Load the JSON of transporteur before entering
-        const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
-        if (response.errors === null) {
-          routeTo.params.transporteur = response.transporteur
-          next()
-        } else {
-          // Error
-          next({name: 'error', params: { errorUrl: routeTo.path }})
-        }
+        await loadTransporteur(routeTo, next)
       }
-    },
-    props: true
+    }
   },
   {
     path: '/cgu',
