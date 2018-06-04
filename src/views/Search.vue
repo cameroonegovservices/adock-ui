@@ -43,12 +43,12 @@ export default {
   created () {
     this.searchLicenseTypeChoices = [
       {
-        text: 'Léger',
+        text: 'Léger (< 3,5 t)',
         value: 'lti',
         avatar: 'LTI'
       },
       {
-        text: 'Lourd',
+        text: 'Lourd (> 3,5 t)',
         value: 'lc',
         avatar: 'LC'
       }
