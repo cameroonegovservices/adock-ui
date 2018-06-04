@@ -179,6 +179,7 @@ export default {
                     v-model.number='searchForm.departementFrom'
                     label="Département d'enlèvement"
                     mask="###"
+                    @keyup.enter="search"
                     data-cy="searchFormDepartementFrom"
                   )
                 v-flex(xs12 sm6 md4)
@@ -186,6 +187,7 @@ export default {
                     v-model.number='searchForm.departementTo'
                     label="Département de livraison"
                     mask="###"
+                    @keyup.enter="search"
                   )
             v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
               v-layout(row)
