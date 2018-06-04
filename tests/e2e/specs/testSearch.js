@@ -35,6 +35,6 @@ describe('Search', () => {
     cy.contains('div.btn__content', 'Chercher')
       .click()
 
-    cy.contains("La recherche avec « 80005226884728 », départ « 42 » n'a retourné aucun résultat.")
+    cy.contains("La recherche avec « 80005226884728 », enlèvement « 42 » n'a retourné aucun résultat.")
   })
 })
