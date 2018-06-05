@@ -108,9 +108,10 @@ export default {
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
-            v-layout
-              v-flex(xs12 offset-md1 md12)
-                span.adock-section.grey--text.text--darken-1 Informations complémentaires
+        v-card.elevation-4.pb-3
+          v-card-title
+            span.headline Informations complémentaires
+          v-container(fluid grid-list-md)
             v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs6 md5)
