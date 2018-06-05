@@ -62,7 +62,7 @@ export default {
                 )
                   | Ce transporteur est présent dans le registre mais absent de la base de données Sirène de l'Insee.
                   | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
-                  | La cause peut être l'opposition au démarchage commerciale.
+                  | La cause peut être l'opposition au démarchage commercial.
             v-layout(v-if="transporteur.deleted_at")
               v-flex(offset-xs1 xs10)
                 v-alert(
