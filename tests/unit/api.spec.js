@@ -21,13 +21,14 @@ describe('api', () => {
 
     const response = await api.getMeta()
     expect(response.meta.version).toBe('1.0')
-    expect(response.errors).toBe(null)
+    expect(response.error).toBe(null)
   })
 
   it('fails to get meta information', async () => {
     mockAdapter.onGet(metaUrl).reply(500)
     const response = await api.getMeta()
-    expect(response.errors.global).toBeDefined()
+    expect(response.error.status).toBe(500)
+    expect(response.error.message).toBeDefined()
   })
 
   it('search transporteurs', async () => {
@@ -48,25 +49,25 @@ describe('api', () => {
       message: 'Invalid request'
     })
     const response = await api.searchTransporteurs()
-    expect(response.errors.global).toBeDefined()
-    expect(response.errors.global).toBe('Invalid request')
+    expect(response.error.status).toBe(400)
+    expect(response.error.message).toBe('Invalid request')
   })
 
   it('fails to search transporteurs w/o message', async () => {
     mockAdapter.onGet(searchTransporteursUrl).networkError()
     process.env.VUE_APP_API_URL = 'https://example.com'
     const response = await api.searchTransporteurs()
-    expect(response.errors.global).toBeDefined()
-    expect(response.errors.global).toBe(
-      'Impossible de contacter le serveur https://example.com'
+    expect(response.error.status).toBe(503)
+    expect(response.error.message).toBe(
+      'Le serveur https://example.com est inaccessible.'
     )
   })
 
   it('fails to search transporteurs on server error', async () => {
     mockAdapter.onGet(searchTransporteursUrl).reply(500)
     const response = await api.searchTransporteurs()
-    expect(response.errors.global).toBeDefined()
-    expect(response.errors.global).toBe(
+    expect(response.error.status).toBe(500)
+    expect(response.error.message).toBe(
       'Le service a retourné une erreur. Les administrateurs ont été informés du problème.'
     )
   })
@@ -78,14 +79,15 @@ describe('api', () => {
     })
     const response = await api.fetchTransporteur('123')
     expect(response.transporteur.raison_sociale).toBe('FOO')
-    expect(response.errors).toBe(null)
+    expect(response.error).toBe(null)
   })
 
   it('fails to fetch a transporteur', async () => {
     const url = getTransporteurUrl('123')
     mockAdapter.onGet(url).reply(404)
     const response = await api.fetchTransporteur('123')
-    expect(response.errors.global).toBeDefined()
+    expect(response.error.status).toBe(404)
+    expect(response.error.message).toBeDefined()
   })
 
   it('update a transporteur', async () => {
@@ -108,6 +110,6 @@ describe('api', () => {
     })
     const response = await api.updateTransporteur('123')
     expect(response.transporteur).toBe(null)
-    expect(response.errors.foo).toBeDefined()
+    expect(response.errors.fields.foo).toBeDefined()
   })
 })

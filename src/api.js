@@ -13,20 +13,28 @@ export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
 }
 
-function handleGlobalErrors (error) {
+function handleCommunicationError (error) {
   if (error.response === undefined) {
     Raven.captureException(error)
     return {
-      global: `Impossible de contacter le serveur ${process.env.VUE_APP_API_URL}`
+      message: `Le serveur ${process.env.VUE_APP_API_URL} est inaccessible.`,
+      status: 503
     }
   } else if (error.response && error.response.status === 500) {
     // Django will call Raven itself
     return {
-      global: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`
+      message: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`,
+      status: error.response.status
     }
   } else if (error.response && error.response.status === 404) {
+    let message = "La ressource demandée n'existe pas"
+    if (error.request && error.request.responseURL) {
+      message += ` « ${error.request.responseURL} »`
+    }
+    message += '.'
     return {
-      global: "La ressource demandée n'existe pas."
+      message,
+      status: error.response.status
     }
   }
 }
@@ -39,14 +47,14 @@ export const api = {
   async getMeta () {
     const data = {
       meta: null,
-      errors: null
+      error: null
     }
 
     try {
       const response = await axiosInstance.get(metaUrl)
       data.meta = response.data
     } catch (error) {
-      data.errors = handleGlobalErrors(error)
+      data.error = handleCommunicationError(error)
     }
 
     return data
@@ -64,10 +72,11 @@ export const api = {
       data.transporteurs = response.data.results
       data.limit = response.data.limit || 0
     } catch (error) {
-      data.errors = handleGlobalErrors(error)
-      if (data.errors == null && error.response.data && error.response.data.message) {
-        data.errors = {
-          global: error.response.data.message
+      data.error = handleCommunicationError(error)
+      if (data.error == null && error.response.data && error.response.data.message) {
+        data.error = {
+          message: error.response.data.message,
+          status: 400
         }
       }
     }
@@ -78,7 +87,7 @@ export const api = {
   async fetchTransporteur (transporteurSiret) {
     const data = {
       transporteur: null,
-      errors: null
+      error: null
     }
 
     try {
@@ -86,8 +95,7 @@ export const api = {
       const response = await axiosInstance.get(url)
       data.transporteur = response.data
     } catch (error) {
-      // FIXME Add not found message
-      data.errors = handleGlobalErrors(error)
+      data.error = handleCommunicationError(error)
     }
 
     return data
@@ -104,10 +112,16 @@ export const api = {
       const response = await axiosInstance.patch(url, form)
       data.transporteur = response.data
     } catch (error) {
-      data.errors = handleGlobalErrors(error)
-      if (data.errors == null && error.response.status === 400 && error.response.data) {
-        // An object with an entry for each field
-        data.errors = error.response.data
+      const mainError = handleCommunicationError(error)
+      if (mainError) {
+        data.errors = {
+          main: mainError
+        }
+      } else if (error.response.status === 400 && error.response.data) {
+        // The form isn't valid
+        data.errors = {
+          fields: error.response.data
+        }
       }
     }
 

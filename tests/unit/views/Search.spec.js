@@ -54,7 +54,7 @@ describe('Search.vue', () => {
     expect(wrapper.vm.transporteurs).toBe(null)
     await wrapper.vm.search()
     expect(wrapper.vm.transporteurs[0].raison_sociale).toBe('FOO')
-    expect(wrapper.vm.errors).toBe(null)
+    expect(wrapper.vm.errorMessage).toBe(null)
     expect(wrapper.vm.limit).toBe(0)
   })
 
@@ -66,7 +66,7 @@ describe('Search.vue', () => {
       store
     })
     await wrapper.vm.search()
-    expect(wrapper.vm.errors.global).toBeDefined()
+    expect(wrapper.vm.errorMessage).toBeDefined()
     expect(wrapper.vm.transporteurs).toEqual(null)
     expect(wrapper.vm.limit).toBe(0)
   })

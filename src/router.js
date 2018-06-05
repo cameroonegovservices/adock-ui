@@ -6,19 +6,34 @@ import Search from '@/views/Search.vue'
 import Detail from '@/views/Detail.vue'
 import Edit from '@/views/Edit.vue'
 import CGU from '@/views/CGU.vue'
-import ResourceError from '@/views/ResourceError.vue'
+import ViewError from '@/views/ViewError.vue'
 import api from './api'
 
 Vue.use(VueRouter)
 
 async function loadTransporteur (routeTo, next) {
   const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
-  if (response.errors === null) {
+  if (response.error === null) {
     routeTo.params.transporteur = response.transporteur
     next()
   } else {
     // Error
-    next({name: 'error', params: { errorUrl: routeTo.path }})
+    let fallbackUrl
+    if (response.error.status === 404) {
+      // Unavailable
+      fallbackUrl = '/'
+    } else {
+      // Try again
+      fallbackUrl = routeTo.path
+    }
+    next({
+      name: 'error',
+      params: {
+        message: response.error.message,
+        status: response.error.status,
+        fallbackUrl
+      }
+    })
   }
 }
 
@@ -60,7 +75,7 @@ const routes = [
   {
     path: '/error',
     name: 'error',
-    component: ResourceError,
+    component: ViewError,
     props: true
   }
 ]

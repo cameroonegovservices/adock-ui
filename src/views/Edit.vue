@@ -1,6 +1,5 @@
 <script>
 import { mapState } from 'vuex'
-import GlobalError from '@/components/GlobalError.vue'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 import api from '@/api.js'
@@ -17,7 +16,6 @@ export default {
   },
 
   components: {
-    GlobalError,
     TransporteurCardHeader
   },
 
@@ -31,7 +29,8 @@ export default {
         specialities: [],
         website: ''
       },
-      errors: {}
+      errorMessage: null,
+      fieldErrors: {}
     }
   },
 
@@ -66,7 +65,13 @@ export default {
     async update () {
       const data = await api.updateTransporteur(this.transporteur.siret, this.form)
       if (data.errors) {
-        this.errors = data.errors
+        if (data.errors.main && data.errors.main.message) {
+          this.errorMessage = data.errors.main.message
+        }
+
+        if (data.errors.fields) {
+          this.fieldErrors = data.errors.fields
+        }
       } else {
         // Success
         this.$store.commit('ADD_MESSAGE', {
@@ -94,14 +99,18 @@ export default {
         v-card
           TransporteurCardHeader(:transporteur="transporteur")
           v-container(grid-list-lg)
-            GlobalError(:errors="errors")
+            v-alert(
+              v-if="errorMessage"
+              type="error"
+              :value="true"
+            ) {{ errorMessage }}
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
                   v-model="form.telephone"
                   input="telephone"
                   label="Téléphone"
-                  :error-messages="errors.telephone"
+                  :error-messages="fieldErrors.telephone"
                   data-cy="inputTelephone"
                 )
             v-layout
@@ -110,7 +119,7 @@ export default {
                   v-model="form.email"
                   input="email"
                   label="Adresse électronique"
-                  :error-messages="errors.email"
+                  :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
                 )
             v-layout
@@ -146,7 +155,7 @@ export default {
                   v-model="form.website"
                   input="url"
                   label="Site Web"
-                  :error-messages="errors.website"
+                  :error-messages="fieldErrors.website"
                 )
             v-layout
               v-flex.adock-align-right(xs12 md11)

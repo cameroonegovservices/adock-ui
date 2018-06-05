@@ -4,7 +4,6 @@ import { mapState } from 'vuex'
 import saveState from 'vue-save-state'
 
 import api from '@/api.js'
-import GlobalError from '@/components/GlobalError.vue'
 import TransporteurList from '@/components/TransporteurList.vue'
 
 const defaultSearchForm = {
@@ -36,7 +35,7 @@ export default {
       searchParams: null,
       transporteurs: null,
       limit: 0,
-      errors: null
+      errorMessage: null
     }
   },
 
@@ -56,7 +55,6 @@ export default {
   },
 
   components: {
-    GlobalError,
     TransporteurList
   },
 
@@ -96,7 +94,7 @@ export default {
 
     async search () {
       // Remove error message as soon as the user clicks
-      this.errors = null
+      this.errorMessage = null
       this.isSearching = true
 
       const data = await api.searchTransporteurs({
@@ -110,14 +108,16 @@ export default {
         }
       })
 
-      if (data.errors == null) {
+      if (data.error == null) {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(data.transporteurs)
         this.limit = data.limit
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
       } else {
-        this.errors = data.errors
+        if (data.error.message) {
+          this.errorMessage = data.error.message
+        }
         this.transporteurs = null
         this.limit = 0
       }
@@ -140,7 +140,11 @@ export default {
           v-card-text
             div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs français de marchandises
             div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs français
-            GlobalError(:errors="errors")
+            v-alert(
+              v-if="errorMessage"
+              type="error"
+              :value="true"
+            ) {{ errorMessage }}
             v-text-field(
               v-model.trim="searchForm.q"
               label="Nom, code postal ou SIRET de l'entreprise"
