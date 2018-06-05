@@ -1,5 +1,7 @@
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'TransporteurList',
   props: {
@@ -52,7 +54,10 @@ export default {
       }
 
       return messages.join(', ')
-    }
+    },
+    ...mapState([
+      'choices'
+    ])
   }
 }
 </script>
@@ -72,11 +77,13 @@ export default {
             :to="{ name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}")
             v-list-tile-content
               v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
-              v-list-tile-sub-title.adock-transporteur-list-tile {{ transporteur.code_postal }} {{ transporteur.ville }}
+              v-list-tile-sub-title.adock-transporteur-list-tile
+                | {{ transporteur.code_postal }} {{ transporteur.ville }}
+                |  - {{ transporteur.lti_nombre }} LTI - {{ transporteur.lc_nombre }} LC
+                |  - {{ choices.workingAreas[transporteur.working_area] }}
             v-list-tile-action.adock-transporteur-list-action
               v-list-tile-action-text
-                span.hidden-xs-only Complété à
-                span  {{ transporteur.completeness }}&nbsp;%
+                span {{ transporteur.completeness }}&nbsp;%
               v-icon info
 </template>
 

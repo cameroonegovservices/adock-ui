@@ -1,15 +1,28 @@
+import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import { createLocalVue, shallowMount } from '@vue/test-utils'
+import deepClone from 'lodash.clonedeep'
 
+import { storeOptions } from '@/store/options'
 import TransporteurList from '@/components/TransporteurList.vue'
 
 describe('TransporteurList.vue', () => {
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   localVue.use(Vuetify)
+
+  let store
+  let clonedStoreOptions
+
+  beforeEach(() => {
+    clonedStoreOptions = deepClone(storeOptions)
+    store = new Vuex.Store(clonedStoreOptions)
+  })
 
   it('renders a list of transporteurs', () => {
     const wrapper = shallowMount(TransporteurList, {
       localVue,
+      store,
       propsData: {
         searchResponseIsEmpty: false,
         searchParams: {
