@@ -34,6 +34,9 @@ export default {
   filters: {
     asDepartements (value) {
       return value.map(dep => String(dep).padStart(2, '0')).join(', ')
+    },
+    asLocaleDate (value) {
+      return new Date(value).toLocaleDateString()
     }
   }
 }
@@ -48,17 +51,26 @@ export default {
             v-icon chevron_left
           span.subheading.no-wrap Recherche
         v-card
-          TransporteurCardHeader(:transporteur="transporteur" :with-button="true")
+          TransporteurCardHeader(:transporteur="transporteur" :with-button="!transporteur.deleted_at")
           v-container(grid-list-lg)
             v-layout(v-if="!transporteur.in_sirene")
-              v-alert(
-                :value="true"
-                type="warning"
-                color="orange"
-              )
-                | Ce transporteur est présent dans le registre mais absent de la base de données Sirène de l'Insee.
-                | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
-                | La cause peut être l'opposition au démarchage commerciale.
+              v-flex(offset-xs1 xs10)
+                v-alert(
+                  :value="true"
+                  type="warning"
+                  color="orange"
+                )
+                  | Ce transporteur est présent dans le registre mais absent de la base de données Sirène de l'Insee.
+                  | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
+                  | La cause peut être l'opposition au démarchage commerciale.
+            v-layout(v-if="transporteur.deleted_at")
+              v-flex(offset-xs1 xs10)
+                v-alert(
+                  :value="true"
+                  type="error"
+                )
+                  | Ce transporteur a été radié du registre des transports de marchandises le
+                  | {{ transporteur.deleted_at | asLocaleDate }}.
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
               v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
@@ -81,7 +93,7 @@ export default {
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_numero }}
               v-layout
                 v-flex(xs6 offset-md1 md5) validité
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_date_debut }} au {{ transporteur.lti_date_fin }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_date_debut | asLocaleDate }} au {{ transporteur.lti_date_fin | asLocaleDate }}
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_nombre }}
@@ -92,7 +104,7 @@ export default {
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_numero }}
               v-layout
                 v-flex(xs6 offset-md1 md5) validité
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_date_debut }} au {{ transporteur.lc_date_fin }}
+                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_date_debut | asLocaleDate }} au {{ transporteur.lc_date_fin | asLocaleDate }}
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
@@ -128,7 +140,7 @@ export default {
               v-flex(xs6 offset-md1 md5) Site Web
               v-flex.adock-align-right(xs6 md5)
                 a(:href="transporteur.website") {{ transporteur.website }}
-            v-layout
+            v-layout(v-if="!transporteur.deleted_at")
               v-flex.adock-align-right(xs12 md11)
                 v-btn.ma-0(
                   dark
