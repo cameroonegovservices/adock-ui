@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, mount } from '@vue/test-utils'
+import { createLocalVue, mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
@@ -33,20 +33,24 @@ describe('Detail.vue', () => {
 
   let store
   let clonedStoreOptions
+  let wrapper
 
   beforeEach(() => {
     clonedStoreOptions = deepClone(storeOptions)
     store = new Vuex.Store(clonedStoreOptions)
-  })
-
-  it('renders detail', () => {
-    const wrapper = mount(Detail, {
+    wrapper = mount(Detail, {
       localVue,
       store,
       propsData: {
         transporteur
+      },
+      stubs: {
+        RouterLink: RouterLinkStub
       }
     })
+  })
+
+  it('renders detail', () => {
     expect(wrapper.text()).toMatch('DUBOIS')
     const siretDiv = wrapper.find('div.container.grid-list-lg > div.layout > div.flex.adock-align-right')
     expect(siretDiv.text()).toMatch('12345678912345')
