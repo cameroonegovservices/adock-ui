@@ -136,6 +136,7 @@ export default {
                   v-if="form.working_area === 'DEPARTEMENT'"
                   v-model="form.working_area_departements"
                   label="Départements livrés"
+                  :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou virgules"
                 )
             v-layout
@@ -144,6 +145,7 @@ export default {
                   :items="options.specialities"
                   v-model="form.specialities"
                   label="Spécialités"
+                  :error-messages="fieldErrors.specialities"
                   chips
                   multiple
                   deletable-chips
