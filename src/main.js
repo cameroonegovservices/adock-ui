@@ -1,4 +1,4 @@
-/* IE11 and old Firerox (v45) */
+/* IE11 and old Firefox (v45) */
 import 'babel-polyfill'
 
 import Vue from 'vue'
