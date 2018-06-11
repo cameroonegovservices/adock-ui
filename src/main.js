@@ -1,5 +1,5 @@
 /* IE11 and old Firefox (v45) */
-import 'babel-polyfill'
+import '@babel/polyfill'
 
 import Vue from 'vue'
 import Vuex from 'vuex'

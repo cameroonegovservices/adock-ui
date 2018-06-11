@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "axios": "0.18.0",
-    "babel-polyfill": "^6.26.0",
     "lodash.clonedeep": "^4.5.0",
     "pug": "^2.0.3",
     "raven-js": "^3.24.2",
