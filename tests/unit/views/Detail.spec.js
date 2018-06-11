@@ -55,4 +55,14 @@ describe('Detail.vue', () => {
     const siretDiv = wrapper.find('div.container.grid-list-lg > div.layout > div.flex.adock-align-right')
     expect(siretDiv.text()).toMatch('12345678912345')
   })
+
+  it('renders departement numbers', () => {
+    const asDepartements = wrapper.vm.$options.filters.asDepartements
+    expect(asDepartements(['2'])).toBe('02')
+    expect(asDepartements(['2A'])).toBe('2A')
+    expect(asDepartements(['44'])).toBe('44')
+    expect(asDepartements(['44', '49'])).toBe('44, 49')
+    expect(asDepartements(['976'])).toBe('976')
+    expect(asDepartements(['976', '49'])).toBe('976, 49')
+  })
 })
