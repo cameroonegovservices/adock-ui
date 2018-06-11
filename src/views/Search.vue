@@ -180,17 +180,17 @@ export default {
                           {{ data.item.text }}
                 v-flex(xs12 sm6 md4)
                   v-text-field(
-                    v-model.number='searchForm.departementFrom'
+                    v-model='searchForm.departementFrom'
                     label="Département d'enlèvement"
-                    mask="###"
+                    mask="#N#"
                     @keyup.enter="search"
                     data-cy="searchFormDepartementFrom"
                   )
                 v-flex(xs12 sm6 md4)
                   v-text-field(
-                    v-model.number='searchForm.departementTo'
+                    v-model='searchForm.departementTo'
                     label="Département de livraison"
-                    mask="###"
+                    mask="#N#"
                     @keyup.enter="search"
                   )
             v-container(fluid ma-0 pa-0 align-baseline grid-list-md)

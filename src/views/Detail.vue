@@ -33,6 +33,9 @@ export default {
 
   filters: {
     asDepartements (value) {
+      if (['2A', '2B'].includes(value)) {
+        return value
+      }
       return value.map(dep => String(dep).padStart(2, '0')).join(', ')
     },
     asLocaleDate (value) {
