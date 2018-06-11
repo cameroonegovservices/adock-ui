@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import MockAdapter from 'axios-mock-adapter'
-import { mount, shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { axiosInstance, searchTransporteursUrl } from '@/api'
@@ -11,12 +11,12 @@ import { addElementWithDataAppToBody } from '../utils'
 
 const mockAdapter = new MockAdapter(axiosInstance)
 
-describe('Search.vue', () => {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.use(Vuetify)
-  addElementWithDataAppToBody()
+const localVue = createLocalVue()
+localVue.use(Vuex)
+localVue.use(Vuetify)
+addElementWithDataAppToBody()
 
+describe('Search.vue', () => {
   let store
   let clonedStoreOptions
 
@@ -47,7 +47,7 @@ describe('Search.vue', () => {
         ]
       })
 
-    const wrapper = shallowMount(Search, {
+    const wrapper = mount(Search, {
       localVue,
       store
     })
@@ -61,7 +61,7 @@ describe('Search.vue', () => {
   it('fails to search transporteurs', async () => {
     mockAdapter.onGet(searchTransporteursUrl)
       .reply(500)
-    const wrapper = shallowMount(Search, {
+    const wrapper = mount(Search, {
       localVue,
       store
     })

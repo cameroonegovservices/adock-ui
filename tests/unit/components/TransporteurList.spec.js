@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { createLocalVue, mount } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
@@ -20,7 +20,7 @@ describe('TransporteurList.vue', () => {
   })
 
   it('renders a list of transporteurs', () => {
-    const wrapper = shallowMount(TransporteurList, {
+    const wrapper = mount(TransporteurList, {
       localVue,
       store,
       propsData: {
