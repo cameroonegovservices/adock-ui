@@ -7072,8 +7072,8 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
 raven-js@^3.24.2:
-  version "3.26.1"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.26.1.tgz#13f78804f2bed524a7283382e1bca7ab423950a3"
+  version "3.26.2"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.26.2.tgz#9153af2416e96ccf4e0b9cbc6c90c34dda0d7e88"
 
 raw-body@2.3.2:
   version "2.3.2"
@@ -7197,10 +7197,6 @@ regenerate-unicode-properties@^7.0.0:
 regenerate@^1.2.1, regenerate@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
-
-regenerator-runtime@^0.10.5:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
 regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
