@@ -32,6 +32,7 @@ export default {
   },
 
   filters: {
+    // FIXME - Format server side and remove it
     asDepartements (value) {
       if (['2A', '2B'].includes(value)) {
         return value
