@@ -42,6 +42,7 @@ export default {
         img.adock-app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
       v-spacer
       v-toolbar-items
+        v-btn(flat :to="{name: 'about'}") En savoir plus
         v-btn(flat :to="{name: 'cgu'}") CGU
       img(src='./assets/logo-fabnum.svg' height='50px')
     v-content

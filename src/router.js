@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import { getTracker } from './tracker'
-import Search from '@/views/Search.vue'
+import api from './api'
+
+import About from '@/views/About.vue'
+import CGU from '@/views/CGU.vue'
 import Detail from '@/views/Detail.vue'
 import Edit from '@/views/Edit.vue'
-import CGU from '@/views/CGU.vue'
+import Search from '@/views/Search.vue'
 import ViewError from '@/views/ViewError.vue'
-import api from './api'
 
 Vue.use(VueRouter)
 
@@ -66,6 +68,11 @@ const routes = [
         await loadTransporteur(routeTo, next)
       }
     }
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About
   },
   {
     path: '/cgu',
