@@ -44,7 +44,8 @@ export default {
       v-toolbar-items
         v-btn(flat :to="{name: 'about'}") En savoir plus
         v-btn(flat :to="{name: 'cgu'}") CGU
-      img(src='./assets/logo-fabnum.svg' height='50px')
+      a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
+        img(src='./assets/logo-fabnum.svg' height='50px')
     v-content
       router-view
 </template>
