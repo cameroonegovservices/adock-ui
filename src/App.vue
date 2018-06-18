@@ -33,7 +33,7 @@ export default {
     v-toolbar.white(app light)
       v-tooltip(bottom)
         span(slot="activator")
-          img(src='./assets/marianne.svg' width='80px')
+          img(src='./assets/marianne.svg' height='50px')
         div
           span A Dock v{{ meta.version }}
           br
@@ -43,6 +43,7 @@ export default {
       v-spacer
       v-toolbar-items
         v-btn(flat :to="{name: 'cgu'}") CGU
+      img(src='./assets/logo-fabnum.svg' height='50px')
     v-content
       router-view
 </template>
