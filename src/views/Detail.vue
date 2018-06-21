@@ -82,6 +82,9 @@ export default {
               v-flex(xs6 offset-md1 md5) N° TVA
               v-flex.adock-align-right(xs6 md5) {{ transporteur.numero_tva }}
             v-layout
+              v-flex(xs6 offset-md1 md5) Raison sociale
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.raison_sociale }}
+            v-layout
               v-flex(xs6 offset-md1 md5) Adresse
               v-flex.adock-align-right(xs6 md5) {{ transporteur.adresse }}
             v-layout

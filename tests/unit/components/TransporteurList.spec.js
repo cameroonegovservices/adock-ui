@@ -30,13 +30,13 @@ describe('TransporteurList.vue', () => {
         },
         transporteurs: [
           {
-            raison_sociale: 'BARBARE',
+            enseigne: 'BARBARE',
             code_postal: '44117',
             ville: 'SAINT ANDRE DES EAUX',
             completeness: 100
           },
           {
-            raison_sociale: 'BAROQUE',
+            enseigne: 'BAROQUE',
             code_postal: '44600',
             ville: 'SAINT NAZAIRE',
             completeness: 85
@@ -46,5 +46,6 @@ describe('TransporteurList.vue', () => {
       }
     })
     expect(wrapper.vm.searchParamsForDisplay).toBe('« BAR »')
+    expect(wrapper.find('div.adock-transporteur-list-tile').text()).toBe('BARBARE')
   })
 })

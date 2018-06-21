@@ -77,7 +77,7 @@ export default {
         this.$store.commit('ADD_MESSAGE', {
           message: {
             color: null,
-            text: `Transporteur « ${this.transporteur.raison_sociale} » enregistré.`
+            text: `Transporteur « ${this.transporteur.enseigne} » enregistré.`
           }
         })
         // Redirect

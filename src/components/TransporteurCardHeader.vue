@@ -4,7 +4,7 @@ v-card-media.white--text(:src="roadPicture" height="200px")
     v-flex.flex-bottom(xs10)
       v-layout(align-end)
         v-flex(xs10)
-          h3.headline {{ transporteur.raison_sociale }}
+          h3.headline {{ transporteur.enseigne }}
           span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
           br
           v-btn.ma-0(v-if="withButton && transporteur.completeness < 100"

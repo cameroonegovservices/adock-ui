@@ -76,7 +76,7 @@ export default {
             :key="transporteur.siret",
             :to="{ name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}")
             v-list-tile-content
-              v-list-tile-title.adock-transporteur-list-tile {{ transporteur.raison_sociale }}
+              v-list-tile-title.adock-transporteur-list-tile {{ transporteur.enseigne }}
               v-list-tile-sub-title.adock-transporteur-list-tile
                 | {{ transporteur.code_postal }} {{ transporteur.ville }}
                 |  - {{ transporteur.lti_nombre }} LTI - {{ transporteur.lc_nombre }} LC
