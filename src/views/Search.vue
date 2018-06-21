@@ -93,21 +93,30 @@ export default {
     },
 
     async search () {
-      // Remove error message as soon as the user clicks
+      // Remove error message as soon as the user clicks.
       this.errorMessage = null
       this.isSearching = true
+      const params = {}
 
-      const data = await api.searchTransporteurs({
-        // The parameters of the query are in French
-        params: {
-          'q': this.searchForm.q,
-          'licence-types': this.searchForm.licenseTypes.map(item => item.value),
-          'departement-depart': this.searchForm.departementFrom,
-          'departement-arrivee': this.searchForm.departementTo,
-          'specialities': this.searchForm.specialities.map(item => item.value)
-        }
-      })
+      // The parameters of the query are in French.
+      // Only add not empty criteria.
+      if (this.searchForm.q) {
+        params['q'] = this.searchForm.q
+      }
 
+      if (this.searchForm.licenseTypes) {
+        params['licence-types'] = this.searchForm.licenseTypes.map(item => item.value)
+      }
+
+      if (this.searchForm.departementFrom) {
+        params['departement-depart'] = this.searchForm.departementFrom
+      }
+
+      if (this.searchForm.specialities) {
+        params['specialities'] = this.searchForm.specialities.map(item => item.value)
+      }
+
+      const data = await api.searchTransporteurs({ params })
       if (data.error == null) {
         // Disable reactivity to speed up rendering
         this.transporteurs = Object.freeze(data.transporteurs)
