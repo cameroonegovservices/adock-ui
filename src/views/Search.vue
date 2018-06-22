@@ -136,6 +136,7 @@ export default {
 
     clear () {
       this.searchForm = deepClone(defaultSearchForm)
+      this.transporteurs = null
     }
   }
 }
