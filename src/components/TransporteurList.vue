@@ -84,7 +84,6 @@ export default {
             v-list-tile-action.adock-transporteur-list-action
               v-list-tile-action-text
                 span {{ transporteur.completeness }}&nbsp;%
-              v-icon info
 </template>
 
 <style lang="stylus">
