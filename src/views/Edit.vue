@@ -138,6 +138,7 @@ export default {
                   label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou virgules"
+                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
