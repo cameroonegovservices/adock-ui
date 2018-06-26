@@ -56,13 +56,9 @@ describe('Detail.vue', () => {
     expect(siretDiv.text()).toMatch('12345678912345')
   })
 
-  it('renders departement numbers', () => {
-    const asDepartements = wrapper.vm.$options.filters.asDepartements
-    expect(asDepartements(['2'])).toBe('02')
-    expect(asDepartements(['2A'])).toBe('2A')
-    expect(asDepartements(['44'])).toBe('44')
-    expect(asDepartements(['44', '49'])).toBe('44, 49')
-    expect(asDepartements(['976'])).toBe('976')
-    expect(asDepartements(['976', '49'])).toBe('976, 49')
+  it('display list of strings as joined string', () => {
+    const asJoinedString = wrapper.vm.$options.filters.asJoinedString
+    expect(asJoinedString(null)).toBe('')
+    expect(asJoinedString(['2A', '34'])).toBe('2A, 34')
   })
 })

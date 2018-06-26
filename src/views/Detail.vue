@@ -32,13 +32,10 @@ export default {
   },
 
   filters: {
-    // FIXME - Format server side and remove it
-    asDepartements (value) {
-      if (['2A', '2B'].includes(value)) {
-        return value
-      }
-      return value.map(dep => String(dep).padStart(2, '0')).join(', ')
+    asJoinedString (value) {
+        return value ? value.join(', ') : ''
     },
+
     asLocaleDate (value) {
       return new Date(value).toLocaleDateString()
     }
@@ -140,7 +137,7 @@ export default {
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
             v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
               v-flex(xs6 offset-md1 md5) Départements livrés
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asDepartements }}
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asJoinedString }}
             v-layout
               v-flex(xs6 offset-md1 md5) Spécialités
               v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
