@@ -53,7 +53,7 @@ export default {
         router-link(:to="{name: 'search', params: {keepPreviousSearch: true}}").d-inline-flex.align-center.adock-no-link
           v-btn(icon)
             v-icon chevron_left
-          span.subheading.no-wrap Recherche
+          span.subheading.no-wrap Retour aux résultats
         v-card
           TransporteurCardHeader(:transporteur="transporteur" :with-button="!transporteur.deleted_at")
           v-container(grid-list-lg)
