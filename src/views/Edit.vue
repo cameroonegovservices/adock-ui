@@ -108,6 +108,7 @@ export default {
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
                   v-model="form.telephone"
+                  required
                   input="telephone"
                   label="Téléphone"
                   :error-messages="fieldErrors.telephone"
