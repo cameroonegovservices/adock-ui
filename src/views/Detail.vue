@@ -145,6 +145,9 @@ export default {
               v-flex(xs6 offset-md1 md5) Site Web
               v-flex.adock-align-right(xs6 md5)
                 a(:href="transporteur.website") {{ transporteur.website }}
+            v-layout(v-if="transporteur.description")
+              v-flex(xs6 offset-md1 md5) Description de l'activité
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.description }}
             v-layout(v-if="!transporteur.deleted_at")
               v-flex.adock-align-right(xs12 md11)
                 v-btn.ma-0(

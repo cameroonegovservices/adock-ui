@@ -27,7 +27,8 @@ export default {
         working_area: '',
         working_area_departements: '',
         specialities: [],
-        website: ''
+        website: '',
+        description: ''
       },
       errorMessage: null,
       fieldErrors: {}
@@ -160,6 +161,15 @@ export default {
                   input="url"
                   label="Site Web"
                   :error-messages="fieldErrors.website"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.description"
+                  multi-line
+                  :rows="2"
+                  label="Description de l'activité"
+                  :error-messages="fieldErrors.description"
                 )
             v-layout
               v-flex.adock-align-right(xs12 md11)
