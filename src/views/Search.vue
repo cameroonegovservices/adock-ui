@@ -112,6 +112,10 @@ export default {
         params['departement-depart'] = this.searchForm.departementFrom
       }
 
+      if (this.searchForm.departementTo) {
+        params['departement-arrivee'] = this.searchForm.departementTo
+      }
+
       if (this.searchForm.specialities) {
         params['specialities'] = this.searchForm.specialities.map(item => item.value)
       }

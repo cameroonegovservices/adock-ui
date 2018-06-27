@@ -33,7 +33,7 @@ export default {
 
   filters: {
     asJoinedString (value) {
-        return value ? value.join(', ') : ''
+      return value ? value.join(', ') : ''
     },
 
     asLocaleDate (value) {
