@@ -22,23 +22,25 @@ function handleCommunicationError (axiosError) {
       status: 503
     }
   } else if (axiosError.response) {
+    const data = {
+      status: axiosError.response.status
+    }
+
     if (axiosError.response.status === 500) {
       // Django will call Raven itself
-      return {
-        message: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`,
-        status: axiosError.response.status
-      }
+      data.message = `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`
     } else if (axiosError.response.status === 404) {
       let message = "La ressource demandée n'existe pas"
       if (axiosError.request && axiosError.request.responseURL) {
         message += ` « ${axiosError.request.responseURL} »`
       }
       message += '.'
-      return {
-        message,
-        status: axiosError.response.status
-      }
+      data.message = message
+    } else if (axiosError.response.status === 400 && axiosError.response.data && axiosError.response.data.message) {
+      data.message = axiosError.response.data.message
     }
+
+    return data
   }
 }
 
