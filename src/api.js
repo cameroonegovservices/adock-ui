@@ -14,6 +14,10 @@ export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
 }
 
+export function getConfirmEmailUrl (transporteurSiret, token) {
+  return `/transporteurs/${transporteurSiret}/confirmer_adresse/${token}/`
+}
+
 function handleCommunicationError (axiosError) {
   if (axiosError.response === undefined) {
     Raven.captureException(axiosError)
@@ -126,6 +130,19 @@ export const api = {
     }
 
     return data
+  },
+
+  async confirmEmail (transporteurSiret, token) {
+    const url = getConfirmEmailUrl(transporteurSiret, token)
+    try {
+      const response = await axiosInstance.get(url)
+      return {
+        message: response.data.message,
+        status: 200
+      }
+    } catch (axiosError) {
+      return handleCommunicationError(axiosError)
+    }
   }
 }
 
