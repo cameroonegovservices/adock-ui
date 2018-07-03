@@ -111,16 +111,18 @@ export const api = {
     try {
       const response = await axiosInstance.patch(url, form)
       data.transporteur = response.data
-    } catch (error) {
-      const mainError = handleCommunicationError(error)
-      if (mainError) {
-        data.errors = {
-          main: mainError
-        }
-      } else if (error.response.status === 400 && error.response.data) {
+    } catch (axiosError) {
+      if (axiosError.response && axiosError.response.status === 400 && axiosError.response.data) {
         // The form isn't valid
         data.errors = {
-          fields: error.response.data
+          fields: axiosError.response.data
+        }
+      } else {
+        const mainError = handleCommunicationError(axiosError)
+        if (mainError) {
+          data.errors = {
+            main: mainError
+          }
         }
       }
     }
