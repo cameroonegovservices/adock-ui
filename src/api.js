@@ -86,13 +86,13 @@ export const api = {
   },
 
   async fetchTransporteur (transporteurSiret) {
+    const url = getTransporteurUrl(transporteurSiret)
     const data = {
       transporteur: null,
       error: null
     }
 
     try {
-      const url = getTransporteurUrl(transporteurSiret)
       const response = await axiosInstance.get(url)
       data.transporteur = response.data
     } catch (error) {
@@ -103,13 +103,12 @@ export const api = {
   },
 
   async updateTransporteur (transporteurSiret, form) {
+    const url = getTransporteurUrl(transporteurSiret)
     const data = {
       transporteur: null,
       errors: null
     }
-
     try {
-      const url = getTransporteurUrl(transporteurSiret)
       const response = await axiosInstance.patch(url, form)
       data.transporteur = response.data
     } catch (error) {
