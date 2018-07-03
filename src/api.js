@@ -6,6 +6,7 @@ export const axiosInstance = axios.create({
   timeout: 5000
 })
 
+// URLs
 export const searchTransporteursUrl = '/transporteurs/recherche/'
 export const metaUrl = '/meta/'
 
@@ -13,28 +14,28 @@ export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
 }
 
-function handleCommunicationError (error) {
-  if (error.response === undefined) {
-    Raven.captureException(error)
+function handleCommunicationError (axiosError) {
+  if (axiosError.response === undefined) {
+    Raven.captureException(axiosError)
     return {
       message: `Le serveur ${process.env.VUE_APP_API_URL} est inaccessible.`,
       status: 503
     }
-  } else if (error.response && error.response.status === 500) {
+  } else if (axiosError.response && axiosError.response.status === 500) {
     // Django will call Raven itself
     return {
       message: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`,
-      status: error.response.status
+      status: axiosError.response.status
     }
-  } else if (error.response && error.response.status === 404) {
+  } else if (axiosError.response && axiosError.response.status === 404) {
     let message = "La ressource demandée n'existe pas"
-    if (error.request && error.request.responseURL) {
-      message += ` « ${error.request.responseURL} »`
+    if (axiosError.request && axiosError.request.responseURL) {
+      message += ` « ${axiosError.request.responseURL} »`
     }
     message += '.'
     return {
       message,
-      status: error.response.status
+      status: axiosError.response.status
     }
   }
 }
