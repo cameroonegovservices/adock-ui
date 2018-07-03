@@ -78,12 +78,6 @@ export const api = {
       data.limit = response.data.limit || 0
     } catch (error) {
       data.error = handleCommunicationError(error)
-      if (data.error == null && error.response.data && error.response.data.message) {
-        data.error = {
-          message: error.response.data.message,
-          status: 400
-        }
-      }
     }
 
     return data
