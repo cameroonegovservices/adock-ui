@@ -21,21 +21,23 @@ function handleCommunicationError (axiosError) {
       message: `Le serveur ${process.env.VUE_APP_API_URL} est inaccessible.`,
       status: 503
     }
-  } else if (axiosError.response && axiosError.response.status === 500) {
-    // Django will call Raven itself
-    return {
-      message: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`,
-      status: axiosError.response.status
-    }
-  } else if (axiosError.response && axiosError.response.status === 404) {
-    let message = "La ressource demandée n'existe pas"
-    if (axiosError.request && axiosError.request.responseURL) {
-      message += ` « ${axiosError.request.responseURL} »`
-    }
-    message += '.'
-    return {
-      message,
-      status: axiosError.response.status
+  } else if (axiosError.response) {
+    if (axiosError.response.status === 500) {
+      // Django will call Raven itself
+      return {
+        message: `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`,
+        status: axiosError.response.status
+      }
+    } else if (axiosError.response.status === 404) {
+      let message = "La ressource demandée n'existe pas"
+      if (axiosError.request && axiosError.request.responseURL) {
+        message += ` « ${axiosError.request.responseURL} »`
+      }
+      message += '.'
+      return {
+        message,
+        status: axiosError.response.status
+      }
     }
   }
 }
