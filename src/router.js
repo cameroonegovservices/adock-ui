@@ -7,6 +7,7 @@ import api from './api'
 import About from '@/views/About.vue'
 import CGU from '@/views/CGU.vue'
 import Detail from '@/views/Detail.vue'
+import ConfirmEmail from '@/views/ConfirmEmail.vue'
 import Edit from '@/views/Edit.vue'
 import Search from '@/views/Search.vue'
 import ViewError from '@/views/ViewError.vue'
@@ -68,6 +69,12 @@ const routes = [
         await loadTransporteur(routeTo, next)
       }
     }
+  },
+  {
+    path: '/transporteur/:transporteurSiret/confirm/:token',
+    name: 'transporteur_confirm_email',
+    component: ConfirmEmail,
+    props: true
   },
   {
     path: '/about',
