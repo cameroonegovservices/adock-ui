@@ -30,18 +30,18 @@ function handleCommunicationError (axiosError) {
       status: axiosError.response.status
     }
 
-    if (axiosError.response.status === 500) {
+    if (data.status === 500) {
       // Django will call Raven itself
       data.message = `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`
-    } else if (axiosError.response.status === 404) {
+    } else if (data.status === 404) {
       let message = "La ressource demandée n'existe pas"
       if (axiosError.request && axiosError.request.responseURL) {
         message += ` « ${axiosError.request.responseURL} »`
       }
       message += '.'
       data.message = message
-    } else if (axiosError.response.status === 400 && axiosError.response.data && axiosError.response.data.message) {
-      data.message = axiosError.response.data.message
+    } else if (data.status === 400 && axiosError.response.data) {
+      Object.assign(data, axiosError.response.data)
     }
 
     return data
