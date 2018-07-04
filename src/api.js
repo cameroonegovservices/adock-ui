@@ -18,6 +18,10 @@ export function getConfirmEmailUrl (transporteurSiret, token) {
   return `/transporteurs/${transporteurSiret}/confirmer_adresse/${token}/`
 }
 
+export function getEditCodeUrl (transporteurSiret) {
+  return `/transporteurs/${transporteurSiret}/envoyer_code/`
+}
+
 function handleCommunicationError (axiosError) {
   if (axiosError.response === undefined) {
     Raven.captureException(axiosError)
@@ -143,6 +147,11 @@ export const api = {
     } catch (axiosError) {
       return handleCommunicationError(axiosError)
     }
+  },
+
+  mailEditCode (transporteurSiret) {
+    const url = getEditCodeUrl(transporteurSiret)
+    axiosInstance.get(url)
   }
 }
 
