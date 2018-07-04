@@ -28,7 +28,8 @@ export default {
         working_area_departements: '',
         specialities: [],
         website: '',
-        description: ''
+        description: '',
+        edit_code: ''
       },
       errorMessage: null,
       fieldErrors: {}
@@ -172,10 +173,23 @@ export default {
                   label="Description de l'activité"
                   :error-messages="fieldErrors.description"
                 )
-            v-layout
-              v-flex.adock-align-right(xs12 offset-md1 md10)
+            v-layout(wrap)
+              v-flex(xs12 offset-md1 md5)
+                v-text-field(
+                  v-if="transporteur.is_locked"
+                  v-model="form.edit_code"
+                  type="integer"
+                  mask="######"
+                  :counter="6"
+                  label="Code de modification"
+                  :hint="`Copier dans ce champ le code envoyé à l'instant à « ${transporteur.email} »`"
+                  :error-messages="fieldErrors.edit_code"
+                )
+              v-flex.adock-align-right(xs12 md5)
                 v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
-                v-btn(color="primary" @click.native="update") Valider
+                v-btn(color="primary" @click.native="update")
+                  v-icon(v-if="transporteur.is_locked" left) lock
+                  | Valider
 </template>
 
 <style lang="stylus">
