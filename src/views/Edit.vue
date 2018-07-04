@@ -173,7 +173,7 @@ export default {
                   :error-messages="fieldErrors.description"
                 )
             v-layout
-              v-flex.adock-align-right(xs12 md11)
+              v-flex.adock-align-right(xs12 offset-md1 md10)
                 v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
                 v-btn(color="primary" @click.native="update") Valider
 </template>
