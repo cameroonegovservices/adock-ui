@@ -155,6 +155,7 @@ export default {
                   :color="transporteur.completeness === 100 ? 'green' : 'orange'"
                   :to="{name: 'transporteur_edit', params: {transporteurSiret: transporteur.siret}}"
                 )
+                  v-icon(v-if="transporteur.is_locked" left) lock
                   span(v-if="transporteur.completeness === 100") Modifier les informations
                   span(v-else) Compléter les informations
 </template>
