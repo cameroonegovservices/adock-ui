@@ -38,7 +38,9 @@ export default {
 
   created () {
     this.loadForm(this.transporteur)
-    api.mailEditCode(this.transporteur.siret)
+    if (this.transporteur.is_locked) {
+      api.mailEditCode(this.transporteur.siret)
+    }
   },
 
   computed: {
