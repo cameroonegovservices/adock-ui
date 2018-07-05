@@ -51,9 +51,9 @@ describe('Detail.vue', () => {
   })
 
   it('renders detail', () => {
-    expect(wrapper.text()).toMatch('DUBOIS')
-    const siretDiv = wrapper.find('div.container.grid-list-lg > div.layout > div.flex.adock-align-right')
-    expect(siretDiv.text()).toMatch('12345678912345')
+    const wrapperText = wrapper.text()
+    expect(wrapperText).toMatch('DUBOIS')
+    expect(wrapperText).toMatch('12345678912345')
   })
 
   it('display list of strings as joined string', () => {

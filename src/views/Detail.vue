@@ -73,6 +73,41 @@ export default {
                   | Ce transporteur a été radié du registre des transports de marchandises le
                   | {{ transporteur.deleted_at | asLocaleDate }}.
             v-layout
+              v-flex(xs6 offset-md1 md5) Téléphone
+              v-flex.adock-align-right(xs6 md5)
+                a(
+                  v-if="transporteur.telephone"
+                  :href="'tel:' + transporteur.telephone"
+                ) {{ transporteur.telephone }}
+                span(v-else) Non renseigné
+            v-layout
+              v-flex(xs6 offset-md1 md5) Email
+              v-flex.adock-align-right(xs6 md5)
+                a(
+                  v-if="transporteur.email"
+                  :href="'mailto:' + transporteur.email"
+                ) {{ transporteur.email }}
+                span(v-else) Non renseigné
+            v-layout
+              v-flex(xs6 offset-md1 md5) Aire de travail
+              v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
+            v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
+              v-flex(xs6 offset-md1 md5) Départements livrés
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asJoinedString }}
+            v-layout
+              v-flex(xs6 offset-md1 md5) Spécialités
+              v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
+            v-layout(v-if="transporteur.website")
+              v-flex(xs6 offset-md1 md5) Site Web
+              v-flex.adock-align-right(xs6 md5)
+                a(:href="transporteur.website") {{ transporteur.website }}
+            v-layout(v-if="transporteur.description")
+              v-flex(xs6 offset-md1 md5) Description de l'activité
+              v-flex.adock-align-right(xs6 md5) {{ transporteur.description }}
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-divider
+            v-layout
               v-flex(xs6 offset-md1 md5) SIRET
               v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
             v-layout
@@ -112,52 +147,6 @@ export default {
               v-layout
                 v-flex(xs6 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
-        v-card.elevation-4.pb-3
-          v-card-title
-            span.headline Informations complémentaires
-          v-container(fluid grid-list-md)
-            v-layout
-              v-flex(xs6 offset-md1 md5) Téléphone
-              v-flex.adock-align-right(xs6 md5)
-                a(
-                  v-if="transporteur.telephone"
-                  :href="'tel:' + transporteur.telephone"
-                ) {{ transporteur.telephone }}
-                span(v-else) Non renseigné
-            v-layout
-              v-flex(xs6 offset-md1 md5) Email
-              v-flex.adock-align-right(xs6 md5)
-                a(
-                  v-if="transporteur.email"
-                  :href="'mailto:' + transporteur.email"
-                ) {{ transporteur.email }}
-                span(v-else) Non renseigné
-            v-layout
-              v-flex(xs6 offset-md1 md5) Aire de travail
-              v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
-            v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
-              v-flex(xs6 offset-md1 md5) Départements livrés
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asJoinedString }}
-            v-layout
-              v-flex(xs6 offset-md1 md5) Spécialités
-              v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
-            v-layout(v-if="transporteur.website")
-              v-flex(xs6 offset-md1 md5) Site Web
-              v-flex.adock-align-right(xs6 md5)
-                a(:href="transporteur.website") {{ transporteur.website }}
-            v-layout(v-if="transporteur.description")
-              v-flex(xs6 offset-md1 md5) Description de l'activité
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.description }}
-            v-layout(v-if="!transporteur.deleted_at")
-              v-flex.adock-align-right(xs12 md11)
-                v-btn.ma-0(
-                  dark
-                  :color="transporteur.completeness === 100 ? 'green' : 'orange'"
-                  :to="{name: 'transporteur_edit', params: {transporteurSiret: transporteur.siret}}"
-                )
-                  v-icon(v-if="transporteur.is_locked" left) lock
-                  span(v-if="transporteur.completeness === 100") Modifier les informations
-                  span(v-else) Compléter les informations
 </template>
 
 <style lang="stylus">
