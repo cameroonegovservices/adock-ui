@@ -36,7 +36,7 @@ export default {
 <template lang="pug">
 v-container(fluid fill-height)
   v-layout(row justify-center align-center)
-    v-flex(xs4 text-xs-center)
+    v-flex(xs6 text-xs-center)
       div(v-if="waiting")
         h4 Confirmation de l'adresse électronique en cours...
         br
