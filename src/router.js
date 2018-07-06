@@ -91,6 +91,10 @@ const routes = [
     name: 'error',
     component: ViewError,
     props: true
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ]
 
