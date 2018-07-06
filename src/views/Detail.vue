@@ -73,6 +73,9 @@ export default {
                   | Ce transporteur a été radié du registre des transports de marchandises le
                   | {{ transporteur.deleted_at | asLocaleDate }}.
             v-layout
+              v-flex(xs12)
+                span.adock-section-title.pl-4 Contact
+            v-layout
               v-flex(xs6 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs6 md5)
                 a(
@@ -107,6 +110,9 @@ export default {
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-divider
+            v-layout
+              v-flex(xs12)
+                span.adock-section-title.pl-4 Administratif
             v-layout
               v-flex(xs6 offset-md1 md5) SIRET
               v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
@@ -157,12 +163,9 @@ export default {
 .adock-align-right
   text-align: right
 
-.adock-section
-  padding-top: 0.5em
-  margin-left: -0.5em
-
-.flex.flex-bottom
-  flex-basis: 0
+.adock-section-title
+  font-size: 16px
+  color: grey
 
 a[href^="tel:"], a[href^="mailto:"]
   text-decoration: none
