@@ -96,6 +96,10 @@ export default {
                   :href="'mailto:' + transporteur.email"
                 ) {{ transporteur.email }}
                 span(v-else) Non renseigné
+            v-layout(v-if="transporteur.website")
+              v-flex(xs6 offset-md1 md5) Site Web
+              v-flex.adock-align-right(xs6 md5)
+                a(:href="transporteur.website") {{ transporteur.website }}
             v-layout
               v-flex(xs6 offset-md1 md5) Aire de travail
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
@@ -105,10 +109,6 @@ export default {
             v-layout
               v-flex(xs6 offset-md1 md5) Spécialités
               v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
-            v-layout(v-if="transporteur.website")
-              v-flex(xs6 offset-md1 md5) Site Web
-              v-flex.adock-align-right(xs6 md5)
-                a(:href="transporteur.website") {{ transporteur.website }}
             v-layout(v-if="transporteur.description")
               v-flex(xs6 offset-md1 md5) Description de l'activité
               v-flex.adock-align-right(xs6 md5) {{ transporteur.description }}

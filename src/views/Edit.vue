@@ -131,6 +131,15 @@ export default {
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.website"
+                  input="url"
+                  label="Site Web"
+                  :error-messages="fieldErrors.website"
+                  placeholder="wwww.transporteur.fr"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
                 v-select(
                   v-model="form.working_area"
                   :items="options.workingAreas"
@@ -158,15 +167,6 @@ export default {
                   multiple
                   deletable-chips
                   data-cy="inputSpecialities"
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  v-model="form.website"
-                  input="url"
-                  label="Site Web"
-                  :error-messages="fieldErrors.website"
-                  placeholder="wwww.transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
