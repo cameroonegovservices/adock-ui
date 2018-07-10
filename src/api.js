@@ -100,7 +100,7 @@ export const api = {
 
     try {
       const response = await axiosInstance.get(url)
-      data.transporteur = response.data
+      data.transporteur = response.data.transporteur
     } catch (error) {
       data.error = handleCommunicationError(error)
     }
@@ -116,7 +116,7 @@ export const api = {
     }
     try {
       const response = await axiosInstance.patch(url, form)
-      data.transporteur = response.data
+      data.transporteur = response.data.transporteur
     } catch (axiosError) {
       if (axiosError.response && axiosError.response.status === 400 && axiosError.response.data) {
         // The form isn't valid
