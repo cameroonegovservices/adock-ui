@@ -128,6 +128,7 @@ export default {
                   :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
                   placeholder="contact@transporteur.fr"
+                  hint="Cette adresse de contact sera aussi utilisée pour verrouiller votre fiche."
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
