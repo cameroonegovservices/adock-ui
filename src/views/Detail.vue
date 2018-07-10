@@ -78,37 +78,37 @@ export default {
                   | Ce transporteur a été radié du registre des transports de marchandises le
                   | {{ transporteur.deleted_at | asLocaleDate }}.
             v-layout
-              v-flex(xs6 offset-md1 md5) Téléphone
-              v-flex.adock-align-right(xs6 md5)
+              v-flex(xs4 offset-md1 md5) Téléphone
+              v-flex.adock-align-right(xs8 md5)
                 a(
                   v-if="transporteur.telephone"
                   :href="'tel:' + transporteur.telephone"
                 ) {{ transporteur.telephone }}
                 span(v-else) Non renseigné
             v-layout
-              v-flex(xs6 offset-md1 md5) Email
-              v-flex.adock-align-right(xs6 md5)
+              v-flex(xs4 offset-md1 md5) Email
+              v-flex.adock-align-right(xs8 md5)
                 a(
                   v-if="transporteur.email"
                   :href="'mailto:' + transporteur.email"
                 ) {{ transporteur.email }}
                 span(v-else) Non renseigné
             v-layout(v-if="transporteur.website")
-              v-flex(xs6 offset-md1 md5) Site Web
-              v-flex.adock-align-right(xs6 md5)
+              v-flex(xs4 offset-md1 md5) Site Web
+              v-flex.adock-align-right(xs8 md5)
                 a(:href="transporteur.website") {{ transporteur.website }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Aire de travail
+              v-flex(xs8 offset-md1 md5) Aire de travail
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
             v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
-              v-flex(xs6 offset-md1 md5) Départements livrés
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.working_area_departements | asJoinedString }}
+              v-flex(xs5 offset-md1 md5) Départements livrés
+              v-flex.adock-align-right(xs7 md5) {{ transporteur.working_area_departements | asJoinedString }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Spécialités
-              v-flex.adock-align-right(xs6 md5) {{ displaySpecialities }}
+              v-flex(xs4 offset-md1 md5) Spécialités
+              v-flex.adock-align-right(xs8 md5) {{ displaySpecialities }}
             v-layout(v-if="transporteur.description")
-              v-flex(xs6 offset-md1 md5) Description de l'activité
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.description }}
+              v-flex(xs4 offset-md1 md5) Description de l'activité
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.description }}
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-divider
@@ -116,45 +116,45 @@ export default {
               v-flex(xs12)
                 span.adock-section-title.pl-4 Administratif
             v-layout
-              v-flex(xs6 offset-md1 md5) SIRET
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.siret }}
+              v-flex(xs4 offset-md1 md5) SIRET
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.siret }}
             v-layout
-              v-flex(xs6 offset-md1 md5) N° TVA
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.numero_tva }}
+              v-flex(xs4 offset-md1 md5) N° TVA
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.numero_tva }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Raison sociale
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.raison_sociale }}
+              v-flex(xs4 offset-md1 md5) Raison sociale
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.raison_sociale }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Adresse
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.adresse }}
+              v-flex(xs4 offset-md1 md5) Adresse
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.adresse }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Ville
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.code_postal }} {{ transporteur.ville }}
+              v-flex(xs4 offset-md1 md5) Ville
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.code_postal }} {{ transporteur.ville }}
             v-layout
-              v-flex(xs6 offset-md1 md5) Gestionnaire
-              v-flex.adock-align-right(xs6 md5) {{ transporteur.gestionnaire }}
+              v-flex(xs4 offset-md1 md5) Gestionnaire
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.gestionnaire }}
             template(v-if="transporteur.lti_numero")
               br
               v-layout
                 v-flex(xs6 offset-md1 md5) Licence LTI (léger)
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_numero }}
               v-layout
-                v-flex(xs6 offset-md1 md5) validité
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_date_debut | asLocaleDate }} au {{ transporteur.lti_date_fin | asLocaleDate }}
+                v-flex(xs4 offset-md1 md5) validité
+                v-flex.adock-align-right(xs8 md5) {{ transporteur.lti_date_debut | asLocaleDate }} au {{ transporteur.lti_date_fin | asLocaleDate }}
               v-layout
-                v-flex(xs6 offset-md1 md5) nombre
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lti_nombre }}
+                v-flex(xs4 offset-md1 md5) nombre
+                v-flex.adock-align-right(xs8 md5) {{ transporteur.lti_nombre }}
             template(v-if="transporteur.lc_numero")
               br
               v-layout
                 v-flex(xs6 offset-md1 md5) Licence LC (lourd, + 3,5 tonnes)
                 v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_numero }}
               v-layout
-                v-flex(xs6 offset-md1 md5) validité
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_date_debut | asLocaleDate }} au {{ transporteur.lc_date_fin | asLocaleDate }}
+                v-flex(xs4 offset-md1 md5) validité
+                v-flex.adock-align-right(xs8 md5) {{ transporteur.lc_date_debut | asLocaleDate }} au {{ transporteur.lc_date_fin | asLocaleDate }}
               v-layout
-                v-flex(xs6 offset-md1 md5) nombre
-                v-flex.adock-align-right(xs6 md5) {{ transporteur.lc_nombre }}
+                v-flex(xs4 offset-md1 md5) nombre
+                v-flex.adock-align-right(xs8 md5) {{ transporteur.lc_nombre }}
 </template>
 
 <style lang="stylus">
