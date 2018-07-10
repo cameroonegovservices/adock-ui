@@ -127,6 +127,7 @@ export default {
                   label="Adresse électronique"
                   :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
+                  placeholder="contact@transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
@@ -165,6 +166,7 @@ export default {
                   input="url"
                   label="Site Web"
                   :error-messages="fieldErrors.website"
+                  placeholder="wwww.transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
