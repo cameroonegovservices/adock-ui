@@ -7,7 +7,6 @@ export const state = {
     workingAreas: [],
     specialities: []
   },
-  // Contains objects {color: 'success', text: ''}
   messages: [
   ],
   meta: {
@@ -25,8 +24,8 @@ function getOptionsFromChoices (choices) {
 }
 
 export const mutations = {
-  REMOVE_MESSAGE (state) {
-    state.messages.shift()
+  REMOVE_MESSAGES (state) {
+    state.messages.splice(0)
   },
   ADD_MESSAGE (state, payload) {
     state.messages.push(payload.message)

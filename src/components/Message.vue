@@ -1,10 +1,16 @@
 <script>
+/* Limitation, when the timeout expires all messages are removed whatever the
+   time on display. Our current use case don't need something smarter.
+*/
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Message',
 
   computed: {
+    messagesJoined () {
+      return this.messages.join(' ')
+    },
     ...mapState([
       'messages'
     ])
@@ -12,7 +18,7 @@ export default {
 
   methods: {
     ...mapMutations([
-      'REMOVE_MESSAGE'
+      'REMOVE_MESSAGES'
     ])
   }
 }
@@ -20,12 +26,11 @@ export default {
 
 <template lang="pug">
   v-snackbar(
-    v-if="messages.length > 0"
+    v-if="messages.length"
     top
-    :timeout="6000",
-    :color="messages[0].color"
-    :value="messages.length > 0"
-    @input="REMOVE_MESSAGE()"
-  ) {{ messages[0].text }}
-    <v-btn flat color="pink" @click.native="REMOVE_MESSAGE()">Fermer</v-btn>
+    :timeout="8000",
+    :value="messages.length"
+    @input="REMOVE_MESSAGES()"
+  ) {{ messagesJoined }}
+    <v-btn flat color="pink" @click.native="REMOVE_MESSAGES()">Fermer</v-btn>
 </template>

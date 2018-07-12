@@ -1,13 +1,13 @@
 import { mutations } from '@/store/mutations'
 
 describe('mutations', () => {
-  it('REMOVE_MESSAGE', () => {
+  it('REMOVE_MESSAGES', () => {
     const state = {
       messages: ['old', 'new']
     }
-    mutations.REMOVE_MESSAGE(state)
+    mutations.REMOVE_MESSAGES(state)
     // Only recent messages are remaining
-    expect(state.messages).toEqual(['new'])
+    expect(state.messages).toEqual([])
   })
 
   it('ADD_MESSAGE', () => {
