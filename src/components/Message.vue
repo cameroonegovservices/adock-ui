@@ -1,6 +1,7 @@
 <script>
 /* Limitation, when the timeout expires all messages are removed whatever the
    time on display. Our current use case don't need something smarter.
+   BTW It will be a nice improvement to pop message one by one.
 */
 import { mapState, mapMutations } from 'vuex'
 
