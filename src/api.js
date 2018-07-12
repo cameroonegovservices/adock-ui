@@ -117,6 +117,7 @@ export const api = {
     try {
       const response = await axiosInstance.patch(url, form)
       data.transporteur = response.data.transporteur
+      data.confirmation_email_sent = response.data.confirmation_email_sent || false
     } catch (axiosError) {
       if (axiosError.response && axiosError.response.status === 400 && axiosError.response.data) {
         // The form isn't valid

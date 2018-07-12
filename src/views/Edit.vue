@@ -80,11 +80,13 @@ export default {
       } else {
         // Success
         this.$store.commit('ADD_MESSAGE', {
-          message: {
-            color: null,
-            text: `Transporteur « ${this.transporteur.enseigne} » enregistré.`
-          }
+          message: `Transporteur « ${this.transporteur.enseigne} » enregistré.`
         })
+        if (data.confirmation_email_sent) {
+          this.$store.commit('ADD_MESSAGE', {
+            message: `Un courriel de confirmation a été envoyé à « ${this.transporteur.email} ».`
+          })
+        }
         // Redirect
         router.push({name: 'transporteur_detail', transporteurSiret: this.transporteur.siret})
       }
