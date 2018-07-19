@@ -143,7 +143,7 @@ export const api = {
       const response = await axiosInstance.get(url)
       return {
         message: response.data.message,
-        status: 200
+        status: response.status
       }
     } catch (axiosError) {
       return handleCommunicationError(axiosError)
