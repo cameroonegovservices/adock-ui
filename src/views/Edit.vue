@@ -32,6 +32,7 @@ export default {
         edit_code: ''
       },
       errorMessage: null,
+      editCodeMessage: null,
       fieldErrors: {}
     }
   },
@@ -40,6 +41,9 @@ export default {
     this.loadForm(this.transporteur)
     if (this.transporteur.is_locked) {
       api.mailEditCode(this.transporteur.siret)
+        .then(data => {
+          this.loadEditCodeData(data)
+        })
     }
   },
 
@@ -64,6 +68,16 @@ export default {
           // Default for other fields
           this.form[field] = transporteur[field] || ''
         }
+      }
+    },
+
+    loadEditCodeData (data) {
+      if (data.status === 201) {
+        const editCodeAt = new Date(data.edit_code_at).toLocaleTimeString()
+        this.editCodeMessage = `Un courriel avec un code modification a été envoyé à « ${data.email} » (${editCodeAt}).`
+      } else if (data.status === 200) {
+        const editCodeTimeoutAt = new Date(data.edit_code_timeout_at).toLocaleTimeString()
+        this.editCodeMessage = `Le code de modification envoyé à « ${data.email} » est encore valide jusqu'à ${editCodeTimeoutAt}.`
       }
     },
 
@@ -111,6 +125,11 @@ export default {
               type="error"
               :value="true"
             ) {{ errorMessage }}
+            v-alert(
+              v-if="editCodeMessage"
+              type="info"
+              :value="true"
+            ) {{ editCodeMessage }}
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(

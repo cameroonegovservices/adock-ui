@@ -150,9 +150,19 @@ export const api = {
     }
   },
 
-  mailEditCode (transporteurSiret) {
+  async mailEditCode (transporteurSiret) {
     const url = getEditCodeUrl(transporteurSiret)
-    axiosInstance.get(url)
+    try {
+      const response = await axiosInstance.get(url)
+      return {
+        email: response.data.email,
+        edit_code_at: response.data.edit_code_at,
+        edit_code_timeout_at: response.data.edit_code_timeout_at,
+        status: response.status
+      }
+    } catch (axiosError) {
+      return handleCommunicationError(axiosError)
+    }
   }
 }
 
