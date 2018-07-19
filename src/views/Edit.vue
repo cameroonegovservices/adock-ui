@@ -208,7 +208,7 @@ export default {
                   mask="######"
                   :counter="6"
                   label="Code de modification"
-                  :hint="`Copier dans ce champ le code envoyé à l'instant à « ${transporteur.email} »`"
+                  :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
                   :error-messages="fieldErrors.edit_code"
                 )
               v-flex.adock-align-right(xs12 md5)
