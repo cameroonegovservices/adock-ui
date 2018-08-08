@@ -130,6 +130,9 @@ export default {
             v-layout
               v-flex(xs4 offset-md1 md5) Ville
               v-flex.adock-align-right(xs8 md5) {{ transporteur.code_postal }} {{ transporteur.ville }}
+            v-layout(v-if="transporteur.debut_activite")
+              v-flex(xs4 offset-md1 md5) Début d'activité
+              v-flex.adock-align-right(xs8 md5) {{ transporteur.debut_activite | asLocaleDate }}
             v-layout
               v-flex(xs4 offset-md1 md5) Gestionnaire
               v-flex.adock-align-right(xs8 md5) {{ transporteur.gestionnaire }}
