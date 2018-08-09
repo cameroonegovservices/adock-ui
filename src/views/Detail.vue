@@ -31,6 +31,10 @@ export default {
           value: 'code_postal'
         },
         {
+          text: 'Ville',
+          value: 'ville'
+        },
+        {
           text: "Début d'activité",
           value: 'debut_activite'
         }
@@ -220,7 +224,14 @@ export default {
                   )
                     td
                       router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: props.item.siret}}") {{ props.item.siret }}
+                      span &nbsp;
+                      v-tooltip(top)
+                        span(slot="activator")
+                          v-icon(v-if="props.item.is_siege" small) domain
+                        div
+                          span Siège social
                     td {{ props.item.code_postal }}
+                    td {{ props.item.ville }}
                     td {{ props.item.debut_activite | asLocaleDate }}
               v-flex(v-else xs10 offset-md1)
                 span Aucun
