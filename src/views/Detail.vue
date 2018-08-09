@@ -56,6 +56,9 @@ export default {
     },
 
     asLocaleDate (value) {
+      if (value == null) {
+        return ''
+      }
       return new Date(value).toLocaleDateString()
     }
   }
