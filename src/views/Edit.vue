@@ -1,5 +1,7 @@
 <script>
 import { mapState } from 'vuex'
+
+import { routeLoadTransporteur } from '@/routeLoaders'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 import api from '@/api.js'
@@ -44,6 +46,19 @@ export default {
         .then(data => {
           this.loadEditCodeData(data)
         })
+    }
+  },
+
+  async beforeRouteEnter (routeTo, routeFrom, next) {
+    if (routeTo.params.transporteur) {
+      next()
+    } else {
+      next(
+        await routeLoadTransporteur(
+          routeTo, routeFrom,
+          response => { routeTo.params.transporteur = response.transporteur }
+        )
+      )
     }
   },
 

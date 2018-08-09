@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import { getTracker } from './tracker'
-import api from './api'
 
 import About from '@/views/About.vue'
 import CGU from '@/views/CGU.vue'
@@ -13,32 +12,6 @@ import Search from '@/views/Search.vue'
 import ViewError from '@/views/ViewError.vue'
 
 Vue.use(VueRouter)
-
-async function loadTransporteur (routeTo, next) {
-  const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
-  if (response.error === null) {
-    routeTo.params.transporteur = response.transporteur
-    next()
-  } else {
-    // Error
-    let fallbackUrl
-    if (response.error.status === 404) {
-      // Unavailable
-      fallbackUrl = '/'
-    } else {
-      // Try again
-      fallbackUrl = routeTo.path
-    }
-    next({
-      name: 'error',
-      params: {
-        message: response.error.message,
-        status: response.error.status,
-        fallbackUrl
-      }
-    })
-  }
-}
 
 const routes = [
   {
@@ -51,24 +24,13 @@ const routes = [
     path: '/transporteur/:transporteurSiret',
     name: 'transporteur_detail',
     component: Detail,
-    props: true,
-    async beforeEnter (routeTo, routeFrom, next) {
-      // Load the JSON of transporteur before entering
-      await loadTransporteur(routeTo, next)
-    }
+    props: true
   },
   {
     path: '/transporteur/:transporteurSiret/edit',
     name: 'transporteur_edit',
     component: Edit,
-    props: true,
-    async beforeEnter (routeTo, routeFrom, next) {
-      if (routeTo.params.transporteur) {
-        next()
-      } else {
-        await loadTransporteur(routeTo, next)
-      }
-    }
+    props: true
   },
   {
     path: '/transporteur/:transporteurSiret/confirm/:token',

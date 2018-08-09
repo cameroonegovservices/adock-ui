@@ -2,6 +2,7 @@
 <script>
 import { mapState } from 'vuex'
 
+import { routeLoadTransporteur } from '@/routeLoaders'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
 export default {
@@ -16,6 +17,24 @@ export default {
 
   components: {
     TransporteurCardHeader
+  },
+
+  async beforeRouteEnter (routeTo, routeFrom, next) {
+    next(
+      await routeLoadTransporteur(
+        routeTo, routeFrom,
+        response => { routeTo.params.transporteur = response.transporteur }
+      )
+    )
+  },
+
+  async beforeRouteUpdate (routeTo, routeFrom, next) {
+    next(
+      await routeLoadTransporteur(
+        routeTo, routeFrom,
+        response => { routeTo.params.transporteur = response.transporteur }
+      )
+    )
   },
 
   computed: {
