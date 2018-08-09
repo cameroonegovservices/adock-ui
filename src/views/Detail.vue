@@ -206,7 +206,7 @@ export default {
               v-flex(xs12)
                 span.adock-section-title.pl-4 Autre établissements de l'entreprise
             v-layout
-              v-flex(xs10 offset-md1)
+              v-flex(v-if="transporteur.subsidiaries && transporteur.subsidiaries.length > 0" xs10 offset-md1)
                 v-data-table(
                   :headers='subsidiariesHeaders'
                   :items='transporteur.subsidiaries'
@@ -222,6 +222,8 @@ export default {
                       router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: props.item.siret}}") {{ props.item.siret }}
                     td {{ props.item.code_postal }}
                     td {{ props.item.debut_activite | asLocaleDate }}
+              v-flex(v-else xs10 offset-md1)
+                span Aucun
 
 </template>
 
