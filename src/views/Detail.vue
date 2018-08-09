@@ -19,6 +19,25 @@ export default {
     TransporteurCardHeader
   },
 
+  data () {
+    return {
+      subsidiariesHeaders: [
+        {
+          text: 'SIRET',
+          value: 'siret'
+        },
+        {
+          text: 'Code postal',
+          value: 'code_postal'
+        },
+        {
+          text: "Début d'activité",
+          value: 'debut_activite'
+        }
+      ]
+    }
+  },
+
   async beforeRouteEnter (routeTo, routeFrom, next) {
     next(
       await routeLoadTransporteur(
@@ -180,6 +199,30 @@ export default {
               v-layout
                 v-flex(xs4 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs8 md5) {{ transporteur.lc_nombre }}
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-divider
+            v-layout
+              v-flex(xs12)
+                span.adock-section-title.pl-4 Autre établissements de l'entreprise
+            v-layout
+              v-flex(xs10 offset-md1)
+                v-data-table(
+                  :headers='subsidiariesHeaders'
+                  :items='transporteur.subsidiaries'
+                  hide-actions
+                  class='elevation-1'
+                  must-sort
+                )
+                  template(
+                    slot='items'
+                    slot-scope='props'
+                  )
+                    td
+                      router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: props.item.siret}}") {{ props.item.siret }}
+                    td {{ props.item.code_postal }}
+                    td {{ props.item.debut_activite | asLocaleDate }}
+
 </template>
 
 <style lang="stylus">
