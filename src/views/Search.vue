@@ -5,6 +5,7 @@ import saveState from 'vue-save-state'
 
 import api from '@/api.js'
 import TransporteurList from '@/components/TransporteurList.vue'
+import TestimonialCards from '@/components/TestimonialCards.vue'
 
 const defaultSearchForm = {
   q: '',
@@ -55,6 +56,7 @@ export default {
   },
 
   components: {
+    TestimonialCards,
     TransporteurList
   },
 
@@ -247,6 +249,7 @@ export default {
                   v-icon(x-large) call
                 h3.text-xs-center 3. Apparaissez en tête des recherches
                 p.text-xs-center Grâce à votre profil complet !
+        TestimonialCards
 </template>
 
 <style lang="stylus">
