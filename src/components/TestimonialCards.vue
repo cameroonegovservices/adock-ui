@@ -19,7 +19,7 @@ export default {
           logo: logoStep,
           title: 'STEP',
           quote: `En tant que petite sociéte de transport naissante, cet outil peut être très
-            utile pour ce faire connaitre.`
+            utile pour ce faire connaître.`
         },
         {
           logo: logoRoutiersBretons,
