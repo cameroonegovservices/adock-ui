@@ -6,6 +6,7 @@ import saveState from 'vue-save-state'
 import api from '@/api.js'
 import TransporteurList from '@/components/TransporteurList.vue'
 import TestimonialCards from '@/components/TestimonialCards.vue'
+import SearchHelp from '@/components/SearchHelp.vue'
 
 const defaultSearchForm = {
   q: '',
@@ -57,7 +58,8 @@ export default {
 
   components: {
     TestimonialCards,
-    TransporteurList
+    TransporteurList,
+    SearchHelp
   },
 
   computed: {
@@ -229,26 +231,7 @@ export default {
           :transporteurs="transporteurs"
           :limit="limit"
         )
-        v-card.elevation-0.adock-cta
-          v-container.pt-4
-            v-layout.adock-cta(row wrap justify-space-around)
-              v-flex(xs3)
-                h2.text-xs-center
-                  v-icon(x-large) search
-                h3.text-xs-center 1. Recherchez votre entreprise
-                p.text-xs-center Grâce à son SIRET ou son nom
-              v-flex(xs3)
-                h2.text-xs-center
-                  v-icon(x-large) mode_edit
-                h3.text-xs-center 2. Complétez votre fiche transporteur
-                p.text-xs-center
-                  | Avec le téléphone ou le mail de votre commercial
-                  | et votre spécialité (par ex. transport frigorifique)
-              v-flex(xs3)
-                h2.text-xs-center
-                  v-icon(x-large) call
-                h3.text-xs-center 3. Apparaissez en tête des recherches
-                p.text-xs-center Grâce à votre profil complet !
+        SearchHelp
         TestimonialCards
 </template>
 
@@ -256,11 +239,4 @@ export default {
 .adock-search-background
   background: no-repeat top/100% url('../assets/search-background.jpg')
   background-color: white
-
-.card.adock-cta
-  background-color: rgba(255, 255, 255, .7)
-
-.layout.adock-cta
-  h3, p, .icon
-    color: #373C42
 </style>
