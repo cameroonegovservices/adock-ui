@@ -12,7 +12,7 @@
         h3.text-xs-center 2. Complétez votre fiche transporteur
         p.text-xs-center
           | Avec le téléphone ou le mail de votre commercial
-          | et votre spécialité (par ex. transport frigorifique)
+          | et votre spécialité
       v-flex(xs3)
         h2.text-xs-center
           v-icon(x-large) call
@@ -22,7 +22,7 @@
 
 <style lang="stylus">
 .card.adock-search-help
-  background-color: rgba(255, 255, 255, .7)
+  background-color: rgba(255, 255, 255, 0.7)
 
 .layout.adock-seach-help
   h3, p, .icon
