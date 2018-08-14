@@ -20,7 +20,7 @@ describe('api', () => {
     })
 
     const response = await api.getMeta()
-    expect(response.meta.version).toBe('1.0')
+    expect(response.data.version).toBe('1.0')
     expect(response.error).toBe(null)
   })
 

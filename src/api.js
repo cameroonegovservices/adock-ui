@@ -57,20 +57,24 @@ export const api = {
      - a field with the instance or the list of instances
      - a field errors which can be a string or an object with an entry for each field (form)
   */
-  async getMeta () {
+  async getData (url) {
     const data = {
-      meta: null,
+      data: null,
       error: null
     }
 
     try {
-      const response = await axiosInstance.get(metaUrl)
-      data.meta = response.data
+      const response = await axiosInstance.get(url)
+      data.data = response.data
     } catch (error) {
       data.error = handleCommunicationError(error)
     }
 
     return data
+  },
+
+  async getMeta () {
+    return this.getData(metaUrl)
   },
 
   async searchTransporteurs (params) {
