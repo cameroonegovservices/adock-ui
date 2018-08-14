@@ -9,6 +9,7 @@ export const axiosInstance = axios.create({
 // URLs
 export const searchTransporteursUrl = '/transporteurs/recherche/'
 export const metaUrl = '/meta/'
+export const statsTransporteursUrl = '/transporteurs/stats/'
 
 export function getTransporteurUrl (transporteurSiret) {
   return `/transporteurs/${transporteurSiret}/`
@@ -75,6 +76,10 @@ export const api = {
 
   async getMeta () {
     return this.getData(metaUrl)
+  },
+
+  async getStats () {
+    return this.getData(statsTransporteursUrl)
   },
 
   async searchTransporteurs (params) {

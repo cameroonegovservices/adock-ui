@@ -5,10 +5,11 @@ import { getTracker } from './tracker'
 
 import About from '@/views/About.vue'
 import CGU from '@/views/CGU.vue'
-import Detail from '@/views/Detail.vue'
 import ConfirmEmail from '@/views/ConfirmEmail.vue'
+import Detail from '@/views/Detail.vue'
 import Edit from '@/views/Edit.vue'
 import Search from '@/views/Search.vue'
+import Stats from '@/views/Stats.vue'
 import ViewError from '@/views/ViewError.vue'
 
 Vue.use(VueRouter)
@@ -37,6 +38,11 @@ const routes = [
     name: 'transporteur_confirm_email',
     component: ConfirmEmail,
     props: true
+  },
+  {
+    path: '/stats',
+    name: 'stats',
+    component: Stats
   },
   {
     path: '/about',
