@@ -1,8 +1,4 @@
 <script>
-import logoInterloc from '@/assets/logo-interloc.jpg'
-import logoStep from '@/assets/logo-step.jpeg'
-import logoRoutiersBretons from '@/assets/logo-routiers-bretons.png'
-
 export default {
   name: 'Testimonial',
 
@@ -10,19 +6,16 @@ export default {
     return {
       testimonials: [
         {
-          logo: logoInterloc,
           title: 'Interloc TP',
           quote: `C'est vraiment encourageant pour la profession de voir que l'État
             met en place des aides au développement de notre activité.`
         },
         {
-          logo: logoStep,
           title: 'STEP',
           quote: `En tant que petite sociéte de transport naissante, cet outil peut être très
             utile pour ce faire connaître.`
         },
         {
-          logo: logoRoutiersBretons,
           title: 'Les Routiers Bretons',
           quote: `Facile à utiliser et saisie rapide à faire.`
         }
