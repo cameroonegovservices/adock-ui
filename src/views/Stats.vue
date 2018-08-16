@@ -23,7 +23,7 @@ export default {
 
   methods: {
     getValueProperty (value) {
-      if (value == 0) {
+      if (value === 0) {
         value = 1
       }
       return `--value: ${value};`
