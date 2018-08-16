@@ -36,13 +36,19 @@ export default {
     }
   },
 
+  filters: {
+    asLocaleMonth (value) {
+      return new Date(value).toLocaleString('fr', {month: 'long'})
+    }
+  },
+
   methods: {
     getValidatedValueProperty (value) {
       if (value === 0) {
         value = 1
       }
       return `--value: ${value};`
-    }
+    },
   }
 }
 </script>
@@ -84,7 +90,7 @@ export default {
           v-card-text
             dl.adock-chart(v-if="validatedCarriersPerMonth.length" :style="validatedScaleProperty")
               template(v-for="item in validatedCarriersPerMonth")
-                dt.adock-chart-month {{ item.month }}
+                dt.adock-chart-month {{ item.month | asLocaleMonth }}
                 dd.adock-chart-bar(:style="getValidatedValueProperty(item.count)")
                   span.adock-chart-value {{ item.count }}
 </template>
