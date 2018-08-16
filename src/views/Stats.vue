@@ -48,7 +48,7 @@ export default {
         value = 1
       }
       return `--value: ${value};`
-    },
+    }
   }
 }
 </script>
