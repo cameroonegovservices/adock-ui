@@ -1,4 +1,6 @@
 <script>
+import { mapState } from 'vuex'
+
 import api from '@/api'
 
 export default {
@@ -22,7 +24,10 @@ export default {
     validatedScaleProperty () {
       const maxValue = Math.max(...this.validatedCarriersPerMonth.map(item => item.count))
       return `--scale: ${maxValue};`
-    }
+    },
+    ...mapState([
+      'meta'
+    ])
   },
 
   methods: {
@@ -38,12 +43,29 @@ export default {
 
 <template lang="pug">
   v-container(fluid grid-list-lg)
-    v-layout(row justify-center wrap)
+    v-layout(row wrap)
       v-flex(xs12 md6)
-        v-card
-          v-card-text.text-xs-center
-            p.display-2 {{ confirmedCarriers }}
-            p Fiches transporteur verrouillées
+        v-layout(column)
+          v-flex(xs12 md6)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ confirmedCarriers }}
+                p Fiches transporteur verrouillées
+          v-flex(xs12 md6)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ meta.transporteur.localeCount }}
+                p Nombre de transporteurs
+          v-flex(xs12 md6)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ meta.transporteur.localeDate }}
+                p Date de dernière mise à jour
+          v-flex(xs12 md6)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ meta.version }}
+                p Version de l'application
       v-flex(xs12 md6)
         v-card
           v-card-title(primary-title)
