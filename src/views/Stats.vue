@@ -6,13 +6,15 @@ export default {
 
   data () {
     return {
-      validatedTransporteurs: []
+      validatedTransporteurs: [],
+      confirmedTransporteurs: 0
     }
   },
 
   created () {
     api.getStats().then(response => {
       this.validatedTransporteurs = response.data['validated_transporteurs']
+      this.confirmedTransporteurs = response.data['confirmed_transporteurs']
     })
   },
 
@@ -35,9 +37,14 @@ export default {
 </script>
 
 <template lang="pug">
-  v-container(fluid)
-    v-layout(row justify-center)
-      v-flex(xs12 sm11 md9 lg8 xl6)
+  v-container(fluid grid-list-lg)
+    v-layout(row justify-center wrap)
+      v-flex(xs12 md6)
+        v-card
+          v-card-text.text-xs-center
+            p.display-2 {{ confirmedTransporteurs }}
+            p Fiches transporteur verrouillées
+      v-flex(xs12 md6)
         v-card
           v-card-title(primary-title)
             h3.headline Nombre de fiches validées par mois
