@@ -6,23 +6,25 @@ export default {
 
   data () {
     return {
-      data: []
+      validatedTransporteurs: []
     }
   },
 
   created () {
-    api.getStats().then(response => { this.data = response.data['validated_transporteurs'] })
+    api.getStats().then(response => {
+      this.validatedTransporteurs = response.data['validated_transporteurs']
+    })
   },
 
   computed: {
-    scaleProperty () {
-      const maxValue = Math.max(...this.data.map(item => item.count))
+    validatedScaleProperty () {
+      const maxValue = Math.max(...this.validatedTransporteurs.map(item => item.count))
       return `--scale: ${maxValue};`
     }
   },
 
   methods: {
-    getValueProperty (value) {
+    getValidatedValueProperty (value) {
       if (value === 0) {
         value = 1
       }
@@ -40,10 +42,10 @@ export default {
           v-card-title(primary-title)
             h3.headline Nombre de fiches validées par mois
           v-card-text
-            dl.adock-chart(v-if="data.length" :style="scaleProperty")
-              template(v-for="item in data")
+            dl.adock-chart(v-if="validatedTransporteurs.length" :style="validatedScaleProperty")
+              template(v-for="item in validatedTransporteurs")
                 dt.adock-chart-month {{ item.month }}
-                dd.adock-chart-bar(:style="getValueProperty(item.count)")
+                dd.adock-chart-bar(:style="getValidatedValueProperty(item.count)")
                   span.adock-chart-value {{ item.count }}
 </template>
 
