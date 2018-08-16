@@ -27,7 +27,13 @@ export default {
     },
     ...mapState([
       'meta'
-    ])
+    ]),
+    validatedCarriers () {
+      return this.validatedCarriersPerMonth.reduce(
+        (sum, current) => sum + current.count,
+        0
+      )
+    }
   },
 
   methods: {
@@ -46,6 +52,11 @@ export default {
     v-layout(row wrap)
       v-flex(xs12 md6)
         v-layout(column)
+          v-flex(xs12 md6)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ validatedCarriers }}
+                p Fiches transporteur validées
           v-flex(xs12 md6)
             v-card
               v-card-text.text-xs-center
