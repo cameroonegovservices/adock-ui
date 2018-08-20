@@ -1,5 +1,5 @@
 <template lang="pug">
-v-card-media.white--text(:src="roadPicture" height="200px")
+v-card-media.adock-transporteur.white--text(:src="roadPicture" height="200px")
   v-layout.pa-4(column reverse)
     v-flex.flex-bottom(xs10)
       v-layout(align-end)
@@ -18,7 +18,8 @@ v-card-media.white--text(:src="roadPicture" height="200px")
             span(v-else) Compléter les informations
         v-flex(xs2)
           CompletenessIndicator(:percent="transporteur.completeness")
-  </template>
+          img.adock-objectif-co2.elevation-16(v-if="transporteur.objectif_co2" src="@/assets/logo-objectif-co2.png")
+</template>
 
 <script>
 import roadPicture from '@/assets/road.jpg'
@@ -49,3 +50,10 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.adock-transporteur .adock-objectif-co2
+  width: 40px
+  border-radius: 4px
+  margin-left: 18px
+</style>

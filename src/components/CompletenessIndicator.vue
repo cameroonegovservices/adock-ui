@@ -30,6 +30,7 @@ export default {
 
 <style lang="stylus">
 .adock-indicator
+  float: left
   color: #fff
   border-radius: 50%
   text-align: center

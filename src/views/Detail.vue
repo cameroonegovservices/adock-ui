@@ -203,6 +203,14 @@ export default {
               v-layout
                 v-flex(xs4 offset-md1 md5) nombre
                 v-flex.adock-align-right(xs8 md5) {{ transporteur.lc_nombre }}
+            template(v-if="transporteur.objectif_co2")
+              br
+              v-layout
+                v-flex(xs6 offset-md1 md5) Objectif CO2
+                v-flex.adock-align-right(xs6 md5) {{ choices.objectifCO2[transporteur.objectif_co2] }}
+              v-layout
+                v-flex(xs4 offset-md1 md5) période
+                v-flex.adock-align-right(xs8 md5) {{ transporteur.objectif_co2_begin | asLocaleDate }} au {{ transporteur.objectif_co2_end | asLocaleDate }}
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-divider

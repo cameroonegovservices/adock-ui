@@ -1,7 +1,8 @@
 export const state = {
   choices: {
     workingAreas: {},
-    specialities: {}
+    specialities: {},
+    objectifCO2: {}
   },
   options: {
     workingAreas: [],
@@ -35,6 +36,7 @@ export const mutations = {
     state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES
     state.options.specialities = getOptionsFromChoices(payload.choices.SPECIALITY_CHOICES)
     state.choices.specialities = payload.choices.SPECIALITY_CHOICES
+    state.choices.objectifCO2 = payload.choices.OBJECTIF_CO2_CHOICES
     if (payload.transporteur) {
       // Format the payload data before assignment
       if (payload.transporteur.date) {
