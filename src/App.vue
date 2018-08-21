@@ -8,7 +8,8 @@ export default {
 
   data () {
     return {
-      isDrawerVisible: false
+      isDrawerVisible: false,
+      isIE11: false
     }
   },
 
@@ -23,6 +24,7 @@ export default {
         this.$router.push({name: 'error'})
       }
     })
+    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode
   },
 
   computed: {
@@ -75,10 +77,17 @@ export default {
         a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
           img(src='./assets/logo-fabnum.svg' height='50px')
     v-content
+      v-alert.adock-alert-ie11(v-if="isIE11" :value="true" type="warning")
+        | Nous vous recommandons d'utiliser un navigateur récent tel que&nbsp;
+        a(href="https://www.mozilla.org/fr/firefox/") Firefox
+        |  ou Chrome pour une expérience optimale.
       router-view
 </template>
 
 <style lang="stylus">
 .adock-app-name
   padding-left: 8px
+
+.adock-alert-ie11
+  margin: 0
 </style>
