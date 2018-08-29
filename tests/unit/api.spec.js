@@ -75,7 +75,9 @@ describe('api', () => {
   it('fetch a transporteur', async () => {
     const url = getTransporteurUrl('123')
     mockAdapter.onGet(url).reply(200, {
-      raison_sociale: 'FOO'
+      transporteur: {
+        raison_sociale: 'FOO'
+      }
     })
     const response = await api.fetchTransporteur('123')
     expect(response.transporteur.raison_sociale).toBe('FOO')
@@ -93,7 +95,9 @@ describe('api', () => {
   it('update a transporteur', async () => {
     const url = getTransporteurUrl('123')
     mockAdapter.onPatch(url).reply(204, {
-      raison_sociale: 'FOO'
+      transporteur: {
+        raison_sociale: 'FOO'
+      }
     })
     const form = {
       email: 'foo@example.com'
