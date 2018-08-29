@@ -13,7 +13,7 @@ export default {
         {
           title: 'STEP',
           quote: `En tant que petite sociéte de transport naissante, cet outil peut être très
-            utile pour ce faire connaître.`
+            utile pour se faire connaître.`
         },
         {
           title: 'Les Routiers Bretons',
