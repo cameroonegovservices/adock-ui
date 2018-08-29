@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, mount } from '@vue/test-utils'
+import { createLocalVue, mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
@@ -23,6 +23,9 @@ describe('TransporteurList.vue', () => {
     const wrapper = mount(TransporteurList, {
       localVue,
       store,
+      stubs: {
+        RouterLink: RouterLinkStub
+      },
       propsData: {
         searchResponseIsEmpty: false,
         searchParams: {

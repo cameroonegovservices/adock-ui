@@ -1,7 +1,7 @@
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 import MockAdapter from 'axios-mock-adapter'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { axiosInstance, searchTransporteursUrl } from '@/api'
@@ -20,7 +20,10 @@ function mountSearch (store) {
   return mount(Search, {
     localVue,
     store,
-    sync: false
+    sync: false,
+    stubs: {
+      RouterLink: RouterLinkStub
+    }
   })
 }
 
