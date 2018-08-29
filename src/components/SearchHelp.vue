@@ -21,10 +21,10 @@
 </template>
 
 <style lang="stylus">
-.card.adock-search-help
+.v-card.adock-search-help
   background-color: rgba(255, 255, 255, 0.7)
 
-.layout.adock-seach-help
+.v-layout.adock-seach-help
   h3, p, .icon
     color: #373C42
 </style>

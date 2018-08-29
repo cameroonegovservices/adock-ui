@@ -11,6 +11,7 @@ import {
   VFooter,
   VGrid,
   VIcon,
+  VImg,
   VList,
   VNavigationDrawer,
   VProgressCircular,
@@ -18,6 +19,7 @@ import {
   VSnackbar,
   VSubheader,
   VTextField,
+  VTextarea,
   VToolbar,
   VTooltip
 } from 'vuetify'
@@ -38,6 +40,7 @@ export const vuetifyOptions = {
     VFooter,
     VGrid,
     VIcon,
+    VImg,
     VList,
     VNavigationDrawer,
     VProgressCircular,
@@ -45,6 +48,7 @@ export const vuetifyOptions = {
     VSnackbar,
     VSubheader,
     VTextField,
+    VTextarea,
     VToolbar,
     VTooltip
   },

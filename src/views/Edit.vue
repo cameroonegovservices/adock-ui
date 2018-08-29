@@ -207,10 +207,9 @@ export default {
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
-                v-text-field(
+                v-textarea(
                   v-model="form.description"
-                  multi-line
-                  :rows="2"
+                  :rows="3"
                   label="Description de l'activité"
                   :error-messages="fieldErrors.description"
                 )
