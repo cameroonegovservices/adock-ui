@@ -1,6 +1,7 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, mount, RouterLinkStub } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
@@ -25,10 +26,10 @@ const transporteur = {
   email: 'contact@example.com'
 }
 
+Vue.use(Vuex)
+Vue.use(Vuetify)
+
 describe('Detail.vue', () => {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.use(Vuetify)
   addElementWithDataAppToBody()
 
   let store
@@ -39,7 +40,6 @@ describe('Detail.vue', () => {
     clonedStoreOptions = deepClone(storeOptions)
     store = new Vuex.Store(clonedStoreOptions)
     wrapper = mount(Detail, {
-      localVue,
       store,
       propsData: {
         transporteur

@@ -1,16 +1,16 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, mount, RouterLinkStub } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
 import TransporteurList from '@/components/TransporteurList.vue'
 
-describe('TransporteurList.vue', () => {
-  const localVue = createLocalVue()
-  localVue.use(Vuex)
-  localVue.use(Vuetify)
+Vue.use(Vuex)
+Vue.use(Vuetify)
 
+describe('TransporteurList.vue', () => {
   let store
   let clonedStoreOptions
 
@@ -21,7 +21,6 @@ describe('TransporteurList.vue', () => {
 
   it('renders a list of transporteurs', () => {
     const wrapper = mount(TransporteurList, {
-      localVue,
       store,
       stubs: {
         RouterLink: RouterLinkStub

@@ -1,21 +1,20 @@
+import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import { createLocalVue, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
 import Message from '@/components/Message.vue'
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
-localVue.use(Vuetify)
+Vue.use(Vuex)
+Vue.use(Vuetify)
 
 describe('Message.vue', () => {
   it('has nothing to show', () => {
     const clonedStoreOptions = deepClone(storeOptions)
     const store = new Vuex.Store(clonedStoreOptions)
     const wrapper = mount(Message, {
-      localVue,
       store
     })
     expect(wrapper.text()).toBe('')
@@ -25,7 +24,6 @@ describe('Message.vue', () => {
     const clonedStoreOptions = deepClone(storeOptions)
     const store = new Vuex.Store(clonedStoreOptions)
     const wrapper = mount(Message, {
-      localVue,
       store
     })
     store.commit('ADD_MESSAGE', {
@@ -46,7 +44,6 @@ describe('Message.vue', () => {
       mutations
     })
     const wrapper = mount(Message, {
-      localVue,
       store
     })
     expect(wrapper.text()).toBe('Hello!Fermer')
