@@ -32,7 +32,8 @@ describe('Search.vue', () => {
   it('renders search', () => {
     const wrapper = mount(Search, {
       localVue,
-      store
+      store,
+      sync: false
     })
     expect(wrapper.text()).toMatch('Chercher')
   })
@@ -49,7 +50,8 @@ describe('Search.vue', () => {
 
     const wrapper = mount(Search, {
       localVue,
-      store
+      store,
+      sync: false
     })
     expect(wrapper.vm.transporteurs).toBe(null)
     await wrapper.vm.search()
@@ -63,7 +65,8 @@ describe('Search.vue', () => {
       .reply(500)
     const wrapper = mount(Search, {
       localVue,
-      store
+      store,
+      sync: false
     })
     await wrapper.vm.search()
     expect(wrapper.vm.errorMessage).toBeDefined()
