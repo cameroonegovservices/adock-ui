@@ -16,6 +16,14 @@ localVue.use(Vuex)
 localVue.use(Vuetify)
 addElementWithDataAppToBody()
 
+function mountSearch (store) {
+  return mount(Search, {
+    localVue,
+    store,
+    sync: false
+  })
+}
+
 describe('Search.vue', () => {
   let store
   let clonedStoreOptions
@@ -30,11 +38,7 @@ describe('Search.vue', () => {
   })
 
   it('renders search', () => {
-    const wrapper = mount(Search, {
-      localVue,
-      store,
-      sync: false
-    })
+    const wrapper = mountSearch(store)
     expect(wrapper.text()).toMatch('Chercher')
   })
 
@@ -48,11 +52,7 @@ describe('Search.vue', () => {
         ]
       })
 
-    const wrapper = mount(Search, {
-      localVue,
-      store,
-      sync: false
-    })
+    const wrapper = mountSearch(store)
     expect(wrapper.vm.transporteurs).toBe(null)
     await wrapper.vm.search()
     expect(wrapper.vm.transporteurs[0].raison_sociale).toBe('FOO')
@@ -63,11 +63,7 @@ describe('Search.vue', () => {
   it('fails to search transporteurs', async () => {
     mockAdapter.onGet(searchTransporteursUrl)
       .reply(500)
-    const wrapper = mount(Search, {
-      localVue,
-      store,
-      sync: false
-    })
+    const wrapper = mountSearch(store)
     await wrapper.vm.search()
     expect(wrapper.vm.errorMessage).toBeDefined()
     expect(wrapper.vm.transporteurs).toEqual(null)
