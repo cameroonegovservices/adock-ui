@@ -14,7 +14,7 @@
     "lodash.clonedeep": "^4.5.0",
     "pug": "^2.0.3",
     "raven-js": "^3.24.2",
-    "vue": "2.5.16",
+    "vue": "2.5.17",
     "vue-router": "3.0.1",
     "vue-save-state": "^1.2.0",
     "vuetify": "1.0.19",
@@ -38,7 +38,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-vuetify": "^0.1.4",
-    "vue-template-compiler": "2.5.16"
+    "vue-template-compiler": "2.5.17"
   },
   "browserslist": [
     "> 1%",
