@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: circleci/node:10
     working_directory: ~/repo
@@ -17,7 +17,6 @@ jobs:
       - run:
           name: 'Test suite'
           command: yarn test:unit --ci --reporters=default --reporters=jest-junit --runInBand
-          environment:
           environment:
             JEST_JUNIT_OUTPUT: 'reports/junit/junit.xml'
       - store_test_results:
