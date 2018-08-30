@@ -58,8 +58,8 @@ Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
 
 * `yarn serve` sert l'application pour le développement
 * `yarn build` compile la version de production
-* `yarn test` lance les tests unitaires
-* `yarn e2e` lance les tests E2E.
+* `yarn test:unit` lance les tests unitaires
+* `yarn test:e2e` lance les tests E2E.
 
 Avant de lancer les tests E2E, lancez le client en mode développement, le
 serveur Django et créez le transporteur suivant via la commande ``manage.py
