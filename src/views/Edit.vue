@@ -117,7 +117,7 @@ export default {
           })
         }
         // Redirect
-        router.push({name: 'transporteur_detail', transporteurSiret: this.transporteur.siret})
+        router.push({ name: 'transporteur_detail', transporteurSiret: this.transporteur.siret })
       }
     }
   }

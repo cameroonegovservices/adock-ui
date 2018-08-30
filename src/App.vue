@@ -21,7 +21,7 @@ export default {
     this.$store.dispatch('loadMeta').then(() => {
       if (this.meta.version.length === 0) {
         // meta data is empty
-        this.$router.push({name: 'error'})
+        this.$router.push({ name: 'error' })
       }
     })
     this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode

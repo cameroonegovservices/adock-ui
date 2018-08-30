@@ -19,7 +19,7 @@ export const state = {
 function getOptionsFromChoices (choices) {
   const options = []
   for (let [k, v] of Object.entries(choices)) {
-    options.push({value: k, text: v})
+    options.push({ value: k, text: v })
   }
   return options
 }

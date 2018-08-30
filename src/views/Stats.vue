@@ -38,7 +38,7 @@ export default {
 
   filters: {
     asLocaleMonth (value) {
-      return new Date(value).toLocaleString('fr', {month: 'long'})
+      return new Date(value).toLocaleString('fr', { month: 'long' })
     }
   },
 

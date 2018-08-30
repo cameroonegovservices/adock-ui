@@ -32,7 +32,7 @@ describe('Edit', () => {
     cy.get(
       '.chip__content > .chip__close > .icon',
       { timeout: 500 })
-      .click({multiple: true})
+      .click({ multiple: true })
     // Go the detail view with success message
     cy.contains('Valider')
       .click()
@@ -64,7 +64,7 @@ describe('Edit', () => {
       .click()
     // Button could be behind the menu
     cy.contains('Valider')
-      .click({force: true})
+      .click({ force: true })
     // Check 100 %
     cy.get('.adock-indicator > .icon')
       .should('contain', 'done')
