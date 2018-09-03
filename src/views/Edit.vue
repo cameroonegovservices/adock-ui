@@ -183,10 +183,9 @@ export default {
                   label="Aire de travail"
                   data-cy="inputWorkingArea"
                 )
-            v-layout
+            v-layout(v-if="form.working_area === 'DEPARTEMENT'")
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
-                  v-if="form.working_area === 'DEPARTEMENT'"
                   v-model="form.working_area_departements"
                   label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
