@@ -7,6 +7,27 @@ import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 import api from '@/api.js'
 import router from '@/router.js'
 
+const WORKING_AREA_REGIONS = {
+  'Auvergne-Rhône-Alpes': ['01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'],
+  'Bourgogne-France-Comté': ['21', '25', '39', '58', '70', '71', '89', '90'],
+  'Bretagne': ['22', '29', '35', '56'],
+  'Centre-Val de Loire': ['18', '28', '36', '37', '41', '45'],
+  'Corse': ['2A', '2B'],
+  'Grand Est': ['08', '10', '51', '52', '54', '55', '57', '67', '68', '88'],
+  'Hauts-de-France': ['02', '59', '60', '62', '80'],
+  'Île-de-France': ['75', '77', '78', '91', '92', '93', '94', '95'],
+  'Normandie': ['14', '27', '50', '61', '76'],
+  'Nouvelle-Aquitaine': ['16', '17', '19', '23', '24', '33', '40', '47', '64', '79', '86', '87'],
+  'Occitanie': ['09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'],
+  'Pays de la Loire': ['44', '49', '53', '72', '85'],
+  "Provence-Alpes-Côte d'Azur": ['04', '05', '06', '13', '83', '84'],
+  'Guadeloupe': ['971'],
+  'Martinique': ['972'],
+  'Guyane': ['973'],
+  'La Réunion': ['974'],
+  'Mayotte': ['976']
+}
+
 export default {
   name: 'Edit',
 
@@ -25,13 +46,13 @@ export default {
     return {
       form: {
         email: '',
-        telephone: '',
-        working_area: '',
-        working_area_departements: '',
+        phone: '',
+        workingArea: '',
+        workingAreaDepartementsAndRegions: [],
         specialities: [],
         website: '',
         description: '',
-        edit_code: ''
+        editCode: ''
       },
       errorMessage: null,
       editCodeMessage: null,
@@ -63,6 +84,16 @@ export default {
   },
 
   computed: {
+    workingAreaRegions () {
+      // Returns the list of items for the combobox
+      let items = [
+        {
+          header: 'Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)'
+        }
+      ]
+      items.push(...Object.keys(WORKING_AREA_REGIONS))
+      return items
+    },
     ...mapState([
       'options'
     ])
@@ -70,19 +101,40 @@ export default {
 
   methods: {
     loadForm (transporteur) {
+      if (transporteur == null || typeof transporteur !== 'object') {
+        return
+      }
+
       // Populate the form fields with the transporteur data
-      for (let field in this.form) {
-        if (field === 'working_area_departements') {
-          // Join county numbers with '0' padding for number < 100
-          const value = transporteur[field]
-          this.form[field] = value ? value.join(', ') : ''
-        } else if (field === 'specialities') {
-          // v-select expects [] instead of null
-          this.form[field] = transporteur[field] || []
+      this.form.email = transporteur.email || ''
+      this.form.phone = transporteur.telephone || ''
+      this.form.workingArea = transporteur.working_area || ''
+      const counties = transporteur.working_area_departements
+      this.form.workingAreaDepartementsAndRegions = counties != null ? counties : []
+      this.form.specialities = transporteur.specialities || []
+      this.form.website = transporteur.website || ''
+      this.form.description = transporteur.description || ''
+    },
+
+    getPayloadFromForm () {
+      const workingAreaDepartements = []
+      for (let item of this.form.workingAreaDepartementsAndRegions) {
+        if (item in WORKING_AREA_REGIONS) {
+          workingAreaDepartements.push(...WORKING_AREA_REGIONS[item])
         } else {
-          // Default for other fields
-          this.form[field] = transporteur[field] || ''
+          workingAreaDepartements.push(item)
         }
+      }
+
+      return {
+        email: this.form.email,
+        telephone: this.form.phone,
+        working_area: this.form.workingArea,
+        working_area_departements: workingAreaDepartements,
+        specialities: this.form.specialities,
+        website: this.form.website,
+        description: this.form.description,
+        edit_code: this.form.editCode
       }
     },
 
@@ -97,7 +149,8 @@ export default {
     },
 
     async update () {
-      const data = await api.updateTransporteur(this.transporteur.siret, this.form)
+      const payload = this.getPayloadFromForm()
+      const data = await api.updateTransporteur(this.transporteur.siret, payload)
       if (data.errors) {
         if (data.errors.main && data.errors.main.message) {
           this.errorMessage = data.errors.main.message
@@ -148,12 +201,12 @@ export default {
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
-                  v-model="form.telephone"
+                  v-model="form.phone"
                   required
-                  input="telephone"
+                  input="phone"
                   label="Téléphone"
-                  :error-messages="fieldErrors.telephone"
-                  data-cy="inputTelephone"
+                  :error-messages="fieldErrors.phone"
+                  data-cy="inputPhone"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
@@ -178,19 +231,21 @@ export default {
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-select(
-                  v-model="form.working_area"
+                  v-model="form.workingArea"
                   :items="options.workingAreas"
                   label="Aire de travail"
                   data-cy="inputWorkingArea"
                 )
-            v-layout(v-if="form.working_area === 'DEPARTEMENT'")
+            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
               v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  v-model="form.working_area_departements"
-                  label="Départements livrés"
-                  :error-messages="fieldErrors.working_area_departements"
-                  hint="Numéros des départements séparés par des espaces ou virgules"
-                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
+                v-combobox(
+                  v-model="form.workingAreaDepartementsAndRegions"
+                  :items="workingAreaRegions"
+                  multiple
+                  chips
+                  label="Départements ou régions livrés"
+                  hint="Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)"
+                  :rules="[() => form.workingArea !== 'DEPARTEMENT' || (form.workingArea === 'DEPARTEMENT' && form.workingAreaDepartementsAndRegions.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
@@ -216,13 +271,13 @@ export default {
               v-flex(xs12 offset-md1 md5)
                 v-text-field(
                   v-if="transporteur.is_locked"
-                  v-model="form.edit_code"
+                  v-model="form.editCode"
                   type="integer"
                   mask="######"
                   :counter="6"
                   label="Code de modification"
                   :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
-                  :error-messages="fieldErrors.edit_code"
+                  :error-messages="fieldErrors.editCode"
                 )
               v-flex.adock-align-right(xs12 md5)
                 v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler

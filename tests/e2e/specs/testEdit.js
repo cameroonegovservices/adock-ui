@@ -7,7 +7,7 @@ describe('Edit', () => {
       .click()
 
     // Submit form w/o phone to raise an error
-    cy.get('[data-cy=inputTelephone]')
+    cy.get('[data-cy=inputPhone]')
       .clear()
     // Don't change the current view on error
     cy.contains('Valider')
@@ -16,7 +16,7 @@ describe('Edit', () => {
       .contains('Ce champ est obligatoire')
 
     // Empty fields excepted phone
-    cy.get('[data-cy=inputTelephone]')
+    cy.get('[data-cy=inputPhone]')
       .clear()
       .type('02 41 42 43 44')
       .should('have.value', '02 41 42 43 44')

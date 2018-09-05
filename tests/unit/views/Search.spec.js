@@ -12,6 +12,8 @@ import { addElementWithDataAppToBody } from '../utils'
 
 const mockAdapter = new MockAdapter(axiosInstance)
 
+// Bad practice but that's the only workaround I know (Vuetify and vue-test-unit
+// issue).
 Vue.use(Vuex)
 Vue.use(Vuetify)
 addElementWithDataAppToBody()

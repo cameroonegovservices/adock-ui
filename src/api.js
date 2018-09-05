@@ -117,14 +117,14 @@ export const api = {
     return data
   },
 
-  async updateTransporteur (transporteurSiret, form) {
+  async updateTransporteur (transporteurSiret, payload) {
     const url = getTransporteurUrl(transporteurSiret)
     const data = {
       transporteur: null,
       errors: null
     }
     try {
-      const response = await axiosInstance.patch(url, form)
+      const response = await axiosInstance.patch(url, payload)
       data.transporteur = response.data.transporteur
       data.confirmation_email_sent = response.data.confirmation_email_sent || false
     } catch (axiosError) {
