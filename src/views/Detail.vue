@@ -216,7 +216,7 @@ export default {
                 v-divider
             v-layout
               v-flex(xs12)
-                span.adock-section-title.pl-4 Autre établissements de l'entreprise
+                span.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
               v-flex(v-if="transporteur.subsidiaries && transporteur.subsidiaries.length > 0" xs10 offset-md1)
                 v-data-table(
