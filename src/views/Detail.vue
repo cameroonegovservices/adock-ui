@@ -99,6 +99,16 @@ export default {
         v-card
           TransporteurCardHeader(:transporteur="transporteur" :with-edit-button="!transporteur.deleted_at")
           v-container(grid-list-lg)
+            v-layout(v-if="transporteur.deleted_at")
+              v-flex(offset-xs1 xs10)
+                v-alert(
+                  :value="true"
+                  type="warning"
+                  color="orange"
+                )
+                  | Cet établissement est absent du registre transports de marchandises depuis le
+                  | {{ transporteur.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
+                  | cessation d'activité.
             v-layout(v-if="!transporteur.in_sirene")
               v-flex(offset-xs1 xs10)
                 v-alert(
@@ -114,16 +124,6 @@ export default {
                   a(href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F24023") Centre de formalités des entreprises
                   |
                   | dont vous dépendez.
-            v-layout(v-if="transporteur.deleted_at")
-              v-flex(offset-xs1 xs10)
-                v-alert(
-                  :value="true"
-                  type="warning"
-                  color="orange"
-                )
-                  | Cet établissement est absent du registre transports de marchandises depuis le
-                  | {{ transporteur.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
-                  | cessation d'activité.
             v-layout
               v-flex(xs4 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs8 md5)
