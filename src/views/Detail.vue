@@ -106,9 +106,9 @@ export default {
                   type="warning"
                   color="orange"
                 )
-                  | Ce transporteur est présent dans le registre mais absent de la base de données Sirène de l'Insee.
+                  | Cet établissement est absent de la base de données Sirène de l'Insee.
                   | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
-                  | La cause peut être l'opposition au démarchage commercial.
+                  | La cause peut être l'opposition au démarchage commercial ou la cessation d'activité.
                   | Nous vous invitons à contacter le
                   |
                   a(href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F24023") Centre de formalités des entreprises
@@ -118,10 +118,12 @@ export default {
               v-flex(offset-xs1 xs10)
                 v-alert(
                   :value="true"
-                  type="error"
+                  type="warning"
+                  color="orange"
                 )
-                  | Ce transporteur a été radié du registre des transports de marchandises le
-                  | {{ transporteur.deleted_at | asLocaleDate }}.
+                  | Cet établissement est absent du registre transports de marchandises depuis le
+                  | {{ transporteur.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
+                  | cessation d'activité.
             v-layout
               v-flex(xs4 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs8 md5)
