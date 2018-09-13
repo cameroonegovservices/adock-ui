@@ -1,5 +1,5 @@
 <template lang="pug">
-v-img.white--text(:src="roadPicture" height="200px")
+v-img.white--text(:src="getRoadPicture" height="200px")
   v-container(fill-height fluid)
     v-layout.pa-4(column reverse)
       v-flex.flex-bottom(xs10)
@@ -24,6 +24,7 @@ v-img.white--text(:src="roadPicture" height="200px")
 
 <script>
 import roadPicture from '@/assets/road.jpg'
+import roadDisabledPicture from '@/assets/road-disabled.jpg'
 import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 export default {
@@ -46,8 +47,10 @@ export default {
     CompletenessIndicator
   },
 
-  created () {
-    this.roadPicture = roadPicture
+  computed: {
+    getRoadPicture () {
+      return this.transporteur.deleted_at ? roadDisabledPicture : roadPicture
+    }
   }
 }
 </script>
