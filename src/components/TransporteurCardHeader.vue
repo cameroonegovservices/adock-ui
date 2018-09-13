@@ -9,7 +9,7 @@ v-img.white--text(:src="roadPicture" height="200px")
             span.white--text.text--darken-1 {{ transporteur.libelle_ape }}
             br
             v-btn.ma-0(
-              v-if="withButton && !transporteur.deleted_at"
+              v-if="withEditButton"
               dark
               :color="transporteur.completeness === 100 ? 'green' : 'orange'"
               :to="{name: 'transporteur_edit', params: {transporteurSiret: transporteur.siret}}"
@@ -18,7 +18,7 @@ v-img.white--text(:src="roadPicture" height="200px")
               span(v-if="transporteur.completeness === 100") Modifier les informations
               span(v-else) Compléter les informations
           v-flex(xs2)
-            CompletenessIndicator(v-if="withButton" :percent="transporteur.completeness")
+            CompletenessIndicator(v-if="withEditButton" :percent="transporteur.completeness")
             img.adock-objectif-co2.elevation-16(v-if="transporteur.objectif_co2" src="@/assets/logo-objectif-co2.png")
 </template>
 
@@ -35,7 +35,7 @@ export default {
       required: true
     },
 
-    withButton: {
+    withEditButton: {
       type: Boolean,
       required: false,
       default: false

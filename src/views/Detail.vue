@@ -97,7 +97,7 @@ export default {
             v-icon chevron_left
           span.subheading.no-wrap Retour aux résultats
         v-card
-          TransporteurCardHeader(:transporteur="transporteur" :with-button="!transporteur.deleted_at")
+          TransporteurCardHeader(:transporteur="transporteur" :with-edit-button="!transporteur.deleted_at")
           v-container(grid-list-lg)
             v-layout(v-if="!transporteur.in_sirene")
               v-flex(offset-xs1 xs10)
