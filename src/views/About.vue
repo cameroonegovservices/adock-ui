@@ -47,6 +47,21 @@ v-container.adock-search-background(fluid fill-height)
             | prochaines fonctionnalités dépendent de vos besoins. Vous pouvez nous
             | écrire à&nbsp;
             a(href="mailto:contact@adock.beta.gouv.fr") contact@adock.beta.gouv.fr !
+
+          p.title Comment sont classés les résultats d'une recherche
+
+          p
+            | Tout d'abord seuls les résultats qui correspondent à tous les critères
+            | sont retournés puis il sont triés dans l'ordre suivant :
+
+          ol
+            li aire de travail la plus restreinte (départemental, France ou internationale)
+            li nombre de départements le plus faible
+            li siège dans la zone de recherche
+            li niveau de complétude de la fiche
+            li ordre alphabétique du nom d'enseigne
+
+          p Le but étant de fournir en priorité des entreprises locales et spécialisées.
 </template>
 
 <style lang="stylus">
