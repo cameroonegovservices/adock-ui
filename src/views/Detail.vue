@@ -232,17 +232,18 @@ export default {
                     slot='items'
                     slot-scope='props'
                   )
-                    td
-                      router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: props.item.siret}}") {{ props.item.siret }}
-                      span &nbsp;
-                      v-tooltip(top)
-                        span(slot="activator")
-                          v-icon(v-if="props.item.is_siege" small) domain
-                        div
-                          span Siège social
-                    td {{ props.item.code_postal }}
-                    td {{ props.item.ville }}
-                    td {{ props.item.debut_activite | asLocaleDate }}
+                    tr(:class="{'adock-tr-deleted': props.item.deleted_at}")
+                      td
+                        router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: props.item.siret}}") {{ props.item.siret }}
+                        span &nbsp;
+                        v-tooltip(top)
+                          span(slot="activator")
+                            v-icon(v-if="props.item.is_siege" small) domain
+                          div
+                            span Siège social
+                      td {{ props.item.code_postal }}
+                      td {{ props.item.ville }}
+                      td {{ props.item.debut_activite | asLocaleDate }}
               v-flex(v-else xs10 offset-md1)
                 span Aucun
 
@@ -258,6 +259,9 @@ export default {
 
 .adock-section-title
   font-size: 16px
+  color: grey
+
+.adock-tr-deleted
   color: grey
 
 a[href^="tel:"], a[href^="mailto:"]
