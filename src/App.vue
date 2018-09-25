@@ -9,7 +9,8 @@ export default {
   data () {
     return {
       isDrawerVisible: false,
-      isIE11: false
+      isIE11: false,
+      isPreproduction: process.env.VUE_APP_IS_PREPRODUCTION || false
     }
   },
 
@@ -67,6 +68,8 @@ export default {
       router-link(:to="{name: 'search'}")
         img.adock-app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
       v-spacer
+      h3.orange--text.text--darken-4(v-if="isPreproduction") PRE PRODUCTION
+      v-spacer(v-if="isPreproduction")
       v-toolbar-side-icon(
         v-if="$vuetify.breakpoint.xsOnly"
         @click="isDrawerVisible = !isDrawerVisible"
