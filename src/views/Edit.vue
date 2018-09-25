@@ -162,11 +162,11 @@ export default {
       } else {
         // Success
         this.$store.commit('ADD_MESSAGE', {
-          message: `Transporteur « ${this.transporteur.enseigne} » enregistré.`
+          message: `Transporteur « ${data.transporteur.enseigne} » enregistré.`
         })
         if (data.confirmation_email_sent) {
           this.$store.commit('ADD_MESSAGE', {
-            message: `Un courriel de confirmation a été envoyé à « ${this.transporteur.email} ».`
+            message: `Un courriel de confirmation a été envoyé à « ${data.transporteur.email} ».`
           })
         }
         // Redirect
