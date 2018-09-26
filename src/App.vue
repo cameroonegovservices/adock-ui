@@ -1,41 +1,3 @@
-<script>
-import { mapState } from 'vuex'
-
-import Message from '@/components/Message.vue'
-
-export default {
-  name: 'App',
-
-  data () {
-    return {
-      isDrawerVisible: false,
-      isIE11: false,
-      isPreproduction: process.env.VUE_APP_IS_PREPRODUCTION || false
-    }
-  },
-
-  components: {
-    Message
-  },
-
-  async created () {
-    this.$store.dispatch('loadMeta').then(() => {
-      if (this.meta.version.length === 0) {
-        // meta data is empty
-        this.$router.push({ name: 'error' })
-      }
-    })
-    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode
-  },
-
-  computed: {
-    ...mapState([
-      'meta'
-    ])
-  }
-}
-</script>
-
 <template lang="pug">
   v-app
     Message
@@ -94,3 +56,41 @@ export default {
 .adock-alert-ie11
   margin: 0
 </style>
+
+<script>
+import { mapState } from 'vuex'
+
+import Message from '@/components/Message.vue'
+
+export default {
+  name: 'App',
+
+  data () {
+    return {
+      isDrawerVisible: false,
+      isIE11: false,
+      isPreproduction: process.env.VUE_APP_IS_PREPRODUCTION || false
+    }
+  },
+
+  components: {
+    Message
+  },
+
+  async created () {
+    this.$store.dispatch('loadMeta').then(() => {
+      if (this.meta.version.length === 0) {
+        // meta data is empty
+        this.$router.push({ name: 'error' })
+      }
+    })
+    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode
+  },
+
+  computed: {
+    ...mapState([
+      'meta'
+    ])
+  }
+}
+</script>

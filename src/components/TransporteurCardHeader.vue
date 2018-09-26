@@ -22,6 +22,13 @@ v-img.white--text(:src="getRoadPicture" height="200px")
             img.adock-objectif-co2.elevation-16(v-if="transporteur.objectif_co2" src="@/assets/logo-objectif-co2.png")
 </template>
 
+<style lang="stylus">
+.adock-transporteur .adock-objectif-co2
+  width: 40px
+  border-radius: 4px
+  margin-left: 18px
+</style>
+
 <script>
 import roadPicture from '@/assets/road.jpg'
 import roadDisabledPicture from '@/assets/road-disabled.jpg'
@@ -54,10 +61,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.adock-transporteur .adock-objectif-co2
-  width: 40px
-  border-radius: 4px
-  margin-left: 18px
-</style>

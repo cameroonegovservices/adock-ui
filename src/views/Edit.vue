@@ -1,3 +1,124 @@
+<template lang="pug">
+  v-container(fluid)
+    v-layout(justify-center row wrap)
+      v-flex(xs12 sm11 md9 lg8 xl6)
+        router-link(:to="{name: 'search', params: {keepPreviousSearch: true}}").d-inline-flex.align-center.adock-no-link
+          v-btn(icon)
+            v-icon chevron_left
+          span.subheading.no-wrap Retour aux résultats
+        v-card
+          TransporteurCardHeader(:transporteur="transporteur")
+          v-container(grid-list-lg)
+            v-alert(
+              v-if="errorMessage"
+              type="error"
+              :value="true"
+            ) {{ errorMessage }}
+            v-alert(
+              v-if="editCodeMessage"
+              type="info"
+              :value="true"
+            ) {{ editCodeMessage }}
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.phone"
+                  required
+                  input="phone"
+                  label="Téléphone"
+                  :error-messages="fieldErrors.phone"
+                  data-cy="inputPhone"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.email"
+                  input="email"
+                  label="Adresse électronique"
+                  :error-messages="fieldErrors.email"
+                  data-cy="inputEmail"
+                  placeholder="contact@transporteur.fr"
+                  hint="Cette adresse de contact sera aussi utilisée pour verrouiller la fiche transporteur."
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  v-model="form.website"
+                  input="url"
+                  label="Site Web"
+                  :error-messages="fieldErrors.website"
+                  placeholder="wwww.transporteur.fr"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-select(
+                  v-model="form.workingArea"
+                  :items="options.workingAreas"
+                  label="Aire de travail"
+                  data-cy="inputWorkingArea"
+                )
+            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
+              v-flex(xs12 offset-md1 md10)
+                v-combobox(
+                  v-model="form.workingAreaDepartementsAndRegions"
+                  :items="workingAreaRegions"
+                  multiple
+                  chips
+                  label="Départements ou régions livrés"
+                  hint="Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)"
+                  :rules="[() => form.workingArea !== 'DEPARTEMENT' || (form.workingArea === 'DEPARTEMENT' && form.workingAreaDepartementsAndRegions.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-select(
+                  :items="options.specialities"
+                  v-model="form.specialities"
+                  label="Spécialités"
+                  :error-messages="fieldErrors.specialities"
+                  chips
+                  multiple
+                  deletable-chips
+                  data-cy="inputSpecialities"
+                )
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                v-textarea(
+                  v-model="form.description"
+                  :rows="3"
+                  label="Description de l'activité"
+                  :error-messages="fieldErrors.description"
+                )
+            v-layout(wrap)
+              v-flex(xs12 offset-md1 md5)
+                v-text-field(
+                  v-if="transporteur.is_locked"
+                  v-model="form.editCode"
+                  type="integer"
+                  mask="######"
+                  :counter="6"
+                  label="Code de modification"
+                  :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
+                  :error-messages="fieldErrors.editCode"
+                )
+              v-flex.adock-align-right(xs12 md5)
+                v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
+                v-btn(color="primary" @click.native="update")
+                  v-icon(v-if="transporteur.is_locked" left) lock
+                  | Valider
+</template>
+
+<style lang="stylus">
+.adock-no-link
+  color: inherit
+  text-decoration: none
+
+.adock-align-right
+  text-align: right
+
+.flex.flex-bottom
+  flex-basis: 0
+</style>
+
 <script>
 import { mapState } from 'vuex'
 
@@ -176,124 +297,3 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-  v-container(fluid)
-    v-layout(justify-center row wrap)
-      v-flex(xs12 sm11 md9 lg8 xl6)
-        router-link(:to="{name: 'search', params: {keepPreviousSearch: true}}").d-inline-flex.align-center.adock-no-link
-          v-btn(icon)
-            v-icon chevron_left
-          span.subheading.no-wrap Retour aux résultats
-        v-card
-          TransporteurCardHeader(:transporteur="transporteur")
-          v-container(grid-list-lg)
-            v-alert(
-              v-if="errorMessage"
-              type="error"
-              :value="true"
-            ) {{ errorMessage }}
-            v-alert(
-              v-if="editCodeMessage"
-              type="info"
-              :value="true"
-            ) {{ editCodeMessage }}
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  v-model="form.phone"
-                  required
-                  input="phone"
-                  label="Téléphone"
-                  :error-messages="fieldErrors.phone"
-                  data-cy="inputPhone"
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  v-model="form.email"
-                  input="email"
-                  label="Adresse électronique"
-                  :error-messages="fieldErrors.email"
-                  data-cy="inputEmail"
-                  placeholder="contact@transporteur.fr"
-                  hint="Cette adresse de contact sera aussi utilisée pour verrouiller la fiche transporteur."
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  v-model="form.website"
-                  input="url"
-                  label="Site Web"
-                  :error-messages="fieldErrors.website"
-                  placeholder="wwww.transporteur.fr"
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-select(
-                  v-model="form.workingArea"
-                  :items="options.workingAreas"
-                  label="Aire de travail"
-                  data-cy="inputWorkingArea"
-                )
-            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
-              v-flex(xs12 offset-md1 md10)
-                v-combobox(
-                  v-model="form.workingAreaDepartementsAndRegions"
-                  :items="workingAreaRegions"
-                  multiple
-                  chips
-                  label="Départements ou régions livrés"
-                  hint="Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)"
-                  :rules="[() => form.workingArea !== 'DEPARTEMENT' || (form.workingArea === 'DEPARTEMENT' && form.workingAreaDepartementsAndRegions.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-select(
-                  :items="options.specialities"
-                  v-model="form.specialities"
-                  label="Spécialités"
-                  :error-messages="fieldErrors.specialities"
-                  chips
-                  multiple
-                  deletable-chips
-                  data-cy="inputSpecialities"
-                )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-textarea(
-                  v-model="form.description"
-                  :rows="3"
-                  label="Description de l'activité"
-                  :error-messages="fieldErrors.description"
-                )
-            v-layout(wrap)
-              v-flex(xs12 offset-md1 md5)
-                v-text-field(
-                  v-if="transporteur.is_locked"
-                  v-model="form.editCode"
-                  type="integer"
-                  mask="######"
-                  :counter="6"
-                  label="Code de modification"
-                  :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
-                  :error-messages="fieldErrors.editCode"
-                )
-              v-flex.adock-align-right(xs12 md5)
-                v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
-                v-btn(color="primary" @click.native="update")
-                  v-icon(v-if="transporteur.is_locked" left) lock
-                  | Valider
-</template>
-
-<style lang="stylus">
-.adock-no-link
-  color: inherit
-  text-decoration: none
-
-.adock-align-right
-  text-align: right
-
-.flex.flex-bottom
-  flex-basis: 0
-</style>

@@ -1,3 +1,94 @@
+<template lang="pug">
+  v-container.adock-search-background(fluid fill-height)
+    v-layout(row justify-center)
+      v-flex(xs12 sm11 md9 lg8 xl6)
+        v-card.elevation-8
+          v-card-text
+            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises
+            div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs de marchandises
+            v-alert(
+              v-if="errorMessage"
+              type="error"
+              :value="true"
+            ) {{ errorMessage }}
+            v-text-field(
+              v-model.trim="searchForm.q"
+              label="Nom, code postal ou SIRET de l'entreprise"
+              hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
+              @keyup.enter="search"
+              data-cy="searchFormQ"
+            )
+            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+              v-layout(row wrap align-end)
+                v-flex(xs12 sm8 md4)
+                  v-select(
+                    :items="searchLicenseTypeChoices"
+                    v-model="searchForm.licenseTypes"
+                    label="Filtre sur le poids"
+                    hint="Le transporteur doit disposer d'au moins une licence pour le critère."
+                    chips
+                    multiple
+                    return-object
+                  )
+                    template(
+                      slot="selection"
+                      slot-scope="data"
+                    )
+                      v-chip.chip--select--multi(
+                        @input="data.parent.selectItem(data.item)"
+                        :selected="data.selected"
+                        :disabled="data.disabled"
+                        :key="JSON.stringify(data.item)"
+                        close
+                      )
+                        v-avatar.accent {{ data.item.avatar }}
+                        .
+                          {{ data.item.text }}
+                v-flex(xs12 sm6 md4)
+                  v-text-field(
+                    v-model='searchForm.departementFrom'
+                    label="Département d'enlèvement"
+                    mask="#N#"
+                    @keyup.enter="search"
+                    data-cy="searchFormDepartementFrom"
+                  )
+                v-flex(xs12 sm6 md4)
+                  v-text-field(
+                    v-model='searchForm.departementTo'
+                    label="Département de livraison"
+                    mask="#N#"
+                    @keyup.enter="search"
+                  )
+            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
+              v-layout(row)
+                v-flex(xs12 sm8 md7)
+                  v-select(
+                    :items="options.specialities"
+                    v-model="searchForm.specialities"
+                    label="Filtre sur les spécialités"
+                    chips
+                    multiple
+                    deletable-chips
+                    return-object
+                  )
+            v-btn(large color="primary" @click.native="search") Chercher
+            v-btn(@click.native="clear") Effacer
+        TransporteurList(
+          :searchParams="searchParams"
+          :searchResponseIsEmpty="searchResponseIsEmpty"
+          :transporteurs="transporteurs"
+          :limit="limit"
+        )
+        SearchHelp
+        TestimonialCards
+</template>
+
+<style lang="stylus">
+.adock-search-background
+  background: no-repeat top/100% url('../assets/search-background.jpg')
+  background-color: white
+</style>
+
 <script>
 import deepClone from 'lodash.clonedeep'
 import { mapState } from 'vuex'
@@ -149,94 +240,3 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-  v-container.adock-search-background(fluid fill-height)
-    v-layout(row justify-center)
-      v-flex(xs12 sm11 md9 lg8 xl6)
-        v-card.elevation-8
-          v-card-text
-            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises
-            div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs de marchandises
-            v-alert(
-              v-if="errorMessage"
-              type="error"
-              :value="true"
-            ) {{ errorMessage }}
-            v-text-field(
-              v-model.trim="searchForm.q"
-              label="Nom, code postal ou SIRET de l'entreprise"
-              hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
-              @keyup.enter="search"
-              data-cy="searchFormQ"
-            )
-            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
-              v-layout(row wrap align-end)
-                v-flex(xs12 sm8 md4)
-                  v-select(
-                    :items="searchLicenseTypeChoices"
-                    v-model="searchForm.licenseTypes"
-                    label="Filtre sur le poids"
-                    hint="Le transporteur doit disposer d'au moins une licence pour le critère."
-                    chips
-                    multiple
-                    return-object
-                  )
-                    template(
-                      slot="selection"
-                      slot-scope="data"
-                    )
-                      v-chip.chip--select--multi(
-                        @input="data.parent.selectItem(data.item)"
-                        :selected="data.selected"
-                        :disabled="data.disabled"
-                        :key="JSON.stringify(data.item)"
-                        close
-                      )
-                        v-avatar.accent {{ data.item.avatar }}
-                        .
-                          {{ data.item.text }}
-                v-flex(xs12 sm6 md4)
-                  v-text-field(
-                    v-model='searchForm.departementFrom'
-                    label="Département d'enlèvement"
-                    mask="#N#"
-                    @keyup.enter="search"
-                    data-cy="searchFormDepartementFrom"
-                  )
-                v-flex(xs12 sm6 md4)
-                  v-text-field(
-                    v-model='searchForm.departementTo'
-                    label="Département de livraison"
-                    mask="#N#"
-                    @keyup.enter="search"
-                  )
-            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
-              v-layout(row)
-                v-flex(xs12 sm8 md7)
-                  v-select(
-                    :items="options.specialities"
-                    v-model="searchForm.specialities"
-                    label="Filtre sur les spécialités"
-                    chips
-                    multiple
-                    deletable-chips
-                    return-object
-                  )
-            v-btn(large color="primary" @click.native="search") Chercher
-            v-btn(@click.native="clear") Effacer
-        TransporteurList(
-          :searchParams="searchParams"
-          :searchResponseIsEmpty="searchResponseIsEmpty"
-          :transporteurs="transporteurs"
-          :limit="limit"
-        )
-        SearchHelp
-        TestimonialCards
-</template>
-
-<style lang="stylus">
-.adock-search-background
-  background: no-repeat top/100% url('../assets/search-background.jpg')
-  background-color: white
-</style>

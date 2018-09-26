@@ -1,93 +1,3 @@
-
-<script>
-import { mapState } from 'vuex'
-
-import { routeLoadTransporteur } from '@/routeLoaders'
-import TransporteurCardHeader from '@/components/TransporteurCardHeader'
-
-export default {
-  name: 'Detail',
-
-  props: {
-    transporteur: {
-      type: Object,
-      required: true
-    }
-  },
-
-  components: {
-    TransporteurCardHeader
-  },
-
-  data () {
-    return {
-      subsidiariesHeaders: [
-        {
-          text: 'SIRET',
-          value: 'siret'
-        },
-        {
-          text: 'Code postal',
-          value: 'code_postal'
-        },
-        {
-          text: 'Ville',
-          value: 'ville'
-        },
-        {
-          text: "Début d'activité",
-          value: 'debut_activite'
-        }
-      ]
-    }
-  },
-
-  async beforeRouteEnter (routeTo, routeFrom, next) {
-    next(
-      await routeLoadTransporteur(
-        routeTo, routeFrom,
-        response => { routeTo.params.transporteur = response.transporteur }
-      )
-    )
-  },
-
-  async beforeRouteUpdate (routeTo, routeFrom, next) {
-    next(
-      await routeLoadTransporteur(
-        routeTo, routeFrom,
-        response => { routeTo.params.transporteur = response.transporteur }
-      )
-    )
-  },
-
-  computed: {
-    displaySpecialities () {
-      if (this.transporteur.specialities && this.choices.specialities) {
-        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
-      } else {
-        return 'Non renseigné'
-      }
-    },
-    ...mapState([
-      'choices'
-    ])
-  },
-
-  filters: {
-    asJoinedString (value) {
-      return value ? value.join(', ') : ''
-    },
-
-    asLocaleDate (value) {
-      if (value == null) {
-        return ''
-      }
-      return new Date(value).toLocaleDateString()
-    }
-  }
-}
-</script>
-
 <template lang="pug">
   v-container(fluid)
     v-layout(justify-center row wrap)
@@ -272,3 +182,92 @@ a[href^="tel:"]:before
   margin-right: 0.5em
 
 </style>
+
+<script>
+import { mapState } from 'vuex'
+
+import { routeLoadTransporteur } from '@/routeLoaders'
+import TransporteurCardHeader from '@/components/TransporteurCardHeader'
+
+export default {
+  name: 'Detail',
+
+  props: {
+    transporteur: {
+      type: Object,
+      required: true
+    }
+  },
+
+  components: {
+    TransporteurCardHeader
+  },
+
+  data () {
+    return {
+      subsidiariesHeaders: [
+        {
+          text: 'SIRET',
+          value: 'siret'
+        },
+        {
+          text: 'Code postal',
+          value: 'code_postal'
+        },
+        {
+          text: 'Ville',
+          value: 'ville'
+        },
+        {
+          text: "Début d'activité",
+          value: 'debut_activite'
+        }
+      ]
+    }
+  },
+
+  async beforeRouteEnter (routeTo, routeFrom, next) {
+    next(
+      await routeLoadTransporteur(
+        routeTo, routeFrom,
+        response => { routeTo.params.transporteur = response.transporteur }
+      )
+    )
+  },
+
+  async beforeRouteUpdate (routeTo, routeFrom, next) {
+    next(
+      await routeLoadTransporteur(
+        routeTo, routeFrom,
+        response => { routeTo.params.transporteur = response.transporteur }
+      )
+    )
+  },
+
+  computed: {
+    displaySpecialities () {
+      if (this.transporteur.specialities && this.choices.specialities) {
+        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
+      } else {
+        return 'Non renseigné'
+      }
+    },
+    ...mapState([
+      'choices'
+    ])
+  },
+
+  filters: {
+    asJoinedString (value) {
+      return value ? value.join(', ') : ''
+    },
+
+    asLocaleDate (value) {
+      if (value == null) {
+        return ''
+      }
+      return new Date(value).toLocaleDateString()
+    }
+  }
+}
+</script>

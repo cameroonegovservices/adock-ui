@@ -1,58 +1,3 @@
-<script>
-import { mapState } from 'vuex'
-
-import api from '@/api'
-
-export default {
-  name: 'Stats',
-
-  data () {
-    return {
-      validatedCarriersPerMonth: [],
-      confirmedCarriers: 0
-    }
-  },
-
-  created () {
-    api.getStats().then(response => {
-      this.validatedCarriersPerMonth = response.data['validated_carriers_per_month']
-      this.confirmedCarriers = response.data['confirmed_carriers']
-    })
-  },
-
-  computed: {
-    validatedScaleProperty () {
-      const maxValue = Math.max(...this.validatedCarriersPerMonth.map(item => item.count))
-      return `--scale: ${maxValue};`
-    },
-    ...mapState([
-      'meta'
-    ]),
-    validatedCarriers () {
-      return this.validatedCarriersPerMonth.reduce(
-        (sum, current) => sum + current.count,
-        0
-      )
-    }
-  },
-
-  filters: {
-    asLocaleMonth (value) {
-      return new Date(value).toLocaleString('fr', { month: 'long' })
-    }
-  },
-
-  methods: {
-    getValidatedValueProperty (value) {
-      if (value === 0) {
-        value = 1
-      }
-      return `--value: ${value};`
-    }
-  }
-}
-</script>
-
 <template lang="pug">
   v-container(fluid grid-list-lg)
     v-layout(row wrap)
@@ -151,3 +96,58 @@ export default {
   position: absolute
   transform: translate(-50%, -1px)
 </style>
+
+<script>
+import { mapState } from 'vuex'
+
+import api from '@/api'
+
+export default {
+  name: 'Stats',
+
+  data () {
+    return {
+      validatedCarriersPerMonth: [],
+      confirmedCarriers: 0
+    }
+  },
+
+  created () {
+    api.getStats().then(response => {
+      this.validatedCarriersPerMonth = response.data['validated_carriers_per_month']
+      this.confirmedCarriers = response.data['confirmed_carriers']
+    })
+  },
+
+  computed: {
+    validatedScaleProperty () {
+      const maxValue = Math.max(...this.validatedCarriersPerMonth.map(item => item.count))
+      return `--scale: ${maxValue};`
+    },
+    ...mapState([
+      'meta'
+    ]),
+    validatedCarriers () {
+      return this.validatedCarriersPerMonth.reduce(
+        (sum, current) => sum + current.count,
+        0
+      )
+    }
+  },
+
+  filters: {
+    asLocaleMonth (value) {
+      return new Date(value).toLocaleString('fr', { month: 'long' })
+    }
+  },
+
+  methods: {
+    getValidatedValueProperty (value) {
+      if (value === 0) {
+        value = 1
+      }
+      return `--value: ${value};`
+    }
+  }
+}
+</script>

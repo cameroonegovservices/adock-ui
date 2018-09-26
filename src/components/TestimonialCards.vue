@@ -1,3 +1,28 @@
+<template lang="pug">
+  v-container(
+    d-flex
+    grid-list-md
+    px-0
+  )
+    v-layout(row wrap)
+      v-flex(v-for="testimonial in testimonials" :key="testimonial.text" md4 xs12)
+        v-card(height="100%")
+          v-card-text
+            h3.headline.text-xs-center.adock-testimonial-title {{ testimonial.title }}
+          v-flex(xs10 offset-xs1)
+            v-divider(light)
+          v-card-text
+            blockquote.blockquote
+              v-icon format_quote
+              | {{ testimonial.quote }}
+</template>
+
+<style lang="stylus">
+.adock-testimonial-title
+  padding-top: 24px
+  padding-bottom: 0
+</style>
+
 <script>
 export default {
   name: 'Testimonial',
@@ -24,28 +49,3 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-  v-container(
-    d-flex
-    grid-list-md
-    px-0
-  )
-    v-layout(row wrap)
-      v-flex(v-for="testimonial in testimonials" :key="testimonial.text" md4 xs12)
-        v-card(height="100%")
-          v-card-text
-            h3.headline.text-xs-center.adock-testimonial-title {{ testimonial.title }}
-          v-flex(xs10 offset-xs1)
-            v-divider(light)
-          v-card-text
-            blockquote.blockquote
-              v-icon format_quote
-              | {{ testimonial.quote }}
-</template>
-
-<style lang="stylus">
-.adock-testimonial-title
-  padding-top: 24px
-  padding-bottom: 0
-</style>
