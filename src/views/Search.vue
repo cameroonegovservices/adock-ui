@@ -4,8 +4,8 @@
       v-flex(xs12 sm11 md9 lg8 xl6)
         v-card.elevation-8
           v-card-text
-            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises
-            div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs de marchandises
+            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises en France
+            div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs de marchandises en France
             v-alert(
               v-if="errorMessage"
               type="error"
