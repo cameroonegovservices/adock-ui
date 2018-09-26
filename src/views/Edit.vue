@@ -62,9 +62,10 @@
                 v-combobox(
                   v-model="form.workingAreaDepartementsAndRegions"
                   :items="workingAreaRegions"
+                  label="Départements ou régions livrés"
+                  :error-messages="fieldErrors.working_area_departements"
                   multiple
                   chips
-                  label="Départements ou régions livrés"
                   hint="Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)"
                   :rules="[() => form.workingArea !== 'DEPARTEMENT' || (form.workingArea === 'DEPARTEMENT' && form.workingAreaDepartementsAndRegions.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
                 )
