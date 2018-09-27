@@ -34,9 +34,9 @@ describe('Edit', () => {
     cy.get('.v-snack__content')
       .contains('Transporteur « A DOCK TRANSPORTEUR » enregistré.')
 
-    // Check indicator percentage
+    // Check indicator percentage (40 + 2 * 15)
     cy.get('.adock-indicator.orange > span')
-      .should('contain', '55')
+      .should('contain', '70')
 
     // Go again to the edit view
     cy.contains('Compléter les informations').first()
