@@ -24,15 +24,10 @@ describe('Edit', () => {
       .clear()
       .should('have.value', '')
     // Select undefined working area (1st item)
-    cy.get('div[data-cy=inputWorkingArea]')
+    cy.get('input[data-cy=inputWorkingArea]').parent()
       .click()
-    cy.get('.menuable__content__active > .card > .list > :nth-child(1) > .list__tile > .list__tile__content > .list__tile__title')
+    cy.get('.menuable__content__active > .v-select-list > .v-list > :nth-child(1) > .v-list__tile > .v-list__tile__content > .v-list__tile__title')
       .click()
-    // Close all chips
-    cy.get(
-      '.chip__content > .chip__close > .icon',
-      { timeout: 500 })
-      .click({ multiple: true })
     // Go the detail view with success message
     cy.contains('Valider')
       .click()
