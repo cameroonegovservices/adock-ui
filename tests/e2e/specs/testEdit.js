@@ -47,10 +47,10 @@ describe('Edit', () => {
       .clear()
       .type('foo@example.com')
       .should('have.value', 'foo@example.com')
-    cy.get('div[data-cy=inputWorkingArea]')
+    cy.get('input[data-cy=inputWorkingArea]').parent()
       .click()
     // 4th element is Département
-    cy.get('.menuable__content__active > .card > .list > :nth-child(4) > .list__tile > .list__tile__content > .list__tile__title')
+    cy.get('.menuable__content__active > .card > .v-list > :nth-child(4) > .v-list__tile > .v-list__tile__content > .v-list__tile__title')
       .click()
     cy.get('div[data-cy=inputSpecialities]')
       .click()
