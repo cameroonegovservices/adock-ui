@@ -74,8 +74,7 @@
             v-layout(v-if="form.workingArea === 'DEPARTEMENT' || form.workingArea === 'REGION'")
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
-                  :value="form.workingAreaDepartementsString"
-                  @input="onInputWorkingAreaDepartements"
+                  v-model="workingAreaDepartementsInput"
                   label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou des virgules"
@@ -203,7 +202,6 @@ export default {
         phone: '',
         workingArea: '',
         workingAreaDepartements: [],
-        workingAreaDepartementsString: '',
         region: '',
         specialities: [],
         website: '',
@@ -244,6 +242,14 @@ export default {
       // Returns the list of regions names
       return Object.keys(WORKING_AREA_REGIONS)
     },
+    workingAreaDepartementsInput: {
+      get: function () {
+        return joinDepartements(this.form.workingAreaDepartements)
+      },
+      set: function (newValue) {
+        this.form.workingAreaDepartements = splitDepartements(newValue)
+      }
+    },
     ...mapState([
       'options'
     ])
@@ -261,7 +267,6 @@ export default {
       this.form.workingArea = transporteur.working_area || ''
       const counties = transporteur.working_area_departements
       this.form.workingAreaDepartements = counties != null ? counties : []
-      this.form.workingAreaDepartementsString = joinDepartements(this.form.workingAreaDepartements)
       this.form.specialities = transporteur.specialities || []
       this.form.website = transporteur.website || ''
       this.form.description = transporteur.description || ''
@@ -317,17 +322,11 @@ export default {
       }
     },
 
-    onInputWorkingAreaDepartements (value) {
-      this.form.workingAreaDepartementsString = value
-      this.form.workingAreaDepartements = splitDepartements(value)
-    },
-
     addDepartementsFromRegion () {
       if (WORKING_AREA_REGIONS.hasOwnProperty(this.form.region)) {
         this.form.workingAreaDepartements.push(...WORKING_AREA_REGIONS[this.form.region])
       }
       this.form.workingAreaDepartements = sortUniq(this.form.workingAreaDepartements)
-      this.form.workingAreaDepartementsString = joinDepartements(this.form.workingAreaDepartements)
       this.form.region = ''
     }
   }
