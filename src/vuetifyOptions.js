@@ -2,6 +2,7 @@ import {
   transitions,
   VAlert,
   VApp,
+  VAutocomplete,
   VAvatar,
   VBtn,
   VCard,
@@ -19,8 +20,8 @@ import {
   VSelect,
   VSnackbar,
   VSubheader,
-  VTextField,
   VTextarea,
+  VTextField,
   VToolbar,
   VTooltip
 } from 'vuetify'
@@ -32,6 +33,7 @@ export const vuetifyOptions = {
     transitions,
     VApp,
     VAlert,
+    VAutocomplete,
     VAvatar,
     VBtn,
     VCard,

@@ -59,16 +59,28 @@
                 )
             v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
               v-flex(xs12 offset-md1 md10)
-                v-combobox(
-                  v-model="form.workingAreaDepartementsAndRegions"
-                  :items="workingAreaRegions"
-                  label="Départements ou régions livrés"
+                v-text-field(
+                  :value="form.workingAreaDepartementsString"
+                  @input="onInputWorkingAreaDepartements"
+                  label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
-                  multiple
-                  chips
-                  hint="Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)"
-                  :rules="[() => form.workingArea !== 'DEPARTEMENT' || (form.workingArea === 'DEPARTEMENT' && form.workingAreaDepartementsAndRegions.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
+                  hint="Numéros des départements séparés par des espaces ou des virgules"
+                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
                 )
+            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
+              v-flex(xs12 offset-md1 md10)
+                v-autocomplete(
+                  v-model="form.region"
+                  label="Ajout de tous les départements d'une région"
+                  hint="Cliquez sur « Ajouter » pour ajouter tous les départements de cette région à l'aire de travail."
+                  :items="workingAreaRegions"
+                  :persistent-hint="true"
+                )
+                  v-btn(
+                    slot="append-outer"
+                    small
+                    @click="addDepartementsFromRegion"
+                  ) Ajouter
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-select(
@@ -129,6 +141,12 @@ import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 import api from '@/api.js'
 import router from '@/router.js'
 
+function sortUniq (a) {
+  return a.sort().filter((item, pos, array) =>
+    !pos || item !== array[pos - 1]
+  )
+}
+
 const WORKING_AREA_REGIONS = {
   'Auvergne-Rhône-Alpes': ['01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'],
   'Bourgogne-France-Comté': ['21', '25', '39', '58', '70', '71', '89', '90'],
@@ -170,7 +188,9 @@ export default {
         email: '',
         phone: '',
         workingArea: '',
-        workingAreaDepartementsAndRegions: [],
+        workingAreaDepartements: [],
+        workingAreaDepartementsString: '',
+        region: '',
         specialities: [],
         website: '',
         description: '',
@@ -207,14 +227,8 @@ export default {
 
   computed: {
     workingAreaRegions () {
-      // Returns the list of items for the combobox
-      let items = [
-        {
-          header: 'Sélection de régions ou saisie libre de numéros de départements (validez avec Entrée)'
-        }
-      ]
-      items.push(...Object.keys(WORKING_AREA_REGIONS))
-      return items
+      // Returns the list of regions names
+      return Object.keys(WORKING_AREA_REGIONS)
     },
     ...mapState([
       'options'
@@ -232,27 +246,19 @@ export default {
       this.form.phone = transporteur.telephone || ''
       this.form.workingArea = transporteur.working_area || ''
       const counties = transporteur.working_area_departements
-      this.form.workingAreaDepartementsAndRegions = counties != null ? counties : []
+      this.form.workingAreaDepartements = counties != null ? counties : []
+      this.form.workingAreaDepartementsString = this.form.workingAreaDepartements.join(' ,')
       this.form.specialities = transporteur.specialities || []
       this.form.website = transporteur.website || ''
       this.form.description = transporteur.description || ''
     },
 
     getPayloadFromForm () {
-      const workingAreaDepartements = []
-      for (let item of this.form.workingAreaDepartementsAndRegions) {
-        if (item in WORKING_AREA_REGIONS) {
-          workingAreaDepartements.push(...WORKING_AREA_REGIONS[item])
-        } else {
-          workingAreaDepartements.push(item)
-        }
-      }
-
       return {
         email: this.form.email,
         telephone: this.form.phone,
         working_area: this.form.workingArea,
-        working_area_departements: workingAreaDepartements,
+        working_area_departements: this.form.workingAreaDepartements,
         specialities: this.form.specialities,
         website: this.form.website,
         description: this.form.description,
@@ -274,6 +280,7 @@ export default {
       const payload = this.getPayloadFromForm()
       const data = await api.updateTransporteur(this.transporteur.siret, payload)
       if (data.errors) {
+        // Error
         if (data.errors.main && data.errors.main.message) {
           this.errorMessage = data.errors.main.message
         }
@@ -294,6 +301,21 @@ export default {
         // Redirect
         router.push({ name: 'transporteur_detail', transporteurSiret: this.transporteur.siret })
       }
+    },
+
+    onInputWorkingAreaDepartements (value) {
+      this.form.workingAreaDepartementsString = value
+      this.form.workingAreaDepartements = value.split(',')
+      console.log(this.form.workingAreaDepartements)
+    },
+
+    addDepartementsFromRegion () {
+      if (WORKING_AREA_REGIONS.hasOwnProperty(this.form.region)) {
+        this.form.workingAreaDepartements.push(...WORKING_AREA_REGIONS[this.form.region])
+      }
+      this.form.workingAreaDepartements = sortUniq(this.form.workingAreaDepartements)
+      this.form.workingAreaDepartementsString = this.form.workingAreaDepartements.join(' ,')
+      this.form.region = ''
     }
   }
 }
