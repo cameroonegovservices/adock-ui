@@ -12,7 +12,7 @@ describe('Edit', () => {
     // Don't change the current view on error
     cy.contains('Valider')
       .click()
-    cy.get('.input-group__messages')
+    cy.get('.v-messages__message')
       .contains('Ce champ est obligatoire')
 
     // Empty fields excepted phone
