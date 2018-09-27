@@ -50,7 +50,7 @@ describe('Edit.vue', () => {
     expect(wrapper.vm.form.email).toBe('')
     expect(wrapper.vm.form.phone).toBe('')
     expect(wrapper.vm.form.workingArea).toBe('FRANCE')
-    expect(wrapper.vm.form.workingAreaDepartementsAndRegions).toEqual(['44'])
+    expect(wrapper.vm.form.workingAreaDepartements).toEqual(['44'])
     expect(wrapper.vm.form.specialities).toEqual(['FOO'])
     expect(wrapper.vm.form.website).toBe('www.example.com')
     expect(wrapper.vm.form.description).toBe('Description')
@@ -60,9 +60,9 @@ describe('Edit.vue', () => {
   it('get the payload from the form', () => {
     const wrapper = mountEdit(store, TRANSPORTEUR_DATA)
     wrapper.vm.form.editCode = '1234'
-    wrapper.vm.form.workingAreaDepartementsAndRegions.push(
-      'Bretagne'
-    )
+    wrapper.vm.form.region = 'Bretagne'
+    wrapper.vm.addDepartementsFromRegion()
+
     const payload = wrapper.vm.getPayloadFromForm()
     expect(payload.email).toBe('')
     expect(payload.telephone).toBe('')
