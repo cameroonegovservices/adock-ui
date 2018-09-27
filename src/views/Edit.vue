@@ -62,7 +62,7 @@
                 v-autocomplete(
                   v-model="form.region"
                   label="Ajout de tous les départements d'une région"
-                  hint="Cliquez sur « Ajouter » pour ajouter tous les départements de cette région à l'aire de travail."
+                  hint="Cliquez sur « Ajouter » pour ajouter tous les départements de cette région aux départements livrés."
                   :items="workingAreaRegions"
                   :persistent-hint="true"
                 )
