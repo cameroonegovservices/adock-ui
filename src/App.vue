@@ -69,7 +69,7 @@ export default {
     return {
       isDrawerVisible: false,
       isIE11: false,
-      isPreproduction: process.env.VUE_APP_IS_PREPRODUCTION || false
+      isPreproduction: (process.env.VUE_APP_IS_PREPRODUCTION || 'false') === 'true'
     }
   },
 
