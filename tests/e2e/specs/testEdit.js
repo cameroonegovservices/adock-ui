@@ -31,7 +31,7 @@ describe('Edit', () => {
     // Go the detail view with success message
     cy.contains('Valider')
       .click()
-    cy.get('.snack__content')
+    cy.get('.v-snack__content')
       .contains('Transporteur « A DOCK TRANSPORTEUR » enregistré.')
 
     // Check indicator percentage
