@@ -11,7 +11,7 @@ import { addElementWithDataAppToBody } from '../utils'
 const transporteur = {
   raison_sociale: 'DUBOIS',
   deleted_at: null,
-  in_sirene: true,
+  sirene_deleted_at: null,
   siret: '12345678912345',
   numero_tva: 'FR32123456789',
   adresse: '90 ROUTE DE LA MER',

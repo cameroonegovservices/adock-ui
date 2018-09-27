@@ -19,7 +19,7 @@
                   | Cet établissement est absent du registre transports de marchandises depuis le
                   | {{ transporteur.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
                   | cessation d'activité.
-            v-layout(v-if="!transporteur.in_sirene")
+            v-layout(v-if="transporteur.sirene_deleted_at")
               v-flex(offset-xs1 xs10)
                 v-alert(
                   :value="true"
