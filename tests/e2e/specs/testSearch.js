@@ -7,7 +7,7 @@ describe('Search', () => {
     // Search on SIRET
     cy.get('[data-cy=searchFormQ]')
       .type('80005226884728')
-    cy.contains('div.btn__content', 'Chercher')
+    cy.contains('div.v-btn__content', 'Chercher')
       .click()
 
     // Click on result to reach detail view
@@ -20,7 +20,7 @@ describe('Search', () => {
       .type('80005226884728')
     cy.get('[data-cy=searchFormDepartementFrom]')
       .type('34')
-    cy.contains('div.btn__content', 'Chercher')
+    cy.contains('div.v-btn__content', 'Chercher')
       .click()
 
     cy.get("a[href='/transporteur/80005226884728']")
@@ -32,7 +32,7 @@ describe('Search', () => {
       .type('80005226884728')
     cy.get('[data-cy=searchFormDepartementFrom]')
       .type('42')
-    cy.contains('div.btn__content', 'Chercher')
+    cy.contains('div.v-btn__content', 'Chercher')
       .click()
 
     cy.contains("La recherche avec « 80005226884728 », enlèvement « 42 » n'a retourné aucun résultat.")

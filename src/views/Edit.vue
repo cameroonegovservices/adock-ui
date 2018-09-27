@@ -91,7 +91,6 @@
                   chips
                   multiple
                   deletable-chips
-                  data-cy="inputSpecialities"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
