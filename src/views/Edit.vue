@@ -26,7 +26,7 @@
                   required
                   input="phone"
                   label="Téléphone"
-                  :error-messages="fieldErrors.phone"
+                  :error-messages="fieldErrors.telephone"
                   data-cy="inputPhone"
                 )
             v-layout
@@ -56,6 +56,7 @@
                   :items="options.workingAreas"
                   label="Aire de travail"
                   data-cy="inputWorkingArea"
+                  :error-messages="fieldErrors.working_area"
                 )
             v-layout(v-if="form.workingArea === 'REGION'")
               v-flex(xs12 offset-md1 md10)
@@ -110,7 +111,7 @@
                   :counter="6"
                   label="Code de modification"
                   :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
-                  :error-messages="fieldErrors.editCode"
+                  :error-messages="fieldErrors.edit_code"
                 )
               v-flex.adock-align-right(xs12 md5)
                 v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
