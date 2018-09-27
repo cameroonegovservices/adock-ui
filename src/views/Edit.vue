@@ -57,17 +57,7 @@
                   label="Aire de travail"
                   data-cy="inputWorkingArea"
                 )
-            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
-              v-flex(xs12 offset-md1 md10)
-                v-text-field(
-                  :value="form.workingAreaDepartementsString"
-                  @input="onInputWorkingAreaDepartements"
-                  label="Départements livrés"
-                  :error-messages="fieldErrors.working_area_departements"
-                  hint="Numéros des départements séparés par des espaces ou des virgules"
-                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
-                )
-            v-layout(v-if="form.workingArea === 'DEPARTEMENT'")
+            v-layout(v-if="form.workingArea === 'REGION'")
               v-flex(xs12 offset-md1 md10)
                 v-autocomplete(
                   v-model="form.region"
@@ -81,6 +71,16 @@
                     small
                     @click="addDepartementsFromRegion"
                   ) Ajouter
+            v-layout(v-if="form.workingArea === 'DEPARTEMENT' || form.workingArea === 'REGION'")
+              v-flex(xs12 offset-md1 md10)
+                v-text-field(
+                  :value="form.workingAreaDepartementsString"
+                  @input="onInputWorkingAreaDepartements"
+                  label="Départements livrés"
+                  :error-messages="fieldErrors.working_area_departements"
+                  hint="Numéros des départements séparés par des espaces ou des virgules"
+                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
+                )
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-select(
@@ -145,6 +145,20 @@ function sortUniq (a) {
   return a.sort().filter((item, pos, array) =>
     !pos || item !== array[pos - 1]
   )
+}
+
+function joinDepartements (departements) {
+  return departements.join(', ')
+}
+
+function splitDepartements (departementsString) {
+  const departements = []
+  const commaDepartements = departementsString.split(',')
+  commaDepartements.forEach(commaDepartement => {
+    const departementsTmp = commaDepartement.split(' ')
+    departements.push(...departementsTmp.filter(departement => departement !== ''))
+  })
+  return departements
 }
 
 const WORKING_AREA_REGIONS = {
@@ -247,7 +261,7 @@ export default {
       this.form.workingArea = transporteur.working_area || ''
       const counties = transporteur.working_area_departements
       this.form.workingAreaDepartements = counties != null ? counties : []
-      this.form.workingAreaDepartementsString = this.form.workingAreaDepartements.join(' ,')
+      this.form.workingAreaDepartementsString = joinDepartements(this.form.workingAreaDepartements)
       this.form.specialities = transporteur.specialities || []
       this.form.website = transporteur.website || ''
       this.form.description = transporteur.description || ''
@@ -305,8 +319,7 @@ export default {
 
     onInputWorkingAreaDepartements (value) {
       this.form.workingAreaDepartementsString = value
-      this.form.workingAreaDepartements = value.split(',')
-      console.log(this.form.workingAreaDepartements)
+      this.form.workingAreaDepartements = splitDepartements(value)
     },
 
     addDepartementsFromRegion () {
@@ -314,7 +327,7 @@ export default {
         this.form.workingAreaDepartements.push(...WORKING_AREA_REGIONS[this.form.region])
       }
       this.form.workingAreaDepartements = sortUniq(this.form.workingAreaDepartements)
-      this.form.workingAreaDepartementsString = this.form.workingAreaDepartements.join(' ,')
+      this.form.workingAreaDepartementsString = joinDepartements(this.form.workingAreaDepartements)
       this.form.region = ''
     }
   }
