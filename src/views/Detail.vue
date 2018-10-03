@@ -130,7 +130,7 @@
               v-flex(xs12)
                 span.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
-              v-flex(v-if="transporteur.subsidiaries && transporteur.subsidiaries.length > 0" xs10 offset-md1)
+              v-flex(v-if="transporteur.subsidiaries && transporteur.subsidiaries.length > 0" xs12 offset-md1)
                 v-data-table(
                   :headers='subsidiariesHeaders'
                   :items='transporteur.subsidiaries'
