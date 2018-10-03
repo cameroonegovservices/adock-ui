@@ -47,7 +47,7 @@
                   input="url"
                   label="Site Web"
                   :error-messages="fieldErrors.website"
-                  placeholder="wwww.transporteur.fr"
+                  placeholder="www.transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
