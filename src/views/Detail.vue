@@ -57,7 +57,7 @@
             v-layout
               v-flex(xs8 offset-md1 md5) Aire de travail
               v-flex.adock-align-right(xs6 md5) {{ choices.workingAreas[transporteur.working_area] }}
-            v-layout(v-if="transporteur.working_area === 'DEPARTEMENT'")
+            v-layout(v-if="transporteur.working_area === 'DEPARTEMENT' || transporteur.working_area === 'REGION'")
               v-flex(xs5 offset-md1 md5) Départements livrés
               v-flex.adock-align-right(xs7 md5) {{ transporteur.working_area_departements | asJoinedString }}
             v-layout
