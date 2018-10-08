@@ -11,7 +11,7 @@
           v-flex(xs12 md6)
             v-card
               v-card-text.text-xs-center
-                p.display-2 {{ confirmedCarriers }}
+                p.display-2 {{ lockedCarriers }}
                 p Fiches transporteur verrouillées
           v-flex(xs12 md6)
             v-card
@@ -107,15 +107,17 @@ export default {
 
   data () {
     return {
-      validatedCarriersPerMonth: [],
-      confirmedCarriers: 0
+      validatedCarriers: 0,
+      lockedCarriers: 0,
+      validatedCarriersPerMonth: []
     }
   },
 
   created () {
     api.getStats().then(response => {
+      this.validatedCarriers = response.data['validated_carriers']
+      this.lockedCarriers = response.data['locked_carriers']
       this.validatedCarriersPerMonth = response.data['validated_carriers_per_month']
-      this.confirmedCarriers = response.data['confirmed_carriers']
     })
   },
 
@@ -126,13 +128,7 @@ export default {
     },
     ...mapState([
       'meta'
-    ]),
-    validatedCarriers () {
-      return this.validatedCarriersPerMonth.reduce(
-        (sum, current) => sum + current.count,
-        0
-      )
-    }
+    ])
   },
 
   filters: {
