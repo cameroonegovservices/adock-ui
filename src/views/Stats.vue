@@ -28,6 +28,11 @@
               v-card-text.text-xs-center
                 p.display-2 {{ meta.version }}
                 p Version de l'application serveur
+          v-flex(md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ version }}
+                p Version de l'application UI
       v-flex(xs12 md6)
         v-card
           v-card-title(primary-title)
@@ -102,6 +107,8 @@ import { mapState } from 'vuex'
 
 import api from '@/api'
 
+import { version } from '@/../package.json'
+
 export default {
   name: 'Stats',
 
@@ -109,7 +116,8 @@ export default {
     return {
       validatedCarriers: 0,
       lockedCarriers: 0,
-      validatedCarriersPerMonth: []
+      validatedCarriersPerMonth: [],
+      version
     }
   },
 
