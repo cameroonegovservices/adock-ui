@@ -2,32 +2,32 @@
   v-container(fluid grid-list-lg)
     v-layout(row wrap)
       v-flex(xs12 md6)
-        v-layout(column)
-          v-flex(xs12 md6)
+        v-layout(row wrap)
+          v-flex(md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ validatedCarriers }}
                 p Fiches transporteur validées
-          v-flex(xs12 md6)
+          v-flex(md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ lockedCarriers }}
                 p Fiches transporteur verrouillées
-          v-flex(xs12 md6)
-            v-card
-              v-card-text.text-xs-center
-                p.display-2 {{ meta.transporteur.localeCount }}
-                p Nombre de transporteurs
-          v-flex(xs12 md6)
+          v-flex(xs12 md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ meta.transporteur.localeDate }}
                 p Date de dernière mise à jour
-          v-flex(xs12 md6)
+          v-flex(xs12 md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ meta.transporteur.localeCount }}
+                p Nombre de transporteurs
+          v-flex(md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ meta.version }}
-                p Version de l'application
+                p Version de l'application serveur
       v-flex(xs12 md6)
         v-card
           v-card-title(primary-title)
