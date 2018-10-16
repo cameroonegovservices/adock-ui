@@ -246,10 +246,12 @@ export default {
 
   computed: {
     displaySpecialities () {
-      if (this.transporteur.specialities && this.choices.specialities) {
-        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
-      } else {
+      if (this.transporteur.specialities == null) {
         return 'Non renseigné'
+      } else if (this.transporteur.specialities.length === 0 || this.choices.specialities == null) {
+        return 'Aucune'
+      } else {
+        return this.transporteur.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
       }
     },
     ...mapState([
