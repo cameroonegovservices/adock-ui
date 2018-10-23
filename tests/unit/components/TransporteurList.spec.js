@@ -48,6 +48,7 @@ describe('TransporteurList.vue', () => {
       }
     })
     expect(wrapper.vm.searchParamsForDisplay).toBe('« BAR »')
-    expect(wrapper.find('div.adock-transporteur-list-tile').text()).toBe('BARBARE')
+    expect(wrapper.find('.v-list__tile__title.adock-transporteur-list-tile').text()).toBe('BARBARE')
+    expect(wrapper.findAll('.v-list__tile__title.adock-transporteur-list-tile')).toHaveLength(2)
   })
 })
