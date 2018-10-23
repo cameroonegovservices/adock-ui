@@ -94,7 +94,7 @@ import deepClone from 'lodash.clonedeep'
 import { mapState } from 'vuex'
 import saveState from 'vue-save-state'
 
-import api from '@/api.js'
+import api from '@/api'
 import TransporteurList from '@/components/TransporteurList.vue'
 import TestimonialCards from '@/components/TestimonialCards.vue'
 import SearchHelp from '@/components/SearchHelp.vue'

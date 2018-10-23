@@ -25,7 +25,7 @@ v-container(fluid fill-height)
 </template>
 
 <script>
-import api from '@/api.js'
+import api from '@/api'
 
 export default {
   name: 'ConfirmEmail',

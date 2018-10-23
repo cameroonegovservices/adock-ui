@@ -137,8 +137,8 @@ import { mapState } from 'vuex'
 import { routeLoadTransporteur } from '@/routeLoaders'
 import TransporteurCardHeader from '@/components/TransporteurCardHeader'
 
-import api from '@/api.js'
-import router from '@/router.js'
+import api from '@/api'
+import router from '@/router'
 
 function sortUniq (a) {
   return a.sort().filter((item, pos, array) =>
