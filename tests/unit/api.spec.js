@@ -2,6 +2,8 @@ import MockAdapter from 'axios-mock-adapter'
 import {
   api,
   axiosInstance,
+  getConfirmEmailUrl,
+  getEditCodeUrl,
   getTransporteurUrl,
   metaUrl,
   searchTransporteursUrl
@@ -89,7 +91,7 @@ describe('api', () => {
     mockAdapter.onGet(url).reply(404)
     const response = await api.fetchTransporteur('123')
     expect(response.error.status).toBe(404)
-    expect(response.error.message).toBeDefined()
+    expect(response.error.message).toBe("La ressource demandée n'existe pas.")
   })
 
   it('update a transporteur', async () => {
@@ -115,5 +117,15 @@ describe('api', () => {
     const response = await api.updateTransporteur('123')
     expect(response.transporteur).toBe(null)
     expect(response.errors.fields.foo).toBeDefined()
+  })
+
+  it('getConfirmEmailUrl', () => {
+    const url = getConfirmEmailUrl('123', '456')
+    expect(url).toBe('/transporteurs/123/confirmer_adresse/456/')
+  })
+
+  it('getEditCodeUrl', () => {
+    const url = getEditCodeUrl('123')
+    expect(url).toBe('/transporteurs/123/envoyer_code/')
   })
 })
