@@ -80,6 +80,8 @@ describe('actions', () => {
     expect(store.state.meta.transporteur.date).toEqual(
       new Date(response.data.transporteur.date)
     )
-    expect(store.state.meta.transporteur.localeCount).toEqual('48 306')
+    expect(store.state.meta.transporteur.localeCount).toEqual(
+      response.data.transporteur.count.toLocaleString()
+    )
   })
 })
