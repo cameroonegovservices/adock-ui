@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
-import { axiosInstance, searchTransporteursUrl } from '@/api'
+import { axiosInstance, searchCarriersUrl } from '@/api'
 import { storeOptions } from '@/store/options'
 import Search from '@/views/Search.vue'
 import { addElementWithDataAppToBody } from '../utils'
@@ -46,8 +46,8 @@ describe('Search.vue', () => {
     expect(wrapper.text()).toMatch('Chercher')
   })
 
-  it('search transporteurs', async () => {
-    mockAdapter.onGet(searchTransporteursUrl)
+  it('search carriers', async () => {
+    mockAdapter.onGet(searchCarriersUrl)
       .reply(200, {
         results: [
           {
@@ -57,20 +57,20 @@ describe('Search.vue', () => {
       })
 
     const wrapper = mountSearch(store)
-    expect(wrapper.vm.transporteurs).toBe(null)
+    expect(wrapper.vm.carriers).toBe(null)
     await wrapper.vm.search()
-    expect(wrapper.vm.transporteurs[0].raison_sociale).toBe('FOO')
+    expect(wrapper.vm.carriers[0].raison_sociale).toBe('FOO')
     expect(wrapper.vm.errorMessage).toBe(null)
     expect(wrapper.vm.limit).toBe(0)
   })
 
-  it('fails to search transporteurs', async () => {
-    mockAdapter.onGet(searchTransporteursUrl)
+  it('fails to search carriers', async () => {
+    mockAdapter.onGet(searchCarriersUrl)
       .reply(500)
     const wrapper = mountSearch(store)
     await wrapper.vm.search()
     expect(wrapper.vm.errorMessage).toBeDefined()
-    expect(wrapper.vm.transporteurs).toEqual(null)
+    expect(wrapper.vm.carriers).toEqual(null)
     expect(wrapper.vm.limit).toBe(0)
   })
 })

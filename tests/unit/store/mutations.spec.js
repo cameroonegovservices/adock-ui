@@ -30,7 +30,7 @@ describe('mutations', () => {
         specialities: []
       },
       meta: {
-        transporteur: {},
+        carrier: {},
         version: ''
       }
     }
@@ -44,7 +44,7 @@ describe('mutations', () => {
         }
       },
       // Meta
-      transporteur: {
+      carrier: {
         date: '2018-04-25',
         count: '1000'
       },
@@ -64,9 +64,9 @@ describe('mutations', () => {
       }
     ])
     // toLocaleDateString depends on the env
-    expect(state.meta.transporteur.localeDate).toBeTruthy()
+    expect(state.meta.carrier.localeDate).toBeTruthy()
     // toLocaleString is a noop on node
-    expect(state.meta.transporteur.localeCount).toBeTruthy()
+    expect(state.meta.carrier.localeCount).toBeTruthy()
     expect(state.meta.version).toBe('1.0')
   })
 })

@@ -16,12 +16,12 @@
           v-flex(xs12 md6 d-flex)
             v-card
               v-card-text.text-xs-center
-                p.display-2 {{ meta.transporteur.localeDate }}
+                p.display-2 {{ meta.carrier.localeDate }}
                 p Date de dernière mise à jour
           v-flex(xs12 md6 d-flex)
             v-card
               v-card-text.text-xs-center
-                p.display-2 {{ meta.transporteur.localeCount }}
+                p.display-2 {{ meta.carrier.localeCount }}
                 p Nombre de transporteurs
           v-flex(md6 d-flex)
             v-card

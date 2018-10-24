@@ -26,7 +26,7 @@
         div
           span A Dock v{{ meta.version }}
           br
-          span {{ meta.transporteur.localeCount }} transporteurs au {{ meta.transporteur.localeDate }}
+          span {{ meta.carrier.localeCount }} transporteurs au {{ meta.carrier.localeDate }}
       router-link(:to="{name: 'search'}")
         img.adock-app-name(src='./assets/adock.beta.gouv.fr-50.png' height='25px')
       v-spacer

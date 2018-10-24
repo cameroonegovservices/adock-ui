@@ -6,21 +6,21 @@ export const axiosInstance = axios.create({
   timeout: 5000
 })
 
-// URLs
-export const searchTransporteursUrl = '/transporteurs/recherche/'
+// Server URLs
+export const searchCarriersUrl = '/carriers/recherche/'
 export const metaUrl = '/meta/'
-export const statsTransporteursUrl = '/transporteurs/stats/'
+export const statsCarriersUrl = '/carriers/stats/'
 
-export function getTransporteurUrl (transporteurSiret) {
-  return `/transporteurs/${transporteurSiret}/`
+export function getCarrierUrl (carrierSiret) {
+  return `/carriers/${carrierSiret}/`
 }
 
-export function getConfirmEmailUrl (transporteurSiret, token) {
-  return `/transporteurs/${transporteurSiret}/confirmer_adresse/${token}/`
+export function getConfirmEmailUrl (carrierSiret, token) {
+  return `/carriers/${carrierSiret}/confirmer_adresse/${token}/`
 }
 
-export function getEditCodeUrl (transporteurSiret) {
-  return `/transporteurs/${transporteurSiret}/envoyer_code/`
+export function getEditCodeUrl (carrierSiret) {
+  return `/carriers/${carrierSiret}/envoyer_code/`
 }
 
 function handleCommunicationError (axiosError) {
@@ -79,19 +79,19 @@ export const api = {
   },
 
   async getStats () {
-    return this.getData(statsTransporteursUrl)
+    return this.getData(statsCarriersUrl)
   },
 
-  async searchTransporteurs (params) {
+  async searchCarriers (params) {
     const data = {
-      transporteurs: null,
+      carriers: null,
       limit: null,
       errors: null
     }
 
     try {
-      const response = await axiosInstance.get(searchTransporteursUrl, params)
-      data.transporteurs = response.data.results
+      const response = await axiosInstance.get(searchCarriersUrl, params)
+      data.carriers = response.data.results
       data.limit = response.data.limit || 0
     } catch (error) {
       data.error = handleCommunicationError(error)
@@ -100,16 +100,16 @@ export const api = {
     return data
   },
 
-  async fetchTransporteur (transporteurSiret) {
-    const url = getTransporteurUrl(transporteurSiret)
+  async fetchCarrier (carrierSiret) {
+    const url = getCarrierUrl(carrierSiret)
     const data = {
-      transporteur: null,
+      carrier: null,
       error: null
     }
 
     try {
       const response = await axiosInstance.get(url)
-      data.transporteur = response.data.transporteur
+      data.carrier = response.data.carrier
     } catch (error) {
       data.error = handleCommunicationError(error)
     }
@@ -117,15 +117,15 @@ export const api = {
     return data
   },
 
-  async updateTransporteur (transporteurSiret, payload) {
-    const url = getTransporteurUrl(transporteurSiret)
+  async updateCarrier (carrierSiret, payload) {
+    const url = getCarrierUrl(carrierSiret)
     const data = {
-      transporteur: null,
+      carrier: null,
       errors: null
     }
     try {
       const response = await axiosInstance.patch(url, payload)
-      data.transporteur = response.data.transporteur
+      data.carrier = response.data.carrier
       data.confirmation_email_sent = response.data.confirmation_email_sent || false
     } catch (axiosError) {
       if (axiosError.response && axiosError.response.status === 400 && axiosError.response.data) {
@@ -146,8 +146,8 @@ export const api = {
     return data
   },
 
-  async confirmEmail (transporteurSiret, token) {
-    const url = getConfirmEmailUrl(transporteurSiret, token)
+  async confirmEmail (carrierSiret, token) {
+    const url = getConfirmEmailUrl(carrierSiret, token)
     try {
       const response = await axiosInstance.get(url)
       return {
@@ -159,8 +159,8 @@ export const api = {
     }
   },
 
-  async mailEditCode (transporteurSiret) {
-    const url = getEditCodeUrl(transporteurSiret)
+  async mailEditCode (carrierSiret) {
+    const url = getEditCodeUrl(carrierSiret)
     try {
       const response = await axiosInstance.get(url)
       return {

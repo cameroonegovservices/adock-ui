@@ -8,7 +8,7 @@ import { storeOptions } from '@/store/options'
 import Detail from '@/views/Detail.vue'
 import { addElementWithDataAppToBody } from '../utils'
 
-const transporteur = {
+const carrier = {
   raison_sociale: 'DUBOIS',
   deleted_at: null,
   sirene_deleted_at: null,
@@ -42,7 +42,7 @@ describe('Detail.vue', () => {
     wrapper = mount(Detail, {
       store,
       propsData: {
-        transporteur
+        carrier
       },
       stubs: {
         RouterLink: RouterLinkStub

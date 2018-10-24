@@ -37,7 +37,7 @@ describe('actions', () => {
           }
         },
         version: '1.4.3',
-        transporteur: {
+        carrier: {
           date: '2018-10-11',
           count: 48306
         }
@@ -77,11 +77,11 @@ describe('actions', () => {
     expect(store.state.choices.objectifCO2).toEqual(
       response.data.choices.OBJECTIF_CO2_CHOICES
     )
-    expect(store.state.meta.transporteur.date).toEqual(
-      new Date(response.data.transporteur.date)
+    expect(store.state.meta.carrier.date).toEqual(
+      new Date(response.data.carrier.date)
     )
-    expect(store.state.meta.transporteur.localeCount).toEqual(
-      response.data.transporteur.count.toLocaleString()
+    expect(store.state.meta.carrier.localeCount).toEqual(
+      response.data.carrier.count.toLocaleString()
     )
   })
 })

@@ -66,9 +66,9 @@ serveur Django et créez le transporteur suivant via la commande ``manage.py
 shell_plus`` :
 
 ```python
-from adock.transporteurs import factories
-Transporteur.objects.filter(pk='80005226884728').delete()
-factories.TransporteurFactory(
+from adock.carriers import factories
+Carrier.objects.filter(pk='80005226884728').delete()
+factories.CarrierFactory(
   raison_sociale='A DOCK TRANSPORTEUR',
   siret='80005226884728',
   working_area='DEPARTEMENT',

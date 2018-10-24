@@ -22,20 +22,20 @@ const routes = [
     props: true
   },
   {
-    path: '/transporteur/:transporteurSiret',
-    name: 'transporteur_detail',
+    path: '/transporteur/:carrierSiret',
+    name: 'carrier_detail',
     component: Detail,
     props: true
   },
   {
-    path: '/transporteur/:transporteurSiret/edit',
-    name: 'transporteur_edit',
+    path: '/transporteur/:carrierSiret/edit',
+    name: 'carrier_edit',
     component: Edit,
     props: true
   },
   {
-    path: '/transporteur/:transporteurSiret/confirm/:token',
-    name: 'transporteur_confirm_email',
+    path: '/transporteur/:carrierSiret/confirm/:token',
+    name: 'carrier_confirm_email',
     component: ConfirmEmail,
     props: true
   },
@@ -62,9 +62,9 @@ const routes = [
   },
   // Temporary (2018-08-08) new URL to fix an issue in a mailing with wrong link
   {
-    path: '/:transporteurSiret',
+    path: '/:carrierSiret',
     redirect: {
-      name: 'transporteur_detail'
+      name: 'carrier_detail'
     }
   },
   {

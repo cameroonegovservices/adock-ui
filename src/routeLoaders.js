@@ -1,7 +1,7 @@
 import api from './api'
 
-export async function routeLoadTransporteur (routeTo, routeFrom, onSuccess) {
-  const response = await api.fetchTransporteur(routeTo.params.transporteurSiret)
+export async function routeLoadCarrier (routeTo, routeFrom, onSuccess) {
+  const response = await api.fetchCarrier(routeTo.params.carrierSiret)
   if (response.error === null) {
     // Success
     return onSuccess(response)

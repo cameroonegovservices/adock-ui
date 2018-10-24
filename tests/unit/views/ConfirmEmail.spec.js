@@ -18,17 +18,17 @@ describe('ConfirmEmail.vue', () => {
   })
 
   it('renders the view', async () => {
-    const transporteurSiret = '123'
+    const carrierSiret = '123'
     const token = '456'
     const message = "L'adresse électronique est confirmée."
-    const url = getConfirmEmailUrl(transporteurSiret, token)
+    const url = getConfirmEmailUrl(carrierSiret, token)
     mockAdapter.onGet(url).reply(200, {
       message
     })
 
     const wrapper = shallowMount(ConfirmEmail, {
       propsData: {
-        transporteurSiret,
+        carrierSiret,
         token
       },
       stubs: {

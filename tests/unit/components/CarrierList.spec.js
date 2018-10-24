@@ -5,12 +5,12 @@ import { mount, shallowMount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
-import TransporteurList from '@/components/TransporteurList.vue'
+import CarrierList from '@/components/CarrierList.vue'
 
 Vue.use(Vuex)
 Vue.use(Vuetify)
 
-describe('TransporteurList.vue', () => {
+describe('CarrierList.vue', () => {
   let store
   let clonedStoreOptions
 
@@ -19,15 +19,15 @@ describe('TransporteurList.vue', () => {
     store = new Vuex.Store(clonedStoreOptions)
   })
 
-  it('renders a list of transporteurs', () => {
-    const wrapper = mount(TransporteurList, {
+  it('renders a list of carriers', () => {
+    const wrapper = mount(CarrierList, {
       store,
       stubs: {
         RouterLink: RouterLinkStub
       },
       propsData: {
         searchResponseIsEmpty: false,
-        transporteurs: [
+        carriers: [
           {
             enseigne: 'BARBARE',
             code_postal: '44117',
@@ -45,12 +45,12 @@ describe('TransporteurList.vue', () => {
       }
     })
     expect(wrapper.vm.searchParamsForDisplay).toBe('')
-    expect(wrapper.find('.v-list__tile__title.adock-transporteur-list-tile').text()).toBe('BARBARE')
-    expect(wrapper.findAll('.v-list__tile__title.adock-transporteur-list-tile')).toHaveLength(2)
+    expect(wrapper.find('.v-list__tile__title.adock-carrier-list-tile').text()).toBe('BARBARE')
+    expect(wrapper.findAll('.v-list__tile__title.adock-carrier-list-tile')).toHaveLength(2)
   })
 
   it('display search params', () => {
-    const wrapper = shallowMount(TransporteurList, {
+    const wrapper = shallowMount(CarrierList, {
       propsData: {
         searchParams: {
           q: 'BAR',
@@ -71,7 +71,7 @@ describe('TransporteurList.vue', () => {
           ]
         },
         searchResponseIsEmpty: false,
-        transporteurs: []
+        carriers: []
       }
     })
     expect(wrapper.vm.searchParamsForDisplay).toBe(

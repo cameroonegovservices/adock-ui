@@ -16,7 +16,7 @@ v-container(fluid fill-height)
           p
             | La fiche transporteur
             |
-            router-link(:to="{name: 'transporteur_detail', params: {transporteurSiret: this.transporteurSiret}}") {{ transporteurSiret }}
+            router-link(:to="{name: 'carrier_detail', params: {carrierSiret: this.carrierSiret}}") {{ carrierSiret }}
             |
             | est maintenant verrouillée.
         div(v-else)
@@ -30,7 +30,7 @@ import api from '@/api'
 export default {
   name: 'ConfirmEmail',
   props: {
-    transporteurSiret: {
+    carrierSiret: {
       type: String,
       required: true
     },
@@ -49,7 +49,7 @@ export default {
   },
 
   created () {
-    api.confirmEmail(this.transporteurSiret, this.token)
+    api.confirmEmail(this.carrierSiret, this.token)
       .then(data => {
         this.waiting = false
         this.message = data.message

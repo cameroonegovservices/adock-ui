@@ -7,7 +7,7 @@
             v-icon chevron_left
           span.subheading.no-wrap Retour aux résultats
         v-card
-          TransporteurCardHeader(:transporteur="transporteur")
+          CarrierCardHeader(:carrier="carrier")
           v-container(grid-list-lg)
             v-alert(
               v-if="errorMessage"
@@ -37,7 +37,7 @@
                   label="Adresse électronique"
                   :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
-                  placeholder="contact@transporteur.fr"
+                  placeholder="contact@carrier.fr"
                   hint="Cette adresse de contact sera aussi utilisée pour verrouiller la fiche transporteur."
                 )
             v-layout
@@ -103,19 +103,19 @@
             v-layout(wrap)
               v-flex(xs12 offset-md1 md5)
                 v-text-field(
-                  v-if="transporteur.is_locked"
+                  v-if="carrier.is_locked"
                   v-model="form.editCode"
                   type="integer"
                   mask="######"
                   :counter="6"
                   label="Code de modification"
-                  :hint="`Copier dans ce champ le code envoyé à « ${transporteur.email} »`"
+                  :hint="`Copier dans ce champ le code envoyé à « ${carrier.email} »`"
                   :error-messages="fieldErrors.edit_code"
                 )
               v-flex.adock-align-right(xs12 md5)
-                v-btn(:to="{name: 'transporteur_detail', params: { transporteurSiret: transporteur.siret }}") Annuler
+                v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
                 v-btn(color="primary" @click.native="update")
-                  v-icon(v-if="transporteur.is_locked" left) lock
+                  v-icon(v-if="carrier.is_locked" left) lock
                   | Valider
 </template>
 
@@ -134,8 +134,8 @@
 <script>
 import { mapState } from 'vuex'
 
-import { routeLoadTransporteur } from '@/routeLoaders'
-import TransporteurCardHeader from '@/components/TransporteurCardHeader'
+import { routeLoadCarrier } from '@/routeLoaders'
+import CarrierCardHeader from '@/components/CarrierCardHeader'
 
 import api from '@/api'
 import router from '@/router'
@@ -185,14 +185,14 @@ export default {
   name: 'Edit',
 
   props: {
-    transporteur: {
+    carrier: {
       type: Object,
       required: true
     }
   },
 
   components: {
-    TransporteurCardHeader
+    CarrierCardHeader
   },
 
   data () {
@@ -215,9 +215,9 @@ export default {
   },
 
   created () {
-    this.loadForm(this.transporteur)
-    if (this.transporteur.is_locked) {
-      api.mailEditCode(this.transporteur.siret)
+    this.loadForm(this.carrier)
+    if (this.carrier.is_locked) {
+      api.mailEditCode(this.carrier.siret)
         .then(data => {
           this.loadEditCodeData(data)
         })
@@ -225,13 +225,13 @@ export default {
   },
 
   async beforeRouteEnter (routeTo, routeFrom, next) {
-    if (routeTo.params.transporteur) {
+    if (routeTo.params.carrier) {
       next()
     } else {
       next(
-        await routeLoadTransporteur(
+        await routeLoadCarrier(
           routeTo, routeFrom,
-          response => { routeTo.params.transporteur = response.transporteur }
+          response => { routeTo.params.carrier = response.carrier }
         )
       )
     }
@@ -256,20 +256,20 @@ export default {
   },
 
   methods: {
-    loadForm (transporteur) {
-      if (transporteur == null || typeof transporteur !== 'object') {
+    loadForm (carrier) {
+      if (carrier == null || typeof carrier !== 'object') {
         return
       }
 
-      // Populate the form fields with the transporteur data
-      this.form.email = transporteur.email || ''
-      this.form.phone = transporteur.telephone || ''
-      this.form.workingArea = transporteur.working_area || ''
-      const counties = transporteur.working_area_departements
+      // Populate the form fields with the carrier data
+      this.form.email = carrier.email || ''
+      this.form.phone = carrier.telephone || ''
+      this.form.workingArea = carrier.working_area || ''
+      const counties = carrier.working_area_departements
       this.form.workingAreaDepartements = counties != null ? counties : []
-      this.form.specialities = transporteur.specialities || []
-      this.form.website = transporteur.website || ''
-      this.form.description = transporteur.description || ''
+      this.form.specialities = carrier.specialities || []
+      this.form.website = carrier.website || ''
+      this.form.description = carrier.description || ''
     },
 
     getPayloadFromForm () {
@@ -297,7 +297,7 @@ export default {
 
     async update () {
       const payload = this.getPayloadFromForm()
-      const data = await api.updateTransporteur(this.transporteur.siret, payload)
+      const data = await api.updateCarrier(this.carrier.siret, payload)
       if (data.errors) {
         // Error
         if (data.errors.main && data.errors.main.message) {
@@ -310,15 +310,15 @@ export default {
       } else {
         // Success
         this.$store.commit('ADD_MESSAGE', {
-          message: `Transporteur « ${data.transporteur.enseigne} » enregistré.`
+          message: `Transporteur « ${data.carrier.enseigne} » enregistré.`
         })
         if (data.confirmation_email_sent) {
           this.$store.commit('ADD_MESSAGE', {
-            message: `Un courriel de confirmation a été envoyé à « ${data.transporteur.email} ».`
+            message: `Un courriel de confirmation a été envoyé à « ${data.carrier.email} ».`
           })
         }
         // Redirect
-        router.push({ name: 'transporteur_detail', transporteurSiret: this.transporteur.siret })
+        router.push({ name: 'carrier_detail', carrierSiret: this.carrier.siret })
       }
     },
 

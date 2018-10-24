@@ -4,7 +4,7 @@
       v-flex(xs12 sm11 md9 lg8 xl6)
         v-card.elevation-8
           v-card-text
-            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.transporteur.localeCount || '50 000' }} transporteurs de marchandises en France
+            div.display-1.mt-4.hidden-xs-only Cherchez et contactez simplement l'un des {{ meta.carrier.localeCount || '50 000' }} transporteurs de marchandises en France
             div.display-1.mt-4.hidden-sm-and-up Cherchez parmi les transporteurs de marchandises en France
             v-alert(
               v-if="errorMessage"
@@ -73,10 +73,10 @@
                   )
             v-btn(large color="primary" @click.native="search") Chercher
             v-btn(@click.native="clear") Effacer
-        TransporteurList(
+        CarrierList(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
-          :transporteurs="transporteurs"
+          :carriers="carriers"
           :limit="limit"
         )
         SearchHelp
@@ -95,7 +95,7 @@ import { mapState } from 'vuex'
 import saveState from 'vue-save-state'
 
 import api from '@/api'
-import TransporteurList from '@/components/TransporteurList.vue'
+import CarrierList from '@/components/CarrierList.vue'
 import TestimonialCards from '@/components/TestimonialCards.vue'
 import SearchHelp from '@/components/SearchHelp.vue'
 
@@ -126,7 +126,7 @@ export default {
       isSearching: false,
       searchForm: deepClone(defaultSearchForm),
       searchParams: null,
-      transporteurs: null,
+      carriers: null,
       limit: 0,
       errorMessage: null
     }
@@ -149,7 +149,7 @@ export default {
 
   components: {
     TestimonialCards,
-    TransporteurList,
+    CarrierList,
     SearchHelp
   },
 
@@ -157,8 +157,8 @@ export default {
     searchResponseIsEmpty () {
       return (
         !this.isSearching &&
-        this.transporteurs != null &&
-        this.transporteurs.length === 0)
+        this.carriers != null &&
+        this.carriers.length === 0)
     },
     ...mapState([
       'meta',
@@ -177,11 +177,11 @@ export default {
             return this[key]
           }
         },
-        cacheKey: 'transporteurSearch',
+        cacheKey: 'carrierSearch',
         saveProperties: [
           'searchForm',
           'searchParams',
-          'transporteurs',
+          'carriers',
           'limit'
         ]
       }
@@ -215,10 +215,10 @@ export default {
         params['specialities'] = this.searchForm.specialities.map(item => item.value)
       }
 
-      const data = await api.searchTransporteurs({ params })
+      const data = await api.searchCarriers({ params })
       if (data.error == null) {
         // Disable reactivity to speed up rendering
-        this.transporteurs = Object.freeze(data.transporteurs)
+        this.carriers = Object.freeze(data.carriers)
         this.limit = data.limit
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
@@ -226,7 +226,7 @@ export default {
         if (data.error.message) {
           this.errorMessage = data.error.message
         }
-        this.transporteurs = null
+        this.carriers = null
         this.limit = 0
       }
 
@@ -235,7 +235,7 @@ export default {
 
     clear () {
       this.searchForm = deepClone(defaultSearchForm)
-      this.transporteurs = null
+      this.carriers = null
     }
   }
 }

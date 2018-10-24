@@ -11,7 +11,7 @@ export const state = {
   messages: [
   ],
   meta: {
-    transporteur: {},
+    carrier: {},
     version: ''
   }
 }
@@ -37,17 +37,17 @@ export const mutations = {
     state.options.specialities = getOptionsFromChoices(payload.choices.SPECIALITY_CHOICES)
     state.choices.specialities = payload.choices.SPECIALITY_CHOICES
     state.choices.objectifCO2 = payload.choices.OBJECTIF_CO2_CHOICES
-    if (payload.transporteur) {
+    if (payload.carrier) {
       // Format the payload data before assignment
-      if (payload.transporteur.date) {
-        payload.transporteur.date = new Date(payload.transporteur.date)
-        payload.transporteur.localeDate = payload.transporteur.date.toLocaleDateString()
+      if (payload.carrier.date) {
+        payload.carrier.date = new Date(payload.carrier.date)
+        payload.carrier.localeDate = payload.carrier.date.toLocaleDateString()
       }
 
-      if (payload.transporteur.count) {
-        payload.transporteur.localeCount = payload.transporteur.count.toLocaleString()
+      if (payload.carrier.count) {
+        payload.carrier.localeCount = payload.carrier.count.toLocaleString()
       }
-      state.meta.transporteur = payload.transporteur
+      state.meta.carrier = payload.carrier
     }
     state.meta.version = payload.version
   }

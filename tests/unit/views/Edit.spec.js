@@ -22,11 +22,11 @@ const TRANSPORTEUR_DATA = {
   edit_code: 'SHOULD NO BE SET'
 }
 
-function mountEdit (store, transporteur) {
+function mountEdit (store, carrier) {
   return shallowMount(Edit, {
     store,
     propsData: {
-      transporteur
+      carrier
     },
     stubs: {
       RouterLink: RouterLinkStub
