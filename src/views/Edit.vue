@@ -292,6 +292,8 @@ export default {
       } else if (data.status === 200) {
         const editCodeTimeoutAt = new Date(data.edit_code_timeout_at).toLocaleTimeString()
         this.editCodeMessage = `Le code de modification envoyé à « ${data.email} » est encore valide jusqu'à ${editCodeTimeoutAt}.`
+      } else {
+        this.errorMessage = "Impossible d'envoyer le code de modification. L'équipe technique a été contactée."
       }
     },
 
