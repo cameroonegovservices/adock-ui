@@ -69,6 +69,7 @@ shell_plus`` :
 from adock.carriers import factories
 Carrier.objects.filter(pk='80005226884728').delete()
 factories.CarrierFactory(
+  telephone='',
   raison_sociale='A DOCK TRANSPORTEUR',
   siret='80005226884728',
   working_area='DEPARTEMENT',

@@ -23,7 +23,7 @@ describe('Edit', () => {
     cy.get('[data-cy=inputEmail]')
       .clear()
       .should('have.value', '')
-    // Select undefined working area (1st item)
+    // Select International working area (1st item)
     cy.get('input[data-cy=inputWorkingArea]').parent()
       .click()
     cy.get('.menuable__content__active > .v-select-list > .v-list > :nth-child(1) > .v-list__tile > .v-list__tile__content > .v-list__tile__title')
@@ -34,9 +34,9 @@ describe('Edit', () => {
     cy.get('.v-snack__content')
       .contains('Transporteur « A DOCK TRANSPORTEUR » enregistré.')
 
-    // Check indicator percentage (40 + 2 * 15)
+    // Check indicator percentage (40 + 3 * 15)
     cy.get('.adock-indicator.orange > span')
-      .should('contain', '70')
+      .should('contain', '85')
 
     // Go again to the edit view
     cy.contains('Compléter les informations').first()
@@ -49,8 +49,8 @@ describe('Edit', () => {
       .should('have.value', 'foo@example.com')
     cy.get('input[data-cy=inputWorkingArea]').parent()
       .click()
-    // 4th element is Département
-    cy.get('.menuable__content__active > .v-select-list > .v-list > :nth-child(4) > .v-list__tile > .v-list__tile__content > .v-list__tile__title')
+    // 3th element is Régional
+    cy.get('.menuable__content__active > .v-select-list > .v-list > :nth-child(3) > .v-list__tile > .v-list__tile__content > .v-list__tile__title')
       .click()
     cy.get(':nth-child(7) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-input__append-inner > .v-input__icon > .v-icon')
       .click()
