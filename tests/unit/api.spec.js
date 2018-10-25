@@ -121,11 +121,11 @@ describe('api', () => {
 
   it('getConfirmEmailUrl', () => {
     const url = getConfirmEmailUrl('123', '456')
-    expect(url).toBe('/carriers/123/confirmer_adresse/456/')
+    expect(url).toBe('/carriers/123/confirm_email/456/')
   })
 
   it('getEditCodeUrl', () => {
     const url = getEditCodeUrl('123')
-    expect(url).toBe('/carriers/123/envoyer_code/')
+    expect(url).toBe('/carriers/123/send_code/')
   })
 })

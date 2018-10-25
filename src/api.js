@@ -7,7 +7,7 @@ export const axiosInstance = axios.create({
 })
 
 // Server URLs
-export const searchCarriersUrl = '/carriers/recherche/'
+export const searchCarriersUrl = '/carriers/search/'
 export const metaUrl = '/meta/'
 export const statsCarriersUrl = '/carriers/stats/'
 
@@ -16,11 +16,11 @@ export function getCarrierUrl (carrierSiret) {
 }
 
 export function getConfirmEmailUrl (carrierSiret, token) {
-  return `/carriers/${carrierSiret}/confirmer_adresse/${token}/`
+  return `/carriers/${carrierSiret}/confirm_email/${token}/`
 }
 
 export function getEditCodeUrl (carrierSiret) {
-  return `/carriers/${carrierSiret}/envoyer_code/`
+  return `/carriers/${carrierSiret}/send_code/`
 }
 
 function handleCommunicationError (axiosError) {
