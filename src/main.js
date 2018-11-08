@@ -3,10 +3,9 @@ import '@babel/polyfill'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import './useVuetify'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
-import { Vuetify } from 'vuetify'
-import vuetifyOptions from './vuetifyOptions'
 import { version } from '../package.json'
 
 import { loadTracker } from './tracker'
@@ -30,7 +29,6 @@ if (process.env.NODE_ENV === 'production') {
   loadTracker()
 }
 
-Vue.use(Vuetify, vuetifyOptions)
 Vue.use(Vuex)
 const store = new Vuex.Store(storeOptions)
 
