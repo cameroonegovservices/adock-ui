@@ -39,10 +39,5 @@
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "2.5.17"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 10"
-  ],
   "license": "AGPL-3.0"
 }
