@@ -32,6 +32,7 @@ import Vuetify, {
   VTextField,
   VToolbar,
   VToolbarItems,
+  VToolbarSideIcon,
   VTooltip
 } from 'vuetify/lib'
 import VGrid from 'vuetify/lib/components/VGrid/'
@@ -73,6 +74,7 @@ Vue.use(Vuetify, {
     VTextarea,
     VToolbar,
     VToolbarItems,
+    VToolbarSideIcon,
     VTooltip,
     transitions
   },
