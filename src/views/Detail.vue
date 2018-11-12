@@ -7,7 +7,11 @@
             v-icon chevron_left
           span.subheading.no-wrap Retour aux résultats
         v-card
-          CarrierCardHeader(:carrier="carrier" :with-edit-button="!carrier.deleted_at")
+          CarrierCardHeader(
+            :carrier="carrier"
+            :detail-url="detailUrl"
+            :with-edit-button="!carrier.deleted_at"
+          )
           v-container(grid-list-lg)
             v-layout(v-if="carrier.deleted_at")
               v-flex(offset-xs1 xs10)
@@ -245,6 +249,10 @@ export default {
   },
 
   computed: {
+    detailUrl () {
+      return `https://${process.env.VUE_APP_HOSTNAME}${this.$router.currentRoute.path}`
+    },
+
     displaySpecialities () {
       if (this.carrier.specialities == null) {
         return 'Non renseigné'

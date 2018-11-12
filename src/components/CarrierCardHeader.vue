@@ -5,8 +5,24 @@ v-img.white--text(:src="getRoadPicture" height="200px")
       v-flex.flex-bottom(xs10)
         v-layout(align-end)
           v-flex(xs12 sm10)
-            h3.headline {{ carrier.enseigne }}
-            span.white--text.text--darken-1 {{ carrier.libelle_ape }}
+            v-layout(align-start justify-start)
+              v-flex(shrink)
+                span.headline {{ carrier.enseigne }}
+                br
+                span.white--text.text--darken-1 {{ carrier.libelle_ape }}
+              v-flex(shrink)
+                v-tooltip(
+                  activator=".clipboard"
+                  top
+                  v-model="copied"
+                )
+                  span Adresse copiée dans le presse-papier (Ctrl + v pour coller).
+                v-btn.clipboard(
+                  small
+                  fab
+                  :data-clipboard-text="detailUrl"
+                )
+                  v-icon share
             br
             v-btn.ma-0(
               v-if="withEditButton"
@@ -39,9 +55,12 @@ v-img.white--text(:src="getRoadPicture" height="200px")
 </style>
 
 <script>
+import ClipboardJS from 'clipboard'
+
+import CompletenessIndicator from '@/components/CompletenessIndicator'
+
 import roadPicture from '@/assets/road.jpg'
 import roadDisabledPicture from '@/assets/road-disabled.jpg'
-import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 export default {
   name: 'TransportCardHeader',
@@ -50,6 +69,12 @@ export default {
     carrier: {
       type: Object,
       required: true
+    },
+
+    detailUrl: {
+      type: String,
+      required: false,
+      default: ''
     },
 
     withEditButton: {
@@ -61,6 +86,22 @@ export default {
 
   components: {
     CompletenessIndicator
+  },
+
+  data () {
+    return {
+      copied: false
+    }
+  },
+
+  created () {
+    let clipboard = new ClipboardJS('.clipboard')
+    clipboard.on('success', e => {
+      this.copied = true
+      setTimeout(() => {
+        this.copied = false
+      }, 3000)
+    })
   },
 
   computed: {
