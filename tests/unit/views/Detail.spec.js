@@ -1,9 +1,10 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
 import Vuetify from 'vuetify'
+import Vuex from 'vuex'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
+import router from '@/router'
 import { storeOptions } from '@/store/options'
 import Detail from '@/views/Detail.vue'
 import { addElementWithDataAppToBody } from '../utils'
@@ -40,6 +41,7 @@ describe('Detail.vue', () => {
     clonedStoreOptions = deepClone(storeOptions)
     store = new Vuex.Store(clonedStoreOptions)
     wrapper = mount(Detail, {
+      router,
       store,
       propsData: {
         carrier
