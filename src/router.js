@@ -60,13 +60,6 @@ const routes = [
     component: ViewError,
     props: true
   },
-  // Temporary (2018-08-08) new URL to fix an issue in a mailing with wrong link
-  {
-    path: '/:carrierSiret',
-    redirect: {
-      name: 'carrier_detail'
-    }
-  },
   {
     path: '*',
     redirect: '/'
