@@ -79,7 +79,7 @@
                   label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou des virgules"
-                  :rules="[() => form.working_area !== 'DEPARTEMENT' || (form.working_area === 'DEPARTEMENT' && form.working_area_departements.length > 0) || 'Des départements doivent être renseignés quand l\\'aire de travail est départementale.']"
+                  :rules="form.workingAreaDepartementsRules"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
@@ -202,6 +202,15 @@ export default {
         phone: '',
         workingArea: '',
         workingAreaDepartements: [],
+        workingAreaDepartementsRules: [
+          v => {
+            if (this.form.workingArea !== 'DEPARTEMENT' && !!v) {
+              return "Des départements doivent être renseignés quand l'aire de travail est départementale."
+            } else {
+              return true
+            }
+          }
+        ],
         region: '',
         specialities: [],
         website: '',
