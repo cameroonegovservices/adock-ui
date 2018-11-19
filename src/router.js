@@ -22,6 +22,27 @@ const routes = [
     props: true
   },
   {
+    path: '/about',
+    name: 'about',
+    component: About
+  },
+  {
+    path: '/cgu',
+    name: 'cgu',
+    component: CGU
+  },
+  {
+    path: '/error',
+    name: 'error',
+    component: ViewError,
+    props: true
+  },
+  {
+    path: '/stats',
+    name: 'stats',
+    component: Stats
+  },
+  {
     path: '/transporteur/:carrierSiret',
     name: 'carrier_detail',
     component: Detail,
@@ -37,27 +58,6 @@ const routes = [
     path: '/transporteur/:carrierSiret/confirm/:token',
     name: 'carrier_confirm_email',
     component: ConfirmEmail,
-    props: true
-  },
-  {
-    path: '/stats',
-    name: 'stats',
-    component: Stats
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: About
-  },
-  {
-    path: '/cgu',
-    name: 'cgu',
-    component: CGU
-  },
-  {
-    path: '/error',
-    name: 'error',
-    component: ViewError,
     props: true
   },
   {
