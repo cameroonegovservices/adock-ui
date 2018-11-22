@@ -91,6 +91,9 @@
             v-layout
               v-flex(xs4 offset-md1 md5) Ville
               v-flex.adock-align-right(xs8 md5) {{ carrier.code_postal }} {{ carrier.ville }}
+            v-layout
+              v-flex(xs12 offset-md1 md10)
+                div#map
             v-layout(v-if="carrier.debut_activite")
               v-flex(xs4 offset-md1 md5) Début d'activité
               v-flex.adock-align-right(xs8 md5) {{ carrier.debut_activite | asLocaleDate }}
@@ -185,13 +188,28 @@ a[href^="tel:"]:before
   content: "\260e"
   margin-right: 0.5em
 
+#map
+  width: 100%
+  height: 256px
+  text-shadow: 0 0 2px #fff
+  border: 1px solid #ccc
 </style>
 
 <script>
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
 import { mapState } from 'vuex'
 
 import { routeLoadCarrier } from '@/routeLoaders'
 import CarrierCardHeader from '@/components/CarrierCardHeader'
+
+// Workaround to load marker icons
+delete L.Icon.Default.prototype._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
 
 export default {
   name: 'Detail',
@@ -228,6 +246,24 @@ export default {
         }
       ]
     }
+  },
+
+  mounted () {
+    const center = [this.carrier.latitude, this.carrier.longitude]
+    const map = L.map('map', {
+      center,
+      zoom: 12,
+      scrollWheelZoom: false
+    })
+    const tileLayer = L.tileLayer(
+      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+      {
+        maxZoom: 18,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+      }
+    )
+    tileLayer.addTo(map)
+    L.marker(center).addTo(map)
   },
 
   async beforeRouteEnter (routeTo, routeFrom, next) {
