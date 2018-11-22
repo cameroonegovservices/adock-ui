@@ -91,7 +91,7 @@
             v-layout
               v-flex(xs4 offset-md1 md5) Ville
               v-flex.adock-align-right(xs8 md5) {{ carrier.code_postal }} {{ carrier.ville }}
-            v-layout
+            v-layout(v-if="carrier.latitude")
               v-flex(xs12 offset-md1 md10)
                 div#map
             v-layout(v-if="carrier.debut_activite")
@@ -249,21 +249,23 @@ export default {
   },
 
   mounted () {
-    const center = [this.carrier.latitude, this.carrier.longitude]
-    const map = L.map('map', {
-      center,
-      zoom: 12,
-      scrollWheelZoom: false
-    })
-    const tileLayer = L.tileLayer(
-      'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
-      {
-        maxZoom: 18,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
-      }
-    )
-    tileLayer.addTo(map)
-    L.marker(center).addTo(map)
+    if (this.carrier.latitude) {
+      const center = [this.carrier.latitude, this.carrier.longitude]
+      const map = L.map('map', {
+        center,
+        zoom: 12,
+        scrollWheelZoom: false
+      })
+      const tileLayer = L.tileLayer(
+        'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+        {
+          maxZoom: 18,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>'
+        }
+      )
+      tileLayer.addTo(map)
+      L.marker(center).addTo(map)
+    }
   },
 
   async beforeRouteEnter (routeTo, routeFrom, next) {
