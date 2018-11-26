@@ -3,26 +3,13 @@ v-img.white--text(:src="getRoadPicture" height="200px")
   v-container(fill-height fluid)
     v-layout.pa-4(column reverse)
       v-flex.flex-bottom(xs10)
-        v-layout(align-end)
-          v-flex(xs12 sm10)
+        v-layout
+          v-flex(xs11)
             v-layout(align-start justify-start)
-              v-flex(shrink)
+              v-flex
                 span.headline {{ carrier.enseigne }}
                 br
                 span.white--text.text--darken-1 {{ carrier.libelle_ape }}
-              v-flex(shrink)
-                v-tooltip(
-                  activator=".clipboard"
-                  top
-                  v-model="copied"
-                )
-                  span Adresse copiée dans le presse-papier (Ctrl + v pour coller).
-                v-btn.clipboard(
-                  small
-                  fab
-                  :data-clipboard-text="detailUrl"
-                )
-                  v-icon share
             br
             v-btn.ma-0(
               v-if="withEditButton"
@@ -32,9 +19,20 @@ v-img.white--text(:src="getRoadPicture" height="200px")
             )
               v-icon(v-if="carrier.is_locked" left) lock
               span(v-if="carrier.completeness === 100") Modifier les informations
-              span(v-else) Compléter les informations
-          v-flex(hidden-sm-and-down sm1)
-            CompletenessIndicator(v-if="withEditButton" :percent="carrier.completeness")
+              span(v-else) Compléter les informations ({{ carrier.completeness }} %)
+          v-flex(xs1)
+            v-tooltip(
+              activator=".clipboard"
+              top
+              v-model="copied"
+            )
+              span Adresse copiée dans le presse-papier (Ctrl + v pour coller).
+            v-btn.clipboard(
+              small
+              fab
+              :data-clipboard-text="detailUrl"
+            )
+              v-icon share
           v-flex(hidden-xs-only v-if="carrier.objectif_co2")
             img.adock-objectif-co2.elevation-16(
               v-if="carrier.objectif_co2 === 'ENLISTED'"
@@ -56,8 +54,6 @@ v-img.white--text(:src="getRoadPicture" height="200px")
 
 <script>
 import ClipboardJS from 'clipboard'
-
-import CompletenessIndicator from '@/components/CompletenessIndicator'
 
 import roadPicture from '@/assets/road.jpg'
 import roadDisabledPicture from '@/assets/road-disabled.jpg'
@@ -82,10 +78,6 @@ export default {
       required: false,
       default: false
     }
-  },
-
-  components: {
-    CompletenessIndicator
   },
 
   data () {
