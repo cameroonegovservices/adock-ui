@@ -193,6 +193,7 @@ a[href^="tel:"]:before
   height: 256px
   text-shadow: 0 0 2px #fff
   border: 1px solid #ccc
+  z-index: 1
 </style>
 
 <script>
