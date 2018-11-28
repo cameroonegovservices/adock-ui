@@ -149,7 +149,7 @@
                     slot='items'
                     slot-scope='props'
                   )
-                    tr(:class="{'adock-tr-deleted': props.item.deleted_at}")
+                    tr(:class="{'adock-tr-deleted': props.item.deleted_at || props.item.sirene_deleted_at }")
                       td
                         router-link(:to="{name: 'carrier_detail', params: {carrierSiret: props.item.siret}}") {{ props.item.siret }}
                         span &nbsp;
