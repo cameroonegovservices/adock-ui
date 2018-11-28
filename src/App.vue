@@ -57,8 +57,8 @@
       router-link.adock-footer-link(:to="{name: 'about'}") En savoir plus
       router-link.adock-footer-link(:to="{name: 'cgu'}") CGU
       v-spacer
-      a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
-        img(src='./assets/logo-fabnum.svg' height='50px')
+      a.adock-french-mobility(href='https://www.ecologique-solidaire.gouv.fr/french-mobility')
+        img(src='./assets/logo-french-mobility.png' height='50px')
 </template>
 
 <style lang="stylus">
@@ -80,6 +80,9 @@
   color: #999
   text-decoration: none
   padding: 0 24px
+
+.adock-french-mobility
+  padding-top: 7px
 </style>
 
 <script>
