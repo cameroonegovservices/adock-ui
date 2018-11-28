@@ -249,10 +249,21 @@ export default {
     }
   },
 
-  mounted () {
-    if (this.carrier.latitude) {
+  created () {
+    this.map = null
+  },
+
+  beforeUpdate () {
+    if (this.map) {
+      this.map.remove()
+      this.map = null
+    }
+  },
+
+  updated () {
+    if (this.map == null && this.carrier.latitude) {
       const center = [this.carrier.latitude, this.carrier.longitude]
-      const map = L.map('map', {
+      this.map = L.map('map', {
         center,
         zoom: 12,
         scrollWheelZoom: false
@@ -265,8 +276,8 @@ export default {
           detectRetina: true
         }
       )
-      tileLayer.addTo(map)
-      L.marker(center).addTo(map)
+      tileLayer.addTo(this.map)
+      L.marker(center).addTo(this.map)
     }
   },
 
