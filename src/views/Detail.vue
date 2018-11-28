@@ -30,7 +30,7 @@
                   type="warning"
                   color="orange"
                 )
-                  | Cet établissement est absent de la base de données Sirène de l'Insee.
+                  | Cet établissement est absent de la base de données Sirene de l'Insee.
                   | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
                   | La cause peut être l'opposition au démarchage commercial ou la cessation d'activité.
                   | Nous vous invitons à contacter le
