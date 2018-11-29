@@ -197,20 +197,11 @@ a[href^="tel:"]:before
 </style>
 
 <script>
-import 'leaflet/dist/leaflet.css'
 import L from 'leaflet'
 import { mapState } from 'vuex'
 
 import { routeLoadCarrier } from '@/routeLoaders'
 import CarrierCardHeader from '@/components/CarrierCardHeader'
-
-// Workaround to load marker icons
-delete L.Icon.Default.prototype._getIconUrl
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-})
 
 export default {
   name: 'Detail',
