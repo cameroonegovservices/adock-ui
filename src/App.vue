@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app
-    Message
+    message
     v-navigation-drawer(
       app
       clipped
@@ -65,7 +65,7 @@ import { mapState } from 'vuex'
 import Message from '@/components/Message.vue'
 
 export default {
-  name: 'App',
+  name: 'app',
 
   data () {
     return {
@@ -76,7 +76,7 @@ export default {
   },
 
   components: {
-    Message
+    'message': Message
   },
 
   async created () {

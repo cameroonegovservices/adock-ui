@@ -64,7 +64,7 @@ import roadPicture from '@/assets/road.jpg'
 import roadDisabledPicture from '@/assets/road-disabled.jpg'
 
 export default {
-  name: 'TransportCardHeader',
+  name: 'carrier-card-header',
 
   props: {
     carrier: {

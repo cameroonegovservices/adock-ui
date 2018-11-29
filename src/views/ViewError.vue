@@ -21,7 +21,8 @@ v-container(fluid fill-height)
 
 <script>
 export default {
-  name: 'ViewError',
+  name: 'view-error',
+
   props: {
     fallbackUrl: {
       type: String,

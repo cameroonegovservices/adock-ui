@@ -7,7 +7,7 @@
             v-icon chevron_left
           span.subheading.no-wrap Retour aux résultats
         v-card
-          CarrierCardHeader(:carrier="carrier")
+          carrier-card-header(:carrier="carrier")
           v-container(grid-list-lg)
             v-alert(
               v-if="errorMessage"
@@ -182,7 +182,7 @@ const WORKING_AREA_REGIONS = {
 }
 
 export default {
-  name: 'Edit',
+  name: 'edit',
 
   props: {
     carrier: {
@@ -192,7 +192,7 @@ export default {
   },
 
   components: {
-    CarrierCardHeader
+    'carrier-card-header': CarrierCardHeader
   },
 
   data () {

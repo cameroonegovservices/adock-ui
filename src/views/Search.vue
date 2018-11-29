@@ -73,14 +73,14 @@
                   )
             v-btn(large color="primary" @click.native="search") Chercher
             v-btn(@click.native="clear") Effacer
-        CarrierList(
+        carrier-list(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
           :carriers="carriers"
           :limit="limit"
         )
-        SearchHelp
-        TestimonialCards
+        search-help
+        testimonial-cards
 </template>
 
 <style lang="stylus">
@@ -108,7 +108,7 @@ const defaultSearchForm = {
 }
 
 export default {
-  name: 'Search',
+  name: 'search',
 
   mixins: [
     saveState
@@ -148,9 +148,9 @@ export default {
   },
 
   components: {
-    TestimonialCards,
-    CarrierList,
-    SearchHelp
+    'testimonial-cards': TestimonialCards,
+    'carrier-list': CarrierList,
+    'search-help': SearchHelp
   },
 
   computed: {

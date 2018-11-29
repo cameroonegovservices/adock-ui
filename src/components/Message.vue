@@ -17,7 +17,7 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'Message',
+  name: 'message',
 
   computed: {
     messagesJoined () {

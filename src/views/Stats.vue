@@ -110,7 +110,7 @@ import api from '@/api'
 import { version } from '@/../package.json'
 
 export default {
-  name: 'Stats',
+  name: 'stats',
 
   data () {
     return {

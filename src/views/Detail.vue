@@ -7,7 +7,7 @@
             v-icon chevron_left
           span.subheading.no-wrap Retour aux résultats
         v-card
-          CarrierCardHeader(
+          carrier-card-header(
             :carrier="carrier"
             :detail-url="detailUrl"
             :with-edit-button="!carrier.deleted_at"
@@ -202,10 +202,10 @@ import L from 'leaflet'
 import { mapState } from 'vuex'
 
 import { routeLoadCarrier } from '@/routeLoaders'
-import CarrierCardHeader from '@/components/CarrierCardHeader'
+import CarrierCardHeader from '@/components/CarrierCardHeader.vue'
 
 export default {
-  name: 'Detail',
+  name: 'detail',
 
   props: {
     carrier: {
@@ -215,7 +215,7 @@ export default {
   },
 
   components: {
-    CarrierCardHeader
+    'carrier-card-header': CarrierCardHeader
   },
 
   data () {

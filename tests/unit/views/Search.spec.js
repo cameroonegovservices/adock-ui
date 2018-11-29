@@ -23,7 +23,10 @@ function mountSearch (store) {
     store,
     sync: false,
     stubs: {
-      RouterLink: RouterLinkStub
+      RouterLink: RouterLinkStub,
+      CarrierList: '<div class="stubbed"/>',
+      SearchHelp: '<div class="stubbed"/>',
+      TestimonialCards: '<div class="stubbed"/>'
     }
   })
 }

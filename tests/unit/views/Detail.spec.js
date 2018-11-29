@@ -55,7 +55,8 @@ describe('Detail.vue', () => {
         carrier
       },
       stubs: {
-        RouterLink: RouterLinkStub
+        RouterLink: RouterLinkStub,
+        CarrierCardHeader: '<div class="stubbed"/>'
       }
     })
   })

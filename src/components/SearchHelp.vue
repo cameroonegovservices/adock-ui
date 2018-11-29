@@ -28,3 +28,9 @@
   h3, p, .icon
     color: #373C42
 </style>
+
+<script>
+export default {
+  name: 'search-help'
+}
+</script>

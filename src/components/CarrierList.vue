@@ -35,7 +35,8 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'TransporteurList',
+  name: 'carrier-list',
+
   props: {
     searchResponseIsEmpty: {
       type: Boolean,

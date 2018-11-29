@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'Testimonial',
+  name: 'testimonial-cards',
 
   data () {
     return {
