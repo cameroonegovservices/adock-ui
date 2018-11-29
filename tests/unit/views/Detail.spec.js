@@ -24,7 +24,15 @@ const carrier = {
   lti_date_fin: '2021-03-11',
   lti_nombre: 6,
   telephone: '06 81 05 82 69',
-  email: 'contact@example.com'
+  email: 'contact@example.com',
+  subsidiaries: [
+    {
+      siret: '48153924500022', code_postal: '74300', ville: 'CLUSES', debut_activite: null, is_siege: false
+    },
+    {
+      siret: '48153924500023', code_postal: '74400', ville: 'AILLEURS', debut_activite: null, is_siege: true
+    }
+  ]
 }
 
 Vue.use(Vuex)
@@ -62,5 +70,9 @@ describe('Detail.vue', () => {
     const asJoinedString = wrapper.vm.$options.filters.asJoinedString
     expect(asJoinedString(null)).toBe('')
     expect(asJoinedString(['2A', '34'])).toBe('2A, 34')
+  })
+
+  it('extracts the headquarters', () => {
+    expect(wrapper.vm.headquarters['is_siege']).toBe(true)
   })
 })

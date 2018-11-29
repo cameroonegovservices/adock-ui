@@ -8,10 +8,12 @@ v-img.white--text(:src="getRoadPicture" height="200px")
             v-layout(align-start justify-start)
               v-flex
                 span.headline {{ carrier.enseigne }}
-                br
-                span.white--text.text--darken-1 {{ carrier.libelle_ape }}
-            br
-            v-btn.ma-0(
+                p.subheadline.white--text.text--darken-1 {{ carrier.libelle_ape }}
+                p.subheadline.white--text.text--darken-1(v-if="isSubsidiary")
+                  | Filiale de
+                  |
+                  router-link.white--text(:to="{name: 'carrier_detail', params: {carrierSiret: this.headquarters.siret }}") {{ headquarters.enseigne }} ({{ headquarters.completeness }} %)
+            v-btn.ma-0.mt-2(
               v-if="withEditButton"
               dark
               :color="carrier.completeness === 100 ? 'green' : 'orange'"
@@ -50,6 +52,9 @@ v-img.white--text(:src="getRoadPicture" height="200px")
   border: 6px solid white
   border-radius: 4px
   width: 64px
+
+.subheadline
+  margin-bottom: 0
 </style>
 
 <script>
@@ -77,6 +82,12 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+
+    headquarters: {
+      type: Object,
+      required: false,
+      default: null
     }
   },
 
@@ -99,6 +110,10 @@ export default {
   computed: {
     getRoadPicture () {
       return this.carrier.deleted_at ? roadDisabledPicture : roadPicture
+    },
+
+    isSubsidiary () {
+      return this.headquarters != null
     }
   }
 }

@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// New Vuetify 1.3 can automatically import all the Vuetify components excepted in PUG templates :(
-// so we need to explicitly register our components.
+// New Vuetify 1.3 can automatically import all the Vuetify components excepted
+// in PUG templates :(so we need to explicitly register our components.
 import Vuetify, {
   VAlert,
   VApp,
