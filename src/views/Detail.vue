@@ -253,32 +253,22 @@ export default {
     this.map = null
   },
 
+  mounted () {
+    this.renderMap()
+  },
+
   beforeUpdate () {
     if (this.map) {
+      // FIXME Move marker and center
       this.map.remove()
       this.map = null
     }
   },
 
   updated () {
-    if (this.map == null && this.carrier.latitude) {
-      const center = [this.carrier.latitude, this.carrier.longitude]
-      this.map = L.map('map', {
-        center,
-        zoom: 12,
-        scrollWheelZoom: false
-      })
-      const tileLayer = L.tileLayer(
-        'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
-        {
-          maxZoom: 18,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>',
-          detectRetina: true
-        }
-      )
-      tileLayer.addTo(this.map)
-      L.marker(center).addTo(this.map)
-    }
+    this.$nextTick(() => {
+      this.renderMap()
+    })
   },
 
   async beforeRouteEnter (routeTo, routeFrom, next) {
@@ -316,6 +306,29 @@ export default {
     ...mapState([
       'choices'
     ])
+  },
+
+  methods: {
+    renderMap () {
+      if (this.carrier.latitude) {
+        const center = [this.carrier.latitude, this.carrier.longitude]
+        this.map = L.map('map', {
+          center,
+          zoom: 12,
+          scrollWheelZoom: false
+        })
+        const tileLayer = L.tileLayer(
+          'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+          {
+            maxZoom: 18,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>',
+            detectRetina: true
+          }
+        )
+        tileLayer.addTo(this.map)
+        L.marker(center).addTo(this.map)
+      }
+    }
   },
 
   filters: {
