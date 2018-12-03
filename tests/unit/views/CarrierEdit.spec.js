@@ -6,7 +6,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import deepClone from 'lodash.clonedeep'
 
 import { storeOptions } from '@/store/options'
-import Edit from '@/views/Edit.vue'
+import CarrierEdit from '@/views/CarrierEdit.vue'
 
 Vue.use(Vuex)
 Vue.use(Vuetify)
@@ -22,8 +22,8 @@ const TRANSPORTEUR_DATA = {
   edit_code: 'SHOULD NO BE SET'
 }
 
-function mountEdit (store, carrier) {
-  return shallowMount(Edit, {
+function mountCarrierEdit (store, carrier) {
+  return shallowMount(CarrierEdit, {
     store,
     propsData: {
       carrier
@@ -34,7 +34,7 @@ function mountEdit (store, carrier) {
   })
 }
 
-describe('Edit.vue', () => {
+describe('CarrierEdit.vue', () => {
   let store
 
   beforeEach(() => {
@@ -43,7 +43,7 @@ describe('Edit.vue', () => {
   })
 
   it('load the form with server data', () => {
-    const wrapper = mountEdit(store, TRANSPORTEUR_DATA)
+    const wrapper = mountCarrierEdit(store, TRANSPORTEUR_DATA)
 
     // The function loadForm is called by 'created' hook
 
@@ -58,7 +58,7 @@ describe('Edit.vue', () => {
   })
 
   it('get the payload from the form', () => {
-    const wrapper = mountEdit(store, TRANSPORTEUR_DATA)
+    const wrapper = mountCarrierEdit(store, TRANSPORTEUR_DATA)
     wrapper.vm.form.editCode = '1234'
     wrapper.vm.form.region = 'Bretagne'
     wrapper.vm.addDepartementsFromRegion()

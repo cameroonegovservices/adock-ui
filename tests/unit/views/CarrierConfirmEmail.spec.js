@@ -6,13 +6,13 @@ import flushPromises from 'flush-promises'
 import MockAdapter from 'axios-mock-adapter'
 
 import { axiosInstance, getConfirmEmailUrl } from '@/api'
-import ConfirmEmail from '@/views/ConfirmEmail.vue'
+import CarrierConfirmEmail from '@/views/CarrierConfirmEmail.vue'
 
 const mockAdapter = new MockAdapter(axiosInstance)
 
 Vue.use(Vuetify)
 
-describe('ConfirmEmail.vue', () => {
+describe('CarrierConfirmEmail.vue', () => {
   afterEach(() => {
     mockAdapter.reset()
   })
@@ -26,7 +26,7 @@ describe('ConfirmEmail.vue', () => {
       message
     })
 
-    const wrapper = shallowMount(ConfirmEmail, {
+    const wrapper = shallowMount(CarrierConfirmEmail, {
       propsData: {
         carrierSiret,
         token

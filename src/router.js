@@ -5,9 +5,9 @@ import { getTracker } from './tracker'
 
 import About from '@/views/About.vue'
 import CGU from '@/views/CGU.vue'
-import ConfirmEmail from '@/views/ConfirmEmail.vue'
-import Detail from '@/views/Detail.vue'
-import Edit from '@/views/Edit.vue'
+import CarrierConfirmEmail from '@/views/CarrierConfirmEmail.vue'
+import CarrierDetail from '@/views/CarrierDetail.vue'
+import CarrierEdit from '@/views/CarrierEdit.vue'
 import Search from '@/views/Search.vue'
 import Stats from '@/views/Stats.vue'
 import ViewError from '@/views/ViewError.vue'
@@ -45,19 +45,19 @@ const routes = [
   {
     path: '/transporteur/:carrierSiret',
     name: 'carrier_detail',
-    component: Detail,
+    component: CarrierDetail,
     props: true
   },
   {
     path: '/transporteur/:carrierSiret/edit',
     name: 'carrier_edit',
-    component: Edit,
+    component: CarrierEdit,
     props: true
   },
   {
     path: '/transporteur/:carrierSiret/confirm/:token',
     name: 'carrier_confirm_email',
-    component: ConfirmEmail,
+    component: CarrierConfirmEmail,
     props: true
   },
   {

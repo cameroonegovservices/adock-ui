@@ -6,7 +6,7 @@ import deepClone from 'lodash.clonedeep'
 
 import router from '@/router'
 import { storeOptions } from '@/store/options'
-import Detail from '@/views/Detail.vue'
+import CarrierDetail from '@/views/CarrierDetail.vue'
 import { addElementWithDataAppToBody } from '../utils'
 
 const carrier = {
@@ -38,7 +38,7 @@ const carrier = {
 Vue.use(Vuex)
 Vue.use(Vuetify)
 
-describe('Detail.vue', () => {
+describe('CarrierDetail.vue', () => {
   addElementWithDataAppToBody()
 
   let store
@@ -48,7 +48,7 @@ describe('Detail.vue', () => {
   beforeEach(() => {
     clonedStoreOptions = deepClone(storeOptions)
     store = new Vuex.Store(clonedStoreOptions)
-    wrapper = mount(Detail, {
+    wrapper = mount(CarrierDetail, {
       router,
       store,
       propsData: {
