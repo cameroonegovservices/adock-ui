@@ -10411,10 +10411,10 @@ vuetify-loader@^1.0.5:
     gm "^1.23.1"
     loader-utils "^1.1.0"
 
-vuetify@^1.3.7:
-  version "1.3.7"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.3.7.tgz#894e0bedb3e87fc5bae47896d924caa4e11e6d84"
-  integrity sha512-EXKQggY+SPTBlmzmcFcNI6h/xdZLv6vr9VBcos8+kUumftIG7HDqqtFdRVNCco4EPrQgiG5sWDm5raM07NDvBg==
+vuetify@^1.3.11:
+  version "1.3.11"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.3.11.tgz#8be51f752a821704bb7fe0b7ac1f9324b902e52a"
+  integrity sha512-K9RS3DaREv9KCX6CqaO5owMltN8V++z9ReyPWnZdq8aokNCu9oDh7cZ3yqkkaoymy9kH89mtjhEu8ybLm6QCsg==
 
 vuex@^3.0.1:
   version "3.0.1"
