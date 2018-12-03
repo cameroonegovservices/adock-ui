@@ -15,11 +15,13 @@ v-img.white--text(:src="getRoadPicture" height="200px")
                     |
                     router-link.white--text(:to="{name: 'carrier_detail', params: {carrierSiret: this.headquarters.siret }}") {{ headquarters.enseigne }} ({{ headquarters.completeness }} %)
                   p.subheadline.white--text.text--darken-1(v-else)
-                    | Siège -
-                    |
-                    a.white--text(
-                      @click="$vuetify.goTo('#subsidiaries')"
-                    ) Autres établissements
+                    | Siège de l'entreprise
+                    span(v-if="carrier.subsidiaries.length > 0")
+                      |  -
+                      |
+                      a.white--text.adock-link(
+                        @click="$vuetify.goTo('#subsidiaries')"
+                      ) Autres établissements
             v-btn.ma-0.mt-2(
               v-if="withEditButton"
               dark
@@ -60,6 +62,9 @@ v-img.white--text(:src="getRoadPicture" height="200px")
   border-radius: 4px
   width: 64px
 
+.adock-link
+  text-decoration: underline
+
 .subheadline
   margin-bottom: 0
 </style>
@@ -89,12 +94,6 @@ export default {
       type: Boolean,
       required: false,
       default: false
-    },
-
-    headquarters: {
-      type: Object,
-      required: false,
-      default: null
     }
   },
 
@@ -119,7 +118,17 @@ export default {
       return this.carrier.deleted_at ? roadDisabledPicture : roadPicture
     },
 
+    headquarters () {
+      const filteredSubsidiaries = this.carrier.subsidiaries.filter(subsidiary => subsidiary.is_siege)
+      if (filteredSubsidiaries.length > 0) {
+        return filteredSubsidiaries[0]
+      } else {
+        return null
+      }
+    },
+
     isSubsidiary () {
+      // When the carrier is a subsidiary, the list of other facilities have a headquarters
       return this.headquarters != null
     }
   }

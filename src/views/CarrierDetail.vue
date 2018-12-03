@@ -11,7 +11,7 @@
             :carrier="carrier"
             :detail-url="detailUrl"
             :with-edit-button="!carrier.deleted_at"
-            :headquarters="headquarters"
+            :subsidiaries="carrier.subsidiaries"
           )
           v-container(grid-list-lg)
             v-layout(v-if="carrier.deleted_at")
@@ -319,15 +319,6 @@ export default {
         return 'Aucune'
       } else {
         return this.carrier.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
-      }
-    },
-
-    headquarters () {
-      const filteredSubsidiaries = this.carrier.subsidiaries.filter(subsidiary => subsidiary.is_siege)
-      if (filteredSubsidiaries) {
-        return filteredSubsidiaries[0]
-      } else {
-        return null
       }
     },
 
