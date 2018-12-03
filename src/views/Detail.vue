@@ -204,6 +204,32 @@ import { mapState } from 'vuex'
 import { routeLoadCarrier } from '@/routeLoaders'
 import CarrierCardHeader from '@/components/CarrierCardHeader.vue'
 
+function getTileProvider () {
+  const tileProviders = {
+    cartodb: {
+      url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+        ', &copy; <a href="https://carto.com/attribution">CARTO</a>'
+    },
+    ign: {
+      url: `https://wxs.ign.fr/${process.env.VUE_APP_IGN_KEY}/wmts?` +
+        'REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0' +
+        '&STYLE=normal&TILEMATRIXSET=PM' +
+        '&FORMAT=image/jpeg' +
+        '&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD' +
+        '&TILEMATRIX={z}' +
+        '&TILEROW={y}' +
+        '&TILECOL={x}',
+      attribution: 'IGN-F/Geoportail'
+    }
+  }
+  if (typeof process.env.VUE_APP_IGN_KEY !== 'undefined' && process.env.VUE_APP_IGN_KEY) {
+    return tileProviders['ign']
+  } else {
+    return tileProviders['cartodb']
+  }
+}
+
 export default {
   name: 'detail',
 
@@ -316,15 +342,19 @@ export default {
         const center = [this.carrier.latitude, this.carrier.longitude]
         this.map = L.map('map', {
           center,
-          zoom: 12,
+          zoom: 9,
           scrollWheelZoom: false
         })
+
+        const tileProvider = getTileProvider()
         const tileLayer = L.tileLayer(
-          'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
+          tileProvider.url,
           {
+            minZoom: 0,
             maxZoom: 18,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy; <a href="https://carto.com/attribution">CARTO</a>',
-            detectRetina: true
+            tileSize: 256,
+            detectRetina: true,
+            attribution: tileProvider.attribution
           }
         )
         tileLayer.addTo(this.map)
