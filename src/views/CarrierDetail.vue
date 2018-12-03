@@ -136,7 +136,7 @@
                 v-divider
             v-layout
               v-flex(xs12)
-                span.adock-section-title.pl-4 Autres établissements de l'entreprise
+                span#subsidiaries.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
               v-flex(v-if="carrier.subsidiaries && carrier.subsidiaries.length > 0" xs12 offset-md1)
                 v-data-table(

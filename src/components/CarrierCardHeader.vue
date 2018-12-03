@@ -13,6 +13,13 @@ v-img.white--text(:src="getRoadPicture" height="200px")
                   | Filiale de
                   |
                   router-link.white--text(:to="{name: 'carrier_detail', params: {carrierSiret: this.headquarters.siret }}") {{ headquarters.enseigne }} ({{ headquarters.completeness }} %)
+                p.subheadline.white--text.text--darken-1(v-else)
+                  | Siège -
+                  |
+                  a.white--text(
+                    @click="$vuetify.goTo('#subsidiaries')"
+                  ) Autres établissements
+
             v-btn.ma-0.mt-2(
               v-if="withEditButton"
               dark
