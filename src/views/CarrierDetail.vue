@@ -11,7 +11,7 @@
             :carrier="carrier"
             :detail-url="detailUrl"
             :with-edit-button="!carrier.deleted_at"
-            :subsidiaries="carrier.subsidiaries"
+            :other-facilities="carrier.other_facilities"
           )
           v-container(grid-list-lg)
             v-layout(v-if="carrier.deleted_at")
@@ -136,12 +136,12 @@
                 v-divider
             v-layout
               v-flex(xs12)
-                span#subsidiaries.adock-section-title.pl-4 Autres établissements de l'entreprise
+                span#facilities.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
-              v-flex(v-if="carrier.subsidiaries && carrier.subsidiaries.length > 0" xs12 offset-md1)
+              v-flex(v-if="carrier.other_facilities && carrier.other_facilities.length > 0" xs12 offset-md1)
                 v-data-table(
-                  :headers='subsidiariesHeaders'
-                  :items='carrier.subsidiaries'
+                  :headers='facilitiesHeaders'
+                  :items='carrier.other_facilities'
                   hide-actions
                   class='elevation-1'
                   must-sort
@@ -246,7 +246,7 @@ export default {
 
   data () {
     return {
-      subsidiariesHeaders: [
+      facilitiesHeaders: [
         {
           text: 'SIRET',
           value: 'siret'

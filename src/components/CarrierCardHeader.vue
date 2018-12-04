@@ -16,11 +16,11 @@ v-img.white--text(:src="getRoadPicture" height="200px")
                     router-link.white--text(:to="{name: 'carrier_detail', params: {carrierSiret: this.headquarters.siret }}") {{ headquarters.enseigne }} ({{ headquarters.completeness }} %)
                   p.subheadline.white--text.text--darken-1(v-else)
                     | Siège de l'entreprise
-                    span(v-if="carrier.subsidiaries.length > 0")
+                    span(v-if="carrier.other_facilities.length > 0")
                       |  -
                       |
                       a.white--text.adock-link(
-                        @click="$vuetify.goTo('#subsidiaries')"
+                        @click="$vuetify.goTo('#facilities')"
                       ) Autres établissements
             v-btn.ma-0.mt-2(
               v-if="withEditButton"
@@ -119,9 +119,9 @@ export default {
     },
 
     headquarters () {
-      const filteredSubsidiaries = this.carrier.subsidiaries.filter(subsidiary => subsidiary.is_siege)
-      if (filteredSubsidiaries.length > 0) {
-        return filteredSubsidiaries[0]
+      const filteredFacilities = this.carrier.other_facilities.filter(facility => facility.is_siege)
+      if (filteredFacilities.length > 0) {
+        return filteredFacilities[0]
       } else {
         return null
       }

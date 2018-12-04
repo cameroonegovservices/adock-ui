@@ -14,7 +14,7 @@ export const carrier = {
   lti_nombre: 6,
   telephone: '06 81 05 82 69',
   email: 'contact@example.com',
-  subsidiaries: [
+  other_facilities: [
     {
       siret: '48153924500022', code_postal: '74300', ville: 'CLUSES', debut_activite: null, is_siege: false
     },

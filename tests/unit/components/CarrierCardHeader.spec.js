@@ -31,7 +31,7 @@ describe('CarrierCardHeader', () => {
 
   it('is a headquarters', () => {
     const carrierHeadquarters = carrier
-    carrierHeadquarters.subsidiaries = []
+    carrierHeadquarters.other_facilities = []
     const wrapper = shallowMount(CarrierCardHeader, {
       localVue,
       propsData: {
@@ -44,7 +44,7 @@ describe('CarrierCardHeader', () => {
 
   it('is a headquarters with subsidiaries', () => {
     const carrierHeadquarters = carrier
-    carrierHeadquarters.subsidiaries = [
+    carrierHeadquarters.other_facilities = [
       {
         siret: '48153924500022', code_postal: '74300', ville: 'CLUSES', debut_activite: null, is_siege: false
       }
