@@ -224,13 +224,7 @@ export default {
   },
 
   created () {
-    this.loadForm(this.carrier)
-    if (this.carrier.is_locked) {
-      api.mailEditCode(this.carrier.siret)
-        .then(data => {
-          this.loadEditCodeData(data)
-        })
-    }
+    this.setup()
   },
 
   async beforeRouteEnter (routeTo, routeFrom, next) {
@@ -243,6 +237,12 @@ export default {
           response => { routeTo.params.carrier = response.carrier }
         )
       )
+    }
+  },
+
+  watch: {
+    carrier: function (val) {
+      this.setup()
     }
   },
 
@@ -265,6 +265,19 @@ export default {
   },
 
   methods: {
+    setup () {
+      this.errorMessage = null
+      this.editCodeMessage = null
+      this.fieldErrors = {}
+      this.loadForm(this.carrier)
+      if (this.carrier.is_locked) {
+        api.mailEditCode(this.carrier.siret)
+          .then(data => {
+            this.loadEditCodeData(data)
+          })
+      }
+    },
+
     loadForm (carrier) {
       if (carrier == null || typeof carrier !== 'object') {
         return

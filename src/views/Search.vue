@@ -92,7 +92,6 @@
 <script>
 import deepClone from 'lodash.clonedeep'
 import { mapState } from 'vuex'
-import saveState from 'vue-save-state'
 
 import api from '@/api'
 import CarrierList from '@/components/CarrierList.vue'
@@ -109,10 +108,6 @@ const defaultSearchForm = {
 
 export default {
   name: 'search',
-
-  mixins: [
-    saveState
-  ],
 
   props: {
     keepPreviousSearch: {
@@ -167,26 +162,6 @@ export default {
   },
 
   methods: {
-    getSaveStateConfig () {
-      return {
-        onLoad: (key, value) => {
-          if (this.keepPreviousSearch) {
-            return value
-          } else {
-            // Default data values
-            return this[key]
-          }
-        },
-        cacheKey: 'carrierSearch',
-        saveProperties: [
-          'searchForm',
-          'searchParams',
-          'carriers',
-          'limit'
-        ]
-      }
-    },
-
     async search () {
       // Remove error message as soon as the user clicks.
       this.errorMessage = null

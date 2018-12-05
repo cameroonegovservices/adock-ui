@@ -48,7 +48,8 @@
         | Nous vous recommandons d'utiliser un navigateur récent tel que&nbsp;
         a(href="https://www.mozilla.org/fr/firefox/") Firefox
         |  ou Chrome pour une expérience optimale.
-      router-view
+      keep-alive
+        router-view
 </template>
 
 <style lang="stylus">
