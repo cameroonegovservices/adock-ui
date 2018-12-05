@@ -3,7 +3,7 @@ import Raven from 'raven-js'
 
 export const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
-  timeout: 5000
+  timeout: process.env.VUE_APP_AXIOS_TIMEOUT
 })
 
 // Server URLs
