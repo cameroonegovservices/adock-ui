@@ -37,7 +37,7 @@
                   label="Adresse électronique"
                   :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
-                  placeholder="contact@carrier.fr"
+                  placeholder="contact@transporteur.fr"
                   hint="Cette adresse de contact sera aussi utilisée pour verrouiller la fiche transporteur."
                 )
             v-layout
