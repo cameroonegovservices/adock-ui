@@ -72,14 +72,14 @@
                     small
                     @click="addDepartementsFromRegion"
                   ) Ajouter
-            v-layout(v-if="form.workingArea === 'DEPARTEMENT' || form.workingArea === 'REGION'")
+            v-layout(v-if="['DEPARTEMENT', 'REGION'].includes(form.workingArea)")
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
                   v-model="workingAreaDepartementsInput"
                   label="Départements livrés"
                   :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou des virgules"
-                  :rules="form.workingAreaDepartementsRules"
+                  :rules="[workingAreaDepartementsRule]"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
@@ -202,15 +202,6 @@ export default {
         phone: '',
         workingArea: '',
         workingAreaDepartements: [],
-        workingAreaDepartementsRules: [
-          v => {
-            if (this.form.workingArea !== 'DEPARTEMENT' && !!v) {
-              return "Des départements doivent être renseignés quand l'aire de travail est départementale."
-            } else {
-              return true
-            }
-          }
-        ],
         region: '',
         specialities: [],
         website: '',
@@ -352,6 +343,14 @@ export default {
       }
       this.form.workingAreaDepartements = sortUniq(this.form.workingAreaDepartements)
       this.form.region = ''
+    },
+
+    workingAreaDepartementsRule (value) {
+      if (['DEPARTEMENT', 'REGION'].includes(this.form.workingArea) && !value) {
+        return "Des départements doivent être renseignés quand l'aire de travail est départementale ou régionale."
+      } else {
+        return true
+      }
     }
   }
 }
