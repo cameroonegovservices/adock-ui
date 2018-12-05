@@ -4,7 +4,7 @@ v-img.white--text(:src="getRoadPicture" height="200px")
     v-layout.pa-4(column reverse)
       v-flex.flex-bottom(xs10)
         v-layout
-          v-flex(xs11)
+          v-flex(xs10 sm11)
             v-layout(align-start justify-start)
               v-flex
                 span.headline {{ carrier.enseigne }}
@@ -31,7 +31,7 @@ v-img.white--text(:src="getRoadPicture" height="200px")
               v-icon(v-if="carrier.is_locked" left) lock
               span(v-if="carrier.completeness === 100") Modifier les informations
               span(v-else) Compléter les informations ({{ carrier.completeness }} %)
-          v-flex(xs1)
+          v-flex(xs2 sm1)
             v-tooltip(
               activator=".clipboard"
               top
