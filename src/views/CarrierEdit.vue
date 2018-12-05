@@ -8,7 +8,10 @@
           span.subheading.no-wrap Retour aux résultats
         v-card
           carrier-card-header(:carrier="carrier")
-          v-container(grid-list-lg)
+          v-container(
+            ref="mainContent"
+            grid-list-lg
+          )
             v-alert(
               v-if="errorMessage"
               type="error"
@@ -314,13 +317,27 @@ export default {
       const payload = this.getPayloadFromForm()
       const data = await api.updateCarrier(this.carrier.siret, payload)
       if (data.errors) {
+        let scrollToTarget = null
+
         // Error
         if (data.errors.main && data.errors.main.message) {
           this.errorMessage = data.errors.main.message
+          scrollToTarget = this.$refs.mainContent
         }
 
         if (data.errors.fields) {
           this.fieldErrors = data.errors.fields
+          if (!scrollToTarget) {
+            scrollToTarget = '.error--text'
+          }
+        }
+
+        if (scrollToTarget) {
+          this.$nextTick(() => {
+            this.$vuetify.goTo(scrollToTarget, {
+              offset: -64
+            })
+          })
         }
       } else {
         // Success
