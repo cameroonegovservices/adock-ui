@@ -1,5 +1,5 @@
 <template lang="pug">
-v-img.white--text(:src="getRoadPicture" height="200px")
+v-img.white--text(:src="roadPicture" height="200px")
   v-container(fill-height fluid)
     v-layout.pa-4(column reverse)
       v-flex.flex-bottom(xs10)
@@ -114,8 +114,8 @@ export default {
   },
 
   computed: {
-    getRoadPicture () {
-      return this.carrier.deleted_at ? roadDisabledPicture : roadPicture
+    roadPicture () {
+      return (this.carrier.deleted_at || this.carrier.sirene_deleted_at) ? roadDisabledPicture : roadPicture
     },
 
     headquarters () {
