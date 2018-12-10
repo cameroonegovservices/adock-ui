@@ -35,10 +35,8 @@ describe("Edit", () => {
     );
 
     // Check indicator percentage (40 + 3 * 15)
-    cy.get(".adock-indicator.orange > span").should("contain", "85");
-
-    // Go again to the edit view
-    cy.contains("Compléter les informations")
+    cy.contains("Compléter les informations (85 %)")
+      // Go again to the edit view
       .first()
       .click();
 
@@ -64,6 +62,6 @@ describe("Edit", () => {
     // Button could be behind the menu
     cy.contains("Valider").click({ force: true });
     // Check 100 %
-    cy.get(".adock-indicator > .v-icon").should("contain", "done");
+    cy.contains("Modifier les informations");
   });
 });
