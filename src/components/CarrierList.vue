@@ -5,7 +5,7 @@
     v-card.mt-1(v-if="carriers && carriers.length > 0")
       v-list(two-line)
         v-subheader(v-if="limit") Seuls les {{ carriers.length }} premiers transporteurs de la recherche {{ searchParamsForDisplay }} sont affichés.
-        v-subheader(v-else) {{ carriers.length }} transporteurs pour la recherche {{ searchParamsForDisplay }}
+        v-subheader(v-else) {{ carriers.length }} transporteur{{ carriers.length > 1 ? "s" : "" }} pour la recherche {{ searchParamsForDisplay }}
         template(v-for="(carrier, index) in carriers")
           v-divider(v-if="index !== 0", :key="'d-' + carrier.siret")
           v-list-tile(
