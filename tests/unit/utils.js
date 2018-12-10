@@ -5,8 +5,8 @@
  * @return undefined
  */
 
-export function addElementWithDataAppToBody () {
-  const app = document.createElement('div')
-  app.setAttribute('data-app', true)
-  document.body.append(app)
+export function addElementWithDataAppToBody() {
+  const app = document.createElement("div");
+  app.setAttribute("data-app", true);
+  document.body.append(app);
 }

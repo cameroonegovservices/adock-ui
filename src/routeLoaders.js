@@ -1,28 +1,28 @@
-import api from './api'
+import api from "./api";
 
-export async function routeLoadCarrier (routeTo, routeFrom, onSuccess) {
-  const response = await api.fetchCarrier(routeTo.params.carrierSiret)
+export async function routeLoadCarrier(routeTo, routeFrom, onSuccess) {
+  const response = await api.fetchCarrier(routeTo.params.carrierSiret);
   if (response.error === null) {
     // Success
-    return onSuccess(response)
+    return onSuccess(response);
   } else {
     // Error
-    let fallbackUrl
+    let fallbackUrl;
     if (response.error.status === 404) {
       // Unavailable
-      fallbackUrl = '/'
+      fallbackUrl = "/";
     } else {
       // Try again
-      fallbackUrl = routeTo.path
+      fallbackUrl = routeTo.path;
     }
     // Redirect to our URL named 'error'
     return {
-      name: 'error',
+      name: "error",
       params: {
         message: response.error.message,
         status: response.error.status,
         fallbackUrl
       }
-    }
+    };
   }
 }

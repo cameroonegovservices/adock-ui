@@ -198,40 +198,46 @@ a[href^="tel:"]:before
 </style>
 
 <script>
-import L from 'leaflet'
-import { mapState } from 'vuex'
+import L from "leaflet";
+import { mapState } from "vuex";
 
-import { routeLoadCarrier } from '@/routeLoaders'
-import CarrierCardHeader from '@/components/CarrierCardHeader.vue'
+import { routeLoadCarrier } from "@/routeLoaders";
+import CarrierCardHeader from "@/components/CarrierCardHeader.vue";
 
-function getTileProvider () {
+function getTileProvider() {
   const tileProviders = {
     cartodb: {
-      url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
+      url:
+        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}.png",
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' +
         ', &copy; <a href="https://carto.com/attribution">CARTO</a>'
     },
     ign: {
-      url: `https://wxs.ign.fr/${process.env.VUE_APP_IGN_KEY}/wmts?` +
-        'REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0' +
-        '&STYLE=normal&TILEMATRIXSET=PM' +
-        '&FORMAT=image/jpeg' +
-        '&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD' +
-        '&TILEMATRIX={z}' +
-        '&TILEROW={y}' +
-        '&TILECOL={x}',
-      attribution: 'IGN-F/Geoportail'
+      url:
+        `https://wxs.ign.fr/${process.env.VUE_APP_IGN_KEY}/wmts?` +
+        "REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0" +
+        "&STYLE=normal&TILEMATRIXSET=PM" +
+        "&FORMAT=image/jpeg" +
+        "&LAYER=GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD" +
+        "&TILEMATRIX={z}" +
+        "&TILEROW={y}" +
+        "&TILECOL={x}",
+      attribution: "IGN-F/Geoportail"
     }
-  }
-  if (typeof process.env.VUE_APP_IGN_KEY !== 'undefined' && process.env.VUE_APP_IGN_KEY) {
-    return tileProviders['ign']
+  };
+  if (
+    typeof process.env.VUE_APP_IGN_KEY !== "undefined" &&
+    process.env.VUE_APP_IGN_KEY
+  ) {
+    return tileProviders["ign"];
   } else {
-    return tileProviders['cartodb']
+    return tileProviders["cartodb"];
   }
 }
 
 export default {
-  name: 'detail',
+  name: "detail",
 
   props: {
     carrier: {
@@ -241,130 +247,130 @@ export default {
   },
 
   components: {
-    'carrier-card-header': CarrierCardHeader
+    "carrier-card-header": CarrierCardHeader
   },
 
-  data () {
+  data() {
     return {
       facilitiesHeaders: [
         {
-          text: 'SIRET',
-          value: 'siret'
+          text: "SIRET",
+          value: "siret"
         },
         {
-          text: 'Code postal',
-          value: 'code_postal'
+          text: "Code postal",
+          value: "code_postal"
         },
         {
-          text: 'Ville',
-          value: 'ville'
+          text: "Ville",
+          value: "ville"
         },
         {
           text: "Début d'activité",
-          value: 'debut_activite'
+          value: "debut_activite"
         }
       ]
-    }
+    };
   },
 
-  created () {
-    this.map = null
+  created() {
+    this.map = null;
   },
 
-  mounted () {
-    this.renderMap()
+  mounted() {
+    this.renderMap();
   },
 
-  beforeUpdate () {
+  beforeUpdate() {
     if (this.map) {
       // FIXME Move marker and center
-      this.map.remove()
-      this.map = null
+      this.map.remove();
+      this.map = null;
     }
   },
 
-  updated () {
+  updated() {
     this.$nextTick(() => {
-      this.renderMap()
-    })
+      this.renderMap();
+    });
   },
 
-  async beforeRouteEnter (routeTo, routeFrom, next) {
+  async beforeRouteEnter(routeTo, routeFrom, next) {
     next(
-      await routeLoadCarrier(
-        routeTo, routeFrom,
-        response => { routeTo.params.carrier = response.carrier }
-      )
-    )
+      await routeLoadCarrier(routeTo, routeFrom, response => {
+        routeTo.params.carrier = response.carrier;
+      })
+    );
   },
 
-  async beforeRouteUpdate (routeTo, routeFrom, next) {
+  async beforeRouteUpdate(routeTo, routeFrom, next) {
     next(
-      await routeLoadCarrier(
-        routeTo, routeFrom,
-        response => { routeTo.params.carrier = response.carrier }
-      )
-    )
+      await routeLoadCarrier(routeTo, routeFrom, response => {
+        routeTo.params.carrier = response.carrier;
+      })
+    );
   },
 
   computed: {
-    detailUrl () {
-      return `https://${process.env.VUE_APP_HOSTNAME}${this.$router.currentRoute.path}`
+    detailUrl() {
+      return `https://${process.env.VUE_APP_HOSTNAME}${
+        this.$router.currentRoute.path
+      }`;
     },
 
-    displaySpecialities () {
+    displaySpecialities() {
       if (this.carrier.specialities == null) {
-        return 'Non renseigné'
-      } else if (this.carrier.specialities.length === 0 || this.choices.specialities == null) {
-        return 'Aucune'
+        return "Non renseigné";
+      } else if (
+        this.carrier.specialities.length === 0 ||
+        this.choices.specialities == null
+      ) {
+        return "Aucune";
       } else {
-        return this.carrier.specialities.map(speciality => this.choices.specialities[speciality]).join(', ')
+        return this.carrier.specialities
+          .map(speciality => this.choices.specialities[speciality])
+          .join(", ");
       }
     },
 
-    ...mapState([
-      'choices'
-    ])
+    ...mapState(["choices"])
   },
 
   methods: {
-    renderMap () {
+    renderMap() {
       if (this.carrier.latitude) {
-        const center = [this.carrier.latitude, this.carrier.longitude]
-        this.map = L.map('map', {
+        const center = [this.carrier.latitude, this.carrier.longitude];
+        this.map = L.map("map", {
           center,
           zoom: 9,
           scrollWheelZoom: false
-        })
+        });
 
-        const tileProvider = getTileProvider()
-        const tileLayer = L.tileLayer(
-          tileProvider.url,
-          {
-            minZoom: 0,
-            maxZoom: 18,
-            tileSize: 256,
-            detectRetina: true,
-            attribution: tileProvider.attribution
-          }
-        )
-        tileLayer.addTo(this.map)
-        L.marker(center).addTo(this.map)
+        const tileProvider = getTileProvider();
+        const tileLayer = L.tileLayer(tileProvider.url, {
+          minZoom: 0,
+          maxZoom: 18,
+          tileSize: 256,
+          detectRetina: true,
+          attribution: tileProvider.attribution
+        });
+        tileLayer.addTo(this.map);
+        L.marker(center).addTo(this.map);
       }
     }
   },
 
   filters: {
-    asJoinedString (value) {
-      return value ? value.join(', ') : ''
+    asJoinedString(value) {
+      return value ? value.join(", ") : "";
     },
 
-    asLocaleDate (value) {
+    asLocaleDate(value) {
       if (value == null) {
-        return ''
+        return "";
       }
-      return new Date(value).toLocaleDateString()
+      return new Date(value).toLocaleDateString();
     }
   }
-}
+};
 </script>

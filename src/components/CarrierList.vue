@@ -32,10 +32,10 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-  name: 'carrier-list',
+  name: "carrier-list",
 
   props: {
     searchResponseIsEmpty: {
@@ -57,40 +57,54 @@ export default {
   },
 
   computed: {
-    searchParamsForDisplay () {
-      const messages = []
+    searchParamsForDisplay() {
+      const messages = [];
 
       if (this.searchParams === null) {
-        return ''
+        return "";
       }
 
-      if (this.searchParams.q !== '') {
-        messages.push(`« ${this.searchParams.q} »`)
+      if (this.searchParams.q !== "") {
+        messages.push(`« ${this.searchParams.q} »`);
       }
 
-      if (this.searchParams.licenseTypes && this.searchParams.licenseTypes.length > 0) {
-        const licenseTypes = this.searchParams.licenseTypes.map(item => item.text)
-        messages.push(`poids « ${licenseTypes.join(', ')} »`)
+      if (
+        this.searchParams.licenseTypes &&
+        this.searchParams.licenseTypes.length > 0
+      ) {
+        const licenseTypes = this.searchParams.licenseTypes.map(
+          item => item.text
+        );
+        messages.push(`poids « ${licenseTypes.join(", ")} »`);
       }
 
-      if (this.searchParams.departementFrom != null && this.searchParams.departementFrom !== '') {
-        messages.push(`enlèvement « ${this.searchParams.departementFrom} »`)
+      if (
+        this.searchParams.departementFrom != null &&
+        this.searchParams.departementFrom !== ""
+      ) {
+        messages.push(`enlèvement « ${this.searchParams.departementFrom} »`);
       }
 
-      if (this.searchParams.departementTo != null && this.searchParams.departementTo !== '') {
-        messages.push(`livraison « ${this.searchParams.departementTo} »`)
+      if (
+        this.searchParams.departementTo != null &&
+        this.searchParams.departementTo !== ""
+      ) {
+        messages.push(`livraison « ${this.searchParams.departementTo} »`);
       }
 
-      if (this.searchParams.specialities && this.searchParams.specialities.length > 0) {
-        const specialities = this.searchParams.specialities.map(item => item.text)
-        messages.push(`spécialités « ${specialities.join(', ')} »`)
+      if (
+        this.searchParams.specialities &&
+        this.searchParams.specialities.length > 0
+      ) {
+        const specialities = this.searchParams.specialities.map(
+          item => item.text
+        );
+        messages.push(`spécialités « ${specialities.join(", ")} »`);
       }
 
-      return messages.join(', ')
+      return messages.join(", ");
     },
-    ...mapState([
-      'choices'
-    ])
+    ...mapState(["choices"])
   }
-}
+};
 </script>

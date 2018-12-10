@@ -31,6 +31,6 @@
 
 <script>
 export default {
-  name: 'search-help'
-}
+  name: "search-help"
+};
 </script>

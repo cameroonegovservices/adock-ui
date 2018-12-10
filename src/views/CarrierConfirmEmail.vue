@@ -25,10 +25,10 @@ v-container(fluid fill-height)
 </template>
 
 <script>
-import api from '@/api'
+import api from "@/api";
 
 export default {
-  name: 'confirm-email',
+  name: "confirm-email",
 
   props: {
     carrierSiret: {
@@ -38,24 +38,22 @@ export default {
     token: {
       type: String,
       required: true
-
     }
   },
-  data () {
+  data() {
     return {
       waiting: true,
-      message: '',
+      message: "",
       status: null
-    }
+    };
   },
 
-  created () {
-    api.confirmEmail(this.carrierSiret, this.token)
-      .then(data => {
-        this.waiting = false
-        this.message = data.message
-        this.status = data.status
-      })
+  created() {
+    api.confirmEmail(this.carrierSiret, this.token).then(data => {
+      this.waiting = false;
+      this.message = data.message;
+      this.status = data.status;
+    });
   }
-}
+};
 </script>

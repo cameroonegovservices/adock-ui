@@ -135,57 +135,97 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
-import { routeLoadCarrier } from '@/routeLoaders'
-import CarrierCardHeader from '@/components/CarrierCardHeader'
+import { routeLoadCarrier } from "@/routeLoaders";
+import CarrierCardHeader from "@/components/CarrierCardHeader";
 
-import api from '@/api'
-import router from '@/router'
+import api from "@/api";
+import router from "@/router";
 
-function sortUniq (a) {
-  return a.sort().filter((item, pos, array) =>
-    !pos || item !== array[pos - 1]
-  )
+function sortUniq(a) {
+  return a.sort().filter((item, pos, array) => !pos || item !== array[pos - 1]);
 }
 
-function joinDepartements (departements) {
-  return departements.join(', ')
+function joinDepartements(departements) {
+  return departements.join(", ");
 }
 
-function splitDepartements (departementsString) {
-  const departements = []
-  const commaDepartements = departementsString.split(',')
+function splitDepartements(departementsString) {
+  const departements = [];
+  const commaDepartements = departementsString.split(",");
   commaDepartements.forEach(commaDepartement => {
-    const departementsTmp = commaDepartement.split(' ')
-    departements.push(...departementsTmp.filter(departement => departement !== ''))
-  })
-  return departements
+    const departementsTmp = commaDepartement.split(" ");
+    departements.push(
+      ...departementsTmp.filter(departement => departement !== "")
+    );
+  });
+  return departements;
 }
 
 const WORKING_AREA_REGIONS = {
-  'Auvergne-Rhône-Alpes': ['01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74'],
-  'Bourgogne-France-Comté': ['21', '25', '39', '58', '70', '71', '89', '90'],
-  'Bretagne': ['22', '29', '35', '56'],
-  'Centre-Val de Loire': ['18', '28', '36', '37', '41', '45'],
-  'Corse': ['2A', '2B'],
-  'Grand Est': ['08', '10', '51', '52', '54', '55', '57', '67', '68', '88'],
-  'Hauts-de-France': ['02', '59', '60', '62', '80'],
-  'Île-de-France': ['75', '77', '78', '91', '92', '93', '94', '95'],
-  'Normandie': ['14', '27', '50', '61', '76'],
-  'Nouvelle-Aquitaine': ['16', '17', '19', '23', '24', '33', '40', '47', '64', '79', '86', '87'],
-  'Occitanie': ['09', '11', '12', '30', '31', '32', '34', '46', '48', '65', '66', '81', '82'],
-  'Pays de la Loire': ['44', '49', '53', '72', '85'],
-  "Provence-Alpes-Côte d'Azur": ['04', '05', '06', '13', '83', '84'],
-  'Guadeloupe': ['971'],
-  'Martinique': ['972'],
-  'Guyane': ['973'],
-  'La Réunion': ['974'],
-  'Mayotte': ['976']
-}
+  "Auvergne-Rhône-Alpes": [
+    "01",
+    "03",
+    "07",
+    "15",
+    "26",
+    "38",
+    "42",
+    "43",
+    "63",
+    "69",
+    "73",
+    "74"
+  ],
+  "Bourgogne-France-Comté": ["21", "25", "39", "58", "70", "71", "89", "90"],
+  Bretagne: ["22", "29", "35", "56"],
+  "Centre-Val de Loire": ["18", "28", "36", "37", "41", "45"],
+  Corse: ["2A", "2B"],
+  "Grand Est": ["08", "10", "51", "52", "54", "55", "57", "67", "68", "88"],
+  "Hauts-de-France": ["02", "59", "60", "62", "80"],
+  "Île-de-France": ["75", "77", "78", "91", "92", "93", "94", "95"],
+  Normandie: ["14", "27", "50", "61", "76"],
+  "Nouvelle-Aquitaine": [
+    "16",
+    "17",
+    "19",
+    "23",
+    "24",
+    "33",
+    "40",
+    "47",
+    "64",
+    "79",
+    "86",
+    "87"
+  ],
+  Occitanie: [
+    "09",
+    "11",
+    "12",
+    "30",
+    "31",
+    "32",
+    "34",
+    "46",
+    "48",
+    "65",
+    "66",
+    "81",
+    "82"
+  ],
+  "Pays de la Loire": ["44", "49", "53", "72", "85"],
+  "Provence-Alpes-Côte d'Azur": ["04", "05", "06", "13", "83", "84"],
+  Guadeloupe: ["971"],
+  Martinique: ["972"],
+  Guyane: ["973"],
+  "La Réunion": ["974"],
+  Mayotte: ["976"]
+};
 
 export default {
-  name: 'edit',
+  name: "edit",
 
   props: {
     carrier: {
@@ -195,100 +235,96 @@ export default {
   },
 
   components: {
-    'carrier-card-header': CarrierCardHeader
+    "carrier-card-header": CarrierCardHeader
   },
 
-  data () {
+  data() {
     return {
       form: {
-        email: '',
-        phone: '',
-        workingArea: '',
+        email: "",
+        phone: "",
+        workingArea: "",
         workingAreaDepartements: [],
-        region: '',
+        region: "",
         specialities: [],
-        website: '',
-        description: '',
-        editCode: ''
+        website: "",
+        description: "",
+        editCode: ""
       },
       errorMessage: null,
       editCodeMessage: null,
       fieldErrors: {}
-    }
+    };
   },
 
-  created () {
-    this.setup()
+  created() {
+    this.setup();
   },
 
-  async beforeRouteEnter (routeTo, routeFrom, next) {
+  async beforeRouteEnter(routeTo, routeFrom, next) {
     if (routeTo.params.carrier) {
-      next()
+      next();
     } else {
       next(
-        await routeLoadCarrier(
-          routeTo, routeFrom,
-          response => { routeTo.params.carrier = response.carrier }
-        )
-      )
+        await routeLoadCarrier(routeTo, routeFrom, response => {
+          routeTo.params.carrier = response.carrier;
+        })
+      );
     }
   },
 
   watch: {
-    carrier: function (val) {
-      this.setup()
+    carrier: function() {
+      this.setup();
     }
   },
 
   computed: {
-    workingAreaRegions () {
+    workingAreaRegions() {
       // Returns the list of regions names
-      return Object.keys(WORKING_AREA_REGIONS)
+      return Object.keys(WORKING_AREA_REGIONS);
     },
     workingAreaDepartementsInput: {
-      get: function () {
-        return joinDepartements(this.form.workingAreaDepartements)
+      get: function() {
+        return joinDepartements(this.form.workingAreaDepartements);
       },
-      set: function (newValue) {
-        this.form.workingAreaDepartements = splitDepartements(newValue)
+      set: function(newValue) {
+        this.form.workingAreaDepartements = splitDepartements(newValue);
       }
     },
-    ...mapState([
-      'options'
-    ])
+    ...mapState(["options"])
   },
 
   methods: {
-    setup () {
-      this.errorMessage = null
-      this.editCodeMessage = null
-      this.fieldErrors = {}
-      this.loadForm(this.carrier)
+    setup() {
+      this.errorMessage = null;
+      this.editCodeMessage = null;
+      this.fieldErrors = {};
+      this.loadForm(this.carrier);
       if (this.carrier.is_locked) {
-        api.mailEditCode(this.carrier.siret)
-          .then(data => {
-            this.loadEditCodeData(data)
-          })
+        api.mailEditCode(this.carrier.siret).then(data => {
+          this.loadEditCodeData(data);
+        });
       }
     },
 
-    loadForm (carrier) {
-      if (carrier == null || typeof carrier !== 'object') {
-        return
+    loadForm(carrier) {
+      if (carrier == null || typeof carrier !== "object") {
+        return;
       }
 
       // Populate the form fields with the carrier data
-      this.form.email = carrier.email || ''
-      this.form.phone = carrier.telephone || ''
-      this.form.workingArea = carrier.working_area || ''
-      const counties = carrier.working_area_departements
-      this.form.workingAreaDepartements = counties != null ? counties : []
-      this.form.specialities = carrier.specialities || []
-      this.form.website = carrier.website || ''
-      this.form.description = carrier.description || ''
+      this.form.email = carrier.email || "";
+      this.form.phone = carrier.telephone || "";
+      this.form.workingArea = carrier.working_area || "";
+      const counties = carrier.working_area_departements;
+      this.form.workingAreaDepartements = counties != null ? counties : [];
+      this.form.specialities = carrier.specialities || [];
+      this.form.website = carrier.website || "";
+      this.form.description = carrier.description || "";
     },
 
-    getPayloadFromForm () {
+    getPayloadFromForm() {
       return {
         email: this.form.email,
         telephone: this.form.phone,
@@ -298,37 +334,44 @@ export default {
         website: this.form.website,
         description: this.form.description,
         edit_code: this.form.editCode
-      }
+      };
     },
 
-    loadEditCodeData (data) {
+    loadEditCodeData(data) {
       if (data.status === 201) {
-        const editCodeAt = new Date(data.edit_code_at).toLocaleTimeString()
-        this.editCodeMessage = `Un courriel avec un code modification a été envoyé à « ${data.email} » (${editCodeAt}).`
+        const editCodeAt = new Date(data.edit_code_at).toLocaleTimeString();
+        this.editCodeMessage = `Un courriel avec un code modification a été envoyé à « ${
+          data.email
+        } » (${editCodeAt}).`;
       } else if (data.status === 200) {
-        const editCodeTimeoutAt = new Date(data.edit_code_timeout_at).toLocaleTimeString()
-        this.editCodeMessage = `Le code de modification envoyé à « ${data.email} » est encore valide jusqu'à ${editCodeTimeoutAt}.`
+        const editCodeTimeoutAt = new Date(
+          data.edit_code_timeout_at
+        ).toLocaleTimeString();
+        this.editCodeMessage = `Le code de modification envoyé à « ${
+          data.email
+        } » est encore valide jusqu'à ${editCodeTimeoutAt}.`;
       } else {
-        this.errorMessage = "Impossible d'envoyer le code de modification. L'équipe technique a été contactée."
+        this.errorMessage =
+          "Impossible d'envoyer le code de modification. L'équipe technique a été contactée.";
       }
     },
 
-    async update () {
-      const payload = this.getPayloadFromForm()
-      const data = await api.updateCarrier(this.carrier.siret, payload)
+    async update() {
+      const payload = this.getPayloadFromForm();
+      const data = await api.updateCarrier(this.carrier.siret, payload);
       if (data.errors) {
-        let scrollToTarget = null
+        let scrollToTarget = null;
 
         // Error
         if (data.errors.main && data.errors.main.message) {
-          this.errorMessage = data.errors.main.message
-          scrollToTarget = this.$refs.mainContent
+          this.errorMessage = data.errors.main.message;
+          scrollToTarget = this.$refs.mainContent;
         }
 
         if (data.errors.fields) {
-          this.fieldErrors = data.errors.fields
+          this.fieldErrors = data.errors.fields;
           if (!scrollToTarget) {
-            scrollToTarget = '.error--text'
+            scrollToTarget = ".error--text";
           }
         }
 
@@ -336,39 +379,48 @@ export default {
           this.$nextTick(() => {
             this.$vuetify.goTo(scrollToTarget, {
               offset: -64
-            })
-          })
+            });
+          });
         }
       } else {
         // Success
-        this.$store.commit('ADD_MESSAGE', {
+        this.$store.commit("ADD_MESSAGE", {
           message: `Transporteur « ${data.carrier.enseigne} » enregistré.`
-        })
+        });
         if (data.confirmation_email_sent) {
-          this.$store.commit('ADD_MESSAGE', {
-            message: `Un courriel de confirmation a été envoyé à « ${data.carrier.email} ».`
-          })
+          this.$store.commit("ADD_MESSAGE", {
+            message: `Un courriel de confirmation a été envoyé à « ${
+              data.carrier.email
+            } ».`
+          });
         }
         // Redirect
-        router.push({ name: 'carrier_detail', carrierSiret: this.carrier.siret })
+        router.push({
+          name: "carrier_detail",
+          carrierSiret: this.carrier.siret
+        });
       }
     },
 
-    addDepartementsFromRegion () {
+    addDepartementsFromRegion() {
       if (WORKING_AREA_REGIONS.hasOwnProperty(this.form.region)) {
-        this.form.workingAreaDepartements.push(...WORKING_AREA_REGIONS[this.form.region])
+        this.form.workingAreaDepartements.push(
+          ...WORKING_AREA_REGIONS[this.form.region]
+        );
       }
-      this.form.workingAreaDepartements = sortUniq(this.form.workingAreaDepartements)
-      this.form.region = ''
+      this.form.workingAreaDepartements = sortUniq(
+        this.form.workingAreaDepartements
+      );
+      this.form.region = "";
     },
 
-    workingAreaDepartementsRule (value) {
-      if (['DEPARTEMENT', 'REGION'].includes(this.form.workingArea) && !value) {
-        return "Des départements doivent être renseignés quand l'aire de travail est départementale ou régionale."
+    workingAreaDepartementsRule(value) {
+      if (["DEPARTEMENT", "REGION"].includes(this.form.workingArea) && !value) {
+        return "Des départements doivent être renseignés quand l'aire de travail est départementale ou régionale.";
       } else {
-        return true
+        return true;
       }
     }
   }
-}
+};
 </script>

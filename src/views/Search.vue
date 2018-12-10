@@ -90,24 +90,24 @@
 </style>
 
 <script>
-import deepClone from 'lodash.clonedeep'
-import { mapState } from 'vuex'
+import deepClone from "lodash.clonedeep";
+import { mapState } from "vuex";
 
-import api from '@/api'
-import CarrierList from '@/components/CarrierList.vue'
-import TestimonialCards from '@/components/TestimonialCards.vue'
-import SearchHelp from '@/components/SearchHelp.vue'
+import api from "@/api";
+import CarrierList from "@/components/CarrierList.vue";
+import TestimonialCards from "@/components/TestimonialCards.vue";
+import SearchHelp from "@/components/SearchHelp.vue";
 
 const defaultSearchForm = {
-  q: '',
+  q: "",
   licenseTypes: [],
-  departementFrom: '',
-  departementTo: '',
+  departementFrom: "",
+  departementTo: "",
   specialities: []
-}
+};
 
 export default {
-  name: 'search',
+  name: "search",
 
   props: {
     keepPreviousSearch: {
@@ -116,7 +116,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       isSearching: false,
       searchForm: deepClone(defaultSearchForm),
@@ -124,94 +124,94 @@ export default {
       carriers: null,
       limit: 0,
       errorMessage: null
-    }
+    };
   },
 
-  created () {
+  created() {
     this.searchLicenseTypeChoices = [
       {
-        text: 'Léger (< 3,5 t)',
-        value: 'lti',
-        avatar: 'LTI'
+        text: "Léger (< 3,5 t)",
+        value: "lti",
+        avatar: "LTI"
       },
       {
-        text: 'Lourd (> 3,5 t)',
-        value: 'lc',
-        avatar: 'LC'
+        text: "Lourd (> 3,5 t)",
+        value: "lc",
+        avatar: "LC"
       }
-    ]
+    ];
   },
 
   components: {
-    'testimonial-cards': TestimonialCards,
-    'carrier-list': CarrierList,
-    'search-help': SearchHelp
+    "testimonial-cards": TestimonialCards,
+    "carrier-list": CarrierList,
+    "search-help": SearchHelp
   },
 
   computed: {
-    searchResponseIsEmpty () {
+    searchResponseIsEmpty() {
       return (
-        !this.isSearching &&
-        this.carriers != null &&
-        this.carriers.length === 0)
+        !this.isSearching && this.carriers != null && this.carriers.length === 0
+      );
     },
-    ...mapState([
-      'meta',
-      'options'
-    ])
+    ...mapState(["meta", "options"])
   },
 
   methods: {
-    async search () {
+    async search() {
       // Remove error message as soon as the user clicks.
-      this.errorMessage = null
-      this.isSearching = true
-      const params = {}
+      this.errorMessage = null;
+      this.isSearching = true;
+      const params = {};
 
       // The parameters of the query are in French.
       // Only add not empty criteria.
       if (this.searchForm.q) {
-        params['q'] = this.searchForm.q
+        params["q"] = this.searchForm.q;
       }
 
       if (this.searchForm.licenseTypes) {
-        params['licence-types'] = this.searchForm.licenseTypes.map(item => item.value)
+        params["licence-types"] = this.searchForm.licenseTypes.map(
+          item => item.value
+        );
       }
 
       if (this.searchForm.departementFrom) {
-        params['departement-depart'] = this.searchForm.departementFrom
+        params["departement-depart"] = this.searchForm.departementFrom;
       }
 
       if (this.searchForm.departementTo) {
-        params['departement-arrivee'] = this.searchForm.departementTo
+        params["departement-arrivee"] = this.searchForm.departementTo;
       }
 
       if (this.searchForm.specialities) {
-        params['specialities'] = this.searchForm.specialities.map(item => item.value)
+        params["specialities"] = this.searchForm.specialities.map(
+          item => item.value
+        );
       }
 
-      const data = await api.searchCarriers({ params })
+      const data = await api.searchCarriers({ params });
       if (data.error == null) {
         // Disable reactivity to speed up rendering
-        this.carriers = Object.freeze(data.carriers)
-        this.limit = data.limit
+        this.carriers = Object.freeze(data.carriers);
+        this.limit = data.limit;
         // Build an object with search parameters to display them to the user with the results
-        this.searchParams = JSON.parse(JSON.stringify(this.searchForm))
+        this.searchParams = JSON.parse(JSON.stringify(this.searchForm));
       } else {
         if (data.error.message) {
-          this.errorMessage = data.error.message
+          this.errorMessage = data.error.message;
         }
-        this.carriers = null
-        this.limit = 0
+        this.carriers = null;
+        this.limit = 0;
       }
 
-      this.isSearching = false
+      this.isSearching = false;
     },
 
-    clear () {
-      this.searchForm = deepClone(defaultSearchForm)
-      this.carriers = null
+    clear() {
+      this.searchForm = deepClone(defaultSearchForm);
+      this.carriers = null;
     }
   }
-}
+};
 </script>

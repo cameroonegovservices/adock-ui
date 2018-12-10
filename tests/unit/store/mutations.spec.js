@@ -1,25 +1,25 @@
-import { mutations } from '@/store/mutations'
+import { mutations } from "@/store/mutations";
 
-describe('mutations', () => {
-  it('REMOVE_MESSAGES', () => {
+describe("mutations", () => {
+  it("REMOVE_MESSAGES", () => {
     const state = {
-      messages: ['old', 'new']
-    }
-    mutations.REMOVE_MESSAGES(state)
+      messages: ["old", "new"]
+    };
+    mutations.REMOVE_MESSAGES(state);
     // Only recent messages are remaining
-    expect(state.messages).toEqual([])
-  })
+    expect(state.messages).toEqual([]);
+  });
 
-  it('ADD_MESSAGE', () => {
+  it("ADD_MESSAGE", () => {
     const state = {
-      messages: ['old']
-    }
-    const message = 'new'
-    mutations.ADD_MESSAGE(state, { message })
-    expect(state.messages).toEqual(['old', 'new'])
-  })
+      messages: ["old"]
+    };
+    const message = "new";
+    mutations.ADD_MESSAGE(state, { message });
+    expect(state.messages).toEqual(["old", "new"]);
+  });
 
-  it('SET_META', () => {
+  it("SET_META", () => {
     const state = {
       choices: {
         workingAreas: {},
@@ -31,42 +31,42 @@ describe('mutations', () => {
       },
       meta: {
         carrier: {},
-        version: ''
+        version: ""
       }
-    }
+    };
     const payload = {
       choices: {
         WORKING_AREA_CHOICES: {
-          FRANCE: 'France'
+          FRANCE: "France"
         },
         SPECIALITY_CHOICES: {
-          LOT: 'Transport de lots'
+          LOT: "Transport de lots"
         }
       },
       // Meta
       carrier: {
-        date: '2018-04-25',
-        count: '1000'
+        date: "2018-04-25",
+        count: "1000"
       },
-      version: '1.0'
-    }
-    mutations.SET_META(state, payload)
+      version: "1.0"
+    };
+    mutations.SET_META(state, payload);
     expect(state.options.workingAreas).toEqual([
       {
-        value: 'FRANCE',
-        text: 'France'
+        value: "FRANCE",
+        text: "France"
       }
-    ])
+    ]);
     expect(state.options.specialities).toEqual([
       {
-        value: 'LOT',
-        text: 'Transport de lots'
+        value: "LOT",
+        text: "Transport de lots"
       }
-    ])
+    ]);
     // toLocaleDateString depends on the env
-    expect(state.meta.carrier.localeDate).toBeTruthy()
+    expect(state.meta.carrier.localeDate).toBeTruthy();
     // toLocaleString is a noop on node
-    expect(state.meta.carrier.localeCount).toBeTruthy()
-    expect(state.meta.version).toBe('1.0')
-  })
-})
+    expect(state.meta.carrier.localeCount).toBeTruthy();
+    expect(state.meta.version).toBe("1.0");
+  });
+});

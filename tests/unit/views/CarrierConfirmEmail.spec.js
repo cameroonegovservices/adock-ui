@@ -1,30 +1,30 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify'
+import Vue from "vue";
+import Vuetify from "vuetify";
 
-import { shallowMount, RouterLinkStub } from '@vue/test-utils'
-import flushPromises from 'flush-promises'
-import MockAdapter from 'axios-mock-adapter'
+import { shallowMount, RouterLinkStub } from "@vue/test-utils";
+import flushPromises from "flush-promises";
+import MockAdapter from "axios-mock-adapter";
 
-import { axiosInstance, getConfirmEmailUrl } from '@/api'
-import CarrierConfirmEmail from '@/views/CarrierConfirmEmail.vue'
+import { axiosInstance, getConfirmEmailUrl } from "@/api";
+import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
 
-const mockAdapter = new MockAdapter(axiosInstance)
+const mockAdapter = new MockAdapter(axiosInstance);
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 
-describe('CarrierConfirmEmail.vue', () => {
+describe("CarrierConfirmEmail.vue", () => {
   afterEach(() => {
-    mockAdapter.reset()
-  })
+    mockAdapter.reset();
+  });
 
-  it('renders the view', async () => {
-    const carrierSiret = '123'
-    const token = '456'
-    const message = "L'adresse électronique est confirmée."
-    const url = getConfirmEmailUrl(carrierSiret, token)
+  it("renders the view", async () => {
+    const carrierSiret = "123";
+    const token = "456";
+    const message = "L'adresse électronique est confirmée.";
+    const url = getConfirmEmailUrl(carrierSiret, token);
     mockAdapter.onGet(url).reply(200, {
       message
-    })
+    });
 
     const wrapper = shallowMount(CarrierConfirmEmail, {
       propsData: {
@@ -34,12 +34,14 @@ describe('CarrierConfirmEmail.vue', () => {
       stubs: {
         RouterLink: RouterLinkStub
       }
-    })
-    expect(wrapper.text()).toBe("Confirmation de l'adresse électronique en cours...")
+    });
+    expect(wrapper.text()).toBe(
+      "Confirmation de l'adresse électronique en cours..."
+    );
 
-    await flushPromises()
+    await flushPromises();
 
     // Message + icon done
-    expect(wrapper.find('h3').text()).toBe(message + 'done')
-  })
-})
+    expect(wrapper.find("h3").text()).toBe(message + "done");
+  });
+});

@@ -70,13 +70,13 @@ v-img.white--text(:src="roadPicture" height="200px")
 </style>
 
 <script>
-import ClipboardJS from 'clipboard'
+import ClipboardJS from "clipboard";
 
-import roadPicture from '@/assets/road.jpg'
-import roadDisabledPicture from '@/assets/road-disabled.jpg'
+import roadPicture from "@/assets/road.jpg";
+import roadDisabledPicture from "@/assets/road-disabled.jpg";
 
 export default {
-  name: 'carrier-card-header',
+  name: "carrier-card-header",
 
   props: {
     carrier: {
@@ -87,7 +87,7 @@ export default {
     detailUrl: {
       type: String,
       required: false,
-      default: ''
+      default: ""
     },
 
     withEditButton: {
@@ -97,40 +97,44 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       copied: false
-    }
+    };
   },
 
-  created () {
-    let clipboard = new ClipboardJS('.clipboard')
-    clipboard.on('success', e => {
-      this.copied = true
+  created() {
+    let clipboard = new ClipboardJS(".clipboard");
+    clipboard.on("success", () => {
+      this.copied = true;
       setTimeout(() => {
-        this.copied = false
-      }, 3000)
-    })
+        this.copied = false;
+      }, 3000);
+    });
   },
 
   computed: {
-    roadPicture () {
-      return (this.carrier.deleted_at || this.carrier.sirene_deleted_at) ? roadDisabledPicture : roadPicture
+    roadPicture() {
+      return this.carrier.deleted_at || this.carrier.sirene_deleted_at
+        ? roadDisabledPicture
+        : roadPicture;
     },
 
-    headquarters () {
-      const filteredFacilities = this.carrier.other_facilities.filter(facility => facility.is_siege)
+    headquarters() {
+      const filteredFacilities = this.carrier.other_facilities.filter(
+        facility => facility.is_siege
+      );
       if (filteredFacilities.length > 0) {
-        return filteredFacilities[0]
-      } else {
-        return null
+        return filteredFacilities[0];
+      } else {
+        return null;
       }
     },
 
-    isSubsidiary () {
+    isSubsidiary() {
       // When the carrier is a subsidiary, the list of other facilities have a headquarters
-      return this.headquarters != null
+      return this.headquarters != null;
     }
   }
-}
+};
 </script>

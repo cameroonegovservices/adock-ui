@@ -14,24 +14,20 @@
    time on display. Our current use case don't need something smarter.
    BTW It will be a nice improvement to pop message one by one.
 */
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'message',
+  name: "message",
 
   computed: {
-    messagesJoined () {
-      return this.messages.join(' ')
+    messagesJoined() {
+      return this.messages.join(" ");
     },
-    ...mapState([
-      'messages'
-    ])
+    ...mapState(["messages"])
   },
 
   methods: {
-    ...mapMutations([
-      'REMOVE_MESSAGES'
-    ])
+    ...mapMutations(["REMOVE_MESSAGES"])
   }
-}
+};
 </script>

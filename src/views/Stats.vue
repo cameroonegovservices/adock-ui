@@ -103,55 +103,56 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
-import api from '@/api'
+import api from "@/api";
 
-import { version } from '@/../package.json'
+import { version } from "@/../package.json";
 
 export default {
-  name: 'stats',
+  name: "stats",
 
-  data () {
+  data() {
     return {
       validatedCarriers: 0,
       lockedCarriers: 0,
       validatedCarriersPerMonth: [],
       version
-    }
+    };
   },
 
-  created () {
+  created() {
     api.getStats().then(response => {
-      this.validatedCarriers = response.data['validated_carriers']
-      this.lockedCarriers = response.data['locked_carriers']
-      this.validatedCarriersPerMonth = response.data['validated_carriers_per_month']
-    })
+      this.validatedCarriers = response.data["validated_carriers"];
+      this.lockedCarriers = response.data["locked_carriers"];
+      this.validatedCarriersPerMonth =
+        response.data["validated_carriers_per_month"];
+    });
   },
 
   computed: {
-    validatedScaleProperty () {
-      const maxValue = Math.max(...this.validatedCarriersPerMonth.map(item => item.count))
-      return `--scale: ${maxValue};`
+    validatedScaleProperty() {
+      const maxValue = Math.max(
+        ...this.validatedCarriersPerMonth.map(item => item.count)
+      );
+      return `--scale: ${maxValue};`;
     },
-    ...mapState([
-      'meta'
-    ])
+    ...mapState(["meta"])
   },
 
   filters: {
-    asLocaleMonth (value) {
-      return new Date(value).toLocaleString('fr', { month: 'long' })
+    asLocaleMonth(value) {
+      return new Date(value).toLocaleString("fr", { month: "long" });
     }
   },
 
   methods: {
-    getValidatedValueProperty (value) {
+    getValidatedValueProperty(value) {
       if (value === 0) {
-        value = 1
+        value = 1;
       }
-      return `--value: ${value};`
+      return `--value: ${value};`;
     }
   }
-}
+};
 </script>

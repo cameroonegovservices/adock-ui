@@ -61,39 +61,38 @@
 </style>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
-import Message from '@/components/Message.vue'
+import Message from "@/components/Message.vue";
 
 export default {
-  name: 'app',
+  name: "app",
 
-  data () {
+  data() {
     return {
       isDrawerVisible: false,
       isIE11: false,
-      isPreproduction: (process.env.VUE_APP_IS_PREPRODUCTION || 'false') === 'true'
-    }
+      isPreproduction:
+        (process.env.VUE_APP_IS_PREPRODUCTION || "false") === "true"
+    };
   },
 
   components: {
-    'message': Message
+    message: Message
   },
 
-  async created () {
-    this.$store.dispatch('loadMeta').then(() => {
+  async created() {
+    this.$store.dispatch("loadMeta").then(() => {
       if (this.meta.version.length === 0) {
         // meta data is empty
-        this.$router.push({ name: 'error' })
+        this.$router.push({ name: "error" });
       }
-    })
-    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode
+    });
+    this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
   },
 
   computed: {
-    ...mapState([
-      'meta'
-    ])
+    ...mapState(["meta"])
   }
-}
+};
 </script>

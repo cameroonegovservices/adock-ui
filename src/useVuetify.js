@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue";
 // New Vuetify 1.3 can automatically import all the Vuetify components excepted
 // in PUG templates :(so we need to explicitly register our components.
 import Vuetify, {
@@ -34,12 +34,12 @@ import Vuetify, {
   VToolbarItems,
   VToolbarSideIcon,
   VTooltip
-} from 'vuetify/lib'
-import VGrid from 'vuetify/lib/components/VGrid/'
-import transitions from 'vuetify/lib/components/transitions/'
-import { Ripple } from 'vuetify/lib/directives'
-import 'vuetify/src/stylus/app.styl'
-import fr from 'vuetify/es5/locale/fr'
+} from "vuetify/lib";
+import VGrid from "vuetify/lib/components/VGrid/";
+import transitions from "vuetify/lib/components/transitions/";
+import { Ripple } from "vuetify/lib/directives";
+import "vuetify/src/stylus/app.styl";
+import fr from "vuetify/es5/locale/fr";
 
 Vue.use(Vuetify, {
   components: {
@@ -84,6 +84,6 @@ Vue.use(Vuetify, {
   },
   lang: {
     locales: { fr },
-    current: 'fr'
+    current: "fr"
   }
-})
+});

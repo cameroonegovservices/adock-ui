@@ -25,27 +25,27 @@
 
 <script>
 export default {
-  name: 'testimonial-cards',
+  name: "testimonial-cards",
 
-  data () {
+  data() {
     return {
       testimonials: [
         {
-          title: 'Interloc TP',
+          title: "Interloc TP",
           quote: `C'est vraiment encourageant pour la profession de voir que l'État
             met en place des aides au développement de notre activité.`
         },
         {
-          title: 'STEP',
+          title: "STEP",
           quote: `En tant que petite sociéte de transport naissante, cet outil peut être très
             utile pour se faire connaître.`
         },
         {
-          title: 'Les Routiers Bretons',
+          title: "Les Routiers Bretons",
           quote: `Facile à utiliser et saisie rapide à faire.`
         }
       ]
-    }
+    };
   }
-}
+};
 </script>

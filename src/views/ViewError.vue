@@ -21,7 +21,7 @@ v-container(fluid fill-height)
 
 <script>
 export default {
-  name: 'view-error',
+  name: "view-error",
 
   props: {
     fallbackUrl: {
@@ -38,9 +38,9 @@ export default {
     }
   },
   methods: {
-    reload () {
-      document.location.assign('/')
+    reload() {
+      document.location.assign("/");
     }
   }
-}
+};
 </script>
