@@ -10,6 +10,7 @@ describe("Search", () => {
 
     // Click on result to reach detail view
     cy.get("a[href='/transporteur/80005226884728']");
+    cy.contains("1 transporteurs pour la recherche « 80005226884728 »");
   });
 
   it("searches on county code", () => {
@@ -19,6 +20,9 @@ describe("Search", () => {
     cy.contains("div.v-btn__content", "Chercher").click();
 
     cy.get("a[href='/transporteur/80005226884728']");
+    cy.contains(
+      "1 transporteurs pour la recherche « 80005226884728 », enlèvement « 34 »"
+    );
   });
 
   it("doesn't find with SIRET and county code", () => {
