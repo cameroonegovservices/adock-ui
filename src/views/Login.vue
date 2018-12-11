@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container.adock-login-overlay(fluid fill-height)
     v-layout(flex align-center justify-center)
-      v-flex(xs12 sm4 elevation-6)
+      v-flex(xs12 sm4 elevation-9)
         v-toolbar.pt-5.blue.darken-2
           v-toolbar-title.white--text
             h4 Connexion
@@ -44,7 +44,7 @@
   background-color: #003189 !important;
 
 .adock-login-overlay
-  background: #8BC34A
+  background: #eee
 </style>
 
 <script>
@@ -62,7 +62,9 @@ export default {
       ],
       passwordRules: [
         v => !!v || "Un mot de passe est requis.",
-        v => (v && v.length >= 8) || "Le mot de passe doit au moins avoir 8 caractères."
+        v =>
+          (v && v.length >= 8) ||
+          "Le mot de passe doit au moins avoir 8 caractères."
       ],
       isValid: false,
       isPlainPassword: false,
@@ -70,7 +72,7 @@ export default {
     };
   },
 
-  mounted () {
+  mounted() {
     // Don't ask me why I need this
     this.isValid = false;
   },
