@@ -1,12 +1,23 @@
 <template lang="pug">
   v-container.adock-login-overlay(fluid fill-height)
-    v-layout(flex align-center justify-center)
-      v-flex(xs12 sm4 elevation-9)
+    v-layout(row align-center justify-center)
+      v-flex(xs12 sm4 elevation-9 text-xs-center)
         v-toolbar.pt-5.blue.darken-2
           v-toolbar-title.white--text
-            h4 Connexion
+            h4 Connectez-vous
         v-card
           v-card-text.pt-4
+            v-layout(align-center justify-center)
+              v-flex
+                v-btn.adock-france-connect
+            v-layout(align-center justify-center)
+              v-flex
+                a(
+                  href="https://app.franceconnect.gouv.fr/en-savoir-plus"
+                ) Qu’est-ce que FranceConnect ?
+            v-layout.pt-4(align-center justify-center)
+              v-flex
+                span.adock-login-or ou
             v-form(
               v-model="isValid"
               ref="form"
@@ -36,7 +47,6 @@
                   @click="submit"
                   :disabled="!isValid"
                 ) Se connecter
-                v-btn(@click="clear") Effacer
 </template>
 
 <style lang="stylus">
@@ -44,7 +54,24 @@
   background-color: #003189 !important;
 
 .adock-login-overlay
-  background: #eee
+  background: #eeeeee
+
+.adock-login-or
+  color: #999999
+
+.adock-france-connect
+  display: inline-block
+  height: 52px
+  width: 186px
+  margin: auto
+  margin-bottom: 8px
+  background-image: url("../assets/france-connect-white.svg")
+  background-repeat: no-repeat
+  background-size: cover
+  cursor: pointer
+
+.adock-france-connect:hover
+  background-image: url("../assets/france-connect-hover.svg")
 </style>
 
 <script>
@@ -82,9 +109,6 @@ export default {
       if (this.$refs.form.validate()) {
         this.$refs.form.$el.submit();
       }
-    },
-    clear() {
-      this.$refs.form.reset();
     }
   }
 };
