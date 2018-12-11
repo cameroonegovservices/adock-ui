@@ -21,7 +21,6 @@
             v-form(
               v-model="isValid"
               ref="form"
-              lazy-validation
             )
               v-text-field(
                 label="Adresse électronique"
