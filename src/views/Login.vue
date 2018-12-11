@@ -106,7 +106,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.$refs.form.$el.submit();
+
       }
     }
   }
