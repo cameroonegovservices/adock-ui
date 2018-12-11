@@ -10,6 +10,7 @@ export const axiosInstance = axios.create({
 export const searchCarriersUrl = "/carriers/search/";
 export const metaUrl = "/meta/";
 export const statsCarriersUrl = "/carriers/stats/";
+export const loginUrl = "/accounts/login/";
 
 export function getCarrierUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/`;
@@ -137,6 +138,24 @@ export const api = {
     }
 
     return data;
+  },
+
+  async login(email, password) {
+    const data = {
+      user: null,
+      errors: null
+    };
+    try {
+      const response = await axiosInstance.post(loginUrl, {
+        username: email,
+        password
+      });
+      if (response.status === 200) {
+        console.log("Invalid credentials.");
+      }
+    } catch (axiosError) {
+      data.errors = handleCommunicationError(axiosError);
+    }
   },
 
   async updateCarrier(carrierSiret, payload) {

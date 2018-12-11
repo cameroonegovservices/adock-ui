@@ -74,6 +74,8 @@
 </style>
 
 <script>
+import api from "@/api";
+
 export default {
   name: "login",
 
@@ -106,7 +108,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-
+        api.login(this.email, this.password).then(data => console.log(data));
       }
     }
   }
