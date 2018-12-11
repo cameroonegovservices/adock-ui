@@ -14,6 +14,7 @@ import Vuetify, {
   VDataTable,
   VDivider,
   VFooter,
+  VForm,
   VIcon,
   VImg,
   VList,
@@ -33,6 +34,7 @@ import Vuetify, {
   VToolbar,
   VToolbarItems,
   VToolbarSideIcon,
+  VToolbarTitle,
   VTooltip
 } from "vuetify/lib";
 import VGrid from "vuetify/lib/components/VGrid/";
@@ -55,6 +57,7 @@ Vue.use(Vuetify, {
     VDataTable,
     VDivider,
     VFooter,
+    VForm,
     VGrid,
     VIcon,
     VImg,
@@ -75,6 +78,7 @@ Vue.use(Vuetify, {
     VToolbar,
     VToolbarItems,
     VToolbarSideIcon,
+    VToolbarTitle,
     VTooltip,
     transitions
   },
