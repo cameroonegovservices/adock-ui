@@ -53,6 +53,28 @@ function handleCommunicationError(axiosError) {
   }
 }
 
+function handleInvalidFormAndCommunicationError(axiosError) {
+  let errors = null;
+  if (
+    axiosError.response &&
+    axiosError.response.status === 400 &&
+    axiosError.response.data
+  ) {
+    // The form isn't valid
+    errors = {
+      fields: axiosError.response.data
+    };
+  } else {
+    const mainError = handleCommunicationError(axiosError);
+    if (mainError) {
+      errors = {
+        main: mainError
+      };
+    }
+  }
+  return errors;
+}
+
 export const api = {
   /* The data structure contains:
      - a field with the instance or the list of instances
@@ -129,25 +151,8 @@ export const api = {
       data.confirmation_email_sent =
         response.data.confirmation_email_sent || false;
     } catch (axiosError) {
-      if (
-        axiosError.response &&
-        axiosError.response.status === 400 &&
-        axiosError.response.data
-      ) {
-        // The form isn't valid
-        data.errors = {
-          fields: axiosError.response.data
-        };
-      } else {
-        const mainError = handleCommunicationError(axiosError);
-        if (mainError) {
-          data.errors = {
-            main: mainError
-          };
-        }
-      }
+      data.errors = handleInvalidFormAndCommunicationError(axiosError);
     }
-
     return data;
   },
 
