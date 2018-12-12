@@ -44,7 +44,7 @@
                 v-btn(
                   color="primary"
                   @click="submit"
-                  :disabled="!isValid"
+                  :disabled="isDisabled"
                 ) Se connecter
 </template>
 
@@ -74,6 +74,12 @@
 </style>
 
 <script>
+/* To avoid to display fields in error when the user types they are validated on
+  blur event but it's nice to change the state of submit button before the blur
+  event. To provide that feature, the component provides a computed value
+  dedicated to the submit button.
+*/
+
 import api from "@/api";
 
 export default {
@@ -100,9 +106,14 @@ export default {
     };
   },
 
-  mounted() {
-    // Don't ask me why I need this
-    this.isValid = false;
+  computed: {
+    isDisabled() {
+      // Only for submit button
+      const statuses = [];
+      this.emailRules.forEach(rule => statuses.push(rule(this.email)));
+      this.passwordRules.forEach(rule => statuses.push(rule(this.password)));
+      return !statuses.every(v => v === true);
+    }
   },
 
   methods: {
