@@ -28,7 +28,9 @@ function handleCommunicationError(axiosError) {
   if (axiosError.response === undefined) {
     Raven.captureException(axiosError);
     return {
-      message: `Le serveur ${process.env.VUE_APP_API_URL} est inaccessible.`,
+      message: `Le serveur ${
+        process.env.VUE_APP_API_URL
+      } est inaccessible ou erreur d'exécution Javascript.`,
       status: 503
     };
   } else if (axiosError.response) {
