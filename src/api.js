@@ -7,10 +7,10 @@ export const axiosInstance = axios.create({
 });
 
 // Server URLs
-export const searchCarriersUrl = "/carriers/search/";
-export const metaUrl = "/meta/";
-export const statsCarriersUrl = "/carriers/stats/";
 export const loginUrl = "/accounts/login/";
+export const metaUrl = "/meta/";
+export const searchCarriersUrl = "/carriers/search/";
+export const statsCarriersUrl = "/carriers/stats/";
 
 export function getCarrierUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/`;
