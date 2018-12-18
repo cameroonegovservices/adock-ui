@@ -155,20 +155,31 @@ export const api = {
 
   async login(email, password) {
     const data = {
-      user: null,
+      isAuthenticated: false,
       errors: null
     };
+
+    // Authenticate
     try {
       const response = await axiosInstance.post(loginUrl, {
-        username: email,
+        email,
         password
       });
-      if (response.status === 200) {
-        console.log("Invalid credentials.");
+      if (response.status !== 200) {
+        data.errors = {
+          main: {
+            message:
+              "L'adresse électronique et le mot de passe ne correspondent pas."
+          }
+        };
+      } else {
+        data.isAuthenticated = true;
+        auth.setToken(response.data.token);
       }
     } catch (axiosError) {
-      data.errors = handleCommunicationError(axiosError);
+      data.errors = handleInvalidFormAndCommunicationError(axiosError);
     }
+    return data;
   },
 
   async updateCarrier(carrierSiret, payload) {
