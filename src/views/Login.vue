@@ -83,6 +83,7 @@
   event. To provide that feature, the component provides a computed value
   dedicated to the submit button.
 */
+import Raven from "raven-js";
 
 import api from "@/api";
 
@@ -125,19 +126,26 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         const data = await api.login(this.email, this.password);
-        if (data.errors) {
-          if (data.errors.main && data.errors.main.message) {
-            this.errorMessage = data.errors.main.message;
-          }
-
-          if (data.errors.fields) {
-            this.fieldErrors = data.errors.fields;
-          }
-        }
-
         if (data.isAuthenticated) {
-        }
+          this.$store.commit("USER_LOG_IN", {
+            user: {
+              // FIXME
+              first_name: "Raymond",
+              last_name: "Dujardin"
+            }})
+        } else {
+          if (data.errors) {
+            if (data.errors.main && data.errors.main.message) {
+              this.errorMessage = data.errors.main.message;
+            }
 
+            if (data.errors.fields) {
+              this.fieldErrors = data.errors.fields;
+            }
+          } else {
+            Raven.captureException("Not authenticated and no errors.");
+          }
+        }
       }
     }
   }

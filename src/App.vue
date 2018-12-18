@@ -39,6 +39,7 @@
         @click="isDrawerVisible = !isDrawerVisible"
       )
       v-toolbar-items(v-else)
+        span {{ user.first_name }}
         v-btn(flat :to="{name: 'about'}") En savoir plus
         v-btn(flat :to="{name: 'cgu'}") CGU
         a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
@@ -92,7 +93,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["meta"])
+    ...mapState(["meta", "user"])
   }
 };
 </script>
