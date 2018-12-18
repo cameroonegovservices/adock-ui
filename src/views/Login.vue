@@ -122,9 +122,22 @@ export default {
   },
 
   methods: {
-    submit() {
+    async submit() {
       if (this.$refs.form.validate()) {
-        api.login(this.email, this.password).then(data => console.log(data));
+        const data = await api.login(this.email, this.password);
+        if (data.errors) {
+          if (data.errors.main && data.errors.main.message) {
+            this.errorMessage = data.errors.main.message;
+          }
+
+          if (data.errors.fields) {
+            this.fieldErrors = data.errors.fields;
+          }
+        }
+
+        if (data.isAuthenticated) {
+        }
+
       }
     }
   }
