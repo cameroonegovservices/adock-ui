@@ -13,9 +13,8 @@
             grid-list-lg
           )
             v-alert(
-              v-if="errorMessage"
               type="error"
-              :value="true"
+              :value="!!errorMessage"
             ) {{ errorMessage }}
             v-alert(
               v-if="editCodeMessage"
