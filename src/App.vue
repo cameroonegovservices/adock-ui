@@ -40,10 +40,6 @@
       )
       v-toolbar-items(v-else)
         span {{ user.first_name }}
-        v-btn(flat :to="{name: 'about'}") En savoir plus
-        v-btn(flat :to="{name: 'cgu'}") CGU
-        a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
-          img(src='./assets/logo-fabnum.svg' height='50px')
     v-content
       v-alert.adock-alert-ie11(v-if="isIE11" :value="true" type="warning")
         | Nous vous recommandons d'utiliser un navigateur récent tel que&nbsp;
@@ -51,6 +47,13 @@
         |  ou Chrome pour une expérience optimale.
       keep-alive
         router-view
+    v-footer.pa-3.adock-footer
+      v-spacer
+      router-link.adock-footer-link(:to="{name: 'about'}") En savoir plus
+      router-link.adock-footer-link(:to="{name: 'cgu'}") CGU
+      v-spacer
+      a(href='https://www.ecologique-solidaire.gouv.fr/fabrique-numerique-lincubateur-services-numeriques-du-pole-ministeriel')
+        img(src='./assets/logo-fabnum.svg' height='50px')
 </template>
 
 <style lang="stylus">
@@ -59,6 +62,14 @@
 
 .adock-alert-ie11
   margin: 0
+
+.adock-footer
+  min-height: 64px
+
+.adock-footer-link
+  color: #999
+  text-decoration: none
+  padding: 0 24px
 </style>
 
 <script>
