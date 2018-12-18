@@ -1,3 +1,5 @@
+import jwtDecode from "jwt-decode";
+
 import auth from "@/auth";
 import api from "@/api";
 
@@ -11,11 +13,10 @@ export const actions = {
 
   userLogIn: ({ commit }, payload) => {
     auth.setToken(payload.token);
+    const decodedJwt = jwtDecode(payload.token);
     commit("USER_LOG_IN", {
       user: {
-        // FIXME
-        first_name: "Raymond",
-        last_name: "Dujardin"
+        email: decodedJwt.email
       }
     });
   },

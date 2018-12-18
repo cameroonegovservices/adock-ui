@@ -40,7 +40,7 @@
       )
       div(v-else)
         div(v-if="user")
-          | {{ user.first_name }}
+          | {{ user.email }}
           v-btn(icon @click="userLogOut")
             v-icon exit_to_app
         v-btn(v-else flat :to="{name: 'login'}") Se connecter
