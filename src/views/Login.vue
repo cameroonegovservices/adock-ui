@@ -127,12 +127,9 @@ export default {
       if (this.$refs.form.validate()) {
         const data = await api.login(this.email, this.password);
         if (data.isAuthenticated) {
-          this.$store.commit("USER_LOG_IN", {
-            user: {
-              // FIXME
-              first_name: "Raymond",
-              last_name: "Dujardin"
-            }})
+          this.$store.dispatch("userLogIn", {
+            token: data.token
+          })
         } else {
           if (data.errors) {
             if (data.errors.main && data.errors.main.message) {

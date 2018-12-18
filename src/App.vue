@@ -38,8 +38,12 @@
         v-if="$vuetify.breakpoint.xsOnly"
         @click="isDrawerVisible = !isDrawerVisible"
       )
-      v-toolbar-items(v-else)
-        span {{ user.first_name }}
+      div(v-else)
+        div(v-if="user")
+          | {{ user.first_name }}
+          v-btn(icon @click="userLogOut")
+            v-icon exit_to_app
+        v-btn(v-else flat :to="{name: 'login'}") Se connecter
     v-content
       v-alert.adock-alert-ie11(v-if="isIE11" :value="true" type="warning")
         | Nous vous recommandons d'utiliser un navigateur récent tel que&nbsp;
@@ -75,6 +79,7 @@
 <script>
 import { mapState } from "vuex";
 
+import auth from "@/auth";
 import Message from "@/components/Message.vue";
 
 export default {
@@ -105,6 +110,12 @@ export default {
 
   computed: {
     ...mapState(["meta", "user"])
+  },
+
+  methods: {
+    userLogOut() {
+      this.$store.dispatch("userLogOut");
+    }
   }
 };
 </script>

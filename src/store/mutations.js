@@ -13,7 +13,7 @@ export const state = {
     carrier: {},
     version: ""
   },
-  user: {}
+  user: null
 };
 
 function getOptionsFromChoices(choices) {
@@ -59,6 +59,6 @@ export const mutations = {
     state.user = payload.user;
   },
   USER_LOG_OUT(state) {
-    state.user = {};
+    state.user = null;
   }
 };
