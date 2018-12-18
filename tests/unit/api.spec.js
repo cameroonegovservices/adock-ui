@@ -60,7 +60,7 @@ describe("api", () => {
     const response = await api.searchCarriers();
     expect(response.error.status).toBe(503);
     expect(response.error.message).toBe(
-      "Le serveur https://example.com est inaccessible."
+      "Le serveur https://example.com est inaccessible ou erreur d'exécution Javascript."
     );
   });
 
