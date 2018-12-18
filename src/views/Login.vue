@@ -126,7 +126,7 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         const data = await api.login(this.email, this.password);
-        if (data.isAuthenticated) {
+        if (data.token) {
           this.$store.dispatch("userLogIn", {
             token: data.token
           })

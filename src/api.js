@@ -155,7 +155,6 @@ export const api = {
 
   async login(email, password) {
     const data = {
-      isAuthenticated: false,
       token: null,
       errors: null
     };
@@ -174,7 +173,6 @@ export const api = {
           }
         };
       } else {
-        data.isAuthenticated = true;
         data.token = response.data.token;
       }
     } catch (axiosError) {
