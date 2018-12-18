@@ -12,7 +12,8 @@ export const state = {
   meta: {
     carrier: {},
     version: ""
-  }
+  },
+  user: {}
 };
 
 function getOptionsFromChoices(choices) {
@@ -53,5 +54,11 @@ export const mutations = {
       state.meta.carrier = payload.carrier;
     }
     state.meta.version = payload.version;
+  },
+  USER_LOG_IN(state, payload) {
+    state.user = payload.user;
+  },
+  USER_LOG_OUT(state) {
+    state.user = {};
   }
 };
