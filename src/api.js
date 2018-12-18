@@ -1,9 +1,20 @@
 import axios from "axios";
 import Raven from "raven-js";
 
+import auth from "./auth";
+
 export const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
   timeout: process.env.VUE_APP_AXIOS_TIMEOUT
+});
+
+// Add JWT token to requests if available
+axiosInstance.interceptors.request.use(function(config) {
+  const token = auth.getToken();
+  if (token) {
+    config.headers["Authorization"] = "Bearer " + token;
+  }
+  return config;
 });
 
 // Server URLs
