@@ -79,7 +79,6 @@
 <script>
 import { mapState } from "vuex";
 
-import auth from "@/auth";
 import Message from "@/components/Message.vue";
 
 export default {
