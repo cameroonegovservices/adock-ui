@@ -22,6 +22,10 @@
               v-model="isValid"
               ref="form"
             )
+              v-alert(
+                type="error"
+                :value="!!errorMessage"
+              ) {{ errorMessage }}
               v-text-field(
                 label="Adresse électronique"
                 v-model="email"
@@ -102,7 +106,8 @@ export default {
       ],
       isValid: false,
       isPlainPassword: false,
-      password: ""
+      password: "",
+      errorMessage: ""
     };
   },
 
