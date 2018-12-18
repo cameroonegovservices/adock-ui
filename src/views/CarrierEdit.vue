@@ -383,11 +383,11 @@ export default {
         }
       } else {
         // Success
-        this.$store.commit("ADD_MESSAGE", {
+        this.$store.commit("MESSAGE_ADD", {
           message: `Transporteur « ${data.carrier.enseigne} » enregistré.`
         });
         if (data.confirmation_email_sent) {
-          this.$store.commit("ADD_MESSAGE", {
+          this.$store.commit("MESSAGE_ADD", {
             message: `Un courriel de confirmation a été envoyé à « ${
               data.carrier.email
             } ».`

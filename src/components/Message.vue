@@ -4,9 +4,9 @@
     top
     :timeout="8000",
     :value="messages.length"
-    @input="REMOVE_MESSAGES()"
+    @input="MESSAGES_REMOVE()"
   ) {{ messagesJoined }}
-    <v-btn flat color="pink" @click.native="REMOVE_MESSAGES()">Fermer</v-btn>
+    <v-btn flat color="pink" @click.native="MESSAGES_REMOVE()">Fermer</v-btn>
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(["REMOVE_MESSAGES"])
+    ...mapMutations(["MESSAGES_REMOVE"])
   }
 };
 </script>

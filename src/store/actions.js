@@ -5,7 +5,7 @@ export const actions = {
   loadMeta: async ({ commit }) => {
     const response = await api.getMeta();
     if (response.error == null) {
-      commit("SET_META", response.data);
+      commit("META_SET", response.data);
     }
   },
 

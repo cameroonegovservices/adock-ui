@@ -26,7 +26,7 @@ describe("Message.vue", () => {
     const wrapper = mount(Message, {
       store
     });
-    store.commit("ADD_MESSAGE", {
+    store.commit("MESSAGE_ADD", {
       message: "Hi!"
     });
     expect(wrapper.text()).toBe("Hi!Fermer");
@@ -35,7 +35,7 @@ describe("Message.vue", () => {
   it("closes after the timeout", () => {
     jest.useFakeTimers();
     const mutations = {
-      REMOVE_MESSAGES: jest.fn()
+      MESSAGES_REMOVE: jest.fn()
     };
     const store = new Vuex.Store({
       state: {
@@ -47,12 +47,12 @@ describe("Message.vue", () => {
       store
     });
     expect(wrapper.text()).toBe("Hello!Fermer");
-    expect(mutations.REMOVE_MESSAGES).not.toHaveBeenCalled();
+    expect(mutations.MESSAGES_REMOVE).not.toHaveBeenCalled();
 
     // 8s later
     // Still visible because the mutation is mocked
     jest.runTimersToTime(8000);
-    expect(mutations.REMOVE_MESSAGES).toHaveBeenCalled();
+    expect(mutations.MESSAGES_REMOVE).toHaveBeenCalled();
 
     jest.useRealTimers();
   });

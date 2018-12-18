@@ -25,13 +25,13 @@ function getOptionsFromChoices(choices) {
 }
 
 export const mutations = {
-  REMOVE_MESSAGES(state) {
+  MESSAGES_REMOVE(state) {
     state.messages.splice(0);
   },
-  ADD_MESSAGE(state, payload) {
+  MESSAGE_ADD(state, payload) {
     state.messages.push(payload.message);
   },
-  SET_META(state, payload) {
+  META_SET(state, payload) {
     state.options.workingAreas = getOptionsFromChoices(
       payload.choices.WORKING_AREA_CHOICES
     );

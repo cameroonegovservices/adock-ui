@@ -1,25 +1,25 @@
 import { mutations } from "@/store/mutations";
 
 describe("mutations", () => {
-  it("REMOVE_MESSAGES", () => {
+  it("MESSAGES_REMOVE", () => {
     const state = {
       messages: ["old", "new"]
     };
-    mutations.REMOVE_MESSAGES(state);
+    mutations.MESSAGES_REMOVE(state);
     // Only recent messages are remaining
     expect(state.messages).toEqual([]);
   });
 
-  it("ADD_MESSAGE", () => {
+  it("MESSAGE_ADD", () => {
     const state = {
       messages: ["old"]
     };
     const message = "new";
-    mutations.ADD_MESSAGE(state, { message });
+    mutations.MESSAGE_ADD(state, { message });
     expect(state.messages).toEqual(["old", "new"]);
   });
 
-  it("SET_META", () => {
+  it("META_SET", () => {
     const state = {
       choices: {
         workingAreas: {},
@@ -50,7 +50,7 @@ describe("mutations", () => {
       },
       version: "1.0"
     };
-    mutations.SET_META(state, payload);
+    mutations.META_SET(state, payload);
     expect(state.options.workingAreas).toEqual([
       {
         value: "FRANCE",
