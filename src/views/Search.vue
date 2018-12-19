@@ -70,8 +70,10 @@
                     deletable-chips
                     return-object
                   )
-            v-btn(large color="primary" @click.native="search") Chercher
-            v-btn(@click.native="clear") Effacer
+              v-layout
+                v-flex.adock-align-right
+                  v-btn(@click.native="clear") Effacer
+                  v-btn(large color="primary" @click.native="search") Chercher
         carrier-list(
           :searchParams="searchParams"
           :searchResponseIsEmpty="searchResponseIsEmpty"
