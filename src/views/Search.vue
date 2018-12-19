@@ -59,7 +59,6 @@
                     mask="#N#"
                     @keyup.enter="search"
                   )
-            v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
               v-layout(row)
                 v-flex(xs12 sm8 md7)
                   v-select(
