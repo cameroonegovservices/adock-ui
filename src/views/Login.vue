@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container.adock-login-overlay(fluid fill-height)
     v-layout(row align-center justify-center)
-      v-flex(xs12 sm4 elevation-9 text-xs-center)
+      v-flex(xs12 sm6 md4 elevation-9 text-xs-center)
         v-toolbar.pt-5.blue.darken-2
           v-toolbar-title.white--text
             h4 Connectez-vous
@@ -129,7 +129,7 @@ export default {
         if (data.token) {
           this.$store.dispatch("userLogIn", {
             token: data.token
-          })
+          });
         } else {
           if (data.errors) {
             if (data.errors.main && data.errors.main.message) {
