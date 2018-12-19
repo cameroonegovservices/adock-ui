@@ -24,7 +24,7 @@
                   v-select(
                     :items="searchLicenseTypeChoices"
                     v-model="searchForm.licenseTypes"
-                    label="Filtre sur le poids"
+                    label="Tonnage"
                     hint="Le transporteur doit disposer d'au moins une licence pour le critère."
                     chips
                     multiple
@@ -65,7 +65,7 @@
                   v-select(
                     :items="options.specialities"
                     v-model="searchForm.specialities"
-                    label="Filtre sur les spécialités"
+                    label="Spécialités"
                     chips
                     multiple
                     deletable-chips
