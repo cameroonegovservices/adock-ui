@@ -38,9 +38,10 @@
         v-if="$vuetify.breakpoint.xsOnly"
         @click="isDrawerVisible = !isDrawerVisible"
       )
-      div(v-else)
-        div(v-if="user")
-          | {{ user.email }}
+      v-toolbar-items(v-else)
+        v-btn(v-if="user && user.is_staff" flat :to="{name: 'stats'}") Statistiques
+        div.adock-toolbar-items(v-if="user")
+          | {{ displayUser }}
           v-btn(icon @click="userLogOut")
             v-icon exit_to_app
         v-btn(v-else flat :to="{name: 'login'}") Se connecter
@@ -66,6 +67,10 @@
 
 .adock-alert-ie11
   margin: 0
+
+.adock-toolbar-items
+  align-items: center
+  align-self: center
 
 .adock-footer
   min-height: 64px
