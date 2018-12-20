@@ -64,6 +64,7 @@
                     mask="#N#"
                     @keyup.enter="search"
                     data-cy="searchFormDepartementFrom"
+                    hint="Numéro du département, ex. 44"
                   )
                 v-flex(xs12 sm6 md4)
                   v-text-field(
@@ -71,6 +72,7 @@
                     label="Département de livraison"
                     mask="#N#"
                     @keyup.enter="search"
+                    hint="Numéro du département, ex. 35"
                   )
               v-layout
                 v-flex.adock-align-right
