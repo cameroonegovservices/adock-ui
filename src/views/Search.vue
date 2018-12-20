@@ -11,16 +11,18 @@
               type="error"
               :value="true"
             ) {{ errorMessage }}
-            v-text-field(
-              v-model.trim="searchForm.q"
-              label="Nom, code postal ou SIRET de l'entreprise"
-              hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
-              @keyup.enter="search"
-              data-cy="searchFormQ"
-            )
             v-container(fluid ma-0 pa-0 align-baseline grid-list-md)
-              v-layout(row wrap align-end)
-                v-flex(xs12 sm8 md4)
+              v-layout(row)
+                v-flex(xs12)
+                  v-text-field(
+                    v-model.trim="searchForm.q"
+                    label="Nom, code postal ou SIRET de l'entreprise"
+                    hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
+                    @keyup.enter="search"
+                    data-cy="searchFormQ"
+                  )
+              v-layout(row wrap)
+                v-flex(xs12 sm4 md5)
                   v-select(
                     :items="searchLicenseTypeChoices"
                     v-model="searchForm.licenseTypes"
@@ -44,6 +46,17 @@
                         v-avatar.accent {{ data.item.avatar }}
                         .
                           {{ data.item.text }}
+                v-flex(xs12 sm8 md7)
+                  v-select(
+                    :items="options.specialities"
+                    v-model="searchForm.specialities"
+                    label="Spécialités"
+                    chips
+                    multiple
+                    deletable-chips
+                    return-object
+                  )
+              v-layout(row wrap)
                 v-flex(xs12 sm6 md4)
                   v-text-field(
                     v-model='searchForm.departementFrom'
@@ -58,17 +71,6 @@
                     label="Département de livraison"
                     mask="#N#"
                     @keyup.enter="search"
-                  )
-              v-layout(row)
-                v-flex(xs12 sm8 md7)
-                  v-select(
-                    :items="options.specialities"
-                    v-model="searchForm.specialities"
-                    label="Spécialités"
-                    chips
-                    multiple
-                    deletable-chips
-                    return-object
                   )
               v-layout
                 v-flex.adock-align-right
