@@ -19,6 +19,17 @@ export const actions = {
     });
   },
 
+  userLogInFromStorage: ({ commit }) => {
+    const token = auth.getToken();
+
+    if (token) {
+      const decodedJwt = jwtDecode(token);
+      commit("USER_LOG_IN", {
+        user: decodedJwt
+      });
+    }
+  },
+
   userLogOut: ({ commit }) => {
     auth.deleteToken();
     commit("USER_LOG_OUT");

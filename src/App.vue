@@ -110,6 +110,8 @@ export default {
       }
     });
     this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+    this.$store.dispatch("userLogInFromStorage");
   },
 
   computed: {
