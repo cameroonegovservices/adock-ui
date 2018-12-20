@@ -15,9 +15,7 @@ export const actions = {
     auth.setToken(payload.token);
     const decodedJwt = jwtDecode(payload.token);
     commit("USER_LOG_IN", {
-      user: {
-        email: decodedJwt.email
-      }
+      user: decodedJwt
     });
   },
 

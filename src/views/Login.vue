@@ -132,14 +132,11 @@ export default {
             token: data.token
           });
           this.$store.commit("MESSAGE_ADD", {
-            message: `Vous êtes connecté en tant que « ${
-              this.$store.state.user.email
-            } ».`
+            message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });
           router.push({
             name: "search"
           });
-
         } else {
           if (data.errors) {
             if (data.errors.main && data.errors.main.message) {

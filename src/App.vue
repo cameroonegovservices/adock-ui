@@ -108,6 +108,11 @@ export default {
   },
 
   computed: {
+    displayUser() {
+      return this.user.first_name
+        ? `${this.user.first_name} ${this.user.last_name}`
+        : this.user.email;
+    },
     ...mapState(["meta", "user"])
   },
 
