@@ -127,6 +127,7 @@ export default {
   methods: {
     userLogOut() {
       this.$store.dispatch("userLogOut");
+      this.$router.push({ path: "/" });
     }
   }
 };
