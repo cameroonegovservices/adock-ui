@@ -124,7 +124,7 @@ export default {
     };
   },
 
-  created() {
+  mounted() {
     api.getStats().then(response => {
       this.validatedCarriers = response.data["validated_carriers"];
       this.lockedCarriers = response.data["locked_carriers"];
