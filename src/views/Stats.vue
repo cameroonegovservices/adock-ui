@@ -3,12 +3,12 @@
     v-layout(row wrap)
       v-flex(xs12 md6)
         v-layout(row wrap)
-          v-flex(md6 d-flex)
+          v-flex(v-if="allowed" md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ validatedCarriers }}
                 p Fiches transporteur validées
-          v-flex(md6 d-flex)
+          v-flex(v-if="allowed" md6 d-flex)
             v-card
               v-card-text.text-xs-center
                 p.display-2 {{ lockedCarriers }}
@@ -33,7 +33,7 @@
               v-card-text.text-xs-center
                 p.display-2 {{ version }}
                 p Version de l'application UI
-      v-flex(xs12 md6)
+      v-flex(v-if="allowed" xs12 md6)
         v-card
           v-card-title(primary-title)
             h3.headline Nombre de fiches validées par mois
@@ -43,6 +43,8 @@
                 dt.adock-chart-month {{ item.month | asLocaleMonth }}
                 dd.adock-chart-bar(:style="getValidatedValueProperty(item.count)")
                   span.adock-chart-value {{ item.count }}
+    v-flex(v-if="!allowed" xs12 md6)
+      p Vous disposez d'un accès restreint aux statistiques.
 </template>
 
 <style lang="stylus">
@@ -114,6 +116,7 @@ export default {
 
   data() {
     return {
+      allowed: false,
       validatedCarriers: 0,
       lockedCarriers: 0,
       validatedCarriersPerMonth: [],
@@ -127,6 +130,7 @@ export default {
       this.lockedCarriers = response.data["locked_carriers"];
       this.validatedCarriersPerMonth =
         response.data["validated_carriers_per_month"];
+      this.allowed = true;
     });
   },
 
