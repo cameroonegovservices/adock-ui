@@ -69,6 +69,7 @@
   margin: 0
 
 .adock-toolbar-items
+  padding-left: 1em
   align-items: center
   align-self: center
 
