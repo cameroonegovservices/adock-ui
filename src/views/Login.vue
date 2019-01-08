@@ -9,7 +9,9 @@
           v-card-text.pt-4
             v-layout(align-center justify-center)
               v-flex
-                v-btn.adock-france-connect
+                v-btn.adock-france-connect(
+                  :href="franceConnectAuthorizeUrl"
+                )
             v-layout(align-center justify-center)
               v-flex
                 a(
@@ -93,6 +95,8 @@ export default {
 
   data() {
     return {
+      franceConnectAuthorizeUrl:
+        process.env.VUE_APP_API_URL + "/accounts/fc/authorize",
       email: "",
       emailRules: [
         v => !!v || "Une adresse électronique est requise.",
