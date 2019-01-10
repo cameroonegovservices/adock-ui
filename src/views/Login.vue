@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       franceConnectAuthorizeUrl:
-        process.env.VUE_APP_API_URL + "/accounts/fc/authorize",
+        process.env.VUE_APP_API_URL + "accounts/fc/authorize",
       email: "",
       emailRules: [
         v => !!v || "Une adresse électronique est requise.",
