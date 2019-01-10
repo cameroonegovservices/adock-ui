@@ -28,7 +28,7 @@ v-container(fluid fill-height)
 import api from "@/api";
 
 export default {
-  name: "confirm-email",
+  name: "carrier-confirm-email",
 
   props: {
     carrierSiret: {

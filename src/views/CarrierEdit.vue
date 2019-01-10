@@ -224,7 +224,7 @@ const WORKING_AREA_REGIONS = {
 };
 
 export default {
-  name: "edit",
+  name: "carrier-edit",
 
   props: {
     carrier: {

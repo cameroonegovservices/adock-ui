@@ -237,7 +237,7 @@ function getTileProvider() {
 }
 
 export default {
-  name: "detail",
+  name: "carrier-detail",
 
   props: {
     carrier: {
