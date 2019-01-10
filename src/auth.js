@@ -25,11 +25,11 @@ export default {
   },
 
   setToken(token) {
-    localStorage.token = token;
+    storage.token = token;
   },
 
   deleteToken() {
-    delete localStorage.token;
+    delete storage.token;
   },
 
   isLoggedIn() {
