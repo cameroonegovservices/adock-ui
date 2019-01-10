@@ -88,7 +88,6 @@
 import Raven from "raven-js";
 
 import api from "@/api";
-import router from "@/router";
 
 export default {
   name: "login",
@@ -138,7 +137,7 @@ export default {
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });
-          router.push({
+          this.$router.push({
             name: "search"
           });
         } else {
