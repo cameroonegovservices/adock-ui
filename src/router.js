@@ -7,6 +7,7 @@ import About from "@/views/About.vue";
 import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
 import CarrierDetail from "@/views/CarrierDetail.vue";
 import CarrierEdit from "@/views/CarrierEdit.vue";
+import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
 import CGU from "@/views/CGU.vue";
 import Login from "@/views/Login.vue";
 import Search from "@/views/Search.vue";
@@ -37,6 +38,11 @@ const routes = [
     name: "error",
     component: ViewError,
     props: true
+  },
+  {
+    path: "/fc/callback",
+    name: "franceconnect_callback",
+    component: FranceConnectCallback
   },
   {
     path: "/login",
