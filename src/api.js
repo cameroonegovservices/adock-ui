@@ -22,6 +22,7 @@ export const loginUrl = "/accounts/login/";
 export const metaUrl = "/meta/";
 export const searchCarriersUrl = "/carriers/search/";
 export const statsCarriersUrl = "/carriers/stats/";
+export const franceConnectCallbackUrl = "/accounts/fc/callback/";
 
 export function getCarrierUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/`;
@@ -148,6 +149,30 @@ export const api = {
       data.carrier = response.data.carrier;
     } catch (error) {
       data.error = handleCommunicationError(error);
+    }
+
+    return data;
+  },
+
+  async franceConnectCallback(code, state) {
+    const data = { token: null, error: null };
+
+    try {
+      const response = await axiosInstance.get(franceConnectCallbackUrl, {
+        params: {
+          code,
+          state
+        }
+      });
+      if (response.status !== 200) {
+        data.error = {
+          message: response.data.message || ""
+        };
+      } else {
+        data.token = response.data.token;
+      }
+    } catch (axiosError) {
+      data.error = handleCommunicationError(axiosError);
     }
 
     return data;
