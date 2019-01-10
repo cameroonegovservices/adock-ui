@@ -25,7 +25,9 @@ export default {
   },
 
   setToken(token) {
-    storage.token = token;
+    if (token) {
+      storage.token = token;
+    }
   },
 
   deleteToken() {
