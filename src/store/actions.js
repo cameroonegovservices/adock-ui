@@ -1,4 +1,5 @@
 import jwtDecode from "jwt-decode";
+import Raven from "raven-js";
 
 import auth from "@/auth";
 import api from "@/api";
@@ -12,11 +13,20 @@ export const actions = {
   },
 
   userLogIn: ({ commit }, payload) => {
+    let decodedJwt = null;
+
     auth.setToken(payload.token);
-    const decodedJwt = jwtDecode(payload.token);
-    commit("USER_LOG_IN", {
-      user: decodedJwt
-    });
+    try {
+      decodedJwt = jwtDecode(payload.token);
+    } catch (e) {
+      Raven.captureException(e);
+    }
+
+    if (decodedJwt) {
+      commit("USER_LOG_IN", {
+        user: decodedJwt
+      });
+    }
   },
 
   userLogInFromStorage: ({ commit }) => {
