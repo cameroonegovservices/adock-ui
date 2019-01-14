@@ -121,6 +121,10 @@ export default {
     },
 
     headquarters() {
+      if (this.carrier.other_facilities == null) {
+        return null;
+      }
+
       const filteredFacilities = this.carrier.other_facilities.filter(
         facility => facility.is_siege
       );
