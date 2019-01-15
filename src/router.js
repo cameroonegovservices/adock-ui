@@ -4,11 +4,12 @@ import VueRouter from "vue-router";
 import { getTracker } from "./tracker";
 
 import About from "@/views/About.vue";
+import CarrierCertificate from "@/views/CarrierCertificate.vue";
 import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
 import CarrierDetail from "@/views/CarrierDetail.vue";
 import CarrierEdit from "@/views/CarrierEdit.vue";
-import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
 import CGU from "@/views/CGU.vue";
+import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
 import Login from "@/views/Login.vue";
 import Search from "@/views/Search.vue";
 import Stats from "@/views/Stats.vue";
@@ -70,6 +71,12 @@ const routes = [
     path: "/transporteur/:carrierSiret/confirm/:token",
     name: "carrier_confirm_email",
     component: CarrierConfirmEmail,
+    props: true
+  },
+  {
+    path: "/transporteur/:carrierSiret/certificate",
+    name: "carrier_certificate",
+    component: CarrierCertificate,
     props: true
   },
   {

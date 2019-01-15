@@ -24,6 +24,10 @@ export const searchCarriersUrl = "/carriers/search/";
 export const statsCarriersUrl = "/carriers/stats/";
 export const franceConnectCallbackUrl = "/accounts/fc/callback/";
 
+export function getCarrierCertificateUrl(carrierSiret, kind) {
+  return `/carriers/${carrierSiret}/certificate/${kind}/`;
+}
+
 export function getCarrierUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/`;
 }
@@ -119,22 +123,17 @@ export const api = {
     return this.getData(statsCarriersUrl);
   },
 
-  async searchCarriers(params) {
-    const data = {
-      carriers: null,
-      limit: null,
-      errors: null
-    };
-
+  async confirmEmail(carrierSiret, token) {
+    const url = getConfirmEmailUrl(carrierSiret, token);
     try {
-      const response = await axiosInstance.get(searchCarriersUrl, params);
-      data.carriers = response.data.results;
-      data.limit = response.data.limit || 0;
-    } catch (error) {
-      data.error = handleCommunicationError(error);
+      const response = await axiosInstance.get(url);
+      return {
+        message: response.data.message,
+        status: response.status
+      };
+    } catch (axiosError) {
+      return handleCommunicationError(axiosError);
     }
-
-    return data;
   },
 
   async fetchCarrier(carrierSiret) {
@@ -206,6 +205,21 @@ export const api = {
     return data;
   },
 
+  async mailEditCode(carrierSiret) {
+    const url = getEditCodeUrl(carrierSiret);
+    try {
+      const response = await axiosInstance.get(url);
+      return {
+        email: response.data.email,
+        edit_code_at: response.data.edit_code_at,
+        edit_code_timeout_at: response.data.edit_code_timeout_at,
+        status: response.status
+      };
+    } catch (axiosError) {
+      return handleCommunicationError(axiosError);
+    }
+  },
+
   async updateCarrier(carrierSiret, payload) {
     const url = getCarrierUrl(carrierSiret);
     const data = {
@@ -223,32 +237,37 @@ export const api = {
     return data;
   },
 
-  async confirmEmail(carrierSiret, token) {
-    const url = getConfirmEmailUrl(carrierSiret, token);
+  async signCarrierCertificate(carrierSiret, payload) {
+    const url = getCarrierCertificateUrl(carrierSiret, payload.kind);
+    const data = {
+      carrier: null,
+      errors: null
+    };
     try {
-      const response = await axiosInstance.get(url);
-      return {
-        message: response.data.message,
-        status: response.status
-      };
+      const response = await axiosInstance.post(url, payload);
+      data.carrier = response.data.carrier;
     } catch (axiosError) {
-      return handleCommunicationError(axiosError);
+      data.errors = handleInvalidFormAndCommunicationError(axiosError);
     }
+    return data;
   },
 
-  async mailEditCode(carrierSiret) {
-    const url = getEditCodeUrl(carrierSiret);
+  async searchCarriers(params) {
+    const data = {
+      carriers: null,
+      limit: null,
+      errors: null
+    };
+
     try {
-      const response = await axiosInstance.get(url);
-      return {
-        email: response.data.email,
-        edit_code_at: response.data.edit_code_at,
-        edit_code_timeout_at: response.data.edit_code_timeout_at,
-        status: response.status
-      };
-    } catch (axiosError) {
-      return handleCommunicationError(axiosError);
+      const response = await axiosInstance.get(searchCarriersUrl, params);
+      data.carriers = response.data.results;
+      data.limit = response.data.limit || 0;
+    } catch (error) {
+      data.error = handleCommunicationError(error);
     }
+
+    return data;
   }
 };
 
