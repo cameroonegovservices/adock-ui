@@ -37,21 +37,25 @@
                   v-model="lastName"
                   label="Nom"
                   required
+                  :error-messages="fieldErrors.last_name"
                 )
                 v-text-field(
                   v-model="firstName"
                   label="Prénom"
                   required
+                  :error-messages="fieldErrors.first_name"
                 )
                 v-text-field(
                   v-model="position"
                   label="Fonction"
                   required
+                  :error-messages="fieldErrors.position"
                 )
                 v-text-field(
                   v-model="location"
                   label="Lieu"
                   required
+                  :error-messages="fieldErrors.location"
                 )
             v-layout(wrap)
               v-flex.adock-align-right(xs12 md11)
