@@ -8,59 +8,120 @@
           span.subheading.no-wrap Retour à la fiche
         v-card
           carrier-card-header(:carrier="carrier")
-          v-container(
-            ref="mainContent"
-            grid-list-lg
-          )
-            v-alert(
-              type="error"
-              :value="!!errorMessage"
-            ) {{ errorMessage }}
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                p.subheading Type d'attestation
-                v-radio-group(
-                  v-model="kind"
-                )
-                  v-radio(
-                    label="Attestation de non emploi de travailleurs étrangers"
-                    value="no-foreigners"
+          v-form(autocomplete="nope")
+            v-container(
+              ref="mainContent"
+              grid-list-lg
+            )
+              v-alert(
+                type="error"
+                :value="!!errorMessage"
+              ) {{ errorMessage }}
+              v-layout
+                v-flex(xs12 offset-md1 md10)
+                  p.subheading Type d'attestation
+                  v-radio-group(
+                    v-model="kind"
                   )
-                  v-radio(
-                    label="Attestation d'emploi de travailleurs étrangers"
-                    value="foreigners"
+                    v-radio(
+                      label="Attestation de non emploi de travailleurs étrangers"
+                      value="no-foreigners"
+                    )
+                    v-radio(
+                      label="Attestation d'emploi de travailleurs étrangers"
+                      value="foreigners"
+                    )
+              v-layout(v-if="kind === 'foreigners'")
+                v-flex(xs12 offset-md1 md10)
+                  p.subheading.mb-0 Salariés étrangers
+              v-layout(
+                wrap
+                v-if="kind === 'foreigners'"
+                v-for="worker in workers"
+                :key="worker.id"
+              )
+                v-flex(xs2 md1 align-self-center)
+                  v-chip(outline) {{ worker.id }}
+                v-flex(xs6 md3)
+                  v-text-field(
+                    browser-autocomplete="off"
+                    v-model="worker.name"
+                    label="Nom"
+                    hint="Nom et prénom du salarié"
+                    required
                   )
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                p.subheading Responsable de l'entreprise
-                v-text-field(
-                  v-model="lastName"
-                  label="Nom"
-                  required
-                  :error-messages="fieldErrors.last_name"
+                v-flex(xs4 md2)
+                  v-text-field(
+                    browser-autocomplete="off"
+                    v-model="worker.date"
+                    label="Date"
+                    hint="Date d'embauche"
+                    required
+                  )
+                v-flex(offset-xs2 xs4 offset-md0 md2)
+                  v-text-field(
+                    browser-autocomplete="off"
+                    v-model="worker.nationality"
+                    label="Nationalité"
+                    required
+                  )
+                v-flex(xs4 md3)
+                  v-text-field(
+                    browser-autocomplete="off"
+                    v-model="worker.work_permit"
+                    label="N° d'autorisation"
+                    hint="Type / N°ordre titre valant autorisation de travail"
+                    required
+                  )
+                v-flex(xs1 md1 align-self-center)
+                  v-btn(flat icon color="grey" @click="removeWorker(worker)")
+                    v-icon delete
+              v-layout(
+                v-if="kind === 'foreigners'"
+              )
+                v-flex(xs3 offset-md1 md2)
+                  v-btn(@click="addWorker") Ajouter
+                v-flex(
+                  v-if="workerIsEmptyError && workerIsEmpty"
+                  xs9 md7
                 )
-                v-text-field(
-                  v-model="firstName"
-                  label="Prénom"
-                  required
-                  :error-messages="fieldErrors.first_name"
-                )
-                v-text-field(
-                  v-model="position"
-                  label="Fonction"
-                  required
-                  :error-messages="fieldErrors.position"
-                )
-                v-text-field(
-                  v-model="location"
-                  label="Lieu"
-                  required
-                  :error-messages="fieldErrors.location"
-                )
-            v-layout(wrap)
-              v-flex.adock-align-right(xs12 md11)
-                v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
-                v-btn(color="primary" @click.native="sign") Signer
+                  v-alert(
+                    :value="true"
+                    type="error"
+                    icon="warning"
+                    outline
+                  ) Vous devez au préalable remplir les champs existants
+              v-layout
+                v-flex(xs12 offset-md1 md10)
+                  p.subheading Responsable de l'entreprise
+                  v-text-field(
+                    v-model="lastName"
+                    label="Nom"
+                    required
+                    :error-messages="fieldErrors.last_name"
+                  )
+                  v-text-field(
+                    v-model="firstName"
+                    label="Prénom"
+                    required
+                    :error-messages="fieldErrors.first_name"
+                  )
+                  v-text-field(
+                    v-model="position"
+                    label="Fonction"
+                    required
+                    :error-messages="fieldErrors.position"
+                  )
+                  v-text-field(
+                    v-model="location"
+                    label="Lieu"
+                    required
+                    :error-messages="fieldErrors.location"
+                  )
+              v-layout(wrap)
+                v-flex.adock-align-right(xs12 md11)
+                  v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
+                  v-btn(color="primary" @click.native="sign") Signer
 </template>
 
 <style lang="stylus">
@@ -78,6 +139,14 @@ import CarrierCardHeader from "@/components/CarrierCardHeader";
 
 import api from "@/api";
 import { scrollToErrorsMixin } from "@/mixins";
+
+const EMPTY_WORKER = {
+  id: 1,
+  name: "",
+  date: "",
+  nationality: "",
+  work_permit: ""
+};
 
 export default {
   name: "carrier-certificate",
@@ -97,11 +166,13 @@ export default {
 
   data() {
     return {
-      kind: "no-foreigners",
+      kind: null,
       firstName: "",
       lastName: "",
       position: "",
-      location: ""
+      location: "",
+      workers: null,
+      workerIsEmptyError: false
     };
   },
 
@@ -127,10 +198,40 @@ export default {
     }
   },
 
+  computed: {
+    workerIsEmpty() {
+      return this.workers.some(
+        worker =>
+          worker.name === "" ||
+          worker.date === "" ||
+          worker.nationality === "" ||
+          worker.work_permit === ""
+      );
+    }
+  },
+
   methods: {
     setup() {
       this.errorMessage = null;
       this.fieldErrors = {};
+      // Only keep manager informations (if any)
+      this.kind = "foreigners";
+      this.workers = [Object.assign({}, EMPTY_WORKER)];
+    },
+
+    addWorker() {
+      // Only update on click
+      this.workerIsEmptyError = this.workerIsEmpty;
+      if (this.workerIsEmptyError) {
+        return;
+      }
+      const newWorker = Object.assign({}, EMPTY_WORKER);
+      newWorker.id = this.workers.length + 1;
+      this.workers.push(newWorker);
+    },
+
+    removeWorker(worker) {
+      this.workers.splice(this.workers.indexOf(worker), 1);
     },
 
     async sign() {
@@ -141,6 +242,10 @@ export default {
         position: this.position,
         location: this.location
       };
+      if (this.kind === "foreigners") {
+        payload.workers = this.workers;
+      }
+
       const data = await api.signCarrierCertificate(
         this.carrier.siret,
         payload

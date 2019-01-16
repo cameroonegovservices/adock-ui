@@ -42,7 +42,7 @@ describe("CarrierEdit.vue", () => {
     store = new Vuex.Store(clonedStoreOptions);
   });
 
-  it("load the form with server data", () => {
+  it("loads the form with server data", () => {
     const wrapper = mountCarrierEdit(store, TRANSPORTEUR_DATA);
 
     // The function loadForm is called by 'created' hook
@@ -57,7 +57,7 @@ describe("CarrierEdit.vue", () => {
     expect(wrapper.vm.form.editCode).toBe("");
   });
 
-  it("get the payload from the form", () => {
+  it("gets the payload from the form", () => {
     const wrapper = mountCarrierEdit(store, TRANSPORTEUR_DATA);
     wrapper.vm.form.editCode = "1234";
     wrapper.vm.form.region = "Bretagne";
