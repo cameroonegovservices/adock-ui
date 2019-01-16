@@ -141,7 +141,6 @@ import CarrierCardHeader from "@/components/CarrierCardHeader";
 
 import api from "@/api";
 import { scrollToErrorsMixin } from "@/mixins";
-import router from "@/router";
 
 function sortUniq(a) {
   return a.sort().filter((item, pos, array) => !pos || item !== array[pos - 1]);
@@ -374,7 +373,7 @@ export default {
           });
         }
         // Redirect
-        router.push({
+        this.$router.push({
           name: "carrier_detail",
           carrierSiret: this.carrier.siret
         });
