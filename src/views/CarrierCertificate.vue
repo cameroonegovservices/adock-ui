@@ -73,9 +73,12 @@ import { routeLoadCarrier } from "@/routeLoaders";
 import CarrierCardHeader from "@/components/CarrierCardHeader";
 
 import api from "@/api";
+import { scrollToErrorsMixin } from "@/mixins";
 
 export default {
   name: "carrier-certificate",
+
+  mixins: [scrollToErrorsMixin],
 
   props: {
     carrier: {
@@ -94,9 +97,7 @@ export default {
       firstName: "",
       lastName: "",
       position: "",
-      location: "",
-      errorMessage: null,
-      fieldErrors: {}
+      location: ""
     };
   },
 
@@ -141,29 +142,7 @@ export default {
         payload
       );
       if (data.errors) {
-        // FIXME DRY
-        let scrollToTarget = null;
-
-        // Error
-        if (data.errors.main && data.errors.main.message) {
-          this.errorMessage = data.errors.main.message;
-          scrollToTarget = this.$refs.mainContent;
-        }
-
-        if (data.errors.fields) {
-          this.fieldErrors = data.errors.fields;
-          if (!scrollToTarget) {
-            scrollToTarget = ".error--text";
-          }
-        }
-
-        if (scrollToTarget) {
-          this.$nextTick(() => {
-            this.$vuetify.goTo(scrollToTarget, {
-              offset: -64
-            });
-          });
-        }
+        this.setErrorsAndScrollTo(data.errors, this.$refs.mainContent);
       } else {
         // Success
         this.$store.commit("MESSAGE_ADD", {

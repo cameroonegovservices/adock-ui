@@ -140,6 +140,7 @@ import { routeLoadCarrier } from "@/routeLoaders";
 import CarrierCardHeader from "@/components/CarrierCardHeader";
 
 import api from "@/api";
+import { scrollToErrorsMixin } from "@/mixins";
 import router from "@/router";
 
 function sortUniq(a) {
@@ -226,6 +227,8 @@ const WORKING_AREA_REGIONS = {
 export default {
   name: "carrier-edit",
 
+  mixins: [scrollToErrorsMixin],
+
   props: {
     carrier: {
       type: Object,
@@ -250,9 +253,7 @@ export default {
         description: "",
         editCode: ""
       },
-      errorMessage: null,
-      editCodeMessage: null,
-      fieldErrors: {}
+      editCodeMessage: null
     };
   },
 
@@ -359,28 +360,7 @@ export default {
       const payload = this.getPayloadFromForm();
       const data = await api.updateCarrier(this.carrier.siret, payload);
       if (data.errors) {
-        let scrollToTarget = null;
-
-        // Error
-        if (data.errors.main && data.errors.main.message) {
-          this.errorMessage = data.errors.main.message;
-          scrollToTarget = this.$refs.mainContent;
-        }
-
-        if (data.errors.fields) {
-          this.fieldErrors = data.errors.fields;
-          if (!scrollToTarget) {
-            scrollToTarget = ".error--text";
-          }
-        }
-
-        if (scrollToTarget) {
-          this.$nextTick(() => {
-            this.$vuetify.goTo(scrollToTarget, {
-              offset: -64
-            });
-          });
-        }
+        this.setErrorsAndScroll(data.errors, this.$refs.mainContent);
       } else {
         // Success
         this.$store.commit("MESSAGE_ADD", {
