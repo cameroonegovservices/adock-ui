@@ -24,8 +24,8 @@ export const searchCarriersUrl = "/carriers/search/";
 export const statsCarriersUrl = "/carriers/stats/";
 export const franceConnectCallbackUrl = "/accounts/fc/callback/";
 
-export function getCarrierCertificateUrl(carrierSiret, kind) {
-  return `/carriers/${carrierSiret}/certificate/${kind}/`;
+export function getCarrierCertificateUrl(carrierSiret) {
+  return `/carriers/${carrierSiret}/certificate/`;
 }
 
 export function getCarrierUrl(carrierSiret) {
@@ -238,7 +238,7 @@ export const api = {
   },
 
   async signCarrierCertificate(carrierSiret, payload) {
-    const url = getCarrierCertificateUrl(carrierSiret, payload.kind);
+    const url = getCarrierCertificateUrl(carrierSiret);
     const data = {
       carrier: null,
       errors: null

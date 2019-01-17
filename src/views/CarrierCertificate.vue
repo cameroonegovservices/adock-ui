@@ -22,22 +22,23 @@
                   p.subheading Type d'attestation
                   v-radio-group(
                     v-model="kind"
+                    :error-messages="fieldErrors.kind"
                   )
                     v-radio(
                       label="Attestation de non emploi de travailleurs étrangers"
-                      value="no-foreigners"
+                      value="no-workers"
                     )
                     v-radio(
                       label="Attestation d'emploi de travailleurs étrangers"
-                      value="foreigners"
+                      value="workers"
                     )
-              v-layout(v-if="kind === 'foreigners'")
+              v-layout(v-if="kind === 'workers'")
                 v-flex(xs12 offset-md1 md10)
                   p.subheading.mb-0 Salariés étrangers
               v-layout(
                 wrap
-                v-if="kind === 'foreigners'"
-                v-for="worker in workers"
+                v-if="kind === 'workers'"
+                v-for="(worker, index) in workers"
                 :key="worker.id"
               )
                 v-flex(xs2 md1 align-self-center)
@@ -77,7 +78,7 @@
                   v-btn(flat icon color="grey" @click="removeWorker(worker)")
                     v-icon delete
               v-layout(
-                v-if="kind === 'foreigners'"
+                v-if="kind === 'workers'"
               )
                 v-flex(xs3 offset-md1 md2)
                   v-btn(@click="addWorker") Ajouter
@@ -215,7 +216,7 @@ export default {
       this.errorMessage = null;
       this.fieldErrors = {};
       // Only keep manager informations (if any)
-      this.kind = "foreigners";
+      this.kind = "workers";
       this.workers = [Object.assign({}, EMPTY_WORKER)];
     },
 
@@ -242,7 +243,7 @@ export default {
         position: this.position,
         location: this.location
       };
-      if (this.kind === "foreigners") {
+      if (this.kind === "workers") {
         payload.workers = this.workers;
       }
 
