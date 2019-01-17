@@ -42,7 +42,7 @@
                 :key="worker.id"
               )
                 v-flex(xs2 md1 align-self-center)
-                  v-chip(outline) {{ worker.id }}
+                  v-chip(outline) {{ index + 1 }}
                 v-flex(xs6 md3)
                   v-text-field(
                     browser-autocomplete="off"
@@ -146,7 +146,6 @@ import api from "@/api";
 import { scrollToErrorsMixin } from "@/mixins";
 
 const EMPTY_WORKER = {
-  id: 1,
   name: "",
   date: "",
   nationality: "",
@@ -182,6 +181,7 @@ export default {
   },
 
   created() {
+    this.workerSequenceId = 1;
     this.setup();
   },
 
@@ -221,7 +221,16 @@ export default {
       this.fieldErrors = {};
       // Only keep manager informations (if any)
       this.kind = "workers";
-      this.workers = [Object.assign({}, EMPTY_WORKER)];
+      this.workers = [this.newWorker()];
+    },
+
+    newWorker() {
+      return Object.assign(
+        {
+          id: this.workerSequenceId++
+        },
+        EMPTY_WORKER
+      );
     },
 
     addWorker() {
@@ -230,8 +239,7 @@ export default {
       if (this.workerIsEmptyError) {
         return;
       }
-      const newWorker = Object.assign({}, EMPTY_WORKER);
-      newWorker.id = this.workers.length + 1;
+      const newWorker = this.newWorker();
       this.workers.push(newWorker);
     },
 
