@@ -49,6 +49,7 @@
                     v-model="worker.name"
                     label="Nom"
                     hint="Nom et prénom du salarié"
+                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].name"
                     required
                   )
                 v-flex(xs4 md2)
@@ -58,6 +59,7 @@
                     label="Date"
                     hint="Date d'embauche"
                     required
+                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].date"
                   )
                 v-flex(offset-xs2 xs4 offset-md0 md2)
                   v-text-field(
@@ -65,6 +67,7 @@
                     v-model="worker.nationality"
                     label="Nationalité"
                     required
+                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].nationality"
                   )
                 v-flex(xs4 md3)
                   v-text-field(
@@ -73,6 +76,7 @@
                     label="N° d'autorisation"
                     hint="Type / N°ordre titre valant autorisation de travail"
                     required
+                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].work_permit"
                   )
                 v-flex(xs1 md1 align-self-center)
                   v-btn(flat icon color="grey" @click="removeWorker(worker)")
