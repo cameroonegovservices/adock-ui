@@ -2,10 +2,10 @@
   v-container(fluid)
     v-layout(justify-center row wrap)
       v-flex(xs12 sm11 md9 lg8 xl6)
-        router-link(:to="{name: 'search', params: {keepPreviousSearch: true}}").d-inline-flex.align-center.adock-no-link
+        router-link(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}").d-inline-flex.align-center.adock-no-link
           v-btn(icon)
             v-icon chevron_left
-          span.subheading.no-wrap Retour aux résultats
+          span.subheading.no-wrap Retour à la fiche
         v-card
           carrier-card-header(:carrier="carrier")
           v-container(
