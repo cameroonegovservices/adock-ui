@@ -136,6 +136,29 @@
                 v-divider
             v-layout
               v-flex(xs12)
+                span.adock-section-title.pl-4 Documents
+            v-layout
+              v-flex(xs6 offset-md1 md4)
+                v-card(
+                  v-if="carrier.latest_certificate"
+                  hover
+                  ripple
+                  :href="certificateUrl"
+                )
+                  v-card-title(primary-title)
+                    v-icon(large left) people
+                    div.headline {{ carrier.latest_certificate.kind_display }}
+                    span.grey--text {{ carrier.latest_certificate.created_at | asLocaleDate }}
+                  v-card-actions
+                    v-spacer
+                    v-btn(icon :href="certificateUrl")
+                      v-icon archive
+                p(v-else) Aucune attestation
+            v-layout
+              v-flex(xs12 offset-md1 md5)
+                v-btn(:to="{name: 'carrier_certificate', params: { carrierSiret: carrier.siret }}") Signer une nouvelle attestation
+            v-layout
+              v-flex(xs12)
                 span#facilities.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
               v-flex(v-if="carrier.other_facilities && carrier.other_facilities.length > 0" xs12 offset-md1)
@@ -202,6 +225,7 @@ import L from "leaflet";
 import { mapState } from "vuex";
 
 import { routeLoadCarrier } from "@/routeLoaders";
+import { getCarrierCertificateUrl } from "@/api";
 import CarrierCardHeader from "@/components/CarrierCardHeader.vue";
 
 function getTileProvider() {
@@ -316,6 +340,12 @@ export default {
       return `https://${process.env.VUE_APP_HOSTNAME}${
         this.$router.currentRoute.path
       }`;
+    },
+
+    certificateUrl() {
+      return `${process.env.VUE_APP_API_URL}${getCarrierCertificateUrl(
+        this.carrier.siret
+      )}`;
     },
 
     displaySpecialities() {
