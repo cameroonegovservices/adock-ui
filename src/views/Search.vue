@@ -15,8 +15,8 @@
               v-layout(row)
                 v-flex(xs12)
                   v-text-field(
-                    v-model.trim="searchForm.q"
                     label="Nom, code postal ou SIRET de l'entreprise"
+                    v-model.trim="searchForm.q"
                     hint="Vous pouvez séparer les différents critères par une virgule (ex. « TRANS, OUEST, 35 »)."
                     @keyup.enter="search"
                     data-cy="searchFormQ"
@@ -24,9 +24,9 @@
               v-layout(row wrap)
                 v-flex(xs12 sm4 md5)
                   v-select(
+                    label="Tonnage"
                     :items="searchLicenseTypeChoices"
                     v-model="searchForm.licenseTypes"
-                    label="Tonnage"
                     hint="Le transporteur doit disposer d'au moins une licence pour le critère."
                     chips
                     multiple
@@ -48,9 +48,9 @@
                           {{ data.item.text }}
                 v-flex(xs12 sm8 md7)
                   v-select(
-                    :items="options.specialities"
-                    v-model="searchForm.specialities"
                     label="Spécialités"
+                    v-model="searchForm.specialities"
+                    :items="options.specialities"
                     chips
                     multiple
                     deletable-chips
@@ -59,8 +59,8 @@
               v-layout(row wrap)
                 v-flex(xs12 sm6 md4)
                   v-autocomplete(
-                    v-model="searchForm.departementFrom"
                     label="Département d'enlèvement"
+                    v-model="searchForm.departementFrom"
                     :items="DEPARTEMENTS"
                     :item-text="departementItemText"
                     item-value="number"
@@ -71,8 +71,8 @@
                   )
                 v-flex(xs12 sm6 md4)
                   v-autocomplete(
-                    v-model='searchForm.departementTo'
                     label="Département de livraison"
+                    v-model='searchForm.departementTo'
                     :items="DEPARTEMENTS"
                     :item-text="departementItemText"
                     item-value="number"
