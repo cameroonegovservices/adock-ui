@@ -48,14 +48,14 @@ describe("Edit", () => {
     cy.get("input[data-cy=inputWorkingArea]")
       .parent()
       .click();
-    // 3th element is Régional
+    // 3th element is Régionale
     cy.get(
       ".menuable__content__active > .v-select-list > .v-list > :nth-child(3) > .v-list__tile > .v-list__tile__content > .v-list__tile__title"
     ).click();
-    cy.get(
-      ":nth-child(7) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-input__append-inner > .v-input__icon > .v-icon"
-    ).click();
     // First speciality
+    cy.get(
+      ":nth-child(8) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-input__append-inner > .v-input__icon > .v-icon"
+    ).click();
     cy.get(
       ".menuable__content__active > .v-select-list > .v-list > :nth-child(1) > .v-list__tile > .v-list__tile__content > .v-list__tile__title"
     ).click();
