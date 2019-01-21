@@ -22,64 +22,55 @@
                     data-cy="searchFormQ"
                   )
               v-layout(row wrap)
-                v-flex(xs12 sm4 md5)
-                  v-select(
-                    label="Tonnage"
-                    :items="searchLicenseTypeChoices"
-                    v-model="searchForm.licenseTypes"
-                    hint="Le transporteur doit disposer d'au moins une licence pour le critère."
-                    chips
-                    multiple
-                    return-object
-                  )
-                    template(
-                      slot="selection"
-                      slot-scope="data"
-                    )
-                      v-chip.chip--select--multi(
-                        @input="data.parent.selectItem(data.item)"
-                        :selected="data.selected"
-                        :disabled="data.disabled"
-                        :key="JSON.stringify(data.item)"
-                        close
+                v-flex(xs12 md4)
+                  v-layout(row wrap)
+                    v-flex(xs12)
+                      p.subheading Licence
+                    v-flex(xs12)
+                      v-checkbox.ma-0(
+                        label="< 3,5 tonnes (léger)"
+                        v-model="searchForm.licenseLTI"
                       )
-                        v-avatar.accent {{ data.item.avatar }}
-                        .
-                          {{ data.item.text }}
-                v-flex(xs12 sm8 md7)
-                  v-select(
-                    label="Spécialités"
-                    v-model="searchForm.specialities"
-                    :items="options.specialities"
-                    chips
-                    multiple
-                    deletable-chips
-                    return-object
-                  )
-              v-layout(row wrap)
-                v-flex(xs12 sm6 md4)
-                  v-autocomplete(
-                    label="Département d'enlèvement"
-                    v-model="searchForm.departementFrom"
-                    :items="DEPARTEMENTS"
-                    :item-text="departementItemText"
-                    item-value="number"
-                    @keyup.enter="search"
-                    data-cy="searchFormDepartementFrom"
-                    hint="Numéro ou nom du département, ex. 44 ou Loire-Atlantique"
-                    clearable
-                  )
-                v-flex(xs12 sm6 md4)
-                  v-autocomplete(
-                    label="Département de livraison"
-                    v-model='searchForm.departementTo'
-                    :items="DEPARTEMENTS"
-                    :item-text="departementItemText"
-                    item-value="number"
-                    @keyup.enter="search"
-                    hint="Numéro ou nom du département, ex. Ille et Vilaine ou 35"
-                    clearable
-                  )
+                      v-checkbox.ma-0(
+                        label="> 3,5 tonnes (lourd)"
+                        v-model="searchForm.licenseLC"
+                      )
+                v-flex(xs12 md8)
+                  v-layout
+                    v-flex(xs12)
+                      v-select(
+                        label="Spécialités"
+                        v-model="searchForm.specialities"
+                        :items="options.specialities"
+                        chips
+                        multiple
+                        deletable-chips
+                        return-object
+                      )
+                  v-layout
+                    v-flex(xs12 md6)
+                      v-autocomplete(
+                        label="Département d'enlèvement"
+                        v-model="searchForm.departementFrom"
+                        :items="DEPARTEMENTS"
+                        :item-text="departementItemText"
+                        item-value="number"
+                        @keyup.enter="search"
+                        data-cy="searchFormDepartementFrom"
+                        hint="Numéro ou nom du département, ex. 44 ou Loire-Atlantique"
+                        clearable
+                      )
+                    v-flex(xs12 md6)
+                      v-autocomplete(
+                        label="Département de livraison"
+                        v-model='searchForm.departementTo'
+                        :items="DEPARTEMENTS"
+                        :item-text="departementItemText"
+                        item-value="number"
+                        @keyup.enter="search"
+                        hint="Numéro ou nom du département, ex. Ille et Vilaine ou 35"
+                        clearable
+                      )
               v-layout
                 v-flex.adock-align-right
                   v-btn(@click.native="clear") Effacer
@@ -112,7 +103,8 @@ import { DEPARTEMENTS } from "@/departements";
 
 const defaultSearchForm = {
   q: "",
-  licenseTypes: [],
+  withLicenseLTI: false,
+  withLicenseLC: false,
   departementFrom: "",
   departementTo: "",
   specialities: []
@@ -141,18 +133,6 @@ export default {
 
   created() {
     this.DEPARTEMENTS = DEPARTEMENTS;
-    this.searchLicenseTypeChoices = [
-      {
-        text: "Léger (< 3,5 t)",
-        value: "lti",
-        avatar: "LTI"
-      },
-      {
-        text: "Lourd (> 3,5 t)",
-        value: "lc",
-        avatar: "LC"
-      }
-    ];
   },
 
   components: {
@@ -187,10 +167,13 @@ export default {
         params["q"] = this.searchForm.q;
       }
 
-      if (this.searchForm.licenseTypes) {
-        params["licence-types"] = this.searchForm.licenseTypes.map(
-          item => item.value
-        );
+      params["licence-types"] = [];
+      if (this.searchForm.licenseLTI) {
+        params["licence-types"].push("lti");
+      }
+
+      if (this.searchForm.licenseLC) {
+        params["licence-types"].push("lc");
       }
 
       if (this.searchForm.departementFrom) {
