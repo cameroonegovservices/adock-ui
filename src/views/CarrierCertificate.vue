@@ -45,35 +45,35 @@
                   v-chip(outline) {{ index + 1 }}
                 v-flex(xs6 md3)
                   v-text-field(
-                    browser-autocomplete="off"
-                    v-model="worker.name"
                     label="Nom"
+                    v-model="worker.name"
+                    browser-autocomplete="off"
                     hint="Nom et prénom du salarié"
                     :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].name"
                     required
                   )
                 v-flex(xs4 md2)
                   v-text-field(
-                    browser-autocomplete="off"
-                    v-model="worker.date"
                     label="Date"
+                    v-model="worker.date"
+                    browser-autocomplete="off"
                     hint="Date d'embauche"
                     required
                     :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].date"
                   )
                 v-flex(offset-xs2 xs4 offset-md0 md2)
                   v-text-field(
-                    browser-autocomplete="off"
-                    v-model="worker.nationality"
                     label="Nationalité"
+                    v-model="worker.nationality"
+                    browser-autocomplete="off"
                     required
                     :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].nationality"
                   )
                 v-flex(xs4 md3)
                   v-text-field(
-                    browser-autocomplete="off"
-                    v-model="worker.work_permit"
                     label="N° d'autorisation"
+                    v-model="worker.work_permit"
+                    browser-autocomplete="off"
                     hint="Type / N°ordre titre valant autorisation de travail"
                     required
                     :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].work_permit"
@@ -100,26 +100,26 @@
                 v-flex(xs12 offset-md1 md10)
                   p.subheading Responsable de l'entreprise
                   v-text-field(
-                    v-model="lastName"
                     label="Nom"
+                    v-model="lastName"
                     required
                     :error-messages="fieldErrors.last_name"
                   )
                   v-text-field(
-                    v-model="firstName"
                     label="Prénom"
+                    v-model="firstName"
                     required
                     :error-messages="fieldErrors.first_name"
                   )
                   v-text-field(
-                    v-model="position"
                     label="Fonction"
+                    v-model="position"
                     required
                     :error-messages="fieldErrors.position"
                   )
                   v-text-field(
-                    v-model="location"
                     label="Lieu"
+                    v-model="location"
                     required
                     :error-messages="fieldErrors.location"
                   )

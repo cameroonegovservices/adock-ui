@@ -24,19 +24,19 @@
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
+                  label="Téléphone"
                   v-model="form.phone"
                   required
                   input="phone"
-                  label="Téléphone"
                   :error-messages="fieldErrors.telephone"
                   data-cy="inputPhone"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
+                  label="Adresse électronique"
                   v-model="form.email"
                   input="email"
-                  label="Adresse électronique"
                   :error-messages="fieldErrors.email"
                   data-cy="inputEmail"
                   placeholder="contact@transporteur.fr"
@@ -45,26 +45,26 @@
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
+                  label="Site Web"
                   v-model="form.website"
                   input="url"
-                  label="Site Web"
                   :error-messages="fieldErrors.website"
                   placeholder="www.transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-select(
+                  label="Aire de travail"
                   v-model="form.workingArea"
                   :items="options.workingAreas"
-                  label="Aire de travail"
                   data-cy="inputWorkingArea"
                   :error-messages="fieldErrors.working_area"
                 )
             v-layout(v-if="form.workingArea === 'REGION'")
               v-flex(xs12 offset-md1 md10)
                 v-autocomplete(
-                  v-model="form.region"
                   label="Ajout de tous les départements d'une région"
+                  v-model="form.region"
                   hint="Cliquez sur « Ajouter » pour ajouter tous les départements de cette région aux départements livrés."
                   :items="workingAreaRegions"
                   :persistent-hint="true"
@@ -77,8 +77,8 @@
             v-layout(v-if="['DEPARTEMENT', 'REGION'].includes(form.workingArea)")
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
-                  v-model="workingAreaDepartementsInput"
                   label="Départements livrés"
+                  v-model="workingAreaDepartementsInput"
                   :error-messages="fieldErrors.working_area_departements"
                   hint="Numéros des départements séparés par des espaces ou des virgules"
                   :rules="[workingAreaDepartementsRule]"
@@ -86,9 +86,9 @@
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-select(
-                  :items="options.specialities"
-                  v-model="form.specialities"
                   label="Spécialités"
+                  v-model="form.specialities"
+                  :items="options.specialities"
                   :error-messages="fieldErrors.specialities"
                   chips
                   multiple
@@ -97,20 +97,20 @@
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-textarea(
+                  label="Description de l'activité"
                   v-model="form.description"
                   :rows="3"
-                  label="Description de l'activité"
                   :error-messages="fieldErrors.description"
                 )
             v-layout(wrap)
               v-flex(xs12 offset-md1 md5)
                 v-text-field(
                   v-if="carrier.is_locked"
+                  label="Code de modification"
                   v-model="form.editCode"
                   type="integer"
                   mask="######"
                   :counter="6"
-                  label="Code de modification"
                   :hint="`Copier dans ce champ le code envoyé à « ${carrier.email} »`"
                   :error-messages="fieldErrors.edit_code"
                 )
