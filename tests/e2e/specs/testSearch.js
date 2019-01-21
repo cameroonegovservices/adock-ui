@@ -16,7 +16,8 @@ describe("Search", () => {
   it("searches on county code", () => {
     cy.visit("/");
     cy.get("[data-cy=searchFormQ]").type("80005226884728");
-    cy.get("[data-cy=searchFormDepartementFrom]").type("34");
+    cy.get("[data-cy=searchFormDepartementFrom]").type("34{enter}");
+
     cy.contains("div.v-btn__content", "Chercher").click();
 
     cy.get("a[href='/transporteur/80005226884728']");
@@ -28,7 +29,7 @@ describe("Search", () => {
   it("doesn't find with SIRET and county code", () => {
     cy.visit("/");
     cy.get("[data-cy=searchFormQ]").type("80005226884728");
-    cy.get("[data-cy=searchFormDepartementFrom]").type("42");
+    cy.get("[data-cy=searchFormDepartementFrom]").type("42{enter}");
     cy.contains("div.v-btn__content", "Chercher").click();
 
     cy.contains(
