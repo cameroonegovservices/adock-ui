@@ -58,21 +58,27 @@
                   )
               v-layout(row wrap)
                 v-flex(xs12 sm6 md4)
-                  v-text-field(
-                    v-model='searchForm.departementFrom'
+                  v-autocomplete(
+                    v-model="searchForm.departementFrom"
                     label="Département d'enlèvement"
-                    mask="#N#"
+                    :items="DEPARTEMENTS"
+                    :item-text="departementItemText"
+                    item-value="number"
                     @keyup.enter="search"
                     data-cy="searchFormDepartementFrom"
-                    hint="Numéro du département, ex. 44"
+                    hint="Numéro ou nom du département, ex. 44 ou Loire-Atlantique"
+                    clearable
                   )
                 v-flex(xs12 sm6 md4)
-                  v-text-field(
+                  v-autocomplete(
                     v-model='searchForm.departementTo'
                     label="Département de livraison"
-                    mask="#N#"
+                    :items="DEPARTEMENTS"
+                    :item-text="departementItemText"
+                    item-value="number"
                     @keyup.enter="search"
-                    hint="Numéro du département, ex. 35"
+                    hint="Numéro ou nom du département, ex. Ille et Vilaine ou 35"
+                    clearable
                   )
               v-layout
                 v-flex.adock-align-right
@@ -102,6 +108,7 @@ import api from "@/api";
 import CarrierList from "@/components/CarrierList.vue";
 import TestimonialCards from "@/components/TestimonialCards.vue";
 import SearchHelp from "@/components/SearchHelp.vue";
+import { DEPARTEMENTS } from "@/departements";
 
 const defaultSearchForm = {
   q: "",
@@ -133,6 +140,7 @@ export default {
   },
 
   created() {
+    this.DEPARTEMENTS = DEPARTEMENTS;
     this.searchLicenseTypeChoices = [
       {
         text: "Léger (< 3,5 t)",
@@ -163,6 +171,10 @@ export default {
   },
 
   methods: {
+    departementItemText(item) {
+      return `${item.number} - ${item.name}`;
+    },
+
     async search() {
       // Remove error message as soon as the user clicks.
       this.errorMessage = null;
