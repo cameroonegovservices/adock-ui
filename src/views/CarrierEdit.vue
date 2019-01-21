@@ -359,7 +359,7 @@ export default {
       const payload = this.getPayloadFromForm();
       const data = await api.updateCarrier(this.carrier.siret, payload);
       if (data.errors) {
-        this.setErrorsAndScroll(data.errors, this.$refs.mainContent);
+        this.setErrorsAndScrollTo(data.errors, this.$refs.mainContent);
       } else {
         // Success
         this.$store.commit("MESSAGE_ADD", {
