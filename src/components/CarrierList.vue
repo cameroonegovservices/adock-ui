@@ -15,20 +15,21 @@
               v-list-tile-title.adock-carrier-list-tile {{ carrier.enseigne }}
               v-list-tile-sub-title.adock-carrier-list-tile
                 | {{ carrier.code_postal }} {{ carrier.ville }}
-                |  - {{ carrier.lti_nombre }} LTI - {{ carrier.lc_nombre }} LC
-                |  - {{ choices.workingAreas[carrier.working_area] }}
-            v-list-tile-action.adock-carrier-list-action
-              v-list-tile-action-text
-                span {{ carrier.completeness }}&nbsp;%
+            v-list-tile-action
+              v-list-tile-action-text.adock-carrier-list-details
+                span  &lt; 3,5 tonnes&nbsp;: {{ carrier.lti_nombre }}
+                br
+                span &gt; 3,5 tonnes&nbsp;: {{ carrier.lc_nombre }}
+                br
+                span {{ choices.workingAreas[carrier.working_area] }}
 </template>
 
 <style lang="stylus">
-.adock-carrier-list-action
-  padding-top: 15px
-  padding-bottom: 15px
-
 .adock-carrier-list-tile
   white-space: unset
+
+.adock-carrier-list-details
+  width: 17ex;
 </style>
 
 <script>
