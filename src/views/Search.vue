@@ -25,7 +25,7 @@
                 v-flex(xs12 md4)
                   v-layout(row wrap)
                     v-flex(xs12)
-                      p.subheading Licence
+                      p.subheading Licences
                     v-flex(xs12)
                       v-checkbox.ma-0(
                         label="< 3,5 tonnes (léger)"
