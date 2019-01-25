@@ -1,3 +1,6 @@
 module.exports = {
-  productionSourceMap: true
+  productionSourceMap: true,
+  devServer: {
+    allowedHosts: [".serveo.net"]
+  }
 };
