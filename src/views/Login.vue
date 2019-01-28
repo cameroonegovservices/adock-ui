@@ -33,6 +33,7 @@
                 v-model="email"
                 :rules="emailRules"
                 validate-on-blur
+                :error-messages="fieldErrors.email"
               )
               v-text-field(
                 label="Mot de passe"
@@ -43,6 +44,7 @@
                 :type="isPlainPassword ? 'text': 'password'"
                 counter
                 validate-on-blur
+                :error-messages="fieldErrors.password"
               )
               v-layout(align-center justify-space-between)
                 router-link(:to="{name: 'login_create'}") Créer un compte
@@ -101,7 +103,8 @@ export default {
       isValid: false,
       isPlainPassword: false,
       password: "",
-      errorMessage: ""
+      errorMessage: "",
+      fieldErrors: {}
     };
   },
 
@@ -123,6 +126,9 @@ export default {
   methods: {
     async submit() {
       if (this.$refs.form.validate()) {
+        this.errorMessage = "";
+        this.fieldErrors = {};
+
         const data = await api.login(this.email, this.password);
         if (data.token) {
           this.$store.dispatch("userLogIn", data);
