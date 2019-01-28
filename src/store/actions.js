@@ -15,9 +15,9 @@ export const actions = {
   userLogIn: ({ commit }, payload) => {
     let decodedJwt = null;
 
-    auth.setToken(payload.token);
+    auth.setTokenData(payload);
     try {
-      decodedJwt = jwtDecode(payload.token);
+      decodedJwt = jwtDecode(auth.getToken());
     } catch (e) {
       Raven.captureException(e);
     }

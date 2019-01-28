@@ -24,14 +24,22 @@ export default {
     return storage.token;
   },
 
-  setToken(token) {
-    if (token) {
-      storage.token = token;
-    }
+  getIdToken() {
+    return storage.idToken;
   },
 
-  deleteToken() {
+  setTokenData(payload) {
+    storage.tokenType = payload.tokenType;
+    storage.token = payload.token;
+    storage.expiresIn = payload.expiresIn;
+    storage.idToken = payload.idToken;
+  },
+
+  deleteTokenData() {
+    delete storage.tokenType;
     delete storage.token;
+    delete storage.expiresIn;
+    delete storage.idToken;
   },
 
   isLoggedIn() {

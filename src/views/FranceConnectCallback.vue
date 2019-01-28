@@ -31,9 +31,7 @@ export default {
     const data = await api.franceConnectCallback(this.code, this.state);
     if (data.token) {
       console.log(data);
-      this.$store.dispatch("userLogIn", {
-        token: data.token
-      });
+      this.$store.dispatch("userLogIn", data);
       this.$store.commit("MESSAGE_ADD", {
         message: `Connecté en tant que « ${
           this.$store.state.user.email

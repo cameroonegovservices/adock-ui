@@ -154,7 +154,7 @@ export const api = {
   },
 
   async franceConnectCallback(code, state) {
-    const data = { token: null, error: null };
+    const data = { error: null };
 
     try {
       const response = await axiosInstance.get(franceConnectCallbackUrl, {
@@ -168,7 +168,10 @@ export const api = {
           message: response.data.message || ""
         };
       } else {
+        data.tokenType = response.data.token_type;
         data.token = response.data.token;
+        data.expiresIn = response.data.expires_in;
+        data.idToken = response.data.id_token;
       }
     } catch (axiosError) {
       data.error = handleCommunicationError(axiosError);
@@ -179,7 +182,6 @@ export const api = {
 
   async login(email, password) {
     const data = {
-      token: null,
       errors: null
     };
 
@@ -198,6 +200,7 @@ export const api = {
         };
       } else {
         data.token = response.data.token;
+        data.expiresIn = response.data.expires_in;
       }
     } catch (axiosError) {
       data.errors = handleInvalidFormAndCommunicationError(axiosError);

@@ -131,9 +131,7 @@ export default {
       if (this.$refs.form.validate()) {
         const data = await api.login(this.email, this.password);
         if (data.token) {
-          this.$store.dispatch("userLogIn", {
-            token: data.token
-          });
+          this.$store.dispatch("userLogIn", data);
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });
