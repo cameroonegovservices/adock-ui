@@ -46,12 +46,14 @@
                 required
                 validate-on-blur
               )
-              v-layout(justify-space-between)
+              v-layout(align-center justify-space-between)
+                router-link(:to="{name: 'login_create'}") Créer un compte
                 v-btn(
                   color="primary"
                   @click="submit"
                   :disabled="isDisabled"
                 ) Se connecter
+
 </template>
 
 <style lang="stylus">

@@ -11,6 +11,7 @@ import CarrierEdit from "@/views/CarrierEdit.vue";
 import CGU from "@/views/CGU.vue";
 import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
 import Login from "@/views/Login.vue";
+import LoginCreate from "@/views/LoginCreate.vue";
 import Search from "@/views/Search.vue";
 import Stats from "@/views/Stats.vue";
 import ViewError from "@/views/ViewError.vue";
@@ -49,6 +50,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: Login
+  },
+  {
+    path: "/login/create",
+    name: "login_create",
+    component: LoginCreate
   },
   {
     path: "/stats",
