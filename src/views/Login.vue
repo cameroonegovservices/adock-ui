@@ -32,7 +32,6 @@
                 label="Adresse électronique"
                 v-model="email"
                 :rules="emailRules"
-                required
                 validate-on-blur
               )
               v-text-field(
@@ -43,7 +42,6 @@
                 @click:append="() => (isPlainPassword = !isPlainPassword)"
                 :type="isPlainPassword ? 'text': 'password'"
                 counter
-                required
                 validate-on-blur
               )
               v-layout(align-center justify-space-between)
