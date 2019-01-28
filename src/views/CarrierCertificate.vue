@@ -209,6 +209,7 @@ export default {
 
   methods: {
     setup() {
+      // From mixin
       this.errorMessage = null;
       this.fieldErrors = {};
       // Only keep manager informations (if any)
