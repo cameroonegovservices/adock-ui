@@ -190,7 +190,7 @@ export const api = {
     // Authenticate
     try {
       const response = await axiosInstance.post(loginUrl, {
-        email,
+        username: email,
         password
       });
       if (response.status !== 200) {
