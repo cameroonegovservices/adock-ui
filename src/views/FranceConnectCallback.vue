@@ -6,6 +6,7 @@
           v-card-text
             p {{ code }}
             p {{ state }}
+            p {{ message }}
 
 </template>
 
