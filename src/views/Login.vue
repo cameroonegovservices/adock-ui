@@ -23,6 +23,7 @@
             v-form(
               v-model="isValid"
               ref="form"
+              @submit="submit"
             )
               v-alert(
                 type="error"
@@ -52,6 +53,7 @@
                   color="primary"
                   @click="submit"
                   :disabled="isDisabled"
+                  type="submit"
                 ) Se connecter
 
 </template>
@@ -124,7 +126,8 @@ export default {
   },
 
   methods: {
-    async submit() {
+    async submit(e) {
+      e.preventDefault();
       if (this.$refs.form.validate()) {
         this.errorMessage = "";
         this.fieldErrors = {};
