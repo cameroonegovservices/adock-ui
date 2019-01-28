@@ -59,6 +59,7 @@
 
 <script>
 import api from "@/api";
+import { emailRules, passwordRules, requiredRules } from "@/mixins";
 
 export default {
   name: "login-create",
@@ -77,19 +78,9 @@ export default {
   },
 
   created() {
-    this.requiredRules = [v => !!v || "Le champ est requis."];
-    this.emailRules = [
-      v => !!v || "Une adresse électronique est requise.",
-      v =>
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-        "L'adresse électronique n'est pas valide."
-    ];
-    this.passwordRules = [
-      v => !!v || "Un mot de passe est requis.",
-      v =>
-        (v && v.length >= 8) ||
-        "Le mot de passe doit au moins avoir 8 caractères."
-    ];
+    this.emailRules = emailRules;
+    this.passwordRules = passwordRules;
+    this.requiredRules = requiredRules;
   },
 
   computed: {

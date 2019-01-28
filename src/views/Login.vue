@@ -90,6 +90,7 @@
 import Raven from "raven-js";
 
 import api from "@/api";
+import { emailRules, passwordRules } from "@/mixins";
 
 export default {
   name: "login",
@@ -99,23 +100,16 @@ export default {
       franceConnectAuthorizeUrl:
         process.env.VUE_APP_API_URL + "accounts/fc/authorize",
       email: "",
-      emailRules: [
-        v => !!v || "Une adresse électronique est requise.",
-        v =>
-          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-          "L'adresse électronique n'est pas valide."
-      ],
-      passwordRules: [
-        v => !!v || "Un mot de passe est requis.",
-        v =>
-          (v && v.length >= 8) ||
-          "Le mot de passe doit au moins avoir 8 caractères."
-      ],
       isValid: false,
       isPlainPassword: false,
       password: "",
       errorMessage: ""
     };
+  },
+
+  created() {
+    this.emailRules = emailRules;
+    this.passwordRules = passwordRules;
   },
 
   computed: {
