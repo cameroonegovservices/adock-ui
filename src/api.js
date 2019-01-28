@@ -23,6 +23,7 @@ export const metaUrl = "/meta/";
 export const searchCarriersUrl = "/carriers/search/";
 export const statsCarriersUrl = "/carriers/stats/";
 export const franceConnectCallbackUrl = "/accounts/fc/callback/";
+export const franceConnectLogoutUrl = "/accounts/fc/logout/";
 
 export function getCarrierCertificateUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/certificate/`;
@@ -205,6 +206,28 @@ export const api = {
     } catch (axiosError) {
       data.errors = handleInvalidFormAndCommunicationError(axiosError);
     }
+    return data;
+  },
+
+  async logout() {
+    const data = {
+      errors: null
+    };
+
+    const idToken = auth.getIdToken();
+    if (idToken) {
+      try {
+        const response = await axiosInstance.get(franceConnectLogoutUrl, {
+          params: {
+            id_token: idToken
+          }
+        });
+        data.message = response.data.message;
+      } catch (axiosError) {
+        data.errors = handleCommunicationError(axiosError);
+      }
+    }
+
     return data;
   },
 

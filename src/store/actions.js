@@ -40,8 +40,14 @@ export const actions = {
     }
   },
 
-  userLogOut: ({ commit }) => {
-    auth.deleteToken();
+  userLogOut: async ({ commit }) => {
+    const data = await api.logout();
+    if (data.message) {
+      commit("MESSAGE_ADD", {
+        message: data.message
+      });
+    }
+    auth.deleteTokenData();
     commit("USER_LOG_OUT");
   }
 };
