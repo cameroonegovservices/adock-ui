@@ -26,7 +26,6 @@
                 v-text-field(
                   label="Téléphone"
                   v-model="form.phone"
-                  required
                   input="phone"
                   :error-messages="fieldErrors.telephone"
                   data-cy="inputPhone"
