@@ -19,6 +19,7 @@ axiosInstance.interceptors.request.use(function(config) {
 
 // Server URLs
 export const loginUrl = "/accounts/login/";
+export const loginCreateUrl = "/accounts/create/";
 export const metaUrl = "/meta/";
 export const searchCarriersUrl = "/carriers/search/";
 export const statsCarriersUrl = "/carriers/stats/";
@@ -202,6 +203,35 @@ export const api = {
       } else {
         data.token = response.data.token;
         data.expiresIn = response.data.expires_in;
+      }
+    } catch (axiosError) {
+      data.errors = handleInvalidFormAndCommunicationError(axiosError);
+    }
+    return data;
+  },
+
+  async loginCreate(payload) {
+    const data = {
+      errors: null
+    };
+
+    try {
+      const response = await axiosInstance.post(loginCreateUrl, {
+        first_name: payload.firstName,
+        last_name: payload.lastName,
+        email: payload.email,
+        password: payload.password
+      });
+      if (response.status !== 200) {
+        data.errors = {
+          main: {
+            message: "Impossible de créer le compte utilisateur."
+          }
+        };
+      } else {
+        data.message = `Le compte est créé, vous devez maintenant l'activer en cliquant sur le mail envoyé à ${
+          payload.email
+        }.`;
       }
     } catch (axiosError) {
       data.errors = handleInvalidFormAndCommunicationError(axiosError);
