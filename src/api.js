@@ -26,6 +26,10 @@ export const statsCarriersUrl = "/carriers/stats/";
 export const franceConnectCallbackUrl = "/accounts/fc/callback/";
 export const franceConnectLogoutUrl = "/accounts/fc/logout/";
 
+export function getAccountActivateUrl(userId, token) {
+  return `/accounts/${userId}/activate/${token}/`;
+}
+
 export function getCarrierCertificateUrl(carrierSiret) {
   return `/carriers/${carrierSiret}/certificate/`;
 }
@@ -236,6 +240,27 @@ export const api = {
     } catch (axiosError) {
       data.errors = handleInvalidFormAndCommunicationError(axiosError);
     }
+    return data;
+  },
+
+  async activateAccount(payload) {
+    const data = {
+      errors: null
+    };
+
+    try {
+      const url = getAccountActivateUrl(payload.userId, payload.token);
+      const response = await axiosInstance.get(url);
+      data.status = response.status;
+      data.message = response.data.message;
+      if (response.data.token) {
+        data.token = response.data.token;
+        data.expiresIn = response.data.expires_in;
+      }
+    } catch (axiosError) {
+      data.errors = handleCommunicationError(axiosError);
+    }
+
     return data;
   },
 
