@@ -88,10 +88,13 @@
 <script>
 import { mapState } from "vuex";
 
+import { displayUserMixin } from "@/mixins";
 import Message from "@/components/Message.vue";
 
 export default {
   name: "app",
+
+  mixins: [displayUserMixin],
 
   data() {
     return {
@@ -119,12 +122,7 @@ export default {
   },
 
   computed: {
-    displayUser() {
-      return this.user.first_name
-        ? `${this.user.first_name} ${this.user.last_name}`
-        : this.user.email;
-    },
-    ...mapState(["meta", "user"])
+    ...mapState(["meta"])
   },
 
   methods: {

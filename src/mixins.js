@@ -1,3 +1,16 @@
+import { mapState } from "vuex";
+
+export const displayUserMixin = {
+  computed: {
+    displayUser() {
+      return this.user.first_name
+        ? `${this.user.first_name} ${this.user.last_name}`
+        : this.user.email;
+    },
+    ...mapState(["user"])
+  }
+};
+
 export const requiredRules = [v => !!v || "Le champ est requis."];
 export const emailRules = [
   v => !!v || "Une adresse électronique est requise.",
