@@ -27,7 +27,7 @@ const routes = [
     props: true
   },
   {
-    path: "/about",
+    path: "/apropos",
     name: "about",
     component: About
   },
@@ -37,7 +37,7 @@ const routes = [
     component: CGU
   },
   {
-    path: "/error",
+    path: "/erreur",
     name: "error",
     component: ViewError,
     props: true
