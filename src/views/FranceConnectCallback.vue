@@ -36,7 +36,7 @@ export default {
       this.$store.commit("MESSAGE_ADD", {
         message: `Connecté en tant que « ${
           this.$store.state.user.email
-        } » via France Connect.`
+        } » via FranceConnect.`
       });
       this.$router.push({
         name: "search"
