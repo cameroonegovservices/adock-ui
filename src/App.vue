@@ -44,7 +44,7 @@
           | {{ displayUser }}
           v-btn(icon @click="userLogOut")
             v-icon exit_to_app
-        v-btn(v-else flat :to="{name: 'login'}") Se connecter
+        v-btn(v-else flat :to="{name: 'account_login'}") Se connecter
     v-content
       v-alert.adock-alert-ie11(v-if="isIE11" :value="true" type="warning")
         | Nous vous recommandons d'utiliser un navigateur récent tel que&nbsp;

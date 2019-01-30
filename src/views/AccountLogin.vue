@@ -48,7 +48,7 @@
                 :error-messages="fieldErrors.password"
               )
               v-layout(align-center justify-space-between)
-                router-link(:to="{name: 'login_create'}") Créer un compte
+                router-link(:to="{name: 'account_create'}") Créer un compte
                 v-btn(
                   color="primary"
                   @click="submit"
@@ -95,7 +95,7 @@ import api from "@/api";
 import { emailRules, passwordRules } from "@/mixins";
 
 export default {
-  name: "login",
+  name: "account-login",
 
   data() {
     return {

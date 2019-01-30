@@ -4,14 +4,15 @@ import VueRouter from "vue-router";
 import { getTracker } from "./tracker";
 
 import About from "@/views/About.vue";
+import AccountActivate from "@/views/AccountActivate.vue";
+import AccountCreate from "@/views/AccountCreate.vue";
+import AccountLogin from "@/views/AccountLogin.vue";
 import CarrierCertificate from "@/views/CarrierCertificate.vue";
 import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
 import CarrierDetail from "@/views/CarrierDetail.vue";
 import CarrierEdit from "@/views/CarrierEdit.vue";
 import CGU from "@/views/CGU.vue";
 import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
-import Login from "@/views/Login.vue";
-import LoginCreate from "@/views/LoginCreate.vue";
 import Search from "@/views/Search.vue";
 import Stats from "@/views/Stats.vue";
 import ViewError from "@/views/ViewError.vue";
@@ -47,16 +48,6 @@ const routes = [
     component: FranceConnectCallback
   },
   {
-    path: "/login",
-    name: "login",
-    component: Login
-  },
-  {
-    path: "/login/create",
-    name: "login_create",
-    component: LoginCreate
-  },
-  {
     path: "/stats",
     name: "stats",
     component: Stats
@@ -84,6 +75,21 @@ const routes = [
     name: "carrier_certificate",
     component: CarrierCertificate,
     props: true
+  },
+  {
+    path: "/utilisateur/connecter/",
+    name: "account_login",
+    component: AccountLogin
+  },
+  {
+    path: "/utilisateur/creer",
+    name: "account_create",
+    component: AccountCreate
+  },
+  {
+    path: "/utilisateur/activate",
+    name: "account_activate",
+    component: AccountActivate
   },
   {
     path: "*",

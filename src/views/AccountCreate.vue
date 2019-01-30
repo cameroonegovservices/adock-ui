@@ -62,7 +62,7 @@ import api from "@/api";
 import { emailRules, passwordRules, requiredRules } from "@/mixins";
 
 export default {
-  name: "login-create",
+  name: "account-create",
 
   data() {
     return {
@@ -113,7 +113,10 @@ export default {
           }
         } else {
           this.errorMessage = "";
-          console.log("Validation email");
+          this.$store.commit("MESSAGE_ADD", data.message);
+          this.$router.push({
+            name: "account_activate"
+          });
         }
       }
     }
