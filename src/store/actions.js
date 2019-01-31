@@ -6,8 +6,8 @@ import api from "@/api";
 
 export const actions = {
   loadMeta: async ({ commit }) => {
-    const response = await api.getMeta();
-    if (response.error == null) {
+    const response = await api.get(api.metaUrl);
+    if (response.status === 200) {
       commit("META_SET", response.data);
     }
   },
@@ -41,14 +41,21 @@ export const actions = {
   },
 
   userLogOut: async ({ commit }) => {
-    const data = await api.logout();
-    if (data.message) {
-      commit("MESSAGE_ADD", {
-        message: data.message
+    const idToken = auth.getIdToken();
+    if (idToken) {
+      const response = await this.get(this.franceConnectLogoutUrl, {
+        id_token: idToken
       });
+      // It's possible the user hasn't been disconnected from FranceConnect, in
+      // this case, we only display a message.
+      if (response.data.message) {
+        commit("MESSAGE_ADD", {
+          message: response.data.message
+        });
+      }
+      auth.deleteTokenData();
+      commit("USER_LOG_OUT");
     }
-    auth.deleteTokenData();
-    commit("USER_LOG_OUT");
   }
 };
 

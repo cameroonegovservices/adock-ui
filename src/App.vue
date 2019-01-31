@@ -109,7 +109,7 @@ export default {
     message: Message
   },
 
-  async created() {
+  created() {
     this.$store.dispatch("loadMeta").then(() => {
       if (this.meta.version.length === 0) {
         // meta data is empty
@@ -117,7 +117,6 @@ export default {
       }
     });
     this.isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
-
     this.$store.dispatch("userLogInFromStorage");
   },
 

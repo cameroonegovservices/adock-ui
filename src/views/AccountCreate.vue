@@ -97,26 +97,26 @@ export default {
     async submit(e) {
       e.preventDefault();
       if (this.$refs.form.validate()) {
-        const data = await api.loginCreate({
-          firstName: this.firstName,
-          lastName: this.lastName,
+        const response = await api.post(api.loginCreateUrl, {
+          first_name: this.firstName,
+          last_name: this.lastName,
           email: this.email,
           password: this.password
         });
-        if (data.errors) {
-          if (data.errors.main && data.errors.main.message) {
-            this.errorMessage = data.errors.main.message;
-          }
-
-          if (data.errors.fields) {
-            this.fieldErrors = data.errors.fields;
-          }
-        } else {
+        if (response.status === 200) {
           this.errorMessage = "";
-          this.$store.commit("MESSAGE_ADD", data.message);
+          this.$store.commit("MESSAGE_ADD", {
+            message: `Le compte est créé, vous devez maintenant l'activer en cliquant sur le mail envoyé à « ${
+              this.email
+            } ».`
+          });
           this.$router.push({
             name: "account_activate"
           });
+        } else {
+          if (response.data.errors) {
+            this.fieldErrors = response.data.errors;
+          }
         }
       }
     }

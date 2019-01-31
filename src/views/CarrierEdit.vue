@@ -264,8 +264,8 @@ export default {
       next();
     } else {
       next(
-        await routeLoadCarrier(routeTo, routeFrom, response => {
-          routeTo.params.carrier = response.carrier;
+        await routeLoadCarrier(routeTo, routeFrom, data => {
+          routeTo.params.carrier = data.carrier;
         })
       );
     }
@@ -294,15 +294,15 @@ export default {
   },
 
   methods: {
-    setup() {
-      this.errorMessage = null;
+    async setup() {
       this.editCodeMessage = null;
+      this.errorMessage = null;
       this.fieldErrors = {};
       this.loadForm(this.carrier);
       if (this.carrier.is_locked) {
-        api.mailEditCode(this.carrier.siret).then(data => {
-          this.loadEditCodeData(data);
-        });
+        const url = api.getEditCodeUrl(this.carrier.siret);
+        const response = await api.get(url);
+        this.loadEditCodeData(response);
       }
     },
 
@@ -335,18 +335,20 @@ export default {
       };
     },
 
-    loadEditCodeData(data) {
-      if (data.status === 201) {
-        const editCodeAt = new Date(data.edit_code_at).toLocaleTimeString();
+    loadEditCodeData(response) {
+      if (response.status === 201) {
+        const editCodeAt = new Date(
+          response.data.edit_code_at
+        ).toLocaleTimeString();
         this.editCodeMessage = `Un courriel avec un code modification a été envoyé à « ${
-          data.email
+          response.data.email
         } » (${editCodeAt}).`;
-      } else if (data.status === 200) {
+      } else if (response.status === 200) {
         const editCodeTimeoutAt = new Date(
-          data.edit_code_timeout_at
+          response.data.edit_code_timeout_at
         ).toLocaleTimeString();
         this.editCodeMessage = `Le code de modification envoyé à « ${
-          data.email
+          response.data.email
         } » est encore valide jusqu'à ${editCodeTimeoutAt}.`;
       } else {
         this.errorMessage =
@@ -356,18 +358,21 @@ export default {
 
     async update() {
       const payload = this.getPayloadFromForm();
-      const data = await api.updateCarrier(this.carrier.siret, payload);
-      if (data.errors) {
-        this.setErrorsAndScrollTo(data.errors, this.$refs.mainContent);
-      } else {
+      const response = await api.patch(
+        api.getCarrierUrl(this.carrier.siret),
+        payload
+      );
+      if (response.status === 200) {
         // Success
         this.$store.commit("MESSAGE_ADD", {
-          message: `Transporteur « ${data.carrier.enseigne} » enregistré.`
+          message: `Transporteur « ${
+            response.data.carrier.enseigne
+          } » enregistré.`
         });
-        if (data.confirmation_email_sent) {
+        if (response.data.confirmation_email_sent) {
           this.$store.commit("MESSAGE_ADD", {
             message: `Un courriel de confirmation a été envoyé à « ${
-              data.carrier.email
+              response.data.carrier.email
             } ».`
           });
         }
@@ -376,6 +381,8 @@ export default {
           name: "carrier_detail",
           carrierSiret: this.carrier.siret
         });
+      } else {
+        this.setErrorsAndScrollTo(response.data, this.$refs.mainContent);
       }
     },
 

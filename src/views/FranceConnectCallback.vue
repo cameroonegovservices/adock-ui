@@ -24,13 +24,23 @@ export default {
     };
   },
 
-  async mounted() {
+  mounted() {
     console.log(this.$route.query);
     this.code = this.$route.query.code;
     this.state = this.$route.query.state;
 
-    const data = await api.franceConnectCallback(this.code, this.state);
-    if (data.token) {
+    const params = {
+      code: this.code,
+      state: this.state
+    };
+    const response = api.get(api.franceConnectCallbackUrl, params);
+    if (response.status === 200) {
+      const data = {
+        tokenType: response.data.token_type,
+        token: response.data.token,
+        expiresIn: response.data.expires_in,
+        idToken: response.data.id_token
+      };
       console.log(data);
       this.$store.dispatch("userLogIn", data);
       this.$store.commit("MESSAGE_ADD", {
@@ -42,7 +52,7 @@ export default {
         name: "search"
       });
     } else {
-      this.message = data.error.message;
+      this.message = response.data.message;
     }
   }
 };

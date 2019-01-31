@@ -77,7 +77,7 @@ const routes = [
     props: true
   },
   {
-    path: "/utilisateur/connecter/",
+    path: "/utilisateur/connecter",
     name: "account_login",
     component: AccountLogin
   },
@@ -87,9 +87,10 @@ const routes = [
     component: AccountCreate
   },
   {
-    path: "/utilisateur/activate",
+    path: "/utilisateur/:userId/activer/:token",
     name: "account_activate",
-    component: AccountActivate
+    component: AccountActivate,
+    props: true
   },
   {
     path: "*",

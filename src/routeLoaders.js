@@ -1,14 +1,15 @@
 import api from "./api";
 
 export async function routeLoadCarrier(routeTo, routeFrom, onSuccess) {
-  const response = await api.fetchCarrier(routeTo.params.carrierSiret);
-  if (response.error === null) {
+  const url = api.getCarrierUrl(routeTo.params.carrierSiret);
+  const response = await api.get(url);
+  if (response.status === 200) {
     // Success
-    return onSuccess(response);
+    return onSuccess(response.data);
   } else {
     // Error
     let fallbackUrl;
-    if (response.error.status === 404) {
+    if (response.status === 404) {
       // Unavailable
       fallbackUrl = "/";
     } else {
@@ -19,8 +20,8 @@ export async function routeLoadCarrier(routeTo, routeFrom, onSuccess) {
     return {
       name: "error",
       params: {
-        message: response.error.message,
-        status: response.error.status,
+        message: response.data.message,
+        status: response.status,
         fallbackUrl
       }
     };

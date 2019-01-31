@@ -3,6 +3,10 @@ import { mapState } from "vuex";
 export const displayUserMixin = {
   computed: {
     displayUser() {
+      if (this.user == null) {
+        return "";
+      }
+
       return this.user.first_name
         ? `${this.user.first_name} ${this.user.last_name}`
         : this.user.email;
@@ -33,20 +37,28 @@ export const scrollToErrorsMixin = {
   },
 
   methods: {
-    setErrorsAndScrollTo(errors, refMainContent) {
+    setErrorsAndScrollTo(data, refMainContent) {
       let scrollToTarget = null;
+      this.errorMessage = null;
+      this.fieldErrors = {};
 
-      // Error
-      if (errors.main && errors.main.message) {
-        this.errorMessage = errors.main.message;
+      if (data.errors) {
+        // Form error
+        this.fieldErrors = data.errors;
+        if (data.errors.__all__) {
+          this.errorMessage = data.errors.__all__.join(" ");
+          scrollToTarget = refMainContent;
+        }
+      }
+
+      if (data.message) {
+        // Global error
+        this.errorMessage = data.message;
         scrollToTarget = refMainContent;
       }
 
-      if (errors.fields) {
-        this.fieldErrors = errors.fields;
-        if (!scrollToTarget) {
-          scrollToTarget = ".error--text";
-        }
+      if (!scrollToTarget) {
+        scrollToTarget = ".error--text";
       }
 
       if (scrollToTarget) {

@@ -17,338 +17,101 @@ axiosInstance.interceptors.request.use(function(config) {
   return config;
 });
 
-// Server URLs
-export const loginUrl = "/accounts/login/";
-export const loginCreateUrl = "/accounts/create/";
-export const metaUrl = "/meta/";
-export const searchCarriersUrl = "/carriers/search/";
-export const statsCarriersUrl = "/carriers/stats/";
-export const franceConnectCallbackUrl = "/accounts/fc/callback/";
-export const franceConnectLogoutUrl = "/accounts/fc/logout/";
+export const api = {
+  // Server URLs
+  franceConnectCallbackUrl: "/accounts/fc/callback/",
+  franceConnectLogoutUrl: "/accounts/fc/logout/",
+  loginCreateUrl: "/accounts/create/",
+  loginUrl: "/accounts/login/",
+  metaUrl: "/meta/",
+  searchCarriersUrl: "/carriers/search/",
+  statsCarriersUrl: "/carriers/stats/",
 
-export function getAccountActivateUrl(userId, token) {
-  return `/accounts/${userId}/activate/${token}/`;
-}
+  getAccountActivateUrl(userId, token) {
+    return `/accounts/${userId}/activate/${token}/`;
+  },
 
-export function getCarrierCertificateUrl(carrierSiret) {
-  return `/carriers/${carrierSiret}/certificate/`;
-}
+  getCarrierCertificateUrl(carrierSiret) {
+    return `/carriers/${carrierSiret}/certificate/`;
+  },
 
-export function getCarrierUrl(carrierSiret) {
-  return `/carriers/${carrierSiret}/`;
-}
+  getCarrierUrl(carrierSiret) {
+    return `/carriers/${carrierSiret}/`;
+  },
 
-export function getConfirmEmailUrl(carrierSiret, token) {
-  return `/carriers/${carrierSiret}/confirm_email/${token}/`;
-}
+  getConfirmEmailUrl(carrierSiret, token) {
+    return `/carriers/${carrierSiret}/confirm_email/${token}/`;
+  },
 
-export function getEditCodeUrl(carrierSiret) {
-  return `/carriers/${carrierSiret}/send_code/`;
-}
+  getEditCodeUrl(carrierSiret) {
+    return `/carriers/${carrierSiret}/send_code/`;
+  },
 
-function handleCommunicationError(axiosError) {
-  if (axiosError.response === undefined) {
-    Raven.captureException(axiosError);
-    return {
-      message: `Le serveur ${
-        process.env.VUE_APP_API_URL
-      } est inaccessible ou erreur d'exécution Javascript.`,
-      status: 503
-    };
-  } else if (axiosError.response) {
-    const data = {
-      status: axiosError.response.status
-    };
+  handleCommunicationError(axiosError) {
+    let message = null;
+    // Returns an object with 'status' (integer), 'data.message' (text) and all the
+    // attributes of 400 responses.
+    if (axiosError.response == null) {
+      Raven.captureException(axiosError);
+      return {
+        data: {
+          message: `Le serveur ${
+            process.env.VUE_APP_API_URL
+          } est inaccessible ou erreur d'exécution Javascript.`
+        },
+        status: 503
+      };
+    }
 
-    if (data.status === 500) {
+    const response = axiosError.response;
+    if (response.status === 500) {
       // Django will call Raven itself
-      data.message = `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`;
-    } else if (data.status === 404) {
-      let message = "La ressource demandée n'existe pas";
+      message = `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`;
+    } else if (response.status === 404) {
+      message = "La ressource demandée n'existe pas";
       if (axiosError.request && axiosError.request.responseURL) {
         message += ` « ${axiosError.request.responseURL} »`;
       }
       message += ".";
-      data.message = message;
-    } else if (data.status === 400 && axiosError.response.data) {
-      Object.assign(data, axiosError.response.data);
     }
 
-    return data;
-  }
-}
-
-function handleInvalidFormAndCommunicationError(axiosError) {
-  let errors = null;
-  if (
-    axiosError.response &&
-    axiosError.response.status === 400 &&
-    axiosError.response.data
-  ) {
-    // The form isn't valid
-    errors = {
-      fields: axiosError.response.data
-    };
-  } else {
-    const mainError = handleCommunicationError(axiosError);
-    if (mainError) {
-      errors = {
-        main: mainError
-      };
+    if (message) {
+      response.data = Object.assign({}, response.data, { message });
     }
-  }
-  return errors;
-}
 
-export const api = {
+    return response;
+  },
+
   /* The data structure contains:
      - a field with the instance or the list of instances
-     - a field errors which can be a string or an object with an entry for each field (form)
+     - a field 'errors' which can be a string or an object with an entry for each field (form)
   */
-  async getData(url) {
-    const data = {
-      data: null,
-      error: null
-    };
-
+  async get(url, params) {
     try {
-      const response = await axiosInstance.get(url);
-      data.data = response.data;
-    } catch (error) {
-      data.error = handleCommunicationError(error);
-    }
-
-    return data;
-  },
-
-  async getMeta() {
-    return this.getData(metaUrl);
-  },
-
-  async getStats() {
-    return this.getData(statsCarriersUrl);
-  },
-
-  async confirmEmail(carrierSiret, token) {
-    const url = getConfirmEmailUrl(carrierSiret, token);
-    try {
-      const response = await axiosInstance.get(url);
-      return {
-        message: response.data.message,
-        status: response.status
-      };
+      return await axiosInstance.get(url, { params });
     } catch (axiosError) {
-      return handleCommunicationError(axiosError);
+      return this.handleCommunicationError(axiosError);
     }
   },
 
-  async fetchCarrier(carrierSiret) {
-    const url = getCarrierUrl(carrierSiret);
-    const data = {
-      carrier: null,
-      error: null
-    };
-
+  async method(method, url, data) {
     try {
-      const response = await axiosInstance.get(url);
-      data.carrier = response.data.carrier;
-    } catch (error) {
-      data.error = handleCommunicationError(error);
-    }
-
-    return data;
-  },
-
-  async franceConnectCallback(code, state) {
-    const data = { error: null };
-
-    try {
-      const response = await axiosInstance.get(franceConnectCallbackUrl, {
-        params: {
-          code,
-          state
-        }
+      return await axiosInstance({
+        method,
+        url,
+        data
       });
-      if (response.status !== 200) {
-        data.error = {
-          message: response.data.message || ""
-        };
-      } else {
-        data.tokenType = response.data.token_type;
-        data.token = response.data.token;
-        data.expiresIn = response.data.expires_in;
-        data.idToken = response.data.id_token;
-      }
     } catch (axiosError) {
-      data.error = handleCommunicationError(axiosError);
-    }
-
-    return data;
-  },
-
-  async login(email, password) {
-    const data = {
-      errors: null
-    };
-
-    // Authenticate
-    try {
-      const response = await axiosInstance.post(loginUrl, {
-        username: email,
-        password
-      });
-      if (response.status !== 200) {
-        data.errors = {
-          main: {
-            message:
-              "L'adresse électronique et le mot de passe ne correspondent pas."
-          }
-        };
-      } else {
-        data.token = response.data.token;
-        data.expiresIn = response.data.expires_in;
-      }
-    } catch (axiosError) {
-      data.errors = handleInvalidFormAndCommunicationError(axiosError);
-    }
-    return data;
-  },
-
-  async loginCreate(payload) {
-    const data = {
-      errors: null
-    };
-
-    try {
-      const response = await axiosInstance.post(loginCreateUrl, {
-        first_name: payload.firstName,
-        last_name: payload.lastName,
-        email: payload.email,
-        password: payload.password
-      });
-      if (response.status !== 200) {
-        data.errors = {
-          main: {
-            message: "Impossible de créer le compte utilisateur."
-          }
-        };
-      } else {
-        data.message = `Le compte est créé, vous devez maintenant l'activer en cliquant sur le mail envoyé à ${
-          payload.email
-        }.`;
-      }
-    } catch (axiosError) {
-      data.errors = handleInvalidFormAndCommunicationError(axiosError);
-    }
-    return data;
-  },
-
-  async activateAccount(payload) {
-    const data = {
-      errors: null
-    };
-
-    try {
-      const url = getAccountActivateUrl(payload.userId, payload.token);
-      const response = await axiosInstance.get(url);
-      data.status = response.status;
-      data.message = response.data.message;
-      if (response.data.token) {
-        data.token = response.data.token;
-        data.expiresIn = response.data.expires_in;
-      }
-    } catch (axiosError) {
-      data.errors = handleCommunicationError(axiosError);
-    }
-
-    return data;
-  },
-
-  async logout() {
-    const data = {
-      errors: null
-    };
-
-    const idToken = auth.getIdToken();
-    if (idToken) {
-      try {
-        const response = await axiosInstance.get(franceConnectLogoutUrl, {
-          params: {
-            id_token: idToken
-          }
-        });
-        data.message = response.data.message;
-      } catch (axiosError) {
-        data.errors = handleCommunicationError(axiosError);
-      }
-    }
-
-    return data;
-  },
-
-  async mailEditCode(carrierSiret) {
-    const url = getEditCodeUrl(carrierSiret);
-    try {
-      const response = await axiosInstance.get(url);
-      return {
-        email: response.data.email,
-        edit_code_at: response.data.edit_code_at,
-        edit_code_timeout_at: response.data.edit_code_timeout_at,
-        status: response.status
-      };
-    } catch (axiosError) {
-      return handleCommunicationError(axiosError);
+      return this.handleCommunicationError(axiosError);
     }
   },
 
-  async updateCarrier(carrierSiret, payload) {
-    const url = getCarrierUrl(carrierSiret);
-    const data = {
-      carrier: null,
-      errors: null
-    };
-    try {
-      const response = await axiosInstance.patch(url, payload);
-      data.carrier = response.data.carrier;
-      data.confirmation_email_sent =
-        response.data.confirmation_email_sent || false;
-    } catch (axiosError) {
-      data.errors = handleInvalidFormAndCommunicationError(axiosError);
-    }
-    return data;
+  post(url, data) {
+    return this.method("post", url, data);
   },
 
-  async signCarrierCertificate(carrierSiret, payload) {
-    const url = getCarrierCertificateUrl(carrierSiret);
-    const data = {
-      carrier: null,
-      errors: null
-    };
-    try {
-      const response = await axiosInstance.post(url, payload);
-      data.carrier = response.data.carrier;
-    } catch (axiosError) {
-      data.errors = handleInvalidFormAndCommunicationError(axiosError);
-    }
-    return data;
-  },
-
-  async searchCarriers(params) {
-    const data = {
-      carriers: null,
-      limit: null,
-      errors: null
-    };
-
-    try {
-      const response = await axiosInstance.get(searchCarriersUrl, params);
-      data.carriers = response.data.results;
-      data.limit = response.data.limit || 0;
-    } catch (error) {
-      data.error = handleCommunicationError(error);
-    }
-
-    return data;
+  patch(url, data) {
+    return this.method("patch", url, data);
   }
 };
 

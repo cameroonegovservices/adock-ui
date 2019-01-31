@@ -89,8 +89,6 @@
   event. To provide that feature, the component provides a computed value
   dedicated to the submit button.
 */
-import Raven from "raven-js";
-
 import api from "@/api";
 import { emailRules, passwordRules } from "@/mixins";
 
@@ -132,9 +130,12 @@ export default {
         this.errorMessage = "";
         this.fieldErrors = {};
 
-        const data = await api.login(this.email, this.password);
-        if (data.token) {
-          this.$store.dispatch("userLogIn", data);
+        const response = await api.post(api.loginUrl, {
+          username: this.email,
+          password: this.password
+        });
+        if (response.status === 200) {
+          this.$store.dispatch("userLogIn", response.data);
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });
@@ -142,16 +143,17 @@ export default {
             name: "search"
           });
         } else {
-          if (data.errors) {
-            if (data.errors.main && data.errors.main.message) {
-              this.errorMessage = data.errors.main.message;
+          if (response.data.errors) {
+            if (response.data.errors.fields) {
+              this.fieldErrors = response.data.errors.fields;
             }
-
-            if (data.errors.fields) {
-              this.fieldErrors = data.errors.fields;
+            if (response.data.errors.__all__) {
+              // Change the original message
+              this.errorMessage =
+                "L'adresse électronique et le mot de passe ne correspondent pas.";
             }
           } else {
-            Raven.captureException("Not authenticated and no errors.");
+            this.errorMessage = response.data.message;
           }
         }
       }

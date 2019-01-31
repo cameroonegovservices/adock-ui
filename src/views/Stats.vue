@@ -124,14 +124,15 @@ export default {
     };
   },
 
-  mounted() {
-    api.getStats().then(response => {
+  async mounted() {
+    const response = await api.get(api.statsCarriersUrl);
+    if (response.status === 200) {
       this.validatedCarriers = response.data["validated_carriers"];
       this.lockedCarriers = response.data["locked_carriers"];
       this.validatedCarriersPerMonth =
         response.data["validated_carriers_per_month"];
       this.allowed = true;
-    });
+    }
   },
 
   computed: {

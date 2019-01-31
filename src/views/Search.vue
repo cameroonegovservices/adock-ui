@@ -167,15 +167,13 @@ export default {
         params["q"] = this.searchForm.q;
       }
 
-      if (this.searchForm.licenseLTI || this.searchForm.licenseLC) {
-        params["licence-types"] = [];
-        if (this.searchForm.licenseLTI) {
-          params["licence-types"].push("lti");
-        }
+      params["licence-types"] = [];
+      if (this.searchForm.licenseLTI) {
+        params["licence-types"].push("lti");
+      }
 
-        if (this.searchForm.licenseLC) {
-          params["licence-types"].push("lc");
-        }
+      if (this.searchForm.licenseLC) {
+        params["licence-types"].push("lc");
       }
 
       if (this.searchForm.departementFrom) {
@@ -186,22 +184,20 @@ export default {
         params["departement-arrivee"] = this.searchForm.departementTo;
       }
 
-      if (this.searchForm.specialities.length > 0) {
-        params["specialities"] = this.searchForm.specialities.map(
-          item => item.value
-        );
-      }
+      params["specialities"] = this.searchForm.specialities.map(
+        item => item.value
+      );
 
-      const data = await api.searchCarriers({ params });
-      if (data.error == null) {
+      const response = await api.get(api.searchCarriersUrl, params);
+      if (response.status === 200) {
         // Disable reactivity to speed up rendering
-        this.carriers = Object.freeze(data.carriers);
-        this.limit = data.limit;
+        this.carriers = Object.freeze(response.data.carriers);
+        this.limit = response.data.limit || 0;
         // Build an object with search parameters to display them to the user with the results
         this.searchParams = JSON.parse(JSON.stringify(this.searchForm));
       } else {
-        if (data.error.message) {
-          this.errorMessage = data.error.message;
+        if (response.data.message) {
+          this.errorMessage = response.data.message;
         }
         this.carriers = null;
         this.limit = 0;

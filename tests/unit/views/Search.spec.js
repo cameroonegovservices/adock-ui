@@ -5,7 +5,7 @@ import MockAdapter from "axios-mock-adapter";
 import { mount, RouterLinkStub } from "@vue/test-utils";
 import deepClone from "lodash.clonedeep";
 
-import { axiosInstance, searchCarriersUrl } from "@/api";
+import { api, axiosInstance } from "@/api";
 import { storeOptions } from "@/store/options";
 import Search from "@/views/Search.vue";
 import { addElementWithDataAppToBody } from "../utils";
@@ -50,8 +50,8 @@ describe("Search.vue", () => {
   });
 
   it("search carriers", async () => {
-    mockAdapter.onGet(searchCarriersUrl).reply(200, {
-      results: [
+    mockAdapter.onGet(api.searchCarriersUrl).reply(200, {
+      carriers: [
         {
           raison_sociale: "FOO"
         }
@@ -67,7 +67,7 @@ describe("Search.vue", () => {
   });
 
   it("fails to search carriers", async () => {
-    mockAdapter.onGet(searchCarriersUrl).reply(500);
+    mockAdapter.onGet(api.searchCarriersUrl).reply(500);
     const wrapper = mountSearch(store);
     await wrapper.vm.search();
     expect(wrapper.vm.errorMessage).toBeDefined();

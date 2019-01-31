@@ -3,15 +3,15 @@ import Vuetify from "vuetify";
 
 import { shallowMount } from "@vue/test-utils";
 
-import LoginCreate from "@/views/LoginCreate.vue";
+import AccountCreate from "@/views/AccountCreate.vue";
 
 Vue.use(Vuetify);
 
-describe("LoginCreate.vue", () => {
+describe("AccountCreate.vue", () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(LoginCreate);
+    wrapper = shallowMount(AccountCreate);
   });
 
   it("renders the form", () => {

@@ -151,7 +151,10 @@
                     span.grey--text {{ carrier.latest_certificate.created_at | asLocaleDate }}
                   v-card-actions
                     v-spacer
-                    v-btn(icon :href="certificateUrl")
+                    v-btn(
+                      icon
+                      :href="certificateUrl"
+                    )
                       v-icon archive
                 p(v-else) Aucune attestation
             v-layout
@@ -225,7 +228,7 @@ import L from "leaflet";
 import { mapState } from "vuex";
 
 import { routeLoadCarrier } from "@/routeLoaders";
-import { getCarrierCertificateUrl } from "@/api";
+import api from "@/api";
 import CarrierCardHeader from "@/components/CarrierCardHeader.vue";
 
 function getTileProvider() {
@@ -321,16 +324,16 @@ export default {
 
   async beforeRouteEnter(routeTo, routeFrom, next) {
     next(
-      await routeLoadCarrier(routeTo, routeFrom, response => {
-        routeTo.params.carrier = response.carrier;
+      await routeLoadCarrier(routeTo, routeFrom, data => {
+        routeTo.params.carrier = data.carrier;
       })
     );
   },
 
   async beforeRouteUpdate(routeTo, routeFrom, next) {
     next(
-      await routeLoadCarrier(routeTo, routeFrom, response => {
-        routeTo.params.carrier = response.carrier;
+      await routeLoadCarrier(routeTo, routeFrom, data => {
+        routeTo.params.carrier = data.carrier;
       })
     );
   },
@@ -343,9 +346,10 @@ export default {
     },
 
     certificateUrl() {
-      return `${process.env.VUE_APP_API_URL}${getCarrierCertificateUrl(
-        this.carrier.siret
-      )}`;
+      return `${process.env.VUE_APP_API_URL.slice(
+        0,
+        -1
+      )}${api.getCarrierCertificateUrl(this.carrier.siret)}`;
     },
 
     displaySpecialities() {

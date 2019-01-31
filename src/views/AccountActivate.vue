@@ -12,7 +12,7 @@ v-container(fluid fill-height)
       div(v-else)
         h3 {{ message }}
           v-icon(v-if="status === 200") done
-        p(v-if="status === 200") Le compte utilisateur « {{ displayUser }} » est maintenant actif.
+        p(v-if="user") Le compte utilisateur « {{ displayUser }} » est maintenant actif.
 </template>
 
 <script>
@@ -46,14 +46,15 @@ export default {
   },
 
   async mounted() {
-    // FIXME then on 400?
     if (this.userId && this.token) {
-      const data = await api.accountActivate(this.userId, this.token);
-      this.status = data.status;
-      this.message = data.message;
+      const url = api.getAccountActivateUrl(this.userId, this.token);
+      const response = await api.get(url);
       this.waiting = false;
-      if (data.token) {
-        this.$store.dispatch("userLogIn", data);
+      this.status = response.status;
+      this.message = response.data.message;
+
+      if (response.status === 200 && response.data.token) {
+        this.$store.dispatch("userLogIn", response.data);
       }
     }
   }

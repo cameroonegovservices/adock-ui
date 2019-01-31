@@ -29,10 +29,12 @@ export default {
   },
 
   setTokenData(payload) {
-    storage.tokenType = payload.tokenType;
-    storage.token = payload.token;
-    storage.expiresIn = payload.expiresIn;
-    storage.idToken = payload.idToken;
+    if (payload.token) {
+      storage.tokenType = payload.tokenType;
+      storage.token = payload.token;
+      storage.expiresIn = payload.expiresIn;
+      storage.idToken = payload.idToken;
+    }
   },
 
   deleteTokenData() {

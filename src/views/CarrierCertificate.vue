@@ -182,8 +182,8 @@ export default {
       next();
     } else {
       next(
-        await routeLoadCarrier(routeTo, routeFrom, response => {
-          routeTo.params.carrier = response.carrier;
+        await routeLoadCarrier(routeTo, routeFrom, data => {
+          routeTo.params.carrier = data.carrier;
         })
       );
     }
@@ -252,13 +252,9 @@ export default {
         payload.workers = this.workers;
       }
 
-      const data = await api.signCarrierCertificate(
-        this.carrier.siret,
-        payload
-      );
-      if (data.errors) {
-        this.setErrorsAndScrollTo(data.errors, this.$refs.mainContent);
-      } else {
+      const url = api.getCarrierCertificateUrl(this.carrier.siret);
+      const response = await api.post(url, payload);
+      if (response.status === 200) {
         // Success
         this.$store.commit("MESSAGE_ADD", {
           message: "L'attestation a été signée."
@@ -268,6 +264,8 @@ export default {
           name: "carrier_detail",
           carrierSiret: this.carrier.siret
         });
+      } else {
+        this.setErrorsAndScrollTo(response.data, this.$refs.mainContent);
       }
     }
   }

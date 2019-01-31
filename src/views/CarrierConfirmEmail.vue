@@ -42,18 +42,18 @@ export default {
   },
   data() {
     return {
-      waiting: true,
       message: "",
-      status: null
+      status: null,
+      waiting: true
     };
   },
 
-  created() {
-    api.confirmEmail(this.carrierSiret, this.token).then(data => {
-      this.waiting = false;
-      this.message = data.message;
-      this.status = data.status;
-    });
+  async mounted() {
+    const url = api.getConfirmEmailUrl(this.carrierSiret, this.token);
+    const response = await api.get(url);
+    this.waiting = false;
+    this.message = (response.data && response.data.message) || "";
+    this.status = response.status;
   }
 };
 </script>
