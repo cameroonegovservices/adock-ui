@@ -143,7 +143,9 @@
                   v-if="carrier.latest_certificate"
                   hover
                   ripple
+                  type="application/pdf"
                   :href="certificateUrl"
+                  download
                 )
                   v-card-title(primary-title)
                     v-icon(large left) people
@@ -153,7 +155,9 @@
                     v-spacer
                     v-btn(
                       icon
+                      type="application/pdf"
                       :href="certificateUrl"
+                      download
                     )
                       v-icon archive
                 p(v-else) Aucune attestation
