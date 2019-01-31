@@ -167,13 +167,15 @@ export default {
         params["q"] = this.searchForm.q;
       }
 
-      params["licence-types"] = [];
-      if (this.searchForm.licenseLTI) {
-        params["licence-types"].push("lti");
-      }
+      if (this.searchForm.licenseLTI || this.searchForm.licenseLC) {
+        params["licence-types"] = [];
+        if (this.searchForm.licenseLTI) {
+          params["licence-types"].push("lti");
+        }
 
-      if (this.searchForm.licenseLC) {
-        params["licence-types"].push("lc");
+        if (this.searchForm.licenseLC) {
+          params["licence-types"].push("lc");
+        }
       }
 
       if (this.searchForm.departementFrom) {
@@ -184,7 +186,7 @@ export default {
         params["departement-arrivee"] = this.searchForm.departementTo;
       }
 
-      if (this.searchForm.specialities) {
+      if (this.searchForm.specialities.length > 0) {
         params["specialities"] = this.searchForm.specialities.map(
           item => item.value
         );
