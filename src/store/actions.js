@@ -43,7 +43,7 @@ export const actions = {
   userLogOut: async ({ commit }) => {
     const idToken = auth.getIdToken();
     if (idToken) {
-      const response = await this.get(this.franceConnectLogoutUrl, {
+      const response = await api.get(api.franceConnectLogoutUrl, {
         id_token: idToken
       });
       // It's possible the user hasn't been disconnected from FranceConnect, in
