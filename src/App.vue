@@ -41,7 +41,10 @@
       v-toolbar-items(v-else)
         v-btn(v-if="user && user.is_staff" flat :to="{name: 'stats'}") Statistiques
         div.adock-toolbar-items(v-if="user")
-          | {{ displayUser }}
+          v-btn(
+            flat
+            :to="{name: 'account_profile'}"
+          ) {{ displayUser }}
           v-btn(icon @click="userLogOut")
             v-icon exit_to_app
         v-btn(v-else flat :to="{name: 'account_login'}") Se connecter

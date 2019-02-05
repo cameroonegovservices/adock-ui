@@ -23,6 +23,7 @@ export const api = {
   franceConnectLogoutUrl: "/accounts/fc/logout/",
   loginCreateUrl: "/accounts/create/",
   loginUrl: "/accounts/login/",
+  profileUrl: "/accounts/profile/",
   metaUrl: "/meta/",
   searchCarriersUrl: "/carriers/search/",
   statsCarriersUrl: "/carriers/stats/",

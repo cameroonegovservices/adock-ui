@@ -7,6 +7,7 @@ import About from "@/views/About.vue";
 import AccountActivate from "@/views/AccountActivate.vue";
 import AccountCreate from "@/views/AccountCreate.vue";
 import AccountLogin from "@/views/AccountLogin.vue";
+import AccountProfile from "@/views/AccountProfile.vue";
 import CarrierCertificate from "@/views/CarrierCertificate.vue";
 import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
 import CarrierDetail from "@/views/CarrierDetail.vue";
@@ -75,6 +76,11 @@ const routes = [
     name: "carrier_certificate",
     component: CarrierCertificate,
     props: true
+  },
+  {
+    path: "/utilisateur",
+    name: "account_profile",
+    component: AccountProfile
   },
   {
     path: "/utilisateur/connecter",
