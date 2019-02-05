@@ -29,7 +29,7 @@
   white-space: unset
 
 .adock-carrier-list-details
-  width: 17ex;
+  width: 17ex
 </style>
 
 <script>
