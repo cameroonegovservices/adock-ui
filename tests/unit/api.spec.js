@@ -103,9 +103,4 @@ describe("api", () => {
     const url = api.getConfirmEmailUrl("123", "456");
     expect(url).toBe("/carriers/123/confirm_email/456/");
   });
-
-  it("getEditCodeUrl", () => {
-    const url = api.getEditCodeUrl("123");
-    expect(url).toBe("/carriers/123/send_code/");
-  });
 });

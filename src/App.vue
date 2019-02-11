@@ -71,6 +71,9 @@
 .adock-alert-ie11
   margin: 0
 
+.adock-align-right
+  text-align: right
+
 .adock-toolbar-items
   padding-left: 1em
   align-items: center

@@ -18,8 +18,7 @@ const TRANSPORTEUR_DATA = {
   working_area_departements: ["44"],
   specialities: ["FOO"],
   website: "www.example.com",
-  description: "Description",
-  edit_code: "SHOULD NO BE SET"
+  description: "Description"
 };
 
 function mountCarrierEdit(store, carrier) {
@@ -54,12 +53,10 @@ describe("CarrierEdit.vue", () => {
     expect(wrapper.vm.form.specialities).toEqual(["FOO"]);
     expect(wrapper.vm.form.website).toBe("www.example.com");
     expect(wrapper.vm.form.description).toBe("Description");
-    expect(wrapper.vm.form.editCode).toBe("");
   });
 
   it("gets the payload from the form", () => {
     const wrapper = mountCarrierEdit(store, TRANSPORTEUR_DATA);
-    wrapper.vm.form.editCode = "1234";
     wrapper.vm.form.region = "Bretagne";
     wrapper.vm.addDepartementsFromRegion();
 
@@ -73,6 +70,5 @@ describe("CarrierEdit.vue", () => {
     expect(payload.working_area_departements.length).toBe(5);
     expect(payload.specialities).toEqual(["FOO"]);
     expect(payload.website).toBe("www.example.com");
-    expect(payload.edit_code).toBe("1234");
   });
 });

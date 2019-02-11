@@ -16,11 +16,6 @@
               type="error"
               :value="!!errorMessage"
             ) {{ errorMessage }}
-            v-alert(
-              v-if="editCodeMessage"
-              type="info"
-              :value="true"
-            ) {{ editCodeMessage }}
             v-layout
               v-flex(xs12 offset-md1 md10)
                 v-text-field(
@@ -102,18 +97,7 @@
                   :error-messages="fieldErrors.description"
                 )
             v-layout(wrap)
-              v-flex(xs12 offset-md1 md5)
-                v-text-field(
-                  v-if="carrier.is_locked"
-                  label="Code de modification"
-                  v-model="form.editCode"
-                  type="integer"
-                  mask="######"
-                  :counter="6"
-                  :hint="`Copier dans ce champ le code envoyé à « ${carrier.email} »`"
-                  :error-messages="fieldErrors.edit_code"
-                )
-              v-flex.adock-align-right(xs12 md5)
+              v-flex.adock-align-right(xs12 md11)
                 v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
                 v-btn(color="primary" @click.native="update")
                   v-icon(v-if="carrier.is_locked" left) lock
@@ -124,9 +108,6 @@
 .adock-no-link
   color: inherit
   text-decoration: none
-
-.adock-align-right
-  text-align: right
 
 .flex.flex-bottom
   flex-basis: 0
@@ -248,10 +229,8 @@ export default {
         region: "",
         specialities: [],
         website: "",
-        description: "",
-        editCode: ""
-      },
-      editCodeMessage: null
+        description: ""
+      }
     };
   },
 
@@ -295,15 +274,9 @@ export default {
 
   methods: {
     async setup() {
-      this.editCodeMessage = null;
       this.errorMessage = null;
       this.fieldErrors = {};
       this.loadForm(this.carrier);
-      if (this.carrier.is_locked) {
-        const url = api.getEditCodeUrl(this.carrier.siret);
-        const response = await api.get(url);
-        this.loadEditCodeData(response);
-      }
     },
 
     loadForm(carrier) {
@@ -330,30 +303,8 @@ export default {
         working_area_departements: this.form.workingAreaDepartements,
         specialities: this.form.specialities,
         website: this.form.website,
-        description: this.form.description,
-        edit_code: this.form.editCode
+        description: this.form.description
       };
-    },
-
-    loadEditCodeData(response) {
-      if (response.status === 201) {
-        const editCodeAt = new Date(
-          response.data.edit_code_at
-        ).toLocaleTimeString();
-        this.editCodeMessage = `Un courriel avec un code modification a été envoyé à « ${
-          response.data.email
-        } » (${editCodeAt}).`;
-      } else if (response.status === 200) {
-        const editCodeTimeoutAt = new Date(
-          response.data.edit_code_timeout_at
-        ).toLocaleTimeString();
-        this.editCodeMessage = `Le code de modification envoyé à « ${
-          response.data.email
-        } » est encore valide jusqu'à ${editCodeTimeoutAt}.`;
-      } else {
-        this.errorMessage =
-          "Impossible d'envoyer le code de modification. L'équipe technique a été contactée.";
-      }
     },
 
     async update() {

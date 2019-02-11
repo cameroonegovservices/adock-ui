@@ -44,10 +44,6 @@ export const api = {
     return `/carriers/${carrierSiret}/confirm_email/${token}/`;
   },
 
-  getEditCodeUrl(carrierSiret) {
-    return `/carriers/${carrierSiret}/send_code/`;
-  },
-
   handleCommunicationError(axiosError) {
     let message = null;
     // Returns an object with 'status' (integer), 'data.message' (text) and all the

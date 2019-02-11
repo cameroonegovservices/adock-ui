@@ -125,9 +125,6 @@
 .adock-no-link
   color: inherit
   text-decoration: none
-
-.adock-align-right
-  text-align: right
 </style>
 
 <script>
