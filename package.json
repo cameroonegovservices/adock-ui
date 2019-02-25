@@ -19,7 +19,7 @@
     "raven-js": "^3.27.0",
     "vue": "^2.5.22",
     "vue-router": "^3.0.2",
-    "vuetify": "^1.4.2",
+    "vuetify": "1.5.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -42,7 +42,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-template-compiler": "^2.5.22",
-    "vuetify-loader": "^1.1.1"
+    "vuetify-loader": "^1.2.1"
   },
   "license": "AGPL-3.0"
 }
