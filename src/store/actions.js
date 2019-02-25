@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import Raven from "raven-js";
+import * as Sentry from "@sentry/browser";
 
 import auth from "@/auth";
 import api from "@/api";
@@ -19,7 +19,7 @@ export const actions = {
     try {
       decodedJwt = jwtDecode(auth.getToken());
     } catch (e) {
-      Raven.captureException(e);
+      Sentry.captureException(e);
     }
 
     if (decodedJwt) {

@@ -51,8 +51,8 @@ Les paramètres de configuration sont définis dans les fichiers
 ajouter des paramètres non versionnés, vous pouvez créer des fichiers avec
 l'extension `.local` pour surcharger les valeurs de ces fichiers.
 
-Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
-`.env.production.local` sous le nom `VUE_APP_RAVEN_URL`.
+Ainsi l'URL du client Sentry doit être définie dans `.env.production.local` sous
+le nom `VUE_APP_SENTRY_URL`.
 
 ## Utilisation
 

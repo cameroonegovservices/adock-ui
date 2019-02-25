@@ -6,8 +6,7 @@ import L from "leaflet";
 import Vue from "vue";
 import Vuex from "vuex";
 import "./useVuetify";
-import Raven from "raven-js";
-import RavenVue from "raven-js/plugins/vue";
+import * as Sentry from "@sentry/browser";
 import { version } from "../package.json";
 
 import { loadTracker } from "./tracker";
@@ -26,13 +25,16 @@ L.Icon.Default.mergeOptions({
 });
 
 if (process.env.NODE_ENV === "production") {
-  // Raven is the client of Sentry
-  // Take care to set VUE_APP_RAVEN_URL in .env.production.local
-  Raven.config(process.env.VUE_APP_RAVEN_URL, {
-    release: version
-  })
-    .addPlugin(RavenVue, Vue)
-    .install();
+  Sentry.init({
+    dsn: process.env.VUE_APP_SENTRY_URL,
+    relase: version,
+    integrations: [
+      new Sentry.Integrations.Vue({
+        Vue,
+        attachProps: true
+      })
+    ]
+  });
 
   // Piwik/Matomo tracker
   loadTracker();

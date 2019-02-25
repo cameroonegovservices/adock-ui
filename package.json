@@ -10,13 +10,13 @@
     "test:e2e": "vue-cli-service test:e2e --url http://localhost:8080/"
   },
   "dependencies": {
+    "@sentry/browser": "^4.6.3",
     "axios": "0.18.0",
     "clipboard": "^2.0.4",
     "jwt-decode": "^2.2.0",
     "leaflet": "^1.4.0",
     "lodash.clonedeep": "^4.5.0",
     "pug": "^2.0.3",
-    "raven-js": "^3.27.0",
     "vue": "2.6.7",
     "vue-router": "^3.0.2",
     "vuetify": "1.5.2",

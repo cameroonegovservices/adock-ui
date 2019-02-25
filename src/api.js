@@ -1,5 +1,6 @@
 import axios from "axios";
-import Raven from "raven-js";
+// FIXME ESM?
+import * as Sentry from "@sentry/browser";
 
 import auth from "./auth";
 
@@ -49,7 +50,7 @@ export const api = {
     // Returns an object with 'status' (integer), 'data.message' (text) and all the
     // attributes of 400 responses.
     if (axiosError.response == null) {
-      Raven.captureException(axiosError);
+      Sentry.captureException(axiosError);
       return {
         data: {
           message: `Le serveur ${
@@ -62,7 +63,7 @@ export const api = {
 
     const response = axiosError.response;
     if (response.status === 500) {
-      // Django will call Raven itself
+      // Django will call Sentry itself
       message = `Le service a retourné une erreur. Les administrateurs ont été informés du problème.`;
     } else if (response.status === 404) {
       message = "La ressource demandée n'existe pas";
