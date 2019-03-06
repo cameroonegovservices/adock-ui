@@ -40,8 +40,8 @@ export const api = {
     return `/carriers/${carrierSiret}/`;
   },
 
-  getConfirmEmailUrl(carrierSiret, token) {
-    return `/carriers/${carrierSiret}/confirm_email/${token}/`;
+  getCarrierEditableConfirmUrl(carrierEditableId, token) {
+    return `/carriers/editable/${carrierEditableId}/confirm/${token}/`;
   },
 
   handleCommunicationError(axiosError) {

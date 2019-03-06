@@ -6,27 +6,27 @@ import flushPromises from "flush-promises";
 import MockAdapter from "axios-mock-adapter";
 
 import { api, axiosInstance } from "@/api";
-import CarrierConfirmEmail from "@/views/CarrierConfirmEmail.vue";
+import CarrierEditableConfirm from "@/views/CarrierEditableConfirm.vue";
 
 const mockAdapter = new MockAdapter(axiosInstance);
 
 Vue.use(Vuetify);
 
-describe("CarrierConfirmEmail.vue", () => {
+describe("CarrierEditableConfirm.vue", () => {
   afterEach(() => {
     mockAdapter.reset();
   });
 
   it("renders the view", async () => {
-    const carrierSiret = "123";
+    const carrierEditableId = "123";
     const token = "456";
-    const message = "L'adresse électronique est confirmée.";
-    const url = api.getConfirmEmailUrl(carrierSiret, token);
+    const message = "Les modifications sont confirmées.";
+    const url = api.getCarrierEditableConfirmUrl(carrierEditableId, token);
     mockAdapter.onGet(url).reply(200, { message });
 
-    const wrapper = shallowMount(CarrierConfirmEmail, {
+    const wrapper = shallowMount(CarrierEditableConfirm, {
       propsData: {
-        carrierSiret,
+        carrierEditableId,
         token
       },
       stubs: {
@@ -34,7 +34,7 @@ describe("CarrierConfirmEmail.vue", () => {
       }
     });
     expect(wrapper.text()).toBe(
-      "Confirmation de l'adresse électronique en cours..."
+      "Confirmation des modifications de la fiche transporteur en cours..."
     );
 
     // Message + icon done

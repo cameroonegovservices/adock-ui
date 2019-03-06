@@ -99,8 +99,8 @@ describe("api", () => {
     expect(response.data.errors.foo).toBeDefined();
   });
 
-  it("getConfirmEmailUrl", () => {
-    const url = api.getConfirmEmailUrl("123", "456");
-    expect(url).toBe("/carriers/123/confirm_email/456/");
+  it("getCarrierEditableConfirmUrl", () => {
+    const url = api.getCarrierEditableConfirmUrl("123", "456");
+    expect(url).toBe("/carriers/editable/123/confirm/456/");
   });
 });

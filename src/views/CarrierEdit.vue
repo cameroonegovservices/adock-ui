@@ -309,7 +309,7 @@ export default {
 
     async update() {
       const payload = this.getPayloadFromForm();
-      const response = await api.patch(
+      const response = await api.post(
         api.getCarrierUrl(this.carrier.siret),
         payload
       );

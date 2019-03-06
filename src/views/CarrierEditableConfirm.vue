@@ -3,7 +3,7 @@ v-container(fluid fill-height)
   v-layout(row justify-center align-center)
     v-flex(xs6 text-xs-center)
       div(v-if="waiting")
-        h4 Confirmation de l'adresse électronique en cours...
+        h4 Confirmation des modifications de la fiche transporteur en cours...
         br
         v-progress-circular(
           :indeterminate="true"
@@ -14,11 +14,11 @@ v-container(fluid fill-height)
           h3 {{ message }}
             v-icon done
           p
-            | La fiche transporteur
+            | Les modifications de la fiche transporteur
             |
             router-link(:to="{name: 'carrier_detail', params: {carrierSiret: this.carrierSiret}}") {{ carrierSiret }}
             |
-            | est maintenant verrouillée.
+            | ont été appliquées.
         div(v-else)
           h3 {{ message }}
           p(v-if="status === 400") Le jeton a peut être expiré ou a déjà été utilisé.
@@ -28,10 +28,10 @@ v-container(fluid fill-height)
 import api from "@/api";
 
 export default {
-  name: "carrier-confirm-email",
+  name: "carrier-editable-confirm",
 
   props: {
-    carrierSiret: {
+    carrierEditableId: {
       type: String,
       required: true
     },
@@ -49,7 +49,10 @@ export default {
   },
 
   async mounted() {
-    const url = api.getConfirmEmailUrl(this.carrierSiret, this.token);
+    const url = api.getCarrierEditableConfirmUrl(
+      this.carrierEditableId,
+      this.token
+    );
     const response = await api.get(url);
     this.waiting = false;
     this.message = (response.data && response.data.message) || "";
