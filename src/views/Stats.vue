@@ -6,13 +6,8 @@
           v-flex(v-if="allowed" md6 d-flex)
             v-card
               v-card-text.text-xs-center
-                p.display-2 {{ validatedCarriers }}
+                p.display-2 {{ modifiedCarriers }}
                 p Fiches transporteur validées
-          v-flex(v-if="allowed" md6 d-flex)
-            v-card
-              v-card-text.text-xs-center
-                p.display-2 {{ lockedCarriers }}
-                p Fiches transporteur verrouillées
           v-flex(xs12 md6 d-flex)
             v-card
               v-card-text.text-xs-center
@@ -38,10 +33,10 @@
           v-card-title(primary-title)
             h3.headline Nombre de fiches validées par mois
           v-card-text
-            dl.adock-chart(v-if="validatedCarriersPerMonth.length" :style="validatedScaleProperty")
-              template(v-for="item in validatedCarriersPerMonth")
+            dl.adock-chart(v-if="modifiedCarriersPerMonth.length" :style="modifiedScaleProperty")
+              template(v-for="item in modifiedCarriersPerMonth")
                 dt.adock-chart-month {{ item.month | asLocaleMonth }}
-                dd.adock-chart-bar(:style="getValidatedValueProperty(item.count)")
+                dd.adock-chart-bar(:style="getmodifiedValueProperty(item.count)")
                   span.adock-chart-value {{ item.count }}
     v-flex(v-if="!allowed" xs12 md6)
       p Vous disposez d'un accès restreint aux statistiques.
@@ -117,9 +112,8 @@ export default {
   data() {
     return {
       allowed: false,
-      validatedCarriers: 0,
-      lockedCarriers: 0,
-      validatedCarriersPerMonth: [],
+      modifiedCarriers: 0,
+      modifiedCarriersPerMonth: [],
       version
     };
   },
@@ -127,18 +121,17 @@ export default {
   async mounted() {
     const response = await api.get(api.statsUrl);
     if (response.status === 200) {
-      this.validatedCarriers = response.data["validated_carriers"];
-      this.lockedCarriers = response.data["locked_carriers"];
-      this.validatedCarriersPerMonth =
-        response.data["validated_carriers_per_month"];
+      this.modifiedCarriers = response.data["modified_carriers"];
+      this.modifiedCarriersPerMonth =
+        response.data["modified_carriers_per_month"];
       this.allowed = true;
     }
   },
 
   computed: {
-    validatedScaleProperty() {
+    modifiedScaleProperty() {
       const maxValue = Math.max(
-        ...this.validatedCarriersPerMonth.map(item => item.count)
+        ...this.modifiedCarriersPerMonth.map(item => item.count)
       );
       return `--scale: ${maxValue};`;
     },
@@ -152,7 +145,7 @@ export default {
   },
 
   methods: {
-    getValidatedValueProperty(value) {
+    getmodifiedValueProperty(value) {
       if (value === 0) {
         value = 1;
       }
