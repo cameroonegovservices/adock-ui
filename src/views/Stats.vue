@@ -125,7 +125,7 @@ export default {
   },
 
   async mounted() {
-    const response = await api.get(api.statsCarriersUrl);
+    const response = await api.get(api.statsUrl);
     if (response.status === 200) {
       this.validatedCarriers = response.data["validated_carriers"];
       this.lockedCarriers = response.data["locked_carriers"];

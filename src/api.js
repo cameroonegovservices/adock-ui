@@ -26,7 +26,7 @@ export const api = {
   profileUrl: "/accounts/profile/",
   metaUrl: "/meta/",
   searchCarriersUrl: "/carriers/search/",
-  statsCarriersUrl: "/carriers/stats/",
+  statsUrl: "/stats/",
 
   getAccountActivateUrl(userId, token) {
     return `/accounts/${userId}/activate/${token}/`;
