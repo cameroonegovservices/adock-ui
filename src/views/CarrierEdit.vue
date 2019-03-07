@@ -101,7 +101,7 @@
                 v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
                 v-btn(color="primary" @click.native="update")
                   v-icon(v-if="carrier.is_locked" left) lock
-                  | Valider
+                  | Modifier
 </template>
 
 <style lang="stylus">

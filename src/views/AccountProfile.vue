@@ -10,7 +10,7 @@
           v-card-title(primary-title)
             div
               h1(headline mb-0) {{ displayUser }}
-              p {{ user.email }}
+              p {{ user ? user.email : "" }}
           v-card-text
             p Compte « {{ providerDisplay }} » créé le {{ localeDateJoined }}
             p Dernière connexion le {{ localeLastLogin }}
@@ -60,21 +60,33 @@ export default {
     };
   },
 
-  async mounted() {
-    const response = await api.get(api.profileUrl);
-    if (response.status === 200) {
-      const user = response.data.user;
-      this.localeDateJoined = new Date(user.date_joined).toLocaleDateString();
-      this.localeLastLogin = new Date(user.last_login).toLocaleDateString();
-      this.providerDisplay = user.provider_display;
-      this.carriers = user.carriers;
-    } else {
-      this.errorMessage = response.data.message;
-    }
+  async created() {
+    this.fetchData();
+  },
+
+  watch: {
+    $route: "fetchData"
   },
 
   computed: {
     ...mapState(["choices"])
+  },
+
+  methods: {
+    async fetchData() {
+      const response = await api.get(api.profileUrl);
+      if (response.status === 200) {
+        const user = response.data.user;
+        this.localeDateJoined = new Date(user.date_joined).toLocaleDateString();
+        this.localeLastLogin = user.last_login
+          ? new Date(user.last_login).toLocaleDateString()
+          : new Date().toLocaleDateString();
+        this.providerDisplay = user.provider_display;
+        this.carriers = user.carriers;
+      } else {
+        this.errorMessage = response.data.message;
+      }
+    }
   }
 };
 </script>
