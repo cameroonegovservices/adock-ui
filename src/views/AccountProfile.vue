@@ -12,7 +12,7 @@
               h1(headline mb-0) {{ displayUser }}
               p {{ user.email }}
           v-card-text
-            p Compte créé le {{ localeDateJoined }}
+            p Compte « {{ providerDisplay }} » créé le {{ localeDateJoined }}
             p Dernière connexion le {{ localeLastLogin }}
         v-card.mt-1
           v-card-title(primary-title)
@@ -54,6 +54,7 @@ export default {
     return {
       localeDateJoined: null,
       localeLastLogin: null,
+      providerDisplay: "",
       errorMessage: "",
       carriers: null
     };
@@ -65,6 +66,7 @@ export default {
       const user = response.data.user;
       this.localeDateJoined = new Date(user.date_joined).toLocaleDateString();
       this.localeLastLogin = new Date(user.last_login).toLocaleDateString();
+      this.providerDisplay = user.provider_display;
       this.carriers = user.carriers;
     } else {
       this.errorMessage = response.data.message;
