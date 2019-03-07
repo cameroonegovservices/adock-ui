@@ -45,27 +45,31 @@ import { mapState } from "vuex";
 import api from "@/api";
 import { displayUserMixin } from "@/mixins";
 
+function getDefaultData() {
+  return {
+    localeDateJoined: null,
+    localeLastLogin: null,
+    providerDisplay: "",
+    errorMessage: "",
+    carriers: null
+  };
+}
+
 export default {
   name: "account-profile",
 
   mixins: [displayUserMixin],
 
   data() {
-    return {
-      localeDateJoined: null,
-      localeLastLogin: null,
-      providerDisplay: "",
-      errorMessage: "",
-      carriers: null
-    };
+    return getDefaultData();
   },
 
   async created() {
-    this.fetchData();
+    this.setup();
   },
 
   watch: {
-    $route: "fetchData"
+    $route: "setup"
   },
 
   computed: {
@@ -73,7 +77,8 @@ export default {
   },
 
   methods: {
-    async fetchData() {
+    async setup() {
+      Object.assign(this.$data, getDefaultData());
       const response = await api.get(api.profileUrl);
       if (response.status === 200) {
         const user = response.data.user;
