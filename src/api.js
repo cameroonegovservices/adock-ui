@@ -13,7 +13,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(function(config) {
   const token = auth.getToken();
   if (token) {
-    config.headers["Authorization"] = "Bearer " + token;
+    config.headers["Authorization"] = auth.getTokenType() + " " + token;
   }
   return config;
 });

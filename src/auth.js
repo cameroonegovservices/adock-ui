@@ -28,6 +28,10 @@ export default {
     return storage.idToken;
   },
 
+  getTokenType() {
+    return storage.tokenType;
+  },
+
   setTokenData(payload) {
     if (payload.token) {
       storage.tokenType = payload.token_type;
