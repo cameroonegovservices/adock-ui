@@ -64,12 +64,16 @@ export default {
     return getDefaultData();
   },
 
-  async created() {
+  created() {
     this.setup();
   },
 
   watch: {
-    $route: "setup"
+    $route(to) {
+      if (to.name === "account_profile") {
+        this.setup();
+      }
+    }
   },
 
   computed: {

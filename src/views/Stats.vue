@@ -118,13 +118,15 @@ export default {
     };
   },
 
-  async mounted() {
-    const response = await api.get(api.statsUrl);
-    if (response.status === 200) {
-      this.modifiedCarriers = response.data["modified_carriers"];
-      this.modifiedCarriersPerMonth =
-        response.data["modified_carriers_per_month"];
-      this.allowed = true;
+  created() {
+    this.setup();
+  },
+
+  watch: {
+    $route(to) {
+      if (to.name === "stats") {
+        this.setup();
+      }
     }
   },
 
@@ -145,6 +147,16 @@ export default {
   },
 
   methods: {
+    async setup() {
+      const response = await api.get(api.statsUrl);
+      if (response.status === 200) {
+        this.modifiedCarriers = response.data["modified_carriers"];
+        this.modifiedCarriersPerMonth =
+          response.data["modified_carriers_per_month"];
+        this.allowed = true;
+      }
+    },
+
     getmodifiedValueProperty(value) {
       if (value === 0) {
         value = 1;
