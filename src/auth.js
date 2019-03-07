@@ -30,10 +30,10 @@ export default {
 
   setTokenData(payload) {
     if (payload.token) {
-      storage.tokenType = payload.tokenType;
+      storage.tokenType = payload.token_type;
       storage.token = payload.token;
-      storage.expiresIn = payload.expiresIn;
-      storage.idToken = payload.idToken;
+      storage.expiresIn = payload.expires_in;
+      storage.idToken = payload.id_token;
     }
   },
 
