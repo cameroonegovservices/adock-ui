@@ -1,7 +1,8 @@
 import axios from "axios";
 import Raven from "raven-js";
 
-import auth from "./auth";
+import auth from "@/auth";
+import router from "@/router";
 
 export const axiosInstance = axios.create({
   baseURL: process.env.VUE_APP_API_URL,
@@ -70,8 +71,11 @@ export const api = {
         message += ` « ${axiosError.request.responseURL} »`;
       }
       message += ".";
+    } else if (response.status === 401) {
+      // No token or expired
+      auth.deleteTokenData();
+      router.push({ name: "account_login" });
     }
-
     if (message) {
       response.data = Object.assign({}, response.data, { message });
     }
