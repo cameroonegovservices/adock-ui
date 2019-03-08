@@ -1,13 +1,22 @@
 <template lang="pug">
   v-container(fluid fill-height)
-    v-layout(row align-center justify-center)
-      v-flex(xs12)
-        v-card
-          v-card-text
-            p {{ code }}
-            p {{ state }}
-            p {{ message }}
-
+    v-layout(row justify-center align-center)
+        v-flex(xs6 text-xs-center)
+          div(v-if="waiting")
+            h4 Envoi de la réponse France Connect au serveur A Dock
+            br
+            v-progress-circular(
+              :indeterminate="true"
+              color="primary"
+            )
+          template(v-else)
+            div(v-if="status === 200")
+              h3 Connecté avec succès
+                v-icon(color="success") done
+            div(v-else)
+              h3 {{ message }}
+                v-icon(color="error") error
+              p La procédure de connexion via France Connect a échoué.
 </template>
 
 <script>
@@ -18,22 +27,19 @@ export default {
 
   data() {
     return {
-      code: "",
-      state: "",
-      message: ""
+      message: "",
+      status: null,
+      waiting: true
     };
   },
 
-  mounted() {
-    console.log(this.$route.query);
-    this.code = this.$route.query.code;
-    this.state = this.$route.query.state;
-
+  async mounted() {
     const params = {
-      code: this.code,
-      state: this.state
+      code: this.$route.query.code,
+      state: this.$route.query.state
     };
-    const response = api.get(api.franceConnectCallbackUrl, params);
+    const response = await api.get(api.franceConnectCallbackUrl, params);
+    this.waiting = false;
     if (response.status === 200) {
       const data = {
         tokenType: response.data.token_type,
@@ -41,7 +47,6 @@ export default {
         expiresIn: response.data.expires_in,
         idToken: response.data.id_token
       };
-      console.log(data);
       this.$store.dispatch("userLogIn", data);
       this.$store.commit("MESSAGE_ADD", {
         message: `Connecté en tant que « ${
@@ -52,7 +57,7 @@ export default {
         name: "search"
       });
     } else {
-      this.message = response.data.message;
+      this.message = response.data.message || "";
     }
   }
 };

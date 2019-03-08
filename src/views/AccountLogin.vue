@@ -135,7 +135,13 @@ export default {
           password: this.password
         });
         if (response.status === 200) {
-          this.$store.dispatch("userLogIn", response.data);
+          const data = {
+            tokenType: response.data.token_type,
+            token: response.data.token,
+            expiresIn: response.data.expires_in,
+            idToken: null
+          };
+          this.$store.dispatch("userLogIn", data);
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });

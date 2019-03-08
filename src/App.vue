@@ -40,7 +40,7 @@
       )
       v-toolbar-items(v-else)
         v-btn(v-if="user && user.is_staff" flat :to="{name: 'stats'}") Statistiques
-        div.adock-toolbar-items(v-if="user")
+        template(v-if="user")
           v-btn(
             flat
             :to="{name: 'account_profile'}"

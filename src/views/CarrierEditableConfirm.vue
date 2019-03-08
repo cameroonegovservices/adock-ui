@@ -12,7 +12,7 @@ v-container(fluid fill-height)
       template(v-else)
         div(v-if="status === 200")
           h3 {{ message }}
-            v-icon done
+            v-icon(color="success") done
           p
             | Les modifications de la fiche transporteur
             |
