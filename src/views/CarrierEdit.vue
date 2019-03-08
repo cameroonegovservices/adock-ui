@@ -316,17 +316,11 @@ export default {
       if (response.status === 200) {
         // Success
         this.$store.commit("MESSAGE_ADD", {
-          message: `Transporteur « ${
-            response.data.carrier.enseigne
-          } » enregistré.`
+          message: `Un courriel a été envoyé à « ${
+            response.data.carrier.email
+          } » pour confirmer les modifications.`
         });
-        if (response.data.confirmation_email_sent) {
-          this.$store.commit("MESSAGE_ADD", {
-            message: `Un courriel de confirmation a été envoyé à « ${
-              response.data.carrier.email
-            } ».`
-          });
-        }
+
         // Redirect
         this.$router.push({
           name: "carrier_detail",
