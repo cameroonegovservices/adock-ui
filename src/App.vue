@@ -89,6 +89,9 @@
 
 .adock-french-mobility
   padding-top: 7px
+
+.adock-help h4, .adock-help h5, .adock-help h6
+  padding: 0.5em 0
 </style>
 
 <script>
