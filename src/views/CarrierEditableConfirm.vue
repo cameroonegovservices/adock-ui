@@ -44,7 +44,8 @@ export default {
     return {
       message: "",
       status: null,
-      waiting: true
+      waiting: true,
+      carrierSiret: null
     };
   },
 
@@ -54,9 +55,10 @@ export default {
       this.token
     );
     const response = await api.get(url);
-    this.waiting = false;
+    this.carrierSiret = (response.data && response.data.siret) || null;
     this.message = (response.data && response.data.message) || "";
     this.status = response.status;
+    this.waiting = false;
   }
 };
 </script>
