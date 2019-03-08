@@ -27,9 +27,10 @@
           span A Dock v{{ meta.version }}
           br
           span {{ meta.carrier.localeCount }} transporteurs au {{ meta.carrier.localeDate }}
-      h3.orange--text.text--darken-4(v-if="isPreproduction") PRÉ-PRODUCTION
-      router-link(v-else :to="{name: 'search'}")
+      router-link.adock-logo-link(:to="{name: 'search'}")
+        h3.orange--text.text--darken-4.pl-2(v-if="isPreproduction") PRÉ-PRODUCTION
         img.adock-app-name(
+          v-else
           src='./assets/adock.beta.gouv.fr-50.png'
           height='25px'
         )
@@ -92,6 +93,9 @@
 
 .adock-help h4, .adock-help h5, .adock-help h6
   padding: 0.5em 0
+
+.adock-logo-link
+  text-decoration: none
 </style>
 
 <script>
