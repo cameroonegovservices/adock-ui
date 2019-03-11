@@ -99,7 +99,7 @@
             v-layout(wrap)
               v-flex.adock-align-right(xs12 md11)
                 v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
-                v-btn(color="primary" @click.native="update")
+                v-btn(color="primary" @click.native="post")
                   v-icon(v-if="carrier.is_locked" left) lock
                   | Modifier
 </template>
@@ -307,7 +307,7 @@ export default {
       };
     },
 
-    async update() {
+    async post() {
       const payload = this.getPayloadFromForm();
       const response = await api.post(
         api.getCarrierUrl(this.carrier.siret),
@@ -315,11 +315,13 @@ export default {
       );
       if (response.status === 200) {
         // Success
-        this.$store.commit("MESSAGE_ADD", {
-          message: `Un courriel a été envoyé à « ${
-            response.data.carrier.email
-          } » pour confirmer les modifications.`
-        });
+        if (response.data["confirmation_email_sent"]) {
+          this.$store.commit("MESSAGE_ADD", {
+            message: `Un courriel a été envoyé à « ${
+              response.data.carrier.email
+            } » pour confirmer les modifications.`
+          });
+        }
 
         // Redirect
         this.$router.push({
