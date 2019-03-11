@@ -6,13 +6,13 @@ import flushPromises from "flush-promises";
 import MockAdapter from "axios-mock-adapter";
 
 import { api, axiosInstance } from "@/api";
-import CarrierEditableConfirm from "@/views/CarrierEditableConfirm.vue";
+import CarrierRelationConfirm from "@/views/CarrierRelationConfirm.vue";
 
 const mockAdapter = new MockAdapter(axiosInstance);
 
 Vue.use(Vuetify);
 
-describe("CarrierEditableConfirm.vue", () => {
+describe("CarrierRelationConfirm.vue", () => {
   afterEach(() => {
     mockAdapter.reset();
   });
@@ -24,9 +24,10 @@ describe("CarrierEditableConfirm.vue", () => {
     const url = api.getCarrierEditableConfirmUrl(carrierEditableId, token);
     mockAdapter.onGet(url).reply(200, { message });
 
-    const wrapper = shallowMount(CarrierEditableConfirm, {
+    const wrapper = shallowMount(CarrierRelationConfirm, {
       propsData: {
-        carrierEditableId,
+        frRelationType: "changement",
+        relationId: carrierEditableId,
         token
       },
       stubs: {
@@ -39,7 +40,7 @@ describe("CarrierEditableConfirm.vue", () => {
 
     // Message + icon done
     await flushPromises();
-
+    console.log(wrapper.text());
     expect(wrapper.find("h3").text()).toBe(message + "done");
   });
 });

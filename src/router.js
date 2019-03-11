@@ -9,7 +9,7 @@ import AccountCreate from "@/views/AccountCreate.vue";
 import AccountLogin from "@/views/AccountLogin.vue";
 import AccountProfile from "@/views/AccountProfile.vue";
 import CarrierCertificate from "@/views/CarrierCertificate.vue";
-import CarrierEditableConfirm from "@/views/CarrierEditableConfirm.vue";
+import CarrierRelationConfirm from "@/views/CarrierRelationConfirm.vue";
 import CarrierDetail from "@/views/CarrierDetail.vue";
 import CarrierEdit from "@/views/CarrierEdit.vue";
 import CGU from "@/views/CGU.vue";
@@ -66,13 +66,13 @@ const routes = [
     props: true
   },
   {
-    path: "/transporteur/changement/:carrierEditableId/confirmer/:token",
-    name: "carrier_editable_confirm",
-    component: CarrierEditableConfirm,
+    path: "/transporteur/:frRelationType/:relationId/confirmer/:token",
+    name: "carrier_relation_confirm",
+    component: CarrierRelationConfirm,
     props: true
   },
   {
-    path: "/transporteur/:carrierSiret/certificate",
+    path: "/transporteur/:carrierSiret/attestation",
     name: "carrier_certificate",
     component: CarrierCertificate,
     props: true

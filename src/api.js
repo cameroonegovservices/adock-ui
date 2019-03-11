@@ -45,6 +45,10 @@ export const api = {
     return `/carriers/editable/${carrierEditableId}/confirm/${token}/`;
   },
 
+  getCarrierCertificateConfirmUrl(certificateId, token) {
+    return `/carriers/certificate/${certificateId}/confirm/${token}/`;
+  },
+
   handleCommunicationError(axiosError) {
     let message = null;
     // Returns an object with 'status' (integer), 'data.message' (text) and all the

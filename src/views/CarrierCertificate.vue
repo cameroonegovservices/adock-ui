@@ -254,7 +254,9 @@ export default {
       if (response.status === 200) {
         // Success
         this.$store.commit("MESSAGE_ADD", {
-          message: "L'attestation a été signée."
+          message: `Un courriel a été envoyé à « ${
+            response.data.carrier.email
+          } » pour confirmer l'attestation.`
         });
         // Redirect
         this.$router.push({
