@@ -97,7 +97,15 @@
                   :error-messages="fieldErrors.description"
                 )
             v-layout(wrap)
-              v-flex.adock-align-right(xs12 md11)
+              v-flex(xs12 offset-md1 md5)
+                v-checkbox.adock-legal-text(
+                  v-model="form.cgu_accepted"
+                )
+                  span(slot="label")
+                    | Je certifie avoir lu et accepté les
+                    |
+                    router-link(:to="{name: 'cgu'}") CGU
+              v-flex.adock-align-right(xs12 md5)
                 v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
                 v-btn(color="primary" @click.native="post")
                   v-icon(v-if="carrier.is_locked" left) lock
@@ -111,6 +119,9 @@
 
 .flex.flex-bottom
   flex-basis: 0
+
+.adock-legal-text .v-label
+  font-size: 14px
 </style>
 
 <script>
@@ -229,7 +240,8 @@ export default {
         region: "",
         specialities: [],
         website: "",
-        description: ""
+        description: "",
+        cgu_accepted: false
       }
     };
   },
@@ -303,7 +315,8 @@ export default {
         working_area_departements: this.form.workingAreaDepartements,
         specialities: this.form.specialities,
         website: this.form.website,
-        description: this.form.description
+        description: this.form.description,
+        cgu_accepted: this.form.cgu_accepted
       };
     },
 
