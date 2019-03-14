@@ -102,33 +102,15 @@
 <script>
 import { mapState } from "vuex";
 
-import api from "@/api";
-
 import { version } from "@/../package.json";
+import api from "@/api";
+import { resetOnShowMixin } from "@/mixins";
 
 export default {
   name: "stats",
+  componentUrl: "stats",
 
-  data() {
-    return {
-      allowed: false,
-      modifiedCarriers: 0,
-      modifiedCarriersPerMonth: [],
-      version
-    };
-  },
-
-  created() {
-    this.setup();
-  },
-
-  watch: {
-    $route(to) {
-      if (to.name === "stats") {
-        this.setup();
-      }
-    }
-  },
+  mixins: [resetOnShowMixin],
 
   computed: {
     modifiedScaleProperty() {
@@ -147,7 +129,17 @@ export default {
   },
 
   methods: {
+    getDefaultData() {
+      return {
+        allowed: false,
+        modifiedCarriers: 0,
+        modifiedCarriersPerMonth: [],
+        version
+      };
+    },
+
     async setup() {
+      // getDefaultData is not called in setup but only by data()
       const response = await api.get(api.statsUrl);
       if (response.status === 200) {
         this.modifiedCarriers = response.data["modified_carriers"];

@@ -58,47 +58,32 @@
 import { mapState } from "vuex";
 
 import api from "@/api";
-import { displayUserMixin } from "@/mixins";
-
-function getDefaultData() {
-  return {
-    localeDateJoined: null,
-    localeLastLogin: null,
-    providerDisplay: "",
-    hasAcceptedCGU: true,
-    errorMessage: "",
-    carriers: null
-  };
-}
+import { displayUserMixin, resetOnShowMixin } from "@/mixins";
 
 export default {
   name: "account-profile",
+  componentUrl: "account_profile",
 
-  mixins: [displayUserMixin],
-
-  data() {
-    return getDefaultData();
-  },
-
-  created() {
-    this.setup();
-  },
-
-  watch: {
-    $route(to) {
-      if (to.name === "account_profile") {
-        this.setup();
-      }
-    }
-  },
+  mixins: [displayUserMixin, resetOnShowMixin],
 
   computed: {
     ...mapState(["choices"])
   },
 
   methods: {
+    getDefaultData() {
+      return {
+        localeDateJoined: null,
+        localeLastLogin: null,
+        providerDisplay: "",
+        hasAcceptedCGU: true,
+        errorMessage: "",
+        carriers: null
+      };
+    },
+
     async setup() {
-      Object.assign(this.$data, getDefaultData());
+      Object.assign(this.$data, this.getDefaultData());
       const response = await api.get(api.profileUrl);
       if (response.status === 200) {
         const user = response.data.user;
