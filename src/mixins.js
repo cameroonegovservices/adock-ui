@@ -71,3 +71,32 @@ export const scrollToErrorsMixin = {
     }
   }
 };
+
+export const resetOnShowMixin = {
+  /* Requires:
+      - getDefaultData(),
+      - componentUrl
+  */
+
+  data() {
+    return this.getDefaultData();
+  },
+
+  created() {
+    this.setup();
+  },
+
+  watch: {
+    $route(to) {
+      if (to.name === this.$options.componentUrl) {
+        this.setup();
+      }
+    }
+  },
+
+  methods: {
+    setup() {
+      Object.assign(this.$data, this.getDefaultData());
+    }
+  }
+};

@@ -14,6 +14,21 @@
           v-card-text
             p Compte « {{ providerDisplay }} » créé le {{ localeDateJoined }}
             p Dernière connexion le {{ localeLastLogin }}
+            p
+              | La dernière version des
+              |
+              router-link(:to="{name: 'cgu'}") CGU
+              |
+              | a été accepté : {{ user.has_accepted_cgu ? "oui" : "non" }}
+            v-alert(
+              type="warning"
+              :value="true"
+            )
+              | Vous devez accepter les dernières
+              |
+              router-link(:to="{name: 'cgu'}") Conditions Générales d'Utilisation
+              |
+              | pour utiliser le service
         v-card.mt-1
           v-card-title(primary-title)
             h2(headline) Vos entreprises
@@ -50,6 +65,7 @@ function getDefaultData() {
     localeDateJoined: null,
     localeLastLogin: null,
     providerDisplay: "",
+    hasAcceptedCGU: true,
     errorMessage: "",
     carriers: null
   };
@@ -91,6 +107,7 @@ export default {
           ? new Date(user.last_login).toLocaleDateString()
           : new Date().toLocaleDateString();
         this.providerDisplay = user.provider_display;
+        this.hasAcceptedCGU = user.has_accepted_cgu;
         this.carriers = user.carriers;
       } else {
         this.errorMessage = response.data.message;

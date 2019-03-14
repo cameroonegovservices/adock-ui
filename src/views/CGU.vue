@@ -4,6 +4,10 @@ v-container.adock-search-background(fluid fill-height)
     v-flex(xs12 sm11 md9 lg8 xl6)
       v-card.elevation-8
         v-card-text.adock-help
+          v-flex.adock-align-right(xs12 offset-md8 md4)
+            p(v-if="!user.has_accepted_cgu")
+              | Acception en bas de page
+            v-icon(large) arrow_downward
 
           h4.display-1 Conditions générales d'utilisation
 
@@ -47,7 +51,8 @@ v-container.adock-search-background(fluid fill-height)
             br
             strong « Vous »
             |  se réfère à un utilisateur de A Dock.
-            strong « Le service »
+            br
+            strong « Le service »
             |  se réfère indistinctement à l’application web adock.beta.gouv.fr et à son interface de programmation applicative (API), documentée via
             |
             a(href="https://github.com/MTES-MCT/adock-api/blob/master/docs/openapi.yaml") OpenAPI v3
@@ -73,7 +78,8 @@ v-container.adock-search-background(fluid fill-height)
 
           p
             |
-            | A Dock demande et stocke diverses informations nominatives (nom, prénom, adresse email). Une fois réunies, ces données ont un
+            | A Dock demande et stocke diverses informations nominatives (nom, prénom, adresse email). Une fois réunies, ces données ont
+            |
             strong caractère personnel
             | .
 
@@ -126,7 +132,9 @@ v-container.adock-search-background(fluid fill-height)
 
           p
             | En application de la réglementation en matière de données à caractère personnel,
+            |
             strong vous avez un droit d’accès, de rectification et de suppression de vos données.
+            |
             | Pour l’exercer, envoyez-nous un courriel à l’adresse contact@adock.beta.gouv.fr, en précisant l’objet de votre demande et les éléments permettant d’identifier les données que vous souhaitez voir supprimées.
             | Après vérification que ces données vous appartiennent bien, nous les supprimerons définitivement de adock.beta.gouv.fr.
 
@@ -213,7 +221,18 @@ v-container.adock-search-background(fluid fill-height)
             br
             | Siège social : 2 rue Kellermann, 59100 Roubaix, France
 
-          </template>
+          v-alert(
+            type="error"
+            :value="!!errorMessage"
+          ) {{ errorMessage }}
+          v-flex(xs12 offset-md7 md5)
+            v-checkbox(
+                v-if="!user.has_accepted_cgu"
+                label="Je certifie avoir lu et accepté les CGU"
+                @change="cguChange"
+                :disabled="cguCheckboxDisabled"
+              )
+</template>
 
 <style lang="stylus">
 .adock-search-background
@@ -223,3 +242,49 @@ v-container.adock-search-background(fluid fill-height)
 iframe
   border: 1px solid
 </style>
+
+<script>
+import api from "@/api";
+import { mapState } from "vuex";
+
+import { resetOnShowMixin } from "@/mixins";
+
+export default {
+  name: "cgu",
+  componentUrl: "cgu",
+
+  mixins: [resetOnShowMixin],
+
+  computed: {
+    ...mapState(["user"])
+  },
+
+  methods: {
+    getDefaultData() {
+      return {
+        errorMessage: "",
+        cguCheckboxDisabled: false
+      };
+    },
+
+    async cguChange(value) {
+      if (value) {
+        this.cguCheckboxDisabled = true;
+        const response = await api.patch(api.profileUrl, {
+          has_accepted_cgu: value
+        });
+        if (response.status === 200) {
+          // Update user
+          this.$store.commit("MESSAGE_ADD", {
+            message:
+              "Vous avez approuvé les Conditions Générales d'Utilisation."
+          });
+          this.$router.push({ name: "search" });
+        } else {
+          this.errorMessage = response.data.message;
+        }
+      }
+    }
+  }
+};
+</script>
