@@ -66,9 +66,5 @@ export default {
 
     delete storage.username;
     delete storage.expiration;
-  },
-
-  isLoggedIn() {
-    return !!this.getToken();
   }
 };
