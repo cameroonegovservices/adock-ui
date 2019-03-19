@@ -140,19 +140,8 @@ export default {
             expiresIn: response.data.expires_in,
             idToken: null
           };
-          await this.$store.dispatch("userLogIn", data);
-          this.$store.commit("MESSAGE_ADD", {
-            message: `Connecté en tant que « ${this.$store.state.user.email} ».`
-          });
-          if (this.$store.state.user.has_accepted_cgu) {
-            this.$router.push({
-              name: "search"
-            });
-          } else {
-            this.$router.push({
-              name: "cgu"
-            });
-          }
+          const routerPath = await this.$store.dispatch("userLogIn", data);
+          this.$router.push(routerPath);
         } else {
           if (response.data.errors) {
             if (response.data.errors.fields) {

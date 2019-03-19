@@ -47,15 +47,8 @@ export default {
         expiresIn: response.data.expires_in,
         idToken: response.data.id_token
       };
-      await this.$store.dispatch("userLogIn", data);
-      this.$store.commit("MESSAGE_ADD", {
-        message: `Connecté en tant que « ${
-          this.$store.state.user.email
-        } » via FranceConnect.`
-      });
-      this.$router.push({
-        name: "search"
-      });
+      const routerPath = await this.$store.dispatch("userLogIn", data);
+      this.$router.push(routerPath);
     } else {
       this.message = response.data.message || "";
     }
