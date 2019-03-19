@@ -6,23 +6,23 @@
               type="error"
               :value="!!errorMessage"
             ) {{ errorMessage }}
-        v-card
+        v-card(v-if="user")
           v-card-title(primary-title)
             div
               h1(headline mb-0) {{ displayUser }}
-              p {{ user ? user.email : "" }}
+              p {{ user.email }}
           v-card-text
-            p Compte « {{ providerDisplay }} » créé le {{ localeDateJoined }}
+            p Compte « {{ user.provider_display }} » créé le {{ localeDateJoined }}
             p Dernière connexion le {{ localeLastLogin }}
             p
               | La dernière version des
               |
               router-link(:to="{name: 'cgu'}") CGU
               |
-              | a été accepté : {{ user.has_accepted_cgu ? "oui" : "non" }}
+              | a été acceptée : {{ user.has_accepted_cgu ? "oui" : "non" }}
             v-alert(
               type="warning"
-              :value="true"
+              :value="!user.has_accepted_cgu"
             )
               | Vous devez accepter les dernières
               |
@@ -67,16 +67,21 @@ export default {
   mixins: [displayUserMixin, resetOnShowMixin],
 
   computed: {
+    localeDateJoined() {
+      return new Date(this.user.date_joined).toLocaleDateString();
+    },
+
+    localeLastLogin() {
+      return this.user.last_login
+        ? new Date(this.user.last_login).toLocaleDateString()
+        : new Date().toLocaleDateString();
+    },
     ...mapState(["choices"])
   },
 
   methods: {
     getDefaultData() {
       return {
-        localeDateJoined: null,
-        localeLastLogin: null,
-        providerDisplay: "",
-        hasAcceptedCGU: true,
         errorMessage: "",
         carriers: null
       };
@@ -84,16 +89,9 @@ export default {
 
     async setup() {
       Object.assign(this.$data, this.getDefaultData());
-      const response = await api.get(api.profileUrl);
+      const response = await api.get(api.extendedProfileUrl);
       if (response.status === 200) {
-        const user = response.data.user;
-        this.localeDateJoined = new Date(user.date_joined).toLocaleDateString();
-        this.localeLastLogin = user.last_login
-          ? new Date(user.last_login).toLocaleDateString()
-          : new Date().toLocaleDateString();
-        this.providerDisplay = user.provider_display;
-        this.hasAcceptedCGU = user.has_accepted_cgu;
-        this.carriers = user.carriers;
+        this.carriers = response.data.user.carriers;
       } else {
         this.errorMessage = response.data.message;
       }

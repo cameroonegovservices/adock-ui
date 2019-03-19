@@ -25,6 +25,7 @@ export const api = {
   loginCreateUrl: "/accounts/create/",
   loginUrl: "/accounts/login/",
   profileUrl: "/accounts/profile/",
+  extendedProfileUrl: "/accounts/profile/extended/",
   metaUrl: "/meta/",
   searchCarriersUrl: "/carriers/search/",
   statsUrl: "/stats/",
