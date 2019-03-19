@@ -50,9 +50,9 @@ export const actions = {
           message: response.data.message
         });
       }
-      auth.deleteTokenData();
-      commit("USER_DELETE");
     }
+    auth.deleteTokenData();
+    commit("USER_DELETE");
   }
 };
 
