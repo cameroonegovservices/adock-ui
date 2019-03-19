@@ -275,6 +275,7 @@ export default {
         });
         if (response.status === 200) {
           // Update user
+          this.$store.commit("USER_SET", response.data);
           this.$store.commit("MESSAGE_ADD", {
             message:
               "Vous avez approuvé les Conditions Générales d'Utilisation."
