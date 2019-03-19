@@ -1,4 +1,6 @@
 /* globals localStorage */
+import jwtDecode from "jwt-decode";
+import Raven from "raven-js";
 
 function isLocalStorageAvailable() {
   const v = "value";
@@ -34,10 +36,22 @@ export default {
 
   setTokenData(payload) {
     if (payload.token) {
+      let decodedJwt = null;
+      try {
+        decodedJwt = jwtDecode(payload.token);
+      } catch (e) {
+        Raven.captureException(e);
+        return false;
+      }
+
       storage.tokenType = payload.tokenType;
       storage.token = payload.token;
       storage.expiresIn = payload.expiresIn;
       storage.idToken = payload.idToken;
+
+      storage.username = decodedJwt.username;
+      storage.expiration = decodedJwt.exp;
+      return true;
     }
   },
 
@@ -46,6 +60,9 @@ export default {
     delete storage.token;
     delete storage.expiresIn;
     delete storage.idToken;
+
+    delete storage.username;
+    delete storage.expiration;
   },
 
   isLoggedIn() {

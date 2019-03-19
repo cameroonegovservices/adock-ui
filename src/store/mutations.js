@@ -55,10 +55,10 @@ export const mutations = {
     }
     state.meta.version = payload.version;
   },
-  USER_LOG_IN(state, payload) {
+  USER_SET(state, payload) {
     state.user = payload.user;
   },
-  USER_LOG_OUT(state) {
+  USER_DELETE(state) {
     state.user = null;
   }
 };

@@ -55,7 +55,6 @@
                   :disabled="isDisabled"
                   type="submit"
                 ) Se connecter
-
 </template>
 
 <style lang="stylus">
@@ -141,7 +140,7 @@ export default {
             expiresIn: response.data.expires_in,
             idToken: null
           };
-          this.$store.dispatch("userLogIn", data);
+          await this.$store.dispatch("userLogIn", data);
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });

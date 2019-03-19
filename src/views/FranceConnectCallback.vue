@@ -47,7 +47,7 @@ export default {
         expiresIn: response.data.expires_in,
         idToken: response.data.id_token
       };
-      this.$store.dispatch("userLogIn", data);
+      await this.$store.dispatch("userLogIn", data);
       this.$store.commit("MESSAGE_ADD", {
         message: `Connecté en tant que « ${
           this.$store.state.user.email

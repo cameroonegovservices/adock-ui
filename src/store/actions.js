@@ -1,6 +1,3 @@
-import jwtDecode from "jwt-decode";
-import Raven from "raven-js";
-
 import auth from "@/auth";
 import api from "@/api";
 
@@ -12,32 +9,32 @@ export const actions = {
     }
   },
 
-  userLogIn: ({ commit }, payload) => {
-    let decodedJwt = null;
-
-    auth.setTokenData(payload);
-    try {
-      decodedJwt = jwtDecode(auth.getToken());
-    } catch (e) {
-      Raven.captureException(e);
+  loadUserProfile: async ({ commit }) => {
+    const response = await api.get(api.profileUrl);
+    if (response.status !== 200) {
+      return false;
     }
 
-    if (decodedJwt) {
-      commit("USER_LOG_IN", {
-        user: decodedJwt
-      });
-    }
+    commit("USER_SET", response.data);
+    return true;
   },
 
-  userLogInFromStorage: ({ commit }) => {
+  userLogIn: async ({ dispatch }, payload) => {
+    if (!auth.setTokenData(payload)) {
+      return false;
+    }
+
+    return await dispatch("loadUserProfile");
+  },
+
+  userLogInFromStorage: async ({ dispatch }) => {
     const token = auth.getToken();
 
-    if (token) {
-      const decodedJwt = jwtDecode(token);
-      commit("USER_LOG_IN", {
-        user: decodedJwt
-      });
+    if (!token) {
+      return false;
     }
+
+    return await dispatch("loadUserProfile");
   },
 
   userLogOut: async ({ commit }) => {
@@ -54,7 +51,7 @@ export const actions = {
         });
       }
       auth.deleteTokenData();
-      commit("USER_LOG_OUT");
+      commit("USER_DELETE");
     }
   }
 };
