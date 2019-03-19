@@ -4,13 +4,32 @@ v-container.adock-search-background(fluid fill-height)
     v-flex(xs12 sm11 md9 lg8 xl6)
       v-card.elevation-8
         v-card-text.adock-help
-          v-flex.adock-align-right(xs12 offset-md8 md4)
-            p(v-if="!user.has_accepted_cgu")
-              | Acception en bas de page
-            v-icon(
-              v-if="!user.has_accepted_cgu"
-              large
-            ) arrow_downward
+          v-layout(v-if="!user.has_accepted_cgu")
+            v-flex(xs12 md12)
+              v-alert(
+                type="warning"
+                :value="true"
+              )
+                v-layout
+                  v-flex(xs10)
+                    p Vous devez accepter les Conditions Générales d'Utilisation pour utiliser le service.
+                  v-flex.adock-align-right(xs2)
+                    v-icon(
+                      dark
+                      v-if="!user.has_accepted_cgu"
+                      large
+                    ) arrow_downward
+              v-alert(
+                type="error"
+                :value="!!errorMessage"
+              ) {{ errorMessage }}
+              v-flex(xs12 offset-md7 md5)
+                v-checkbox(
+                  v-if="!user.has_accepted_cgu"
+                  label="Je certifie avoir lu et accepté les CGU"
+                  @change="cguChange"
+                  :disabled="cguCheckboxDisabled"
+                )
 
           h4.display-1 Conditions générales d'utilisation
 
