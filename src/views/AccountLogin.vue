@@ -144,9 +144,15 @@ export default {
           this.$store.commit("MESSAGE_ADD", {
             message: `Connecté en tant que « ${this.$store.state.user.email} ».`
           });
-          this.$router.push({
-            name: "search"
-          });
+          if (this.$store.state.user.has_accepted_cgu) {
+            this.$router.push({
+              name: "search"
+            });
+          } else {
+            this.$router.push({
+              name: "cgu"
+            });
+          }
         } else {
           if (response.data.errors) {
             if (response.data.errors.fields) {

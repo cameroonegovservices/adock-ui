@@ -7,7 +7,10 @@ v-container.adock-search-background(fluid fill-height)
           v-flex.adock-align-right(xs12 offset-md8 md4)
             p(v-if="!user.has_accepted_cgu")
               | Acception en bas de page
-            v-icon(large) arrow_downward
+            v-icon(
+              v-if="!user.has_accepted_cgu"
+              large
+            ) arrow_downward
 
           h4.display-1 Conditions générales d'utilisation
 
