@@ -22,15 +22,23 @@ v-img.white--text(:src="roadPicture" height="200px")
                       a.white--text.adock-link(
                         @click="$vuetify.goTo('#facilities')"
                       ) Autres établissements
-            v-btn.ma-0.mt-2(
+            template(
               v-if="withEditButton"
-              dark
-              :color="carrier.completeness === 100 ? 'green' : 'orange'"
-              :to="{name: 'carrier_edit', params: {carrierSiret: carrier.siret}}"
             )
-              v-icon(v-if="carrier.is_locked" left) lock
-              span(v-if="carrier.completeness === 100") Modifier les informations
-              span(v-else) Compléter les informations ({{ carrier.completeness }} %)
+              v-btn.ma-0.mt-2(
+                dark
+                :color="carrier.completeness === 100 ? 'green' : 'orange'"
+                :to="{name: 'carrier_edit', params: {carrierSiret: carrier.siret}}"
+              )
+                v-icon(v-if="carrier.is_locked" left) lock
+                span(v-if="carrier.completeness === 100") Modifier la fiche
+                span(v-else) Compléter la fiche ({{ carrier.completeness }} %)
+              v-btn.ma-0.ml-2.mt-2(
+                dark
+                :to="{name: 'carrier_certificate', params: { carrierSiret: carrier.siret }}"
+              )
+                v-icon(v-if="carrier.is_locked" left) lock
+                span Générer une attestation
           v-flex(xs2 sm1)
             v-tooltip(
               activator=".clipboard"

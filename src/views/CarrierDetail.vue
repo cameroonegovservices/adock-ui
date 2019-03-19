@@ -162,9 +162,6 @@
                       v-icon archive
                 p(v-else) Aucune attestation
             v-layout
-              v-flex(xs12 offset-md1 md5)
-                v-btn(:to="{name: 'carrier_certificate', params: { carrierSiret: carrier.siret }}") Signer une nouvelle attestation
-            v-layout
               v-flex(xs12)
                 span#facilities.adock-section-title.pl-4 Autres établissements de l'entreprise
             v-layout
