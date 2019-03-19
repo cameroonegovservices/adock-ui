@@ -40,7 +40,6 @@ describe("CarrierRelationConfirm.vue", () => {
 
     // Message + icon done
     await flushPromises();
-    console.log(wrapper.text());
     expect(wrapper.find("h3").text()).toBe(message + "done");
   });
 });

@@ -22,8 +22,22 @@ if (isLocalStorageAvailable()) {
 }
 
 export default {
+  tokenHasExpired() {
+    if (!storage.expiration) {
+      return false;
+    }
+
+    const now = new Date().getTime() / 1000;
+    const expiration = Number(storage.expiration);
+    return expiration - now <= 0;
+  },
+
   getToken() {
-    return storage.token;
+    if (this.tokenHasExpired()) {
+      return null;
+    }
+
+    return storage.token || null;
   },
 
   getIdToken() {
@@ -32,6 +46,10 @@ export default {
 
   getTokenType() {
     return storage.tokenType;
+  },
+
+  getUserId() {
+    return storage.userId;
   },
 
   setTokenData(payload) {
@@ -52,7 +70,7 @@ export default {
       if (payload.idToken) {
         storage.idToken = payload.idToken;
       }
-      storage.username = decodedJwt.username;
+      storage.userId = decodedJwt.user_id;
       storage.expiration = decodedJwt.exp;
       return true;
     }
