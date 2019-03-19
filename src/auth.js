@@ -45,10 +45,13 @@ export default {
       }
 
       storage.tokenType = payload.tokenType;
-      storage.token = payload.token;
+      if (payload.token) {
+        storage.token = payload.token;
+      }
       storage.expiresIn = payload.expiresIn;
-      storage.idToken = payload.idToken;
-
+      if (payload.idToken) {
+        storage.idToken = payload.idToken;
+      }
       storage.username = decodedJwt.username;
       storage.expiration = decodedJwt.exp;
       return true;
