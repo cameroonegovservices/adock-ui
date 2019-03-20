@@ -39,6 +39,7 @@ export default {
       state: this.$route.query.state
     };
     const response = await api.get(api.franceConnectCallbackUrl, params);
+    this.status = response.status;
     this.waiting = false;
     if (response.status === 200) {
       const routerPath = await this.$store.dispatch("userLogIn", response.data);
