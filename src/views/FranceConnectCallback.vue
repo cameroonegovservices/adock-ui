@@ -41,13 +41,7 @@ export default {
     const response = await api.get(api.franceConnectCallbackUrl, params);
     this.waiting = false;
     if (response.status === 200) {
-      const data = {
-        tokenType: response.data.token_type,
-        token: response.data.token,
-        expiresIn: response.data.expires_in,
-        idToken: response.data.id_token
-      };
-      const routerPath = await this.$store.dispatch("userLogIn", data);
+      const routerPath = await this.$store.dispatch("userLogIn", response.data);
       this.$router.push(routerPath);
     } else {
       this.message = response.data.message || "";

@@ -23,7 +23,7 @@ export const actions = {
     let name;
 
     if (!auth.setTokenData(payload)) {
-      return false;
+      return null;
     }
 
     await dispatch("loadUserProfile");

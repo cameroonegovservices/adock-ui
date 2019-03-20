@@ -10,7 +10,7 @@
             v-layout(align-center justify-center)
               v-flex
                 v-btn.adock-france-connect(
-                  :href="franceConnectAuthorizeUrl"
+                  @click="goToFranceConnectAuthorizeUrl"
                 )
             v-layout(align-center justify-center)
               v-flex
@@ -89,6 +89,7 @@
   dedicated to the submit button.
 */
 import api from "@/api";
+import auth from "@/auth";
 import { emailRules, passwordRules } from "@/mixins";
 
 export default {
@@ -96,8 +97,6 @@ export default {
 
   data() {
     return {
-      franceConnectAuthorizeUrl:
-        process.env.VUE_APP_API_URL + "accounts/fc/authorize",
       email: "",
       isValid: false,
       isPlainPassword: false,
@@ -123,25 +122,36 @@ export default {
   },
 
   methods: {
+    goToFranceConnectAuthorizeUrl() {
+      /* redirect_uri could be set with the URL of the original page */
+      auth.deleteTokenData();
+      const nonce = auth.generateNonce();
+      window.location = `${
+        process.env.VUE_APP_API_URL
+      }accounts/fc/authorize/?nonce=${nonce}`;
+    },
     async submit(e) {
       e.preventDefault();
       if (this.$refs.form.validate()) {
         this.errorMessage = "";
         this.fieldErrors = {};
 
+        auth.deleteTokenData();
         const response = await api.post(api.loginUrl, {
           username: this.email,
           password: this.password
         });
         if (response.status === 200) {
-          const data = {
-            tokenType: response.data.token_type,
-            token: response.data.token,
-            expiresIn: response.data.expires_in,
-            idToken: null
-          };
-          const routerPath = await this.$store.dispatch("userLogIn", data);
-          this.$router.push(routerPath);
+          const routerPath = await this.$store.dispatch(
+            "userLogIn",
+            response.data
+          );
+          if (!routerPath) {
+            this.errorMessage =
+              "Succès de l'identification mais échec des contrôles de sécurité.";
+          } else {
+            this.$router.push(routerPath);
+          }
         } else {
           if (response.data.errors) {
             if (response.data.errors.fields) {

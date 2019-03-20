@@ -21,7 +21,39 @@ if (isLocalStorageAvailable()) {
   storage = {};
 }
 
+/*
+  Code from https://auth0.com/docs/api-auth/tutorials/nonce#persist-nonces-across-requests
+  that uses Web Crypto API.
+*/
+function randomString(length) {
+  const charset =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~";
+  let result = "";
+
+  while (length > 0) {
+    var bytes = new Uint8Array(16);
+    var random = window.crypto.getRandomValues(bytes);
+
+    random.forEach(function(c) {
+      if (length == 0) {
+        return;
+      }
+      if (c < charset.length) {
+        result += charset[c];
+        length--;
+      }
+    });
+  }
+  return result;
+}
+
 export default {
+  generateNonce() {
+    const nonce = randomString(16);
+    storage.nonce = nonce;
+    return nonce;
+  },
+
   tokenHasExpired() {
     if (!storage.expiration) {
       return false;
@@ -53,27 +85,44 @@ export default {
   },
 
   setTokenData(payload) {
-    if (payload.token) {
-      let decodedJwt = null;
+    if (!payload.token) {
+      return false;
+    }
+
+    let decodedToken = null;
+    try {
+      decodedToken = jwtDecode(payload.token);
+    } catch (e) {
+      Raven.captureException(e);
+      return false;
+    }
+
+    if (storage.nonce) {
+      /* A nonce is expected */
+      let decodedIdToken = null;
       try {
-        decodedJwt = jwtDecode(payload.token);
+        decodedIdToken = jwtDecode(payload.id_token);
       } catch (e) {
         Raven.captureException(e);
         return false;
       }
 
-      storage.tokenType = payload.tokenType;
-      if (payload.token) {
-        storage.token = payload.token;
+      if (storage.nonce !== decodedIdToken.nonce) {
+        Raven.captureMessage("Different nonce detected.");
+        return false;
       }
-      storage.expiresIn = payload.expiresIn;
-      if (payload.idToken) {
-        storage.idToken = payload.idToken;
-      }
-      storage.userId = decodedJwt.user_id;
-      storage.expiration = decodedJwt.exp;
-      return true;
     }
+
+    // Store only after validations
+    storage.tokenType = payload.token_type;
+    storage.token = payload.token;
+    storage.expiresIn = payload.expires_in;
+    if (payload.id_token) {
+      storage.idToken = payload.id_token;
+    }
+    storage.userId = decodedToken.user_id;
+    storage.expiration = decodedToken.exp;
+    return true;
   },
 
   deleteTokenData() {
@@ -81,7 +130,7 @@ export default {
     delete storage.token;
     delete storage.expiresIn;
     delete storage.idToken;
-
+    delete storage.nonce;
     delete storage.username;
     delete storage.expiration;
   }

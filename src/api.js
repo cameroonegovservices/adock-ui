@@ -78,7 +78,6 @@ export const api = {
       message += ".";
     } else if (response.status === 401) {
       // No token or expired
-      auth.deleteTokenData();
       router.push({ name: "account_login" });
     }
     if (message) {
