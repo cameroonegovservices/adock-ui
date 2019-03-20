@@ -118,7 +118,7 @@
               v-layout(wrap)
                 v-flex.adock-align-right(xs12 md11)
                   v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
-                  v-btn(color="primary" @click.native="sign") Signer
+                  v-btn(color="primary" @click.native="sign") Générer
 </template>
 
 <style lang="stylus">
