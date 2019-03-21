@@ -1,20 +1,27 @@
+import deepClone from "lodash.clonedeep";
 import Vue from "vue";
+import Vuex from "vuex";
 import Vuetify from "vuetify";
 import { shallowMount, RouterLinkStub } from "@vue/test-utils";
 
 import CarrierCertificate from "@/views/CarrierCertificate.vue";
+import { storeOptions } from "@/store/options";
 import { carrier } from "../testData";
 
+Vue.use(Vuex);
 Vue.use(Vuetify);
 
 describe("CarrierCertificate.vue", () => {
   let wrapper;
 
   beforeEach(() => {
+    const clonedStoreOptions = deepClone(storeOptions);
+    const store = new Vuex.Store(clonedStoreOptions);
     wrapper = shallowMount(CarrierCertificate, {
       propsData: {
         carrier
       },
+      store,
       stubs: {
         RouterLink: RouterLinkStub
       }

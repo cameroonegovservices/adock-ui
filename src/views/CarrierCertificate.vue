@@ -158,15 +158,7 @@ export default {
   },
 
   data() {
-    return {
-      kind: null,
-      firstName: "",
-      lastName: "",
-      position: "",
-      location: "",
-      workers: null,
-      workerIsEmptyError: false
-    };
+    return this.getDefaultData();
   },
 
   created() {
@@ -205,13 +197,25 @@ export default {
   },
 
   methods: {
+    getDefaultData() {
+      const user = this.$store.state.user;
+      return {
+        kind: "workers",
+        firstName: user && user.first_name,
+        lastName: user && user.last_name,
+        position: "",
+        location: "",
+        workers: [this.newWorker()],
+        workerIsEmptyError: false
+      };
+    },
+
     setup() {
-      // From mixin
+      // For mixin
       this.errorMessage = null;
       this.fieldErrors = {};
-      // Only keep manager informations (if any)
-      this.kind = "workers";
-      this.workers = [this.newWorker()];
+      // For self
+      Object.assign(this.$data, this.getDefaultData());
     },
 
     newWorker() {
