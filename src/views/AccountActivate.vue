@@ -18,6 +18,7 @@ v-container(fluid fill-height)
 <script>
 import { displayUserMixin } from "@/mixins";
 import api from "@/api";
+import { setTimeout } from "timers";
 
 export default {
   name: "account-activate",
@@ -54,7 +55,10 @@ export default {
       this.message = response.data.message;
 
       if (response.status === 200 && response.data.token) {
-        this.$store.dispatch("userLogIn", response.data);
+        await this.$store.dispatch("userLogIn", response.data);
+        setTimeout(() => {
+          this.$router.push({ name: "search" });
+        }, 3000);
       }
     }
   }
