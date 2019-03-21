@@ -3,16 +3,24 @@ v-container(fluid fill-height)
   v-layout(row justify-center align-center)
     v-flex(xs6 text-xs-center)
       div(v-if="waiting")
-        h4 {{ message }}
+        h4 Votre compte utilisateur a bien été créé.
+        h4 Pour l’activer, cliquez sur le lien envoyé à votre adresse email.
         br
         v-progress-circular(
           :indeterminate="true"
           color="primary"
         )
       div(v-else)
-        h3 {{ message }}
-          v-icon(v-if="status === 200") done
-        p(v-if="user") Le compte utilisateur « {{ displayUser }} » est maintenant actif.
+        p(v-if="user") Le compte utilisateur « {{ displayUser }} » est maintenant activé.
+          v-icon(
+            v-if="status === 200"
+            color="success"
+          ) done
+        v-alert(
+          v-else
+          type="error"
+          :value="true"
+        ) {{ errorMessage }}
 </template>
 
 <script>
@@ -40,9 +48,9 @@ export default {
 
   data() {
     return {
-      waiting: true,
-      message: "Cliquez sur le lien qui vous a été envoyé par courriel.",
-      status: null
+      errorMessage: null,
+      status: null,
+      waiting: true
     };
   },
 
@@ -50,19 +58,21 @@ export default {
     if (this.userId && this.token) {
       const url = api.getAccountActivateUrl(this.userId, this.token);
       const response = await api.get(url);
-      this.waiting = false;
       this.status = response.status;
-      this.message = response.data.message;
-
       if (response.status === 200 && response.data.token) {
         const routerPath = await this.$store.dispatch(
           "userLogIn",
           response.data
         );
+        // Wait for proper login
+        this.waiting = false;
         // New account should validate CGU each time but I think it's better to not hard code that.
         setTimeout(() => {
           this.$router.push(routerPath);
         }, 2000);
+      } else {
+        this.waiting = false;
+        this.errorMessage = response.data.message;
       }
     }
   }
