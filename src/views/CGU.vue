@@ -4,7 +4,7 @@ v-container.adock-search-background(fluid fill-height)
     v-flex(xs12 sm11 md9 lg8 xl6)
       v-card.elevation-8
         v-card-text.adock-help
-          v-layout(v-if="!user.has_accepted_cgu")
+          v-layout(v-if="user && !user.has_accepted_cgu")
             v-flex(xs12 md12)
               v-alert(
                 type="warning"
@@ -16,7 +16,7 @@ v-container.adock-search-background(fluid fill-height)
                   v-flex.adock-align-right(xs2)
                     v-icon(
                       dark
-                      v-if="!user.has_accepted_cgu"
+                      v-if="user && !user.has_accepted_cgu"
                       large
                     ) arrow_downward
               v-alert(
@@ -25,7 +25,7 @@ v-container.adock-search-background(fluid fill-height)
               ) {{ errorMessage }}
               v-flex(xs12 offset-md7 md5)
                 v-checkbox(
-                  v-if="!user.has_accepted_cgu"
+                  v-if="user && !user.has_accepted_cgu"
                   label="Je certifie avoir lu et accepté les CGU"
                   @change="cguChange"
                   :disabled="cguCheckboxDisabled"
@@ -249,7 +249,7 @@ v-container.adock-search-background(fluid fill-height)
           ) {{ errorMessage }}
           v-flex(xs12 offset-md7 md5)
             v-checkbox(
-                v-if="!user.has_accepted_cgu"
+                v-if="user && !user.has_accepted_cgu"
                 label="Je certifie avoir lu et accepté les CGU"
                 @change="cguChange"
                 :disabled="cguCheckboxDisabled"
