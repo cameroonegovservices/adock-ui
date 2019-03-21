@@ -55,10 +55,14 @@ export default {
       this.message = response.data.message;
 
       if (response.status === 200 && response.data.token) {
-        await this.$store.dispatch("userLogIn", response.data);
+        const routerPath = await this.$store.dispatch(
+          "userLogIn",
+          response.data
+        );
+        // New account should validate CGU each time but I think it's better to not hard code that.
         setTimeout(() => {
-          this.$router.push({ name: "search" });
-        }, 3000);
+          this.$router.push(routerPath);
+        }, 2000);
       }
     }
   }
