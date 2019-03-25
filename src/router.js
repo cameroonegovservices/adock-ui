@@ -3,99 +3,84 @@ import VueRouter from "vue-router";
 
 import { getTracker } from "./tracker";
 
-import About from "@/views/About.vue";
-import AccountActivate from "@/views/AccountActivate.vue";
-import AccountCreate from "@/views/AccountCreate.vue";
-import AccountLogin from "@/views/AccountLogin.vue";
-import AccountProfile from "@/views/AccountProfile.vue";
-import CarrierCertificate from "@/views/CarrierCertificate.vue";
-import CarrierRelationConfirm from "@/views/CarrierRelationConfirm.vue";
-import CarrierDetail from "@/views/CarrierDetail.vue";
-import CarrierEdit from "@/views/CarrierEdit.vue";
-import CGU from "@/views/CGU.vue";
-import FranceConnectCallback from "@/views/FranceConnectCallback.vue";
-import Search from "@/views/Search.vue";
-import Stats from "@/views/Stats.vue";
-import ViewError from "@/views/ViewError.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
     name: "search",
-    component: Search,
+    component: require("@/views/Search.vue").default,
     props: true
   },
   {
     path: "/apropos",
     name: "about",
-    component: About
+    component: require("@/views/About.vue").default
   },
   {
     path: "/cgu",
     name: "cgu",
-    component: CGU
+    component: require("@/views/CGU.vue").default
   },
   {
     path: "/erreur",
     name: "error",
-    component: ViewError,
+    component: require("@/views/ViewError.vue").default,
     props: true
   },
   {
     path: "/fc/callback",
     name: "franceconnect_callback",
-    component: FranceConnectCallback
+    component: require("@/views/FranceConnectCallback.vue").default
   },
   {
     path: "/stats",
     name: "stats",
-    component: Stats
+    component: require("@/views/Stats.vue").default
   },
   {
     path: "/transporteur/:carrierSiret",
     name: "carrier_detail",
-    component: CarrierDetail,
+    component: require("@/views/CarrierDetail.vue").default,
     props: true
   },
   {
     path: "/transporteur/:carrierSiret/edit",
     name: "carrier_edit",
-    component: CarrierEdit,
+    component: require("@/views/CarrierEdit.vue").default,
     props: true
   },
   {
     path: "/transporteur/:frRelationType/:relationId/confirmer/:token",
     name: "carrier_relation_confirm",
-    component: CarrierRelationConfirm,
+    component: require("@/views/CarrierRelationConfirm.vue").default,
     props: true
   },
   {
     path: "/transporteur/:carrierSiret/attestation",
     name: "carrier_certificate",
-    component: CarrierCertificate,
+    component: require("@/views/CarrierCertificate.vue").default,
     props: true
   },
   {
     path: "/utilisateur",
     name: "account_profile",
-    component: AccountProfile
+    component: require("@/views/AccountProfile.vue").default
   },
   {
     path: "/utilisateur/connecter",
     name: "account_login",
-    component: AccountLogin
+    component: require("@/views/AccountLogin.vue").default
   },
   {
     path: "/utilisateur/creer",
     name: "account_create",
-    component: AccountCreate
+    component: require("@/views/AccountCreate.vue").default
   },
   {
     path: "/utilisateur/:userId/activer/:token",
     name: "account_activate",
-    component: AccountActivate,
+    component: require("@/views/AccountActivate.vue").default,
     props: true
   },
   {
