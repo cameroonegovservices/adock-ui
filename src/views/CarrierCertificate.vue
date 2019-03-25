@@ -45,7 +45,7 @@
                   v-chip(outline) {{ index + 1 }}
                 v-flex(xs6 md3)
                   v-text-field(
-                    label="Nom"
+                    label="Nom et prénom"
                     v-model="worker.name"
                     browser-autocomplete="off"
                     hint="Nom et prénom du salarié"
@@ -71,7 +71,7 @@
                     label="N° d'autorisation"
                     v-model="worker.work_permit"
                     browser-autocomplete="off"
-                    hint="Type / N°ordre titre valant autorisation de travail"
+                    hint="Titre / n° d'ordre du titre valant autorisation de travail"
                     :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].work_permit"
                   )
                 v-flex(xs1 md1 align-self-center)
@@ -200,7 +200,7 @@ export default {
     getDefaultData() {
       const user = this.$store.state.user;
       return {
-        kind: "workers",
+        kind: "no-workers",
         firstName: user && user.first_name,
         lastName: user && user.last_name,
         position: "",
