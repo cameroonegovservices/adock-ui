@@ -21,6 +21,7 @@
 
 <script>
 import api from "@/api";
+import { getRouterLocationWhenLogged, getNextUrlFromRoute } from "@/router";
 
 export default {
   name: "franceconnect-callback",
@@ -34,16 +35,23 @@ export default {
   },
 
   async mounted() {
+    const nextUrl = getNextUrlFromRoute(this.$route);
+    // nextUrl is provided here only for control
     const params = {
       code: this.$route.query.code,
-      state: this.$route.query.state
+      state: this.$route.query.state,
+      next: nextUrl
     };
     const response = await api.get(api.franceConnectCallbackUrl, params);
     this.status = response.status;
     this.waiting = false;
     if (response.status === 200) {
-      const routerPath = await this.$store.dispatch("userLogIn", response.data);
-      this.$router.push(routerPath);
+      await this.$store.dispatch("userLogIn", response.data);
+      const routerLocation = getRouterLocationWhenLogged(
+        this.$store.state.user,
+        nextUrl
+      );
+      this.$router.push(routerLocation);
     } else {
       this.message = response.data.message || "";
     }

@@ -25,8 +25,8 @@ v-container(fluid fill-height)
 
 <script>
 import { displayUserMixin } from "@/mixins";
+import { getRouterLocationWhenLogged } from "@/router";
 import api from "@/api";
-import { setTimeout } from "timers";
 
 export default {
   name: "account-activate",
@@ -60,15 +60,14 @@ export default {
       const response = await api.get(url);
       this.status = response.status;
       if (response.status === 200 && response.data.token) {
-        const routerPath = await this.$store.dispatch(
-          "userLogIn",
-          response.data
-        );
+        // FIXME RC
+        await this.$store.dispatch("userLogIn", response.data);
+        const routerLocation = getRouterLocationWhenLogged(this.user);
         // Wait for proper login
         this.waiting = false;
         // New account should validate CGU each time but I think it's better to not hard code that.
         setTimeout(() => {
-          this.$router.push(routerPath);
+          this.$router.push(routerLocation);
         }, 2000);
       } else {
         this.waiting = false;

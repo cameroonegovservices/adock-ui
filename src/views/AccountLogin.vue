@@ -91,6 +91,7 @@
 import api from "@/api";
 import auth from "@/auth";
 import { emailRules, passwordRules } from "@/mixins";
+import { getRouterLocationWhenLogged, getNextUrlFromRoute } from "@/router";
 
 export default {
   name: "account-login",
@@ -123,12 +124,16 @@ export default {
 
   methods: {
     goToFranceConnectAuthorizeUrl() {
-      /* redirect_uri could be set with the URL of the original page */
       auth.deleteTokenData();
       const nonce = auth.generateNonce();
-      window.location = `${
+      let location = `${
         process.env.VUE_APP_API_URL
       }accounts/fc/authorize/?nonce=${nonce}`;
+      const nextUrl = getNextUrlFromRoute(this.$route);
+      if (nextUrl) {
+        location += `&next=${nextUrl}`;
+      }
+      window.location = location;
     },
     async submit(e) {
       e.preventDefault();
@@ -142,15 +147,18 @@ export default {
           password: this.password
         });
         if (response.status === 200) {
-          const routerPath = await this.$store.dispatch(
-            "userLogIn",
-            response.data
+          // FIXME RC
+          await this.$store.dispatch("userLogIn", response.data);
+          const routerLocation = getRouterLocationWhenLogged(
+            this.$store.state.user,
+            getNextUrlFromRoute(this.$route)
           );
-          if (!routerPath) {
+          if (!routerLocation) {
             this.errorMessage =
               "Succès de l'identification mais échec des contrôles de sécurité.";
           } else {
-            this.$router.push(routerPath);
+            // Logged
+            this.$router.push(routerLocation);
           }
         } else {
           if (response.data.errors) {

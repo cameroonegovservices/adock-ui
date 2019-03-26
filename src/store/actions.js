@@ -20,27 +20,19 @@ export const actions = {
   },
 
   userLogIn: async ({ commit, dispatch, state }, payload) => {
-    let name;
-
     if (!auth.setTokenData(payload)) {
-      return null;
+      return false;
     }
 
-    await dispatch("loadUserProfile");
-    commit("MESSAGE_ADD", {
-      message: `Connecté en tant que « ${state.user.email} » via ${
-        state.user.provider_display
-      }.`
-    });
-
-    if (state.user.has_accepted_cgu) {
-      name = "search";
-    } else {
-      name = "cgu";
+    let rc = await dispatch("loadUserProfile");
+    if (rc) {
+      commit("MESSAGE_ADD", {
+        message: `Connecté en tant que « ${state.user.email} » via ${
+          state.user.provider_display
+        }.`
+      });
     }
-    return {
-      name
-    };
+    return rc;
   },
 
   userLogInFromStorage: async ({ dispatch }) => {

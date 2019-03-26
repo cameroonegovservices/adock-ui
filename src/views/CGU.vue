@@ -266,10 +266,11 @@ iframe
 </style>
 
 <script>
-import api from "@/api";
 import { mapState } from "vuex";
 
+import api from "@/api";
 import { resetOnShowMixin } from "@/mixins";
+import { getNextUrlFromRoute } from "@/router";
 
 export default {
   name: "cgu",
@@ -302,7 +303,12 @@ export default {
             message:
               "Vous avez approuvé les Conditions Générales d'Utilisation."
           });
-          this.$router.push({ name: "search" });
+          const nextUrl = getNextUrlFromRoute(this.$route);
+          if (nextUrl) {
+            this.$router.push({ path: nextUrl });
+          } else {
+            this.$router.push({ name: "search" });
+          }
         } else {
           this.errorMessage = response.data.message;
         }

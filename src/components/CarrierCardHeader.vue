@@ -26,6 +26,7 @@ v-img.white--text(:src="roadPicture" height="200px")
               v-if="withEditButton"
             )
               v-btn.ma-0.mt-2(
+                v-if="user"
                 dark
                 :color="carrier.completeness === 100 ? 'green' : 'orange'"
                 :to="{name: 'carrier_edit', params: {carrierSiret: carrier.siret}}"
@@ -34,11 +35,16 @@ v-img.white--text(:src="roadPicture" height="200px")
                 span(v-if="carrier.completeness === 100") Modifier la fiche
                 span(v-else) Compléter la fiche ({{ carrier.completeness }} %)
               v-btn.ma-0.ml-2.mt-2(
+                v-if="user"
                 dark
                 :to="{name: 'carrier_certificate', params: { carrierSiret: carrier.siret }}"
               )
                 v-icon(v-if="carrier.is_locked" left) lock
                 span Générer une attestation
+              v-btn.ma-0.mt-2(
+                v-else
+                @click="onClickLoginAndReturn"
+              ) Ceci est mon entreprise
           v-flex(xs2 sm1)
             v-tooltip(
               activator=".clipboard"
@@ -79,7 +85,7 @@ v-img.white--text(:src="roadPicture" height="200px")
 
 <script>
 import ClipboardJS from "clipboard";
-
+import { mapState } from "vuex";
 import roadPicture from "@/assets/road.jpg";
 import roadDisabledPicture from "@/assets/road-disabled.jpg";
 
@@ -146,6 +152,24 @@ export default {
     isSubsidiary() {
       // When the carrier is a subsidiary, the list of other facilities have a headquarters
       return this.headquarters != null;
+    },
+    ...mapState(["user"])
+  },
+
+  methods: {
+    onClickLoginAndReturn() {
+      // Resolve the next URL to use on successful login
+      const href = this.$router.resolve({
+        name: "carrier_edit",
+        params: { carrierSiret: this.carrier.siret }
+      }).href;
+      // Pass the href as next param
+      this.$router.push({
+        name: "account_login",
+        query: {
+          next: href
+        }
+      });
     }
   }
 };

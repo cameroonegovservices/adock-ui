@@ -108,4 +108,30 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+export function getRouterLocationWhenLogged(user, nextUrl) {
+  const location = {};
+  if (user.has_accepted_cgu) {
+    if (nextUrl) {
+      location.path = nextUrl;
+    } else {
+      location.name = "search";
+    }
+  } else {
+    location.name = "cgu";
+    if (nextUrl) {
+      location.query = {
+        next: nextUrl
+      };
+    }
+  }
+  return location;
+}
+
+export function getNextUrlFromRoute(route) {
+  if (route.query && route.query.next) {
+    return route.query.next;
+  }
+  return "";
+}
+
 export default router;
