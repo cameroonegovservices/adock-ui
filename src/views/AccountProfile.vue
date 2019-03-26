@@ -9,10 +9,14 @@
         v-card(v-if="user")
           v-card-title(primary-title)
             div
-              h1(headline mb-0) {{ displayUser }}
-              p {{ user.email }}
+              h1(headline mb-0) Compte de {{ displayUser }}
           v-card-text
-            p Compte « {{ user.provider_display }} » créé le {{ localeDateJoined }}
+            p Adresse électronique : {{ user.email }}
+            template(v-if="user.provider_data")
+              p {{ user.provider_data.gender === "male" ? "Homme": "Femme" }}
+              p Adresse : {{ user.provider_data.address }}
+              p(v-if="user.provider_data.phone") Téléphone : {{ user.provider_data.phone }}
+            p Le compte a été créé le {{ localeDateJoined }} via « {{ user.provider_display }} »
             p Dernière connexion le {{ localeLastLogin }}
             p
               | La dernière version des
