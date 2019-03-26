@@ -99,9 +99,7 @@
             v-layout(wrap)
               v-flex.adock-align-right(xs12 offset-md6 md5)
                 v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
-                v-btn(color="primary" @click.native="post")
-                  v-icon(v-if="carrier.is_locked" left) lock
-                  | Modifier
+                v-btn(color="primary" @click.native="post") Suivant
 </template>
 
 <style lang="stylus">
@@ -328,7 +326,7 @@ export default {
 
         // Redirect
         this.$router.push({
-          name: "carrier_detail",
+          name: "carrier_certificate",
           carrierSiret: this.carrier.siret
         });
       } else {

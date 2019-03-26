@@ -31,16 +31,8 @@ v-img.white--text(:src="roadPicture" height="200px")
                 :color="carrier.completeness === 100 ? 'green' : 'orange'"
                 :to="{name: 'carrier_edit', params: {carrierSiret: carrier.siret}}"
               )
-                v-icon(v-if="carrier.is_locked" left) lock
                 span(v-if="carrier.completeness === 100") Modifier la fiche
                 span(v-else) Compléter la fiche ({{ carrier.completeness }} %)
-              v-btn.ma-0.ml-2.mt-2(
-                v-if="user"
-                dark
-                :to="{name: 'carrier_certificate', params: { carrierSiret: carrier.siret }}"
-              )
-                v-icon(v-if="carrier.is_locked" left) lock
-                span Générer une attestation
               v-btn.ma-0.mt-2(
                 v-else
                 @click="onClickLoginAndReturn"
