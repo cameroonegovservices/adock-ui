@@ -71,9 +71,21 @@
             v-layout(v-if="carrier.description")
               v-flex(xs4 offset-md1 md5) Description de l'activité
               v-flex.adock-align-right(xs8 md5) {{ carrier.description }}
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-divider
+            v-layout(v-if="carrier.latest_certificate")
+              v-flex(xs12)
+                span.adock-section-title.pl-4 Documents
+            v-layout(v-if="carrier.latest_certificate")
+              v-flex(xs4 offset-md1 md5)
+                | {{ carrier.latest_certificate.kind_display }}
+                br
+                span.grey--text {{ carrier.latest_certificate.created_at | asLocaleDate }}
+              v-flex.adock-align-right(xs8 md5)
+                v-btn(
+                  large
+                  type="application/pdf"
+                  :href="certificateUrl"
+                ) Télécharger
+                  v-icon(right) archive
             v-layout
               v-flex(xs12)
                 span.adock-section-title.pl-4 Administratif
@@ -131,36 +143,6 @@
               v-layout
                 v-flex(xs4 offset-md1 md5) période
                 v-flex.adock-align-right(xs8 md5) {{ carrier.objectif_co2_begin | asLocaleDate }} au {{ carrier.objectif_co2_end | asLocaleDate }}
-            v-layout
-              v-flex(xs12 offset-md1 md10)
-                v-divider
-            v-layout
-              v-flex(xs12)
-                span.adock-section-title.pl-4 Documents
-            v-layout
-              v-flex(xs6 offset-md1 md4)
-                v-card(
-                  v-if="carrier.latest_certificate"
-                  hover
-                  ripple
-                  type="application/pdf"
-                  :href="certificateUrl"
-                  download
-                )
-                  v-card-title(primary-title)
-                    v-icon(large left) people
-                    div.headline {{ carrier.latest_certificate.kind_display }}
-                    span.grey--text {{ carrier.latest_certificate.created_at | asLocaleDate }}
-                  v-card-actions
-                    v-spacer
-                    v-btn(
-                      icon
-                      type="application/pdf"
-                      :href="certificateUrl"
-                      download
-                    )
-                      v-icon archive
-                p(v-else) Aucune attestation
             v-layout
               v-flex(xs12)
                 span#facilities.adock-section-title.pl-4 Autres établissements de l'entreprise
