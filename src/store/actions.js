@@ -46,21 +46,23 @@ export const actions = {
   },
 
   userLogOut: async ({ commit }) => {
+    let response = null;
     const idToken = auth.getIdToken();
+
     if (idToken) {
-      const response = await api.get(api.franceConnectLogoutUrl, {
+      // Logout from FC
+      response = await api.get(api.franceConnectLogoutUrl, {
         id_token: idToken
       });
-      // It's possible the user hasn't been disconnected from FranceConnect, in
-      // this case, we only display a message.
-      if (response.data.message) {
-        commit("MESSAGE_ADD", {
-          message: response.data.message
-        });
-      }
     }
+
     auth.deleteTokenData();
     commit("USER_DELETE");
+
+    if (response && response.status === 302) {
+      // Redirect to FC that will redirect to UI logout view
+      window.location = response.data.url;
+    }
   }
 };
 

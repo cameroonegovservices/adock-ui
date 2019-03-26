@@ -34,6 +34,11 @@ const routes = [
     component: require("@/views/FranceConnectCallback.vue").default
   },
   {
+    path: "/fc/postlogout",
+    name: "franceconnect_postlogout",
+    component: require("@/views/FranceConnectPostLogout.vue").default
+  },
+  {
     path: "/stats",
     name: "stats",
     component: require("@/views/Stats.vue").default
