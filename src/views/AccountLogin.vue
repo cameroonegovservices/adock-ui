@@ -35,6 +35,7 @@
                 :rules="emailRules"
                 validate-on-blur
                 :error-messages="fieldErrors.email"
+                data-cy="inputEmail"
               )
               v-text-field(
                 label="Mot de passe"
@@ -46,6 +47,7 @@
                 counter
                 validate-on-blur
                 :error-messages="fieldErrors.password"
+                data-cy="inputPassword"
               )
               v-layout(align-center justify-space-between)
                 router-link(:to="{name: 'account_create'}") Créer un compte

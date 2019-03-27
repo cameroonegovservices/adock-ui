@@ -22,6 +22,7 @@
                 :rules="requiredRules"
                 validate-on-blur
                 :error-messages="fieldErrors.first_name"
+                data-cy="inputFirstName"
               )
               v-text-field(
                 label="Nom"
@@ -29,6 +30,7 @@
                 :rules="requiredRules"
                 validate-on-blur
                 :error-messages="fieldErrors.last_name"
+                data-cy="inputLastName"
               )
               v-text-field(
                 label="Adresse électronique"
@@ -36,6 +38,7 @@
                 :rules="emailRules"
                 validate-on-blur
                 :error-messages="fieldErrors.email"
+                data-cy="inputEmail"
               )
               v-text-field(
                 label="Mot de passe"
@@ -47,6 +50,7 @@
                 counter
                 validate-on-blur
                 :error-messages="fieldErrors.password"
+                data-cy="inputPassword"
               )
               v-layout(justify-space-between)
                 v-btn(

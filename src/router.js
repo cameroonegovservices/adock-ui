@@ -39,7 +39,7 @@ const routes = [
     component: require("@/views/FranceConnectPostLogout.vue").default
   },
   {
-    path: "/stats",
+    path: "/stats/",
     name: "stats",
     component: require("@/views/Stats.vue").default
   },

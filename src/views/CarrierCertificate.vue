@@ -96,24 +96,28 @@
                 v-flex(xs12 offset-md1 md10)
                   p.subheading Responsable de l'entreprise
                   v-text-field(
-                    label="Nom"
-                    v-model="lastName"
-                    :error-messages="fieldErrors.last_name"
-                  )
-                  v-text-field(
                     label="Prénom"
                     v-model="firstName"
                     :error-messages="fieldErrors.first_name"
+                    data-cy="inputFirstName"
+                  )
+                  v-text-field(
+                    label="Nom"
+                    v-model="lastName"
+                    :error-messages="fieldErrors.last_name"
+                    data-cy="inputLastName"
                   )
                   v-text-field(
                     label="Fonction"
                     v-model="position"
                     :error-messages="fieldErrors.position"
+                    data-cy="inputPosition"
                   )
                   v-text-field(
                     label="Lieu"
                     v-model="location"
                     :error-messages="fieldErrors.location"
+                    data-cy="inputLocation"
                   )
               v-layout(wrap)
                 v-flex.adock-align-right(xs12 md11)

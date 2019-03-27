@@ -62,19 +62,24 @@ Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
 * `yarn test:e2e` lance les tests E2E.
 
 Avant de lancer les tests E2E, lancez le client en mode développement, le
-serveur Django et créez le transporteur suivant via la commande ``manage.py
-shell_plus`` :
+serveur Django dans l'environement `TEST` et créez le transporteur suivant via
+la commande `manage.py shell_plus` :
 
 ```python
 from adock.carriers import factories
+User.objects.filter(email="joemartin@example.com").delete()
 Carrier.objects.filter(pk='80005226884728').delete()
-factories.CarrierFactory(
+carrier_editable = factories.CarrierEditableFactory(
+  carrier__siret='80005226884728',
+  carrier__raison_sociale='A DOCK TRANSPORTEUR',
   telephone='',
-  raison_sociale='A DOCK TRANSPORTEUR',
-  siret='80005226884728',
+  email='',
   working_area='DEPARTEMENT',
   working_area_departements=[34],
+  specialities=[]
 )
+carrier_editable.carrier.editable = carrier_editable
+carrier_editable.carrier.save()
 ```
 
 
