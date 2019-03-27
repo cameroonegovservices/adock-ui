@@ -4,7 +4,4 @@ module.exports = {
     plugins: [new VuetifyLoaderPlugin()]
   },
   productionSourceMap: true,
-  devServer: {
-    allowedHosts: [".serveo.net"]
-  }
 };
