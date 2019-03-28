@@ -43,7 +43,7 @@
                   v-model="form.website"
                   input="url"
                   :error-messages="fieldErrors.website"
-                  placeholder="www.transporteur.fr"
+                  placeholder="https://www.transporteur.fr"
                 )
             v-layout
               v-flex(xs12 offset-md1 md10)
