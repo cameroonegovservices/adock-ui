@@ -37,7 +37,7 @@
                   p.subheading.mb-0 Salariés étrangers
               v-layout(
                 wrap
-                v-if="kind === 'workers'"
+                v-show="kind === 'workers'"
                 v-for="(worker, index) in workers"
                 :key="worker.id"
               )
@@ -78,7 +78,7 @@
                   v-btn(flat icon color="grey" @click="removeWorker(worker)")
                     v-icon delete
               v-layout(
-                v-if="kind === 'workers'"
+                v-show="kind === 'workers'"
               )
                 v-flex(xs3 offset-md1 md2)
                   v-btn(@click="addWorker") Ajouter
@@ -122,7 +122,10 @@
               v-layout(wrap)
                 v-flex.adock-align-right(xs12 md11)
                   v-btn(:to="{name: 'carrier_detail', params: { carrierSiret: carrier.siret }}") Annuler
-                  v-btn(color="primary" @click.native="sign") Générer
+                  v-btn(
+                    color="primary"
+                    @click.native="sign"
+                  ) Générer
 </template>
 
 <style lang="stylus">
