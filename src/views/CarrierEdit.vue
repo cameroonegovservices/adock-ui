@@ -316,10 +316,10 @@ export default {
       );
       if (response.status === 200) {
         // Success
-        if (response.data["confirmation_email_sent"]) {
+        if (response.data.confirmation_sent_to) {
           this.$store.commit("MESSAGE_ADD", {
             message: `Un courriel a été envoyé à « ${
-              response.data.carrier.email
+              response.data.confirmation_sent_to
             } » pour confirmer les modifications.`
           });
         }
