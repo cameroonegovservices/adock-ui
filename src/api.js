@@ -20,13 +20,15 @@ axiosInstance.interceptors.request.use(function(config) {
 
 export const api = {
   // Server URLs
+  extendedProfileUrl: "/accounts/profile/extended/",
   franceConnectCallbackUrl: "/accounts/fc/callback/",
   franceConnectLogoutUrl: "/accounts/fc/logout/",
   loginCreateUrl: "/accounts/create/",
   loginUrl: "/accounts/login/",
-  profileUrl: "/accounts/profile/",
-  extendedProfileUrl: "/accounts/profile/extended/",
   metaUrl: "/meta/",
+  passwordRecoverUrl: "/accounts/password/recover/",
+  passwordResetUrl: "/accounts/password/reset/",
+  profileUrl: "/accounts/profile/",
   searchCarriersUrl: "/carriers/search/",
   statsUrl: "/stats/",
 

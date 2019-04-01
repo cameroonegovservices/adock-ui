@@ -49,6 +49,8 @@
                 :error-messages="fieldErrors.password"
                 data-cy="inputPassword"
               )
+              v-layout
+                a(@click="onRecoverPassword") J'ai oublié mon mot de passe
               v-layout(align-center justify-space-between)
                 router-link(:to="{name: 'account_create'}") Créer un compte
                 v-btn(
@@ -136,6 +138,14 @@ export default {
         location += `&next=${nextUrl}`;
       }
       window.location = location;
+    },
+    onRecoverPassword() {
+      this.$router.push({
+        name: "account_password_recover",
+        params: {
+          email: this.email
+        }
+      });
     },
     async submit(e) {
       e.preventDefault();

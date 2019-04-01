@@ -89,6 +89,17 @@ const routes = [
     props: true
   },
   {
+    path: "/utilisateur/motdepasse/recuperer",
+    name: "account_password_recover",
+    component: require("@/views/AccountPasswordRecover.vue").default,
+    props: true
+  },
+  {
+    path: "/utilisateur/:email/reinitialiser/:token",
+    component: require("@/views/AccountPasswordReset.vue").default,
+    props: true
+  },
+  {
     path: "*",
     redirect: "/"
   }
