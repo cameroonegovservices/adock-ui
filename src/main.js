@@ -35,7 +35,9 @@ if (process.env.NODE_ENV === "production") {
     .install();
 
   // Piwik/Matomo tracker
-  loadTracker();
+  if (!process.env.VUE_APP_IS_PREPRODUCTION) {
+    loadTracker();
+  }
 }
 
 Vue.use(Vuex);
