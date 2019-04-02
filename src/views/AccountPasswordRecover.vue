@@ -7,6 +7,9 @@ s<template lang="pug">
             h4 Récupération de mot de passe
         v-card
           v-card-text.pt-4
+            v-layout
+              v-flex
+                p.caption Uniquement possible avec les comptes A Dock (pas France Connect).
             v-form(
               v-model="isValid"
               ref="form"
