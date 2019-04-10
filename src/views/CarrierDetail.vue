@@ -24,7 +24,7 @@
                   | Cet établissement est absent du registre transports de marchandises depuis le
                   | {{ carrier.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
                   | cessation d'activité.
-            v-layout(v-if="carrier.sirene_deleted_at")
+            v-layout(v-if="carrier.sirene_closed_at")
               v-flex(offset-xs1 xs10)
                 v-alert(
                   :value="true"
@@ -159,7 +159,7 @@
                     slot='items'
                     slot-scope='props'
                   )
-                    tr(:class="{'adock-tr-deleted': props.item.deleted_at || props.item.sirene_deleted_at }")
+                    tr(:class="{'adock-tr-deleted': props.item.deleted_at || props.item.sirene_closed_at }")
                       td
                         router-link(:to="{name: 'carrier_detail', params: {carrierSiret: props.item.siret}}") {{ props.item.siret }}
                         span &nbsp;

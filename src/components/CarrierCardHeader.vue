@@ -121,7 +121,7 @@ export default {
 
   computed: {
     roadPicture() {
-      return this.carrier.deleted_at || this.carrier.sirene_deleted_at
+      return this.carrier.deleted_at || this.carrier.sirene_closed_at
         ? roadDisabledPicture
         : roadPicture;
     },
