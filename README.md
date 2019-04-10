@@ -61,9 +61,10 @@ Ainsi l'URL du client Raven de Sentry doit être enregistrée dans
 * `yarn test:unit` lance les tests unitaires
 * `yarn test:e2e` lance les tests E2E.
 
-Avant de lancer les tests E2E, lancez le client en mode développement, le
-serveur Django dans l'environement `TEST` et créez le transporteur suivant via
-la commande `manage.py shell_plus` :
+Avant de lancer les tests End To End, lancez l'application JS en mode
+développement et le serveur Django dans l'environement `E2E` via le paramètre
+`ENVIRONMENT` du fichier `settings.py` puis créez le transporteur suivant via la
+commande `manage.py shell_plus` :
 
 ```python
 from adock.carriers import factories
