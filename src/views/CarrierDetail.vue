@@ -24,6 +24,20 @@
                   | Cet établissement est absent du registre transports de marchandises depuis le
                   | {{ carrier.deleted_at | asLocaleDate }}. Cela peut faire suite à un déménagement ou à une
                   | cessation d'activité.
+            v-layout(v-if="!carrier.sirene_exists")
+              v-flex(offset-xs1 xs10)
+                v-alert(
+                  :value="true"
+                  type="warning"
+                  color="orange"
+                )
+                  | Cet établissement n'est pas publiée dans la base Sirene de l'Insee.
+                  | La cause peut être l'opposition au démarchage commercial.
+                  | Nous vous invitons à contacter le
+                  |
+                  a(href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F24023") Centre de formalités des entreprises
+                  |
+                  | dont vous dépendez.
             v-layout(v-if="carrier.sirene_closed_at")
               v-flex(offset-xs1 xs10)
                 v-alert(
@@ -31,14 +45,8 @@
                   type="warning"
                   color="orange"
                 )
-                  | Cet établissement est absent de la base de données Sirene de l'Insee.
-                  | Certaines informations telles que le code APE ou l'adresse sont indisponibles.
-                  | La cause peut être l'opposition au démarchage commercial ou la cessation d'activité.
-                  | Nous vous invitons à contacter le
-                  |
-                  a(href="https://www.service-public.fr/professionnels-entreprises/vosdroits/F24023") Centre de formalités des entreprises
-                  |
-                  | dont vous dépendez.
+                  | Cet établissement est fermé depuis le {{ carrier.sirene_closed_at | asLocaleDate }}.
+                  | L'information provient de la base Sirene.
             v-layout
               v-flex(xs4 offset-md1 md5) Téléphone
               v-flex.adock-align-right(xs8 md5)

@@ -1,6 +1,7 @@
 export const carrier = {
   raison_sociale: "DUBOIS",
   deleted_at: null,
+  siren_exists: true,
   sirene_closed_at: null,
   siret: "12345678912345",
   numero_tva: "FR32123456789",
