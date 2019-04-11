@@ -14,7 +14,7 @@ describe("Edit", () => {
     cy.get("[data-cy=inputFirstName").type("Joé");
     cy.get("[data-cy=inputLastName").type("Martin");
     cy.get("[data-cy=inputEmail").type("joemartin@example.com");
-    cy.get("[data-cy=inputPassword").type("12345678");
+    cy.get("[data-cy=inputPassword").type("a12345678b");
     cy.contains("Créer le compte").click();
 
     // Arguments aren't used
