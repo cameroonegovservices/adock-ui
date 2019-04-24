@@ -4,39 +4,17 @@ v-container.adock-search-background(fluid fill-height)
     v-flex(xs12 sm11 md9 lg8 xl6)
       v-card.elevation-8
         v-card-text.adock-help
-          v-layout(v-if="user && !user.has_accepted_cgu")
-            v-flex(xs12 md12)
-              v-alert(
-                type="warning"
-                :value="true"
-              )
-                v-layout
-                  v-flex(xs10)
-                    p Vous devez accepter les Conditions Générales d'Utilisation pour utiliser le service.
-                  v-flex.adock-align-right(xs2)
-                    v-icon(
-                      dark
-                      v-if="user && !user.has_accepted_cgu"
-                      large
-                    ) arrow_downward
-              v-alert(
-                type="error"
-                :value="!!errorMessage"
-              ) {{ errorMessage }}
-              v-flex(xs12 offset-md7 md5)
-                v-checkbox(
-                  v-if="user && !user.has_accepted_cgu"
-                  label="Je certifie avoir lu et accepté les CGU"
-                  @change="cguChange"
-                  :disabled="cguCheckboxDisabled"
-                )
-
           h4.display-1 Conditions générales d'utilisation
 
           p
             | Le présent document a pour objet de régler les relations entre les
             | différents intervenants sur ce site et de définir les conditions et
             | modalités d’utilisation des services proposés sur adock.beta.gouv.fr.
+
+          cgu-confirm(
+            v-if="user && !user.has_accepted_cgu"
+            :user="user"
+          )
 
           h5.headline Présentation
 
@@ -243,17 +221,10 @@ v-container.adock-search-background(fluid fill-height)
             br
             | Siège social : 2 rue Kellermann, 59100 Roubaix, France
 
-          v-alert(
-            type="error"
-            :value="!!errorMessage"
-          ) {{ errorMessage }}
-          v-flex(xs12 offset-md7 md5)
-            v-checkbox(
-                v-if="user && !user.has_accepted_cgu"
-                label="Je certifie avoir lu et accepté les CGU"
-                @change="cguChange"
-                :disabled="cguCheckboxDisabled"
-              )
+          cgu-confirm(
+            v-if="user && !user.has_accepted_cgu"
+            :user="user"
+          )
 </template>
 
 <style lang="stylus">
@@ -268,9 +239,8 @@ iframe
 <script>
 import { mapState } from "vuex";
 
-import api from "@/api";
 import { resetOnShowMixin } from "@/mixins";
-import { getNextUrlFromRoute } from "@/router";
+import CGUConfirm from "@/components/CGUConfirm";
 
 export default {
   name: "cgu",
@@ -278,41 +248,17 @@ export default {
 
   mixins: [resetOnShowMixin],
 
+  components: {
+    "cgu-confirm": CGUConfirm
+  },
+
   computed: {
     ...mapState(["user"])
   },
 
   methods: {
     getDefaultData() {
-      return {
-        errorMessage: "",
-        cguCheckboxDisabled: false
-      };
-    },
-
-    async cguChange(value) {
-      if (value) {
-        this.cguCheckboxDisabled = true;
-        const response = await api.patch(api.profileUrl, {
-          has_accepted_cgu: value
-        });
-        if (response.status === 200) {
-          // Update user
-          this.$store.commit("USER_SET", response.data);
-          this.$store.commit("MESSAGE_ADD", {
-            message:
-              "Vous avez approuvé les Conditions Générales d'Utilisation."
-          });
-          const nextUrl = getNextUrlFromRoute(this.$route);
-          if (nextUrl) {
-            this.$router.push({ path: nextUrl });
-          } else {
-            this.$router.push({ name: "search" });
-          }
-        } else {
-          this.errorMessage = response.data.message;
-        }
-      }
+      return {};
     }
   }
 };

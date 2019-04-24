@@ -28,6 +28,10 @@ describe("Edit", () => {
       .first()
       .click();
 
+    cy.contains("Valider")
+      .first()
+      .click();
+
     cy.contains("Cherchez et contactez simplement");
 
     cy.visit("/transporteur/80005226884728");

@@ -33,6 +33,7 @@
               router-link(:to="{name: 'cgu'}") Conditions Générales d'Utilisation
               |
               | pour utiliser le service
+            cgu-confirm(:user="user")
         v-card.mt-1
           v-card-title(primary-title)
             h2(headline) Vos entreprises
@@ -63,12 +64,17 @@ import { mapState } from "vuex";
 
 import api from "@/api";
 import { displayUserMixin, resetOnShowMixin } from "@/mixins";
+import CGUConfirm from "@/components/CGUConfirm.vue";
 
 export default {
   name: "account-profile",
   componentUrl: "account_profile",
 
   mixins: [displayUserMixin, resetOnShowMixin],
+
+  components: {
+    "cgu-confirm": CGUConfirm
+  },
 
   computed: {
     localeDateJoined() {
