@@ -62,7 +62,7 @@
       router-link.adock-footer-link(:to="{name: 'cgu'}") CGU
       v-spacer
       a.adock-french-mobility(href='https://www.ecologique-solidaire.gouv.fr/french-mobility')
-        img(src='./assets/logo-french-mobility.png' height='50px')
+        img(srcset='./assets/logo-french-mobility-120.png 1x, ./assets/logo-french-mobility-240.png 2x')
 </template>
 
 <style lang="stylus">
