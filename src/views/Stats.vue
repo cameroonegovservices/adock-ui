@@ -11,6 +11,11 @@
           v-flex(xs12 md6 d-flex)
             v-card
               v-card-text.text-xs-center
+                p.display-2 {{ certificates }}
+                p Nombres d'attestations générées
+          v-flex(xs12 md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
                 p.display-2 {{ meta.carrier.localeDate }}
                 p Date de dernière mise à jour
           v-flex(xs12 md6 d-flex)
@@ -132,6 +137,7 @@ export default {
     getDefaultData() {
       return {
         allowed: false,
+        certificates: 0,
         modifiedCarriers: 0,
         modifiedCarriersPerMonth: [],
         version
@@ -142,6 +148,7 @@ export default {
       // getDefaultData is not called in setup but only by data()
       const response = await api.get(api.statsUrl);
       if (response.status === 200) {
+        this.certificates = response.data["certificates"];
         this.modifiedCarriers = response.data["modified_carriers"];
         this.modifiedCarriersPerMonth =
           response.data["modified_carriers_per_month"];
