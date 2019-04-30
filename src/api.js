@@ -30,6 +30,7 @@ export const api = {
   passwordResetUrl: "/accounts/password/reset/",
   profileUrl: "/accounts/profile/",
   searchCarriersUrl: "/carriers/search/",
+  selfTestUrl: "/selftest/",
   statsUrl: "/stats/",
 
   getAccountActivateUrl(userId, token) {

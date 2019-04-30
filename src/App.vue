@@ -40,6 +40,7 @@
         @click="isDrawerVisible = !isDrawerVisible"
       )
       v-toolbar-items(v-else)
+        v-btn(v-if="user && user.is_staff" flat :to="{name: 'self_test'}") Self Test
         v-btn(flat :to="{name: 'stats'}") Statistiques
         template(v-if="user")
           v-btn(

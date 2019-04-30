@@ -39,6 +39,11 @@ const routes = [
     component: require("@/views/FranceConnectPostLogout.vue").default
   },
   {
+    path: "/selftest/",
+    name: "self_test",
+    component: require("@/views/SelfTest.vue").default
+  },
+  {
     path: "/stats/",
     name: "stats",
     component: require("@/views/Stats.vue").default
