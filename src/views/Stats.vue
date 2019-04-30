@@ -23,6 +23,21 @@
               v-card-text.text-xs-center
                 p.display-2 {{ meta.carrier.localeCount }}
                 p Nombre de transporteurs
+          v-flex(xs12 md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ searchViews }}
+                p Recherches effectuées
+          v-flex(xs12 md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ carrierViews }}
+                p Transporteurs consultés
+          v-flex(xs12 md6 d-flex)
+            v-card
+              v-card-text.text-xs-center
+                p.display-2 {{ certificateViews}}
+                p Attestations téléchargées
           v-flex(md6 d-flex)
             v-card
               v-card-text.text-xs-center
@@ -140,6 +155,9 @@ export default {
         certificates: 0,
         modifiedCarriers: 0,
         modifiedCarriersPerMonth: [],
+        carrierViews: 0,
+        certificateViews: 0,
+        searchViews: 0,
         version
       };
     },
@@ -152,6 +170,11 @@ export default {
         this.modifiedCarriers = response.data["modified_carriers"];
         this.modifiedCarriersPerMonth =
           response.data["modified_carriers_per_month"];
+        this.carrierViews = response.data["carrier_views"].toLocaleString();
+        this.certificateViews = response.data[
+          "certificate_views"
+        ].toLocaleString();
+        this.searchViews = response.data["search_views"].toLocaleString();
         this.allowed = true;
       }
     },
