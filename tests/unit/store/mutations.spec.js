@@ -22,6 +22,8 @@ describe("mutations", () => {
   it("META_SET", () => {
     const payload = {
       choices: {
+        CERTIFICATE_CHOICES: {},
+        OBJECTIF_CO2_CHOICES: {},
         WORKING_AREA_CHOICES: {
           FRANCE: "France"
         },

@@ -25,15 +25,13 @@
                     :error-messages="fieldErrors.kind"
                   )
                     v-radio(
-                      label="Attestation de non emploi de travailleurs étrangers"
-                      value="no-workers"
-                    )
-                    v-radio(
-                      label="Attestation d'emploi de travailleurs étrangers"
-                      value="workers"
+                      v-for="certificate in options.certificates"
+                      :key="certificate.value"
+                      :label="certificate.text"
+                      :value="certificate.value"
                     )
               template(
-                v-if="kind === 'workers'"
+                v-if="isCertificateWithworkers"
               )
                 v-layout
                   v-flex(xs12 offset-md1 md10)
@@ -135,6 +133,8 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
+
 import { routeLoadCarrier } from "@/routeLoaders";
 import CarrierCardHeader from "@/components/CarrierCardHeader";
 
@@ -192,6 +192,10 @@ export default {
   },
 
   computed: {
+    isCertificateWithworkers() {
+      return this.kind === "WORKERS";
+    },
+
     workerIsEmpty() {
       return this.workers.some(
         worker =>
@@ -200,14 +204,15 @@ export default {
           worker.nationality === "" ||
           worker.work_permit === ""
       );
-    }
+    },
+    ...mapState(["options"])
   },
 
   methods: {
     getDefaultData() {
       const user = this.$store.state.user;
       return {
-        kind: "no-workers",
+        kind: "NO_WORKERS",
         firstName: user && user.first_name,
         lastName: user && user.last_name,
         position: "",
@@ -256,7 +261,7 @@ export default {
         position: this.position,
         location: this.location
       };
-      if (this.kind === "workers") {
+      if (this.isCertificateWithworkers) {
         payload.workers = this.workers;
       }
 

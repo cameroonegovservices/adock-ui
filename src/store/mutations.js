@@ -1,12 +1,14 @@
 export const state = {
   choices: {
-    workingAreas: {},
+    objectifCO2: {},
     specialities: {},
-    objectifCO2: {}
+    workingAreas: {}
   },
+  // Options are computed from choices provided by /meta (easier to use)
   options: {
-    workingAreas: [],
-    specialities: []
+    certificates: [],
+    specialities: [],
+    workingAreas: []
   },
   messages: [],
   meta: {
@@ -32,15 +34,23 @@ export const mutations = {
     state.messages.push(payload.message);
   },
   META_SET(state, payload) {
-    state.options.workingAreas = getOptionsFromChoices(
-      payload.choices.WORKING_AREA_CHOICES
+    // Sometimes, choices and options are required by the app or just one of them.
+    state.options.certificates = getOptionsFromChoices(
+      payload.choices.CERTIFICATE_CHOICES
     );
-    state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES;
+
+    state.choices.objectifCO2 = payload.choices.OBJECTIF_CO2_CHOICES;
+
     state.options.specialities = getOptionsFromChoices(
       payload.choices.SPECIALITY_CHOICES
     );
     state.choices.specialities = payload.choices.SPECIALITY_CHOICES;
-    state.choices.objectifCO2 = payload.choices.OBJECTIF_CO2_CHOICES;
+
+    state.options.workingAreas = getOptionsFromChoices(
+      payload.choices.WORKING_AREA_CHOICES
+    );
+    state.choices.workingAreas = payload.choices.WORKING_AREA_CHOICES;
+
     if (payload.carrier) {
       // Format the payload data before assignment
       if (payload.carrier.date) {
