@@ -1,39 +1,25 @@
-import { mutations } from "@/store/mutations";
+import { state, mutations } from "@/store/mutations";
 
 describe("mutations", () => {
   it("MESSAGES_REMOVE", () => {
-    const state = {
+    const mockState = {
       messages: ["old", "new"]
     };
-    mutations.MESSAGES_REMOVE(state);
+    mutations.MESSAGES_REMOVE(mockState);
     // Only recent messages are remaining
-    expect(state.messages).toEqual([]);
+    expect(mockState.messages).toEqual([]);
   });
 
   it("MESSAGE_ADD", () => {
-    const state = {
+    const mockState = {
       messages: ["old"]
     };
     const message = "new";
-    mutations.MESSAGE_ADD(state, { message });
-    expect(state.messages).toEqual(["old", "new"]);
+    mutations.MESSAGE_ADD(mockState, { message });
+    expect(mockState.messages).toEqual(["old", "new"]);
   });
 
   it("META_SET", () => {
-    const state = {
-      choices: {
-        workingAreas: {},
-        specialities: {}
-      },
-      options: {
-        workingAreas: [],
-        specialities: []
-      },
-      meta: {
-        carrier: {},
-        version: ""
-      }
-    };
     const payload = {
       choices: {
         WORKING_AREA_CHOICES: {
