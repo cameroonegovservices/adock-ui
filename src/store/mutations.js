@@ -20,8 +20,10 @@ export const state = {
 
 function getOptionsFromChoices(choices) {
   const options = [];
-  for (let [k, v] of Object.entries(choices)) {
-    options.push({ value: k, text: v });
+  if (choices != null) {
+    for (let [k, v] of Object.entries(choices)) {
+      options.push({ value: k, text: v });
+    }
   }
   return options;
 }
