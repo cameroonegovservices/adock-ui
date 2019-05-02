@@ -32,66 +32,66 @@
                       label="Attestation d'emploi de travailleurs étrangers"
                       value="workers"
                     )
-              v-layout(v-if="kind === 'workers'")
-                v-flex(xs12 offset-md1 md10)
-                  p.subheading.mb-0 Salariés étrangers
-              v-layout(
-                wrap
-                v-show="kind === 'workers'"
-                v-for="(worker, index) in workers"
-                :key="worker.id"
+              template(
+                v-if="kind === 'workers'"
               )
-                v-flex(xs2 md1 align-self-center)
-                  v-chip(outline) {{ index + 1 }}
-                v-flex(xs6 md3)
-                  v-text-field(
-                    label="Nom et prénom"
-                    v-model="worker.name"
-                    browser-autocomplete="off"
-                    hint="Nom et prénom du salarié"
-                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].name"
-                  )
-                v-flex(xs4 md2)
-                  v-text-field(
-                    label="Date"
-                    v-model="worker.date"
-                    browser-autocomplete="off"
-                    hint="Date d'embauche"
-                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].date"
-                  )
-                v-flex(offset-xs2 xs4 offset-md0 md2)
-                  v-text-field(
-                    label="Nationalité"
-                    v-model="worker.nationality"
-                    browser-autocomplete="off"
-                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].nationality"
-                  )
-                v-flex(xs4 md3)
-                  v-text-field(
-                    label="N° d'autorisation"
-                    v-model="worker.work_permit"
-                    browser-autocomplete="off"
-                    hint="Titre / n° d'ordre du titre valant autorisation de travail"
-                    :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].work_permit"
-                  )
-                v-flex(xs1 md1 align-self-center)
-                  v-btn(flat icon color="grey" @click="removeWorker(worker)")
-                    v-icon delete
-              v-layout(
-                v-show="kind === 'workers'"
-              )
-                v-flex(xs3 offset-md1 md2)
-                  v-btn(@click="addWorker") Ajouter
-                v-flex(
-                  v-if="workerIsEmptyError && workerIsEmpty"
-                  xs9 md7
+                v-layout
+                  v-flex(xs12 offset-md1 md10)
+                    p.subheading.mb-0 Salariés étrangers
+                v-layout(
+                  wrap
+                  v-for="(worker, index) in workers"
+                  :key="worker.id"
                 )
-                  v-alert(
-                    :value="true"
-                    type="error"
-                    icon="warning"
-                    outline
-                  ) Vous devez au préalable remplir les champs existants
+                  v-flex(xs2 md1 align-self-center)
+                    v-chip(outline) {{ index + 1 }}
+                  v-flex(xs6 md3)
+                    v-text-field(
+                      label="Nom et prénom"
+                      v-model="worker.name"
+                      browser-autocomplete="off"
+                      hint="Nom et prénom du salarié"
+                      :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].name"
+                    )
+                  v-flex(xs4 md2)
+                    v-text-field(
+                      label="Date"
+                      v-model="worker.date"
+                      browser-autocomplete="off"
+                      hint="Date d'embauche"
+                      :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].date"
+                    )
+                  v-flex(offset-xs2 xs4 offset-md0 md2)
+                    v-text-field(
+                      label="Nationalité"
+                      v-model="worker.nationality"
+                      browser-autocomplete="off"
+                      :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].nationality"
+                    )
+                  v-flex(xs4 md3)
+                    v-text-field(
+                      label="N° d'autorisation"
+                      v-model="worker.work_permit"
+                      browser-autocomplete="off"
+                      hint="Titre / n° d'ordre du titre valant autorisation de travail"
+                      :error-messages="fieldErrors.workers && fieldErrors.workers[index] && fieldErrors.workers[index].work_permit"
+                    )
+                  v-flex(xs1 md1 align-self-center)
+                    v-btn(flat icon color="grey" @click="removeWorker(worker)")
+                      v-icon delete
+                v-layout
+                  v-flex(xs3 offset-md1 md2)
+                    v-btn(@click="addWorker") Ajouter
+                  v-flex(
+                    v-if="workerIsEmptyError && workerIsEmpty"
+                    xs9 md7
+                  )
+                    v-alert(
+                      :value="true"
+                      type="error"
+                      icon="warning"
+                      outline
+                    ) Vous devez au préalable remplir les champs existants
               v-layout
                 v-flex(xs12 offset-md1 md10)
                   p.subheading Responsable de l'entreprise
