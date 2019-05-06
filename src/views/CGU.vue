@@ -227,15 +227,6 @@ v-container.adock-search-background(fluid fill-height)
           )
 </template>
 
-<style lang="stylus">
-.adock-search-background
-  background: no-repeat top/100% url('../assets/search-background.jpg')
-  background-color: white
-
-iframe
-  border: 1px solid
-</style>
-
 <script>
 import { mapState } from "vuex";
 

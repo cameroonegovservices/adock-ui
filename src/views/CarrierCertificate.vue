@@ -126,12 +126,6 @@
                   ) Générer
 </template>
 
-<style lang="stylus">
-.adock-no-link
-  color: inherit
-  text-decoration: none
-</style>
-
 <script>
 import { mapState } from "vuex";
 

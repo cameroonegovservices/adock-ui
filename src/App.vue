@@ -97,6 +97,17 @@
 
 .adock-logo-link
   text-decoration: none
+
+.adock-link
+  text-decoration: underline
+
+.adock-no-link
+  color: inherit
+  text-decoration: none
+
+.adock-search-background
+  background: no-repeat top/100% url('assets/search-background.jpg')
+  background-color: white
 </style>
 
 <script>

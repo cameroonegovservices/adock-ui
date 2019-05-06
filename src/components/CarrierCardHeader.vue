@@ -68,9 +68,6 @@ v-img.white--text(:src="roadPicture" height="200px")
   border-radius: 4px
   width: 64px
 
-.adock-link
-  text-decoration: underline
-
 .subheadline
   margin-bottom: 0
 </style>

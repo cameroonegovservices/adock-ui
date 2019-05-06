@@ -103,10 +103,6 @@
 </template>
 
 <style lang="stylus">
-.adock-no-link
-  color: inherit
-  text-decoration: none
-
 .flex.flex-bottom
   flex-basis: 0
 

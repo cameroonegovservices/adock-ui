@@ -85,12 +85,6 @@
         testimonial-cards
 </template>
 
-<style lang="stylus">
-.adock-search-background
-  background: no-repeat top/100% url('../assets/search-background.jpg')
-  background-color: white
-</style>
-
 <script>
 import deepClone from "lodash.clonedeep";
 import { mapState } from "vuex";

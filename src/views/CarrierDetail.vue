@@ -185,13 +185,6 @@
 </template>
 
 <style lang="stylus">
-.adock-no-link
-  color: inherit
-  text-decoration: none
-
-.adock-align-right
-  text-align: right
-
 .adock-section-title
   font-size: 16px
   color: grey
