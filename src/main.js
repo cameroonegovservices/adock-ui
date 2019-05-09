@@ -1,6 +1,7 @@
 /* IE11 and old Firefox (v45) */
 import "@babel/polyfill";
 import "leaflet/dist/leaflet.css";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 import L from "leaflet";
 import Vue from "vue";
@@ -44,6 +45,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store(storeOptions);
 
 new Vue({
+  iconfont: "md",
   router,
   store,
   render: h => h(App)
