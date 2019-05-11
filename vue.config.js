@@ -1,7 +1,12 @@
 const VuetifyLoaderPlugin = require("vuetify-loader/lib/plugin");
 module.exports = {
   configureWebpack: {
-    plugins: [new VuetifyLoaderPlugin()]
+    plugins: [new VuetifyLoaderPlugin()],
+    optimization: {
+      splitChunks: {
+        chunks: "all"
+      }
+    }
   },
-  productionSourceMap: true,
+  productionSourceMap: true
 };
