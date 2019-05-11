@@ -1,9 +1,7 @@
 /* IE11 and old Firefox (v45) */
 import "@babel/polyfill";
-import "leaflet/dist/leaflet.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
 
-import L from "leaflet";
 import Vue from "vue";
 import Vuex from "vuex";
 import "./useVuetify";
@@ -17,14 +15,6 @@ import router from "./router";
 import { storeOptions } from "./store/options";
 
 Vue.config.productionTip = false;
-
-// Workaround to load marker icons
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});
 
 if (process.env.NODE_ENV === "production") {
   // Raven is the client of Sentry
