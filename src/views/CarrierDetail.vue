@@ -208,7 +208,6 @@ a[href^="tel:"]:before
 </style>
 
 <script>
-import "leaflet/dist/leaflet.css";
 // Lazy loaded in created()
 let L = null;
 import { mapState } from "vuex";

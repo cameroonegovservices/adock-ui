@@ -1,6 +1,7 @@
 /* IE11 and old Firefox (v45) */
 import "@babel/polyfill";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "leaflet/dist/leaflet.css";
 
 import Vue from "vue";
 import Vuex from "vuex";
