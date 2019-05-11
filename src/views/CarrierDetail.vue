@@ -209,21 +209,23 @@ a[href^="tel:"]:before
 
 <script>
 import "leaflet/dist/leaflet.css";
-
-import L from "leaflet";
+// Lazy loaded in created()
+let L = null;
 import { mapState } from "vuex";
 
 import { routeLoadCarrier } from "@/routeLoaders";
 import api from "@/api";
 import CarrierCardHeader from "@/components/CarrierCardHeader.vue";
 
-// Workaround to load marker icons
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
-});
+function setMarkerIcons(leaflet) {
+  // Workaround to load marker icons
+  delete leaflet.Icon.Default.prototype._getIconUrl;
+  leaflet.Icon.Default.mergeOptions({
+    iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+    iconUrl: require("leaflet/dist/images/marker-icon.png"),
+    shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+  });
+}
 
 function getTileProvider() {
   const tileProviders = {
@@ -296,6 +298,14 @@ export default {
 
   created() {
     this.map = null;
+    import("leaflet").then(leaflet => {
+      setMarkerIcons(leaflet.default);
+      L = leaflet.default;
+      if (this.map != null) {
+        // Ensure not already rendered by mounted (unlikely)
+      }
+      this.renderMap();
+    });
   },
 
   mounted() {
@@ -366,6 +376,11 @@ export default {
 
   methods: {
     renderMap() {
+      if (L == null) {
+        // Module not loaded yet
+        return;
+      }
+
       if (this.carrier.latitude) {
         const center = [this.carrier.latitude, this.carrier.longitude];
         this.map = L.map("map", {

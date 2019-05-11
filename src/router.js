@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/selftest/",
     name: "self_test",
-    component: require("@/views/SelfTest.vue").default
+    component: () => import("@/views/SelfTest.vue")
   },
   {
     path: "/stats/",
@@ -90,18 +90,18 @@ const routes = [
   {
     path: "/utilisateur/:userId/activer/:token",
     name: "account_activate",
-    component: require("@/views/AccountActivate.vue").default,
+    component: () => import("@/views/AccountActivate.vue"),
     props: true
   },
   {
     path: "/utilisateur/motdepasse/recuperer",
     name: "account_password_recover",
-    component: require("@/views/AccountPasswordRecover.vue").default,
+    component: () => import("@/views/AccountPasswordRecover.vue"),
     props: true
   },
   {
     path: "/utilisateur/:email/reinitialiser/:token",
-    component: require("@/views/AccountPasswordReset.vue").default,
+    component: () => import("@/views/AccountPasswordReset.vue"),
     props: true
   },
   {
