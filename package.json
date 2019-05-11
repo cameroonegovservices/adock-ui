@@ -13,7 +13,7 @@
     "axios": "0.18.0",
     "clipboard": "^2.0.4",
     "jwt-decode": "^2.2.0",
-    "leaflet": "^1.4.0",
+    "leaflet": "^1.5.1",
     "lodash.clonedeep": "^4.5.0",
     "material-design-icons-iconfont": "^5.0.1",
     "pug": "^2.0.3",
