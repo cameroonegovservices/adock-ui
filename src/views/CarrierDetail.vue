@@ -297,14 +297,18 @@ export default {
 
   created() {
     this.map = null;
-    import("leaflet").then(leaflet => {
-      setMarkerIcons(leaflet.default);
-      L = leaflet.default;
-      if (this.map != null) {
-        // Ensure not already rendered by mounted (unlikely)
-      }
-      this.renderMap();
-    });
+    import("leaflet")
+      .then(leaflet => {
+        setMarkerIcons(leaflet.default);
+        L = leaflet.default;
+        if (this.map != null) {
+          // Ensure not already rendered by mounted (unlikely)
+        }
+        this.renderMap();
+      })
+      .catch(error => {
+        Raven.captureException(error);
+      });
   },
 
   mounted() {
